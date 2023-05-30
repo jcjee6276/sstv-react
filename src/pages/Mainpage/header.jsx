@@ -18,10 +18,11 @@ import LoginModal from './loginModal';
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import axios from 'axios';
+import Mainpage from '.';
 
-const header = () => {
+const header = ({isDarkMode, setIsDarkMode}) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    
     const {data} = useSWR('/user/login', fetcher);
     const userId = data?.userId;
     const openModal = () => {
@@ -31,7 +32,14 @@ const header = () => {
     const closeModal = () => {
         setIsOpen(false);
     }
+    const setDarkMode = ()=> {
+        setIsDarkMode(false);
+    }
 
+    const setWhiteMode = () => {
+        setIsDarkMode(true);
+        
+    }
 
     const logout = useCallback(() => {
         axios.get('/user/logout')
@@ -141,7 +149,7 @@ const header = () => {
                                             }}
                                         >
                                             <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                            <MenuItem onClick={handleClose}>My account</MenuItem>
+                                            <MenuItem onClick={setWhiteMode}>화이트 모드</MenuItem>
                                             <MenuItem onClick={()=> {
                                                 navigate('/Community/'+userId);
                                             }}>내 방송국 가기</MenuItem>

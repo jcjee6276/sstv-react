@@ -21,12 +21,20 @@ import axios from 'axios';
 import LoginModal from '../Mainpage/loginModal';
 
 const header = () => {
+    
     const [isOpen, setIsOpen] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
     const {data} = useSWR('/user/login', fetcher);
     const openModal = () => {
         setIsOpen(true);
     };
+    const setDarkMode = ()=> {
+        setIsDarkMode(true);
+    }
+
+    const setWhiteMode = () => {
+        setIsDarkMode(false);
+    }
 
     const closeModal = () => {
         setIsOpen(false);

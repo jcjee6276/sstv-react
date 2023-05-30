@@ -1,5 +1,5 @@
 import React from 'react';
-import { User_info_second_div, User_info_full_div, User_info_section, User_info_title_area_div, User_info_title_h4, User_info_title_a, User_info_div_2, User_info_div_button, User_info_div_span, User_info_body_div, User_info_body_div_2, User_info_body_2_button, User_info_body_2_em, User_info_body_2_span } from './style';
+import { User_info_second_div, User_info_full_div, User_info_section, User_info_title_area_div, User_info_title_h4, User_info_title_a, User_info_div_2, User_info_div_button, User_info_div_span, User_info_body_div, User_info_body_div_2, User_info_body_2_button, User_info_body_2_em, User_info_body_2_span, User_info_body_3_button, User_info_body_3_em, User_info_body_3_span, User_info_body_4_button, User_info_body_4_em, User_info_body_5_button, User_info_body_5_em } from './style';
 
 const userInfo = () => {
 
@@ -24,6 +24,16 @@ const userInfo = () => {
                             <User_info_body_2_em></User_info_body_2_em>
                             <User_info_body_2_span>30만</User_info_body_2_span>
                         </User_info_body_2_button>
+                        <User_info_body_3_button>
+                            <User_info_body_3_em></User_info_body_3_em>
+                            <User_info_body_3_span>400</User_info_body_3_span>
+                        </User_info_body_3_button>
+                        <User_info_body_4_button>
+                            <User_info_body_4_em></User_info_body_4_em>
+                        </User_info_body_4_button>
+                        <User_info_body_5_button>
+                            <User_info_body_5_em></User_info_body_5_em>
+                        </User_info_body_5_button>
                     </User_info_body_div_2>
                 </User_info_body_div>
             </User_info_full_div>
