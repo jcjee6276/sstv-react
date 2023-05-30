@@ -11,6 +11,7 @@ const App= ()=> {
   const WritingList = loadable(()=> import('./pages/Community/writingList'));
   const GetWriting = loadable(()=> import('./pages/Community/getWriting'));
   const Chat = loadable(()=> import('./pages/Chat'))
+  const Test = loadable(()=> import('./pages/Chat/donationModal'))
   return (
     
     <Router>
@@ -23,6 +24,7 @@ const App= ()=> {
         <Route path="/WritingList/:userId" element={<WritingList/>}/>
         <Route path="/:writingNo/:userId" element={<GetWriting/>}/>
         <Route path="/Chat" element={<Chat/>} />
+        <Route path="/Test" element={<Test/>} />
       </Routes>
     </Router>
     

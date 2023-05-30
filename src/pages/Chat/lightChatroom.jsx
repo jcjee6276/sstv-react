@@ -11,6 +11,7 @@ const lightChatroom = () => {
     const isCanSubmit = !!currentMessage.replace(/ |\n/g, '');
     const chatboxRef = useRef(null);
     const [scrUpdate, setScrUpdate] = useState(false);
+    
     const sendMessage= async () => {
         if(isCanSubmit) {
             const messageData = {
