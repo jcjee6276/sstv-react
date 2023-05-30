@@ -40635,6 +40635,7 @@ display: flex;
 flex-direction: column;
 flex: 1;
 flex-basis: 0.000000001px;
+background-color: #ffffff;
 `;
 
 export const Chat_re_body_mainlist = styled.div`
