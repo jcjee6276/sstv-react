@@ -4,7 +4,8 @@ import {Header_Right_Login_Ui_Button, Stream_div, Chat_text_div, Chat_body_conta
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faFilm, faFontAwesome, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import Chatfooter from './chatfooter'
-const lightChatroom = () => {
+const lightChatroom = (props) => {
+    const {streaming, serviceUrl} = props.data
     const [currentMessage, setCurrentMessage] = useState('');
     const [messageList, setMessageList] = useState([]);
     const [chatInput, setChatInput] = useState('');
@@ -74,8 +75,10 @@ const lightChatroom = () => {
                 <Stream_second_div>
                     <Stream_third_div>
                         <Stream_div>
-                            <video src='./video/test.mp4
-                            ' controls/>
+                        <video controls>
+                          <source src={serviceUrl} type="application/x-mpegURL" />
+                        </video>
+                            {/* <video src={serviceUrl} controls/> */}
                         </Stream_div>
                     </Stream_third_div>
                     <Chatfooter/>

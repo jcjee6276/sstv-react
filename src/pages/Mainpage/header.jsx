@@ -49,10 +49,8 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     });
     
     //NodeServerLogin
-   const setNodeCookie = async () => {
+    const setNodeCookie = async () => {
     if(data) {
-        console.log('[header.jsx setNodeCookie] data = ', data);
-
         const response = await axios.create({
             baseURL: 'http://localhost:3000',
             withCredentials : true
@@ -62,7 +60,6 @@ const header = ({isDarkMode, setIsDarkMode}) => {
    
    useEffect(() => {
     if (data) {
-      console.log('[MainPage header.jsx init useEffect]');
       setNodeCookie();
     }
   }, [data]);

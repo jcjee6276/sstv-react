@@ -6,9 +6,12 @@ import Sidebar from '../Community/sidebar';
 import Header from './header';
 import axios from 'axios';
 import { key } from 'fontawesome';
-import { Link } from 'react-router-dom';
+import LightChatroom from '../Chat/lightChatroom';
+import { useNavigate } from 'react-router-dom';
+
 
 const Mainpage = () => {
+    const navigate = useNavigate();
     const [isDarkMode, setIsDarkMode] = useState(false);
     // useEffect(()=> {
     //     return <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
@@ -32,7 +35,7 @@ const Mainpage = () => {
         fetchStreamingList().then((response) => {
           let result = []; 
           for (const data of response) {
-            result.push(JSON.parse(data));
+            result.push(data);
           }
           setStreamingList(result);
         });
@@ -66,9 +69,39 @@ const Mainpage = () => {
         return result;
       }
 
-      const getStreamingViewPage = (userId) => {
-        
-      }
+      const getStreamingViewPage = async (userId) => {
+        try {
+            const response = await axios.get('http://localhost:3000/streaming/getStreamingViewerPage',
+                {params : {
+                    streamingUserId : userId
+                },
+                withCredentials : true
+            });
+
+            const firstData = response.data.result;
+            if(firstData === 'success') {
+                alert('success');
+                const streaming = response.data.firstData;
+                const serviceUrl = response.data.secondData;
+                
+                navigate(`/chat`, {
+                    state: {
+                        streaming : streaming,
+                        serviceUrl : serviceUrl
+                    }
+                });
+            }else {
+                const firstData = response.data.firstData;
+                if(firstData == '1') {
+                    alert('로그인이 필요합니다.')
+                }else if(firstData == '2') {
+                    alert('이미 스트리밍중입니다.')
+                }
+            }
+        } catch (error) {
+            alert('[index.jsx getStreamingViewPage] error  = ' + error);
+        }
+      }      
     // =============================[Code By LDW End]============================= //
     console.log("dark"+isDarkMode);
     return(
@@ -109,12 +142,7 @@ const Mainpage = () => {
                                     {streamingList.map((streaming, index) => (
                                         
                                             <Main_stream_list_div>
-                                                <Link to={
-                                                    {
-                                                        pathname : '/chat',
-                                                        state : streaming.userId
-                                                    }
-                                                }>
+                                                <label onClick={() => getStreamingViewPage(streaming.userId)}>
                                                 <Main_stream_list_div_2>
                                                     <Main_stream_list_img src={streaming.thumnailUrlWithOutAd}/>
                                                     <Main_stream_list_h4 key={index}>{streaming.streamingTitle}
@@ -130,7 +158,7 @@ const Mainpage = () => {
                                                             </Main_stream_list_watching_li_2>
                                                     </Main_stream_list_watching_ul>
                                                         </Main_stream_list_div_2>
-                                                </Link>
+                                                </label>
                                             </Main_stream_list_div>
                                         
                                     ))}
