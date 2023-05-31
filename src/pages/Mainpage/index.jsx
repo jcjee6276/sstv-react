@@ -6,6 +6,7 @@ import Sidebar from '../Community/sidebar';
 import Header from './header';
 import axios from 'axios';
 import { key } from 'fontawesome';
+import { Link } from 'react-router-dom';
 
 const Mainpage = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
@@ -17,16 +18,16 @@ const Mainpage = () => {
     // 1. 일일히 baseURL : 'http://localhost:3000'이렇게 작성 안하고 전역변수로 만드는 방법 찾기
     const [streamingList, setStreamingList] = useState([]);
 
-    useEffect(() => {
-        console.log('[init useEffect]');
-      
-        const fetchStreamingList = async () => {
-          const response = await axios.create({
-            baseURL: 'http://localhost:3000'
-          }).get('/streaming/getStreamingList');
-      
-          return response.data?.firstData;
-        }
+    useEffect(() => {     
+        const fetchStreamingList = async () => {          
+            const response = await axios.create({
+              baseURL: 'http://localhost:3000',
+            //   withCredentials : true
+            }).get('/streaming/getStreamingList');
+          
+            return response.data?.firstData; 
+          };
+          
       
         fetchStreamingList().then((response) => {
           let result = []; 
@@ -63,6 +64,10 @@ const Mainpage = () => {
                 break;
         }
         return result;
+      }
+
+      const getStreamingViewPage = (userId) => {
+        
       }
     // =============================[Code By LDW End]============================= //
     console.log("dark"+isDarkMode);
@@ -102,7 +107,14 @@ const Mainpage = () => {
                                  <Main_body_stream_list_div>
                                    {/* 방송 목록 반복 data 들어갈 부분  */}
                                     {streamingList.map((streaming, index) => (
+                                        
                                             <Main_stream_list_div>
+                                                <Link to={
+                                                    {
+                                                        pathname : '/chat',
+                                                        state : streaming.userId
+                                                    }
+                                                }>
                                                 <Main_stream_list_div_2>
                                                     <Main_stream_list_img src={streaming.thumnailUrlWithOutAd}/>
                                                     <Main_stream_list_h4 key={index}>{streaming.streamingTitle}
@@ -118,9 +130,9 @@ const Mainpage = () => {
                                                             </Main_stream_list_watching_li_2>
                                                     </Main_stream_list_watching_ul>
                                                         </Main_stream_list_div_2>
-                                                </Main_stream_list_div>
-
-                                        // <p key={index}>{streaming.userId}</p>
+                                                </Link>
+                                            </Main_stream_list_div>
+                                        
                                     ))}
                                     {/* 방송 목록 반복 data 들어갈 부분  */}
 

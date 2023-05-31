@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import ReactDOM from 'react-dom';
 import { redirect, Link, useNavigate } from 'react-router-dom';
@@ -48,21 +48,36 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         })
     });
     
-    
-   console.log(userId);
+    //NodeServerLogin
+   const setNodeCookie = async () => {
+    if(data) {
+        console.log('[header.jsx setNodeCookie] data = ', data);
+
+        const response = await axios.create({
+            baseURL: 'http://localhost:3000',
+            withCredentials : true
+          }).post('/testLogin', data);    
+    }
+   }
+   
+   useEffect(() => {
+    if (data) {
+      console.log('[MainPage header.jsx init useEffect]');
+      setNodeCookie();
+    }
+  }, [data]);
+   
+
       
       
     const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-
-   
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         
