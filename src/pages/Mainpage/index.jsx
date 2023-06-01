@@ -80,14 +80,14 @@ const Mainpage = () => {
 
             const firstData = response.data.result;
             if(firstData === 'success') {
-                alert('success');
                 const streaming = response.data.firstData;
                 const serviceUrl = response.data.secondData;
                 
-                navigate(`/chat/${streamingUserId}`, {
+                navigate(`/chat`, {
                     state: {
                         streaming : streaming,
-                        serviceUrl : serviceUrl
+                        serviceUrl : serviceUrl,
+                        streamingUserId : streamingUserId
                     }
                 });
             }else {
@@ -95,7 +95,7 @@ const Mainpage = () => {
                 if(firstData == '1') {
                     alert('로그인이 필요합니다.')
                 }else if(firstData == '2') {
-                    alert('이미 스트리밍중입니다.')
+                    alert('해당 스트리머 회원의 블랙리스트에 등록되어있습니다.')
                 }
             }
         } catch (error) {

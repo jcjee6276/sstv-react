@@ -4,8 +4,10 @@ import {Header_Right_Login_Ui_Button, Stream_div, Chat_text_div, Chat_body_conta
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faFilm, faFontAwesome, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import Chatfooter from './chatfooter'
+import ReactPlayer from 'react-player';
+
 const lightChatroom = (props) => {
-    const {streaming, serviceUrl} = props.data
+    const {streaming, serviceUrl} = props.data;
     const [currentMessage, setCurrentMessage] = useState('');
     const [messageList, setMessageList] = useState([]);
     const [chatInput, setChatInput] = useState('');
@@ -25,14 +27,11 @@ const lightChatroom = (props) => {
                 ":" +
                 new Date(Date.now()).getMinutes(),
             };
-            await 
-            setMessageList(messageList=> [...messageList, messageData]);
+            await setMessageList(messageList=> [...messageList, messageData]);
             console.log(messageData);
             setCurrentMessage('');
         }
     }
-
-   
 
     useEffect(()=>{
             scrollToBottom();
@@ -66,9 +65,6 @@ const lightChatroom = (props) => {
             }
     }
     
-    
-    alert('[streaming] : ' + streaming);
-    alert('[serviceUrl] : ' + serviceUrl);
     return(
         <body>
         <Chat_stream_main_div id="main">
@@ -76,13 +72,21 @@ const lightChatroom = (props) => {
                 <Stream_second_div>
                     <Stream_third_div>
                         <Stream_div>
-                        <video controls>
-                          <source src='' type="application/x-mpegURL" />
-                        </video>
-                            {/* <video src={serviceUrl} controls/> */}
+                            <ReactPlayer
+                                className='react-player'
+                                url={serviceUrl}    // 플레이어 url
+                                width='1200px'         // 플레이어 크기 (가로)
+                                height='550px'        // 플레이어 크기 (세로)
+                                playing={true}        // 자동 재생 on
+                                muted={true}          // 자동 재생 on
+                                controls={true}       // 플레이어 컨트롤 노출 여부
+                                light={false}         // 플레이어 모드
+                                pip={true}            // pip 모드 설정 여부
+                                poster={'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg'}   // 플레이어 초기 포스터 사진
+                            />
                         </Stream_div>
                     </Stream_third_div>
-                    <Chatfooter/>
+                    <Chatfooter data ={streaming}/>
                 </Stream_second_div>
             </Stream_main_div>
 
@@ -311,14 +315,14 @@ const lightChatroom = (props) => {
                                             </Chat_user_tipe_div_2>
                                         </Chat_user_tipe_div>
                                     </Chat_body_user_div>
-
+                                    
                                 </Chat_frame_div>
                             {/* </Chat_main_iframe> */}
                         </Chat_main_frame>
+                        <p>test</p>
                     </Chat_main_div_3>
                 </Chat_main_div_2>
             </Chat_main_div>
-            
          </Chat_stream_main_div>
          
          </body>

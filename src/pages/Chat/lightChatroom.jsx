@@ -4,6 +4,7 @@ import {Header_Right_Login_Ui_Button, Stream_div, Chat_text_div, Chat_body_conta
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faFilm, faFontAwesome, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import Chatfooter from './chatfooter'
+import ReactPlayer from 'react-player';
 const lightChatroom = (props) => {
     const {streaming, serviceUrl} = props.data
     const [currentMessage, setCurrentMessage] = useState('');
@@ -75,13 +76,21 @@ const lightChatroom = (props) => {
                 <Stream_second_div>
                     <Stream_third_div>
                         <Stream_div>
-                        <video controls>
-                          <source src={serviceUrl} type="application/x-mpegURL" />
-                        </video>
-                            {/* <video src={serviceUrl} controls/> */}
+                        <ReactPlayer
+                                className='react-player'
+                                url={serviceUrl}    // 플레이어 url
+                                width='1200px'         // 플레이어 크기 (가로)
+                                height='550px'        // 플레이어 크기 (세로)
+                                playing={true}        // 자동 재생 on
+                                muted={true}          // 자동 재생 on
+                                controls={true}       // 플레이어 컨트롤 노출 여부
+                                light={false}         // 플레이어 모드
+                                pip={true}            // pip 모드 설정 여부
+                                poster={'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg'}   // 플레이어 초기 포스터 사진
+                            />
                         </Stream_div>
                     </Stream_third_div>
-                    <Chatfooter/>
+                    <Chatfooter data ={{streaming , serviceUrl}}/>
                 </Stream_second_div>
             </Stream_main_div>
 

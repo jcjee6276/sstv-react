@@ -4,12 +4,42 @@ import {Footer_stream_item_star_li_t, Footer_stream_li2_span, Footer_main_div, F
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import DonationModal from './donationModal';
-const chatfooter = () => {
+const chatfooter = (props) => {
+    const {streaming} = props.data;
     const [onClose, setOnClose] = useState(false);
 
     const openDonation = () => {
         setOnClose(true);
     }
+
+    const getCategory = (categoryId) => {
+        let result;
+        switch(categoryId) {
+            case '0':
+                result = '게임';
+                break;
+            case '1':
+                result = '일상';
+                break;
+            case '2':
+                result = '스포츠';
+                break;
+            case '3':
+                result = '먹방';
+                break;
+            case '4':
+                result = '요리';
+                break;
+            case '5':
+                result = '교육';
+                break;
+            default:
+                break;
+        }
+        return result;
+      }
+    
+
     return (
         <Footer_main_div>
 
@@ -49,11 +79,11 @@ const chatfooter = () => {
                 <Stream_user_name>전지창</Stream_user_name>
                 <Footer_user_count_div>
                     <Footer_user_count_span>
-                        <Footer_user_count_em><FontAwesomeIcon icon={faUserGroup} style={{color: "#757d8a",}} /> 200</Footer_user_count_em>
+                        <Footer_user_count_em><FontAwesomeIcon icon={faUserGroup} style={{color: "#757d8a",}} />{streaming.streamingViewer}</Footer_user_count_em>
                     </Footer_user_count_span>
                 </Footer_user_count_div>
                 <Footer_stream_title_div>
-                    <Footer_stream_title_span>제목을 지어볼까요?</Footer_stream_title_span>
+                    <Footer_stream_title_span>{streaming.streamingTitle}</Footer_stream_title_span>
                 </Footer_stream_title_div>
                 <Footer_title_underline/>
 
@@ -77,7 +107,7 @@ const chatfooter = () => {
                 <Footer_stream_time_ul>
                     <Footer_stream_time_li_1>
                         <Footer_stream_time_1_strong>· 방송시작시간</Footer_stream_time_1_strong>
-                        <Footer_stream_time_1_span>2023-05-29 08:50:10</Footer_stream_time_1_span>
+                        <Footer_stream_time_1_span>{streaming.streamingStartTime}</Footer_stream_time_1_span>
                     </Footer_stream_time_li_1>
 
                     <Footer_stream_time_2_li>
@@ -90,7 +120,7 @@ const chatfooter = () => {
                 </Footer_stream_time_2_li>
                 <Footer_stream_time_2_li>
                     <Footer_stream_time_2_strong>· 카테고리</Footer_stream_time_2_strong>
-                    <Footer_stream_time_2_span>운동</Footer_stream_time_2_span>
+                    <Footer_stream_time_2_span>{getCategory(streaming.streamingCategory)}</Footer_stream_time_2_span>
                 </Footer_stream_time_2_li>
 
                 <Footer_stream_time_2_li>

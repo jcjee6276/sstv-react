@@ -20,6 +20,7 @@ import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import axios from 'axios';
 import Mainpage from '.';
+import cookie from 'react-cookies';
 
 const header = ({isDarkMode, setIsDarkMode}) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -45,6 +46,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
             alert('로그인이 필요합니다.');
         } else if(result == '2')  {
             alert('회원님은 이미 스트리밍이 진행중입니다 <나중에 해당 스트리밍으로 바로 보내는 버튼 추가>.');
+            navigate('/streamerChat');
         } else if(result == '3') {
             alert('회원님은 현재 스트리밍 권한이 정지되었습니다. <나중에 가능하면 스트리밍권한 정지 종료날짜도 출력해보자>.');
         }
@@ -67,6 +69,12 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     }
 
     const logout = useCallback(() => {
+        cookie.remove('NSESSIONID', {path : '/'}, 0);
+        axios.create({
+            baseURL: 'http://localhost:3001',
+            withCredentials : true
+          }).get('/testLogout');
+
         axios.get('/user/logout')
         .then(()=>{
             window.location.reload();
@@ -83,6 +91,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     }
    }
 
+   //login성공 후 data가 변화하면 setNodeCookie() 실행
    useEffect(() => {
         if (data) {
         setNodeCookie();
