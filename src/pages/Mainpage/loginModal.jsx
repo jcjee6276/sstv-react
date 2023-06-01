@@ -15,7 +15,7 @@ const loginModal = ({onClose, setOnClose}) => {
     const [buttonChange, setButtonChange] = useState(false);
 
     const {data,revalidate} = useSWR('/user/login', fetcher);
-
+    const navigate = useNavigate();
     
     
     useEffect(() => {
@@ -60,6 +60,12 @@ const loginModal = ({onClose, setOnClose}) => {
         
         
     },[userId, password])
+
+    //휴대폰 인증 화면으로 이동
+    const handleClick = () => {
+        
+        navigate('/sendSMS');
+    }
 
     const handleMouseOver = () => {
         setMouseOver(true);
@@ -168,9 +174,10 @@ const loginModal = ({onClose, setOnClose}) => {
                                                             <Modal_signup_button>
                                                                 <Modal_signup_button_div onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
                                                                     {mouseOver === false? 
-                                                                    <Modal_signup_content_div>계정이 없으신가요? 회원가입</Modal_signup_content_div>
+                                                                    <Modal_signup_content_div >계정이 없으신가요? 회원가입</Modal_signup_content_div>
                                                                     :
-                                                                    <Modal_signup_button_div_over>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
+                                                                    // <Modal_signup_button_div_over >계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
+                                                                    <Modal_signup_button_div_over onClick={handleClick}>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
                                                                     }
                                                                 </Modal_signup_button_div>
                                                             </Modal_signup_button>
