@@ -15,6 +15,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import LoginModal from './loginModal';
+import StartStreamingModal from './startStreamingModal';
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import axios from 'axios';
@@ -22,16 +23,40 @@ import Mainpage from '.';
 
 const header = ({isDarkMode, setIsDarkMode}) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [startStreamingIsOpen, setStartStreamingIsOpen] = useState(false);
     
     const {data} = useSWR('/user/login', fetcher);
     const userId = data?.userId;
+    
+
     const openModal = () => {
         setIsOpen(true);
     };
-    const navigate = useNavigate();
     const closeModal = () => {
         setIsOpen(false);
     }
+    const openStartStreamingModal = async () => {
+        const response = await validateStreamingRoll();
+        const result = response.firstData;
+
+        if(result == '0') {
+            setStartStreamingIsOpen(true);
+        } else if(result == '1') {
+            alert('로그인이 필요합니다.');
+        } else if(result == '2')  {
+            alert('회원님은 이미 스트리밍이 진행중입니다 <나중에 해당 스트리밍으로 바로 보내는 버튼 추가>.');
+        } else if(result == '3') {
+            alert('회원님은 현재 스트리밍 권한이 정지되었습니다. <나중에 가능하면 스트리밍권한 정지 종료날짜도 출력해보자>.');
+        }
+    }
+    const closeStartStreamingModal = () => {
+        setStartStreamingIsOpen(false);
+    }
+
+    const navigate = useNavigate();
+    
+    
+
     const setDarkMode = ()=> {
         setIsDarkMode(false);
     }
@@ -52,20 +77,52 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     const setNodeCookie = async () => {
     if(data) {
         const response = await axios.create({
-            baseURL: 'http://localhost:3000',
+            baseURL: 'http://localhost:3001',
             withCredentials : true
           }).post('/testLogin', data);    
     }
    }
-   
-   useEffect(() => {
-    if (data) {
-      setNodeCookie();
-    }
-  }, [data]);
-   
 
-      
+   useEffect(() => {
+        if (data) {
+        setNodeCookie();
+        }
+    }, [data]);
+
+   const validateStreamingRoll = async () => {
+        const response = await axios.create({
+            baseURL: 'http://localhost:3001',
+            withCredentials : true
+        }).get('/streaming/addStreaming');
+
+        const result = JSON.parse(response.data);
+        return result;
+   }
+
+
+   /* 1. startStreamingModal에서 스트리밍 제목, 카테고리를 받아옴
+      2. 해당 스트리밍 제목, 카테고리로 LiveStation에 api요청을 보내 스트리밍 생성요청보냄
+      3. 생성요청을 보낸 뒤 스트리밍이 생성될 동안 자신의 스트리밍 페이지로 보냄
+   */
+   const handleSubmit = async (data) => {
+        closeStartStreamingModal();
+        const streamingTitle = data.streamingTitle;
+        const streamingCategory = data.streamingCategory;
+
+        const response = await axios.create({
+            baseURL: 'http://localhost:3001',
+            withCredentials : true
+        }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
+        
+        const result = (JSON.parse(response.data)).result;
+        console.log('result = ' +  result);
+        if(result == 'success') {
+            alert('success!');
+            navigate('/LoadingPage');
+        }else {
+            alert('스트리밍 시작에 실패했습니다.');
+        }
+    };
       
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -131,14 +188,14 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                         </Header_Right_Icon_1_a>
                                     </Header_Right_Icon_1_Div>
 
-                                    <Header_Right_Icon_2_Button>
+                                    <Header_Right_Icon_2_Button onClick={openStartStreamingModal}>
                                         <Header_Right_Icon_2_Span>
 
                                         </Header_Right_Icon_2_Span>
                                     </Header_Right_Icon_2_Button>
-
+                                        {startStreamingIsOpen && <StartStreamingModal onClose={startStreamingIsOpen} setOnClose={setStartStreamingIsOpen} handleSubmit={handleSubmit} />}
                                     <Header_Right_Login_Ui_Div>
-                                        
+
                                         <Header_Right_Login_Ui_Span>
                                         {!data ? null :
                                             <Button

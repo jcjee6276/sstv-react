@@ -24,7 +24,7 @@ const Mainpage = () => {
     useEffect(() => {     
         const fetchStreamingList = async () => {          
             const response = await axios.create({
-              baseURL: 'http://localhost:3000',
+              baseURL: 'http://localhost:3001',
             //   withCredentials : true
             }).get('/streaming/getStreamingList');
           
@@ -69,11 +69,11 @@ const Mainpage = () => {
         return result;
       }
 
-      const getStreamingViewPage = async (userId) => {
+      const getStreamingViewPage = async (streamingUserId) => {
         try {
-            const response = await axios.get('http://localhost:3000/streaming/getStreamingViewerPage',
+            const response = await axios.get('http://localhost:3001/streaming/getStreamingViewerPage',
                 {params : {
-                    streamingUserId : userId
+                    streamingUserId : streamingUserId
                 },
                 withCredentials : true
             });
@@ -84,7 +84,7 @@ const Mainpage = () => {
                 const streaming = response.data.firstData;
                 const serviceUrl = response.data.secondData;
                 
-                navigate(`/chat`, {
+                navigate(`/chat/${streamingUserId}`, {
                     state: {
                         streaming : streaming,
                         serviceUrl : serviceUrl
@@ -128,7 +128,7 @@ const Mainpage = () => {
                     {/* 맨위 상단 배너 div */}
                     {/* 홈화면 중단 배너 (스트리밍) */}
                     <Main_stream_body_div>
-                        <Main_stream_body_div_2>
+                        <Main_stream_body_div_2>z``
                             <Main_stream_body_div_3>
                                 <Main_stream_body_title_div>
                                     <Main_steram_body_title_h4>

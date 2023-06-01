@@ -11,7 +11,10 @@ const App= ()=> {
   const WritingList = loadable(()=> import('./pages/Community/writingList'));
   const GetWriting = loadable(()=> import('./pages/Community/getWriting'));
   const Chat = loadable(()=> import('./pages/Chat'))
-  const Test = loadable(()=> import('./pages/Chat/donationModal'))
+  const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
+  const Test = loadable(()=> import('./pages/Chat/donationModal'));
+  const LoadingPage = loadable(()=> import('./pages/LoadingPage'))
+
   return (
     
     <Router>
@@ -24,7 +27,9 @@ const App= ()=> {
         <Route path="/WritingList/:userId" element={<WritingList/>}/>
         <Route path="/:writingNo/:userId" element={<GetWriting/>}/>
         <Route path="/Chat" element={<Chat/>} />
+        <Route path="/StreamerChat" element={<StreamerChat/>} />
         <Route path="/Test" element={<Test/>} />
+        <Route path="/LoadingPage" element={<LoadingPage/>} />
       </Routes>
     </Router>
     
