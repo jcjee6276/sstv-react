@@ -6,8 +6,12 @@ import Sidebar from '../Community/sidebar';
 import Header from './header';
 import axios from 'axios';
 import { key } from 'fontawesome';
+import LightChatroom from '../Chat/lightChatroom';
+import { useNavigate } from 'react-router-dom';
+
 
 const Mainpage = () => {
+    const navigate = useNavigate();
     const [isDarkMode, setIsDarkMode] = useState(false);
     // useEffect(()=> {
     //     return <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
@@ -17,25 +21,25 @@ const Mainpage = () => {
     // 1. 일일히 baseURL : 'http://localhost:3000'이렇게 작성 안하고 전역변수로 만드는 방법 찾기
     const [streamingList, setStreamingList] = useState([]);
 
-    // useEffect(() => {
-    //     console.log('[init useEffect]');
+    useEffect(() => {     
+        const fetchStreamingList = async () => {          
+            const response = await axios.create({
+              baseURL: 'http://localhost:3001',
+            //   withCredentials : true
+            }).get('/streaming/getStreamingList');
+          
+            return response.data?.firstData; 
+          };
+          
       
-    //     const fetchStreamingList = async () => {
-    //       const response = await axios.create({
-    //         baseURL: 'http://localhost:3000'
-    //       }).get('/streaming/getStreamingList');
-      
-    //       return response.data?.firstData;
-    //     }
-      
-    //     fetchStreamingList().then((response) => {
-    //       let result = []; 
-    //       for (const data of response) {
-    //         result.push(JSON.parse(data));
-    //       }
-    //       setStreamingList(result);
-    //     });
-    //   }, []);
+        fetchStreamingList().then((response) => {
+          let result = []; 
+          for (const data of response) {
+            result.push(data);
+          }
+          setStreamingList(result);
+        });
+      }, []);
     
 
       const getCategory = (categoryId) => {
@@ -64,6 +68,40 @@ const Mainpage = () => {
         }
         return result;
       }
+
+      const getStreamingViewPage = async (streamingUserId) => {
+        try {
+            const response = await axios.get('http://localhost:3001/streaming/getStreamingViewerPage',
+                {params : {
+                    streamingUserId : streamingUserId
+                },
+                withCredentials : true
+            });
+
+            const firstData = response.data.result;
+            if(firstData === 'success') {
+                const streaming = response.data.firstData;
+                const serviceUrl = response.data.secondData;
+                
+                navigate(`/chat`, {
+                    state: {
+                        streaming : streaming,
+                        serviceUrl : serviceUrl,
+                        streamingUserId : streamingUserId
+                    }
+                });
+            }else {
+                const firstData = response.data.firstData;
+                if(firstData == '1') {
+                    alert('로그인이 필요합니다.')
+                }else if(firstData == '2') {
+                    alert('해당 스트리머 회원의 블랙리스트에 등록되어있습니다.')
+                }
+            }
+        } catch (error) {
+            alert('[index.jsx getStreamingViewPage] error  = ' + error);
+        }
+      }      
     // =============================[Code By LDW End]============================= //
     console.log("dark"+isDarkMode);
     return(
@@ -90,7 +128,7 @@ const Mainpage = () => {
                     {/* 맨위 상단 배너 div */}
                     {/* 홈화면 중단 배너 (스트리밍) */}
                     <Main_stream_body_div>
-                        <Main_stream_body_div_2>
+                        <Main_stream_body_div_2>z``
                             <Main_stream_body_div_3>
                                 <Main_stream_body_title_div>
                                     <Main_steram_body_title_h4>
@@ -102,7 +140,9 @@ const Mainpage = () => {
                                  <Main_body_stream_list_div>
                                    {/* 방송 목록 반복 data 들어갈 부분  */}
                                     {streamingList.map((streaming, index) => (
+                                        
                                             <Main_stream_list_div>
+                                                <label onClick={() => getStreamingViewPage(streaming.userId)}>
                                                 <Main_stream_list_div_2>
                                                     <Main_stream_list_img src={streaming.thumnailUrlWithOutAd}/>
                                                     <Main_stream_list_h4 key={index}>{streaming.streamingTitle}
@@ -118,9 +158,9 @@ const Mainpage = () => {
                                                             </Main_stream_list_watching_li_2>
                                                     </Main_stream_list_watching_ul>
                                                         </Main_stream_list_div_2>
-                                                </Main_stream_list_div>
-
-                                        // <p key={index}>{streaming.userId}</p>
+                                                </label>
+                                            </Main_stream_list_div>
+                                        
                                     ))}
                                     {/* 방송 목록 반복 data 들어갈 부분  */}
 

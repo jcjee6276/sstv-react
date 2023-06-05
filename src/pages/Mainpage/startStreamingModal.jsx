@@ -7,17 +7,16 @@ import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import Header from './header';
 
-const loginModal = ({onClose, setOnClose}) => {
-    const [userId, setUserId]= useState('');
-    const [password, setPassword] = useState('');
+const startStreamingModal = ({onClose, setOnClose, handleSubmit}) => {
+    const navigate = useNavigate();
+    const [streamingTitle, setStreamingTitle]= useState('');
+    const [streamingCategory, setStreamingCategory] = useState('');
     const [mouseOver, setMouseOver] = useState(false);
     const modalRef = useRef(null);
     const [buttonChange, setButtonChange] = useState(false);
 
     const {data,revalidate} = useSWR('/user/login', fetcher);
-    const navigate = useNavigate();
-    
-    
+
     useEffect(() => {
         const handler = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -30,36 +29,40 @@ const loginModal = ({onClose, setOnClose}) => {
         };
     }, [onClose]);
 
-    const onChangeUserId = useCallback((event) =>{
-        setUserId(event.target.value);
+    const onChangestreamingTitle = useCallback((event) =>{
+        setStreamingTitle(event.target.value);
         
-    },[userId])
-    const onChangePassword = useCallback((event) => {
-        setPassword(event.target.value);
-    },[password])
+    },[streamingTitle])
+    const onChangestreamingCategory = useCallback((event) => {
+        setStreamingCategory(event.target.value);
+    },[streamingCategory])
 
     //console.log(data);
 
     useEffect(()=> {
-        if(userId!=='' && password !=='' ) {
+        if(streamingTitle!=='' && streamingCategory !=='' ) {
             setButtonChange(true);
         }
-        if(userId==='' || password==='' ){
+        if(streamingTitle==='' || streamingCategory==='' ){
             setButtonChange(false);
         }
     })
     
-    const onSubmit = useCallback(() => {
-        axios.post('/user/login',
-            {userId, password}
-        )
-        .then((response)=> {
-            console.log(response.data);
-            revalidate();
-        })
+    // const onSubmit = useCallback(async () => {
+    //     const response = await axios.create({
+    //         baseURL: 'http://localhost:3000',
+    //         withCredentials : true
+    //     }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
         
-    },[userId, password])
-
+    //     const result = (JSON.parse(response.data)).result;
+    //     if(result == 'success') {
+    //         alert('success!');
+    //         navigate('/chat');
+    //     }else {
+    //         alert('스트리밍 시작에 실패했습니다.');
+    //     }
+    // });
+    
     const handleMouseOver = () => {
         setMouseOver(true);
     }
@@ -68,10 +71,12 @@ const loginModal = ({onClose, setOnClose}) => {
         setMouseOver(false);
     }
 
-     //휴대폰 인증 화면으로 이동
-     const handleClick = () => {
-        
-        navigate('/sendSMS');
+    const handleModalSubmit = () => {
+        const data = {
+            streamingTitle : streamingTitle,
+            streamingCategory : streamingCategory
+        }
+        handleSubmit(data);
     }
 
     // if(!data){
@@ -94,7 +99,7 @@ const loginModal = ({onClose, setOnClose}) => {
                                                     <Modal_title_div_3>
                                                         <Modal_title_figure><img src={ process.env.PUBLIC_URL+'/img/SSTV_mini.gif'}/></Modal_title_figure>
                                                         <Modal_title_write_div>
-                                                            <Modal_title_h4>SSTV에 로그인</Modal_title_h4>
+                                                            <Modal_title_h4>SSTV에서 스트리밍 시작</Modal_title_h4>
                                                         </Modal_title_write_div>
                                                     </Modal_title_div_3>
                                                 </Modal_title_div_2>
@@ -102,19 +107,19 @@ const loginModal = ({onClose, setOnClose}) => {
 
 
                                             <Modal_body_div>
-                                                <Modal_body_form onSubmit={onSubmit}>
+                                                <Modal_body_form onSubmit={handleModalSubmit}>
                                                     <Modal_body_lay_div >
                                                         <Modal_body_id_div>
                                                             <Modal_body_id_div_1>
                                                                 <Modal_body_id_div_2>
                                                                     <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>아이디</Modal_body_id_lable>
+                                                                        <Modal_body_id_lable>스트리밍 제목</Modal_body_id_lable>
                                                                     </Modal_body_id_div_3>
                                                                 </Modal_body_id_div_2>
 
                                                                 <Modal_body_id_input_div>
                                                                     <Modal_body_id_input_div_2>
-                                                                        <Modal_body_id_input value={userId} onChange={onChangeUserId}></Modal_body_id_input>
+                                                                        <Modal_body_id_input value={streamingTitle} onChange={onChangestreamingTitle}></Modal_body_id_input>
                                                                     </Modal_body_id_input_div_2>
                                                                 </Modal_body_id_input_div>
 
@@ -126,26 +131,19 @@ const loginModal = ({onClose, setOnClose}) => {
                                                                 <Modal_body_pw_div_3>
                                                                     <Modal_body_pw_div_4>
                                                                         <Modal_body_pw_title_div>
-                                                                            <Modal_body_pw_title_lable>비밀번호</Modal_body_pw_title_lable>
+                                                                            <Modal_body_pw_title_lable>스트리밍 카테고리</Modal_body_pw_title_lable>
                                                                         </Modal_body_pw_title_div>
                                                                     </Modal_body_pw_div_4>
 
                                                                     <Modal_body_pw_input_div>
                                                                         <Modal_body_pw_input_div_2>
                                                                             <Modal_body_pw_input_div_3>
-                                                                                <Modal_body_pw_input onChange={onChangePassword} id='password' type='password' ></Modal_body_pw_input>
+                                                                                <Modal_body_pw_input onChange={onChangestreamingCategory} id='streamingCategory' type='streamingCategory' ></Modal_body_pw_input>
                                                                             </Modal_body_pw_input_div_3>
                                                                         </Modal_body_pw_input_div_2>
                                                                     </Modal_body_pw_input_div>
 
                                                                 </Modal_body_pw_div_3>
-
-                                                                <Modal_body_help_div>
-                                                                    <Modal_body_help_a>
-                                                                        <Modal_body_help_p>로그인이 안 되세요?</Modal_body_help_p>
-                                                                    </Modal_body_help_a>
-                                                                </Modal_body_help_div>
-
                                                             </Modal_body_pw_div_2>
                                                         </Modal_body_pw_idv>
 
@@ -156,13 +154,13 @@ const loginModal = ({onClose, setOnClose}) => {
                                                                 {buttonChange ===false ? 
                                                                     <Modal_login_submit_button disabled>
                                                                         <Modal_login_submit_button_div >
-                                                                            <Modal_login_submit_noinput_div>로그인</Modal_login_submit_noinput_div>
+                                                                            <Modal_login_submit_noinput_div>스트리밍 시작!</Modal_login_submit_noinput_div>
                                                                         </Modal_login_submit_button_div>
                                                                     </Modal_login_submit_button> 
                                                                 :
                                                                      <Modal_login_submit_input_button>
                                                                             <Modal_login_submit_input_button_div>
-                                                                                 <Modal_login_submit_input_div>로그인</Modal_login_submit_input_div>
+                                                                                 <Modal_login_submit_input_div>스트리밍 시작!</Modal_login_submit_input_div>
                                                                             </Modal_login_submit_input_button_div>
                                                                      </Modal_login_submit_input_button>  
                                                                         } 
@@ -173,9 +171,9 @@ const loginModal = ({onClose, setOnClose}) => {
                                                             <Modal_signup_button>
                                                                 <Modal_signup_button_div onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
                                                                     {mouseOver === false? 
-                                                                    <Modal_signup_content_div>계정이 없으신가요? 회원가입</Modal_signup_content_div>
+                                                                    <Modal_signup_content_div>적당한걸로 바꾸자</Modal_signup_content_div>
                                                                     :
-                                                                    <Modal_signup_button_div_over onClick={handleClick}>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
+                                                                    <Modal_signup_button_div_over>적당한걸로 바꾸자</Modal_signup_button_div_over>
                                                                     }
                                                                 </Modal_signup_button_div>
                                                             </Modal_signup_button>
@@ -199,4 +197,4 @@ const loginModal = ({onClose, setOnClose}) => {
 
 }
 
-export default loginModal;
+export default startStreamingModal;

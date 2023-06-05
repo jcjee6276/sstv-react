@@ -14,10 +14,16 @@ import io from 'socket.io-client'
 import Donation from '../Chat/donationEvent'
 import axios from 'axios';
 import ChatList from './chatList'
+import ReactPlayer from 'react-player';
 
-const lightChatroom = () => {
+
+    
+
+const lightChatroom = (props) => {
     const {data} = useSWR('/user/login', fetcher);
-    const [currentMessage, setCurrentMessage] = useState(''); 
+    
+    const {streaming, serviceUrl} = props.data
+    const [currentMessage, setCurrentMessage] = useState('');
     const [messageList, setMessageList] = useState([]);
     const isCanSubmit = !!currentMessage.replace(/ |\n/g, '');
     const chatboxRef = useRef(null);
@@ -87,8 +93,7 @@ const lightChatroom = () => {
                 ":" +
                 new Date(Date.now()).getMinutes(),
             };
-             await socket.emit('send_message', messageData);
-            // setMessageList(emessageList=> [...emessageList, messageData]);
+            await setMessageList(messageList=> [...messageList, messageData]);
             console.log(messageData);
             setCurrentMessage('');
             setReceiveMessage(null);
@@ -149,7 +154,7 @@ const lightChatroom = () => {
     },[openEvent])
     // useEffect(()=> {
     socket.emit('send_donation', donationData);
-// }, [])
+    // }, [])
     // useEffect(()=> {
     //     if(donationData){
     //         setSocketDonation(donationData);
@@ -167,7 +172,6 @@ const lightChatroom = () => {
     
 
     const scrollToBottom = () => {
-        
         if(chatboxRef.current){
             chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
             console.log("ff:"+chatboxRef.current.scrollHeight);
@@ -213,6 +217,9 @@ const lightChatroom = () => {
     
     
 
+
+    
+    alert('serviceUrl = ' + serviceUrl);
     return(
     <CS_Main>
         <Chat_stream_main_div id="main">
@@ -220,11 +227,22 @@ const lightChatroom = () => {
                 <Stream_second_div>
                     <Stream_third_div>
                         <Stream_div>
-                            <video src='./video/test.mp4
-                            ' controls/>
+                        <ReactPlayer
+                                className='react-player'
+                                url={serviceUrl}    // 플레이어 url
+                                width='1200px'         // 플레이어 크기 (가로)
+                                height='550px'        // 플레이어 크기 (세로)
+                                playing={true}        // 자동 재생 on
+                                muted={true}          // 자동 재생 on
+                                controls={true}       // 플레이어 컨트롤 노출 여부
+                                light={false}         // 플레이어 모드
+                                pip={true}            // pip 모드 설정 여부
+                                poster={'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg'}   // 플레이어 초기 포스터 사진
+                            />
                         </Stream_div>
                     </Stream_third_div>
-                    <Chatfooter donationData={donationData} setDonationData={setDonationData}/>
+                    <Chatfooter data ={{streaming , serviceUrl}} donationData={donationData} setDonationData={setDonationData}/>
+                    
                 </Stream_second_div>
             </Stream_main_div>
 
@@ -479,7 +497,7 @@ const lightChatroom = () => {
          </Chat_stream_main_div>
          
          </CS_Main>
-    )
+    )   
 }
 
 export default lightChatroom;

@@ -11,12 +11,11 @@ const App= ()=> {
   const WritingList = loadable(()=> import('./pages/Community/writingList'));
   const GetWriting = loadable(()=> import('./pages/Community/getWriting'));
   const Chat = loadable(()=> import('./pages/Chat'))
-  const Test = loadable(()=> import('./pages/Chat/chatList'))
-  const AddUser = loadable(()=> import('./pages/user/addUser'))
-  const SendSMS = loadable(()=> import('./pages/user/sendSMS'))
-  const RmUser = loadable(()=> import('./pages/user/removeUser'))
-  const UpdateUser = loadable(()=> import('./pages/user/updateUser'))
-  // const LoadingPage = loadable(()=> import('./pages/LoadingPage'))
+  const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
+  const Test = loadable(()=> import('./pages/Chat/donationModal'));
+  const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
+  const Admin = loadable(()=> import('./pages/Admin'));
+  
   return (
     
     <Router>
@@ -29,12 +28,15 @@ const App= ()=> {
         <Route path="/WritingList/:userId" element={<WritingList/>}/>
         <Route path="/:writingNo/:userId" element={<GetWriting/>}/>
         <Route path="/Chat" element={<Chat/>} />
+        <Route path="/StreamerChat" element={<StreamerChat/>} />
         <Route path="/Test" element={<Test/>} />
-        <Route path="/addUser" element={<AddUser/>} />
-        <Route path="/sendSMS" element={<SendSMS/>} />
-        <Route path='/remove' element={<RmUser/>} />
-        <Route path='/updateUser' element={<UpdateUser/>} />
-        {/* <Route path="/LoadingPage" element={<LoadingPage/>} /> */}
+        {/* <Route path="/addUser" element={<AddUser/>} /> */}
+        {/* <Route path="/sendSMS" element={<SendSMS/>} /> */}
+        {/* <Route path='/remove' element={<RmUser/>} /> */}
+        {/* <Route path='/updateUser' element={<UpdateUser/>} /> */}
+        <Route path="/LoadingPage" element={<LoadingPage/>} />
+        <Route path="/LoadingPage" element={<LoadingPage/>} />
+        <Route path="/Admin" element={<Admin/>} />
       </Routes>
     </Router>
     
