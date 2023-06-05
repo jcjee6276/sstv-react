@@ -64,7 +64,6 @@ const lightChatroom = (props) => {
                 scrollToBottom();
             }
     }
-    
     return(
         <body>
         <Chat_stream_main_div id="main">
@@ -86,7 +85,7 @@ const lightChatroom = (props) => {
                             />
                         </Stream_div>
                     </Stream_third_div>
-                    <Chatfooter data ={streaming}/>
+                    <Chatfooter data ={{streaming}}/>
                 </Stream_second_div>
             </Stream_main_div>
 

@@ -26,8 +26,7 @@ const lightChatroom = (props) => {
                 ":" +
                 new Date(Date.now()).getMinutes(),
             };
-            await 
-            setMessageList(messageList=> [...messageList, messageData]);
+            await setMessageList(messageList=> [...messageList, messageData]);
             console.log(messageData);
             setCurrentMessage('');
         }
@@ -48,7 +47,6 @@ const lightChatroom = (props) => {
     
 
     const scrollToBottom = () => {
-        
         if(chatboxRef.current){
             chatboxRef.current.scrollTop = chatboxRef.current.scrollHeight;
             console.log("ff:"+chatboxRef.current.scrollHeight);
@@ -56,19 +54,15 @@ const lightChatroom = (props) => {
         }
     }
 
-    
-
     const handleKeyPress = (event) => {
-            if( !event.shiftKey && event.key ==="Enter"){
-                event.preventDefault();
-                sendMessage();
-                setScrUpdate(false);
-                scrollToBottom();
-            }
-    }
-    
-    
-
+        if( !event.shiftKey && event.key ==="Enter"){
+            event.preventDefault();
+            sendMessage();
+            setScrUpdate(false);
+            scrollToBottom();
+        }
+    }    
+    alert('serviceUrl = ' + serviceUrl);
     return(
         <body>
         <Chat_stream_main_div id="main">

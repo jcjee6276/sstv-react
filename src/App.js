@@ -13,8 +13,9 @@ const App= ()=> {
   const Chat = loadable(()=> import('./pages/Chat'))
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
   const Test = loadable(()=> import('./pages/Chat/donationModal'));
-  const LoadingPage = loadable(()=> import('./pages/LoadingPage'))
-
+  const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
+  const Admin = loadable(()=> import('./pages/Admin'));
+  
   return (
     
     <Router>
@@ -30,6 +31,7 @@ const App= ()=> {
         <Route path="/StreamerChat" element={<StreamerChat/>} />
         <Route path="/Test" element={<Test/>} />
         <Route path="/LoadingPage" element={<LoadingPage/>} />
+        <Route path="/Admin" element={<Admin/>} />
       </Routes>
     </Router>
     

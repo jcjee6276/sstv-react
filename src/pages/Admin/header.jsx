@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import Modal from 'react-modal';
 import ReactDOM from 'react-dom';
-import { redirect, Link, useNavigate } from 'react-router-dom';
 import { CHeader, CHeader_Dark, Com_h1, HeaderDiv, Header_Modal_Div, 
     Header_Modal_Div_Set, Header_Modal_Label, Header_Modal_Strong_mode, Header_Right_Icon_1_Button, 
     Header_Right_Icon_1_Div, Header_Right_Icon_1_a, Header_Right_Icon_2_Button, 
@@ -11,133 +10,42 @@ import { CHeader, CHeader_Dark, Com_h1, HeaderDiv, Header_Modal_Div,
     Header_Search_Button, Header_Search_Div, Header_Search_Div_input, Header_Search_Div_input_in, 
     Header_Search_Input_in, Header_Search_Side_Button, Header_Search_Side_Span, Header_Search_Span, 
     Header_Search_fieldset, Header_Search_form, Header_a, Header_legend, Header_right_Icon_1_Span } from './style'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import LoginModal from './loginModal';
-import StartStreamingModal from './startStreamingModal';
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import axios from 'axios';
-import Mainpage from '.';
-import { useCookies } from 'react-cookie';
+import LoginModal from '../Mainpage/loginModal';
+import './style.css';
 
-
-const header = ({isDarkMode, setIsDarkMode}) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [startStreamingIsOpen, setStartStreamingIsOpen] = useState(false);
-    const [cookies, setCookie, removeCookie] = useCookies(['NSESSIONID']);
-    const {data} = useSWR('/user/login', fetcher);
-    const userId = data?.userId;
+const header = () => {
     
+    const [isOpen, setIsOpen] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
+    const {data} = useSWR('/user/login', fetcher);
     const openModal = () => {
         setIsOpen(true);
     };
-    const closeModal = () => {
-        setIsOpen(false);
-    }
-    const openStartStreamingModal = async () => {
-        const response = await validateStreamingRoll();
-        const result = response.firstData;
-
-        if(result == '0') {
-            setStartStreamingIsOpen(true);
-        } else if(result == '1') {
-            alert('로그인이 필요합니다.');
-        } else if(result == '2')  {
-            alert('회원님은 이미 스트리밍이 진행중입니다 <나중에 해당 스트리밍으로 바로 보내는 버튼 추가>.');
-            navigate('/streamerChat');
-        } else if(result == '3') {
-            alert('회원님은 현재 스트리밍 권한이 정지되었습니다. <나중에 가능하면 스트리밍권한 정지 종료날짜도 출력해보자>.');
-        }
-    }
-    const closeStartStreamingModal = () => {
-        setStartStreamingIsOpen(false);
-    }
-
-    const navigate = useNavigate();
-    
     const setDarkMode = ()=> {
-        setIsDarkMode(false);
+        setIsDarkMode(true);
     }
 
     const setWhiteMode = () => {
-        setIsDarkMode(true);
-        
+        setIsDarkMode(false);
     }
-    
-    //로그아웃시 Node서버에서 발급한 쿠키 삭제
-    const removeNodeCookie = useCallback(() => {
-        removeCookie('NSESSIONID', { path: '/' });
-    }, [removeCookie]);
 
+    const closeModal = () => {
+        setIsOpen(false);
+    }
     const logout = useCallback(() => {
-        //node의 redis에 해당 유저 삭제 요청
-        axios.create({
-            baseURL: 'http://localhost:3001',
-            withCredentials : true
-          }).get('/testLogout');
-
         axios.get('/user/logout')
         .then(()=>{
             window.location.reload();
-        });
-
-        removeNodeCookie();
+        })
     });
-    
-    
-    //로그인시 노드서버에 요청을 보내 쿠키 생성
-    const setNodeCookie = async () => {
-    if(data) {
-        const response = await axios.create({
-            baseURL: 'http://localhost:3001',
-            withCredentials : true
-          }).post('/testLogin', data);    
-    }
-   }
-
-   //login성공 후 data가 변화하면 setNodeCookie() 실행
-   useEffect(() => {
-        if (data) {
-        setNodeCookie();
-        }
-    }, [data]);
-
-   const validateStreamingRoll = async () => {
-        const response = await axios.create({
-            baseURL: 'http://localhost:3001',
-            withCredentials : true
-        }).get('/streaming/addStreaming');
-
-        const result = JSON.parse(response.data);
-        return result;
-   }
-
-
-   /* 1. startStreamingModal에서 스트리밍 제목, 카테고리를 받아옴
-      2. 해당 스트리밍 제목, 카테고리로 LiveStation에 api요청을 보내 스트리밍 생성요청보냄
-      3. 생성요청을 보낸 뒤 스트리밍이 생성될 동안 자신의 스트리밍 페이지로 보냄
-   */
-   const handleSubmit = async (data) => {
-        closeStartStreamingModal();
-        const streamingTitle = data.streamingTitle;
-        const streamingCategory = data.streamingCategory;
-
-        const response = await axios.create({
-            baseURL: 'http://localhost:3001',
-            withCredentials : true
-        }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
-        
-        const result = (JSON.parse(response.data)).result;
-        console.log('result = ' +  result);
-        if(result == 'success') {
-            alert('success!');
-            navigate('/LoadingPage');
-        }else {
-            alert('스트리밍 시작에 실패했습니다.');
-        }
-    };
       
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -148,15 +56,33 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         setAnchorEl(null);
     };
 
+    //   const ModalComponent: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+    //     return (
+    //       <Modal isOpen={isOpen} onRequestClose={onClose}>
+    //         {/* 모달 내용 */}
+    //         <Header_Modal_Div>
+    //             <Header_Modal_Div_Set>
+    //                 <Header_Modal_Strong_mode>
+    //                     다크모드
+    //                 </Header_Modal_Strong_mode>
+    //                 <Header_Modal_Label>
+
+    //                 </Header_Modal_Label>
+    //             </Header_Modal_Div_Set>
+    //         </Header_Modal_Div>
+    //       </Modal>
+    //     );
+    //   };
+   
+
     return (
-        
+        <div>
         <CHeader>
-            
             <HeaderDiv >
-            <Com_h1 >
+                <Com_h1 >
                     
                     <Header_a >
-                    <img src={process.env.PUBLIC_URL +'/img/SSTV_gray.gif'} width={150} height={65} />
+                    <img src={process.env.PUBLIC_URL +'/img/SSTV.gif'} width={150} height={65} />
                     </Header_a>
                 </Com_h1>
 
@@ -203,16 +129,15 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                         </Header_Right_Icon_1_a>
                                     </Header_Right_Icon_1_Div>
 
-                                    <Header_Right_Icon_2_Button onClick={openStartStreamingModal}>
+                                    <Header_Right_Icon_2_Button>
                                         <Header_Right_Icon_2_Span>
 
                                         </Header_Right_Icon_2_Span>
                                     </Header_Right_Icon_2_Button>
-                                        {startStreamingIsOpen && <StartStreamingModal onClose={startStreamingIsOpen} setOnClose={setStartStreamingIsOpen} handleSubmit={handleSubmit} />}
-                                    <Header_Right_Login_Ui_Div>
 
+                                    <Header_Right_Login_Ui_Div>
                                         <Header_Right_Login_Ui_Span>
-                                        {!data ? null :
+                                            
                                             <Button
                                                 id="basic-button"
                                                 aria-controls={open ? 'basic-menu' : undefined}
@@ -222,7 +147,6 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             >
                                                <Header_Right_Login_Ui_Button />
                                             </Button>
-                                            }
                                             <Menu
                                             id="basic-menu"
                                             anchorEl={anchorEl}
@@ -233,12 +157,10 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             }}
                                         >
                                             <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                            <MenuItem onClick={setWhiteMode}>화이트 모드</MenuItem>
-                                            <MenuItem onClick={()=> {
-                                                navigate('/Community/'+userId);
-                                            }}>내 방송국 가기</MenuItem>
+                                            <MenuItem onClick={handleClose}>My account</MenuItem>
+                                            <MenuItem onClick={handleClose}>Logout</MenuItem>
                                         </Menu>
-                                                           
+                                        
 
                                             {/* <Modal isOpen={isOpen} onRequestClose={closeModal} portalClassName='modal-portal'>
                                             <Header_Modal_Div>
@@ -256,25 +178,38 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             </Modal> */}
                                             
                                             
-                                            {!data? 
+                                            {!data ? 
                                             <Header_Right_Login_Ui_a onClick={openModal}>
                                                         로그인
                                             </Header_Right_Login_Ui_a>
-                                            
                                             :
-                                            <Header_Right_Login_Ui_a onClick={logout} >
+                                            <Header_Right_Login_Ui_a onClick={logout}>
                                                         로그아웃
                                             </Header_Right_Login_Ui_a>
                                             }
                                             {isOpen && <LoginModal onClose={isOpen} setOnClose={setIsOpen}/>}
+                                            
                                         </Header_Right_Login_Ui_Span>
+                                        
                                     </Header_Right_Login_Ui_Div>
-
+                                
                                 </Header_Right_Side_Div>
 
             </HeaderDiv>
         </CHeader>
-       
+    
+        {/* <div id="menu">  
+        <ul class="menu text">
+            <li class=" "><a href="https://sotong.afreecatv.com" target="_top">소통센터 홈</a></li>
+            <li class=" "><a href="https://sotong.afreecatv.com/?board_type=servicenotice&amp;work=list" target="_top">알려드립니다</a></li>
+            <li class=" "><a href="https://sotong.afreecatv.com/?board_type=user&amp;work=list" target="_top">유저게시판</a></li>
+            <li class=" "><a href="https://sotong.afreecatv.com/?board_type=bj&amp;work=list" target="_top">BJ 게시판</a></li>
+            <li class="on "><a href="https://sotong.afreecatv.com/?board_type=report&amp;work=list" target="_top">버그리포트</a></li>
+            <li class=" floatR"><a href="https://contentlab.afreecatv.com" target="_blank">콘텐츠 지원센터<i class="target_blank"></i></a></li>
+            <li class=" floatR"><a href="https://bjguide.afreecatv.com" target="_blank">BJ 가이드<i class="target_blank"></i></a></li>
+        </ul>
+    </div> */}
+</div>
     )
 }
 

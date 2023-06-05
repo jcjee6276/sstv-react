@@ -38,8 +38,6 @@ const chatfooter = (props) => {
         }
         return result;
       }
-    
-
     return (
         <Footer_main_div>
 
@@ -76,7 +74,7 @@ const chatfooter = (props) => {
                 </Footer_user_image_a>
             </Footer_user_image_div>
             {/* <Stream_info_div> */}
-                <Stream_user_name>전지창</Stream_user_name>
+                <Stream_user_name>{streaming.userNickname}</Stream_user_name>
                 <Footer_user_count_div>
                     <Footer_user_count_span>
                         <Footer_user_count_em><FontAwesomeIcon icon={faUserGroup} style={{color: "#757d8a",}} />{streaming.streamingViewer}</Footer_user_count_em>

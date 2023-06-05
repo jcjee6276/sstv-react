@@ -5,32 +5,33 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const Chat = () => {
-    const location = useLocation();
-
+  const location = useLocation();
     const [streaming, setStreaming] = useState(null);
     const [serviceUrl, setServiceUrl] = useState(null);
-    
+
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await axios.get('http://localhost:3001/streaming/getMyOnGoingStreamingPage',
-            {
-                withCredentials : true
-            });
-            
-            const data = response.data
-            const result = response.data.result;
-            const streaming = data.firstData;
-            const serviceUrl = data.secondData;
+      const fetchData = async () => {
+        const response = await axios.get('http://localhost:3001/streaming/getMyOnGoingStreamingPage',
+        {
+            withCredentials : true
+        });
+        
+        const data = response.data
+        const result = response.data.result;
+        
+  
+        if(result == 'success') {
+          const streamingData = data.firstData;
+          const serviceUrlData = data.secondData;
 
-            if(result == 'success') {
-                setStreaming(streaming);
-                setServiceUrl(serviceUrl);
-            }
+          setStreaming(streamingData);
+          setServiceUrl(serviceUrlData);
         }
-
-            fetchData();
+      }
+      fetchData();
     },[])
 
+    
     if (streaming && serviceUrl) {
         return (
           <body>

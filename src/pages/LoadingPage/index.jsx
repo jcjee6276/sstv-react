@@ -26,9 +26,6 @@ const LoadingPage = () => {
       const streaming = data.firstData;
       const serviceUrl = data.secondData;
 
-      alert('success streaming = ' + streaming);
-      alert('success streaming = ' + serviceUrl);
-
       navigate('/streamerChat', {
         state : {
           streaming : streaming,
