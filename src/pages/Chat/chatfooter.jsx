@@ -7,7 +7,9 @@ import DonationModal from './donationModal';
 import DonationEvent from './donationEvent'
 import { useNavigate } from 'react-router-dom';
 
-const chatfooter = (props, {donationData, setDonationData} ) => {
+const chatfooter = (props ) => {
+    const {setDonationData} = props.data;
+    const {donationData} = props.data;
     const {streaming} = props.data;
     const [onClose, setOnClose] = useState(false);
     const [openDo, SetOpenDo] = useState(false);
@@ -15,14 +17,14 @@ const chatfooter = (props, {donationData, setDonationData} ) => {
     const openDonation = () => {
         setOnClose(true);
     }
-
+    console.log("foot"+donationData);
 
     const Donation = () => {
         SetOpenDo(true);
     }
 
     const onClickCommunity =()=>{ // 스트리머 아이디로
-        navigate('/Community/'+'admin');
+        navigate('/Community/'+streaming.userId);
     }
 
     const getCategory = (categoryId) => {
@@ -91,7 +93,7 @@ const chatfooter = (props, {donationData, setDonationData} ) => {
                 </Footer_user_image_a>
             </Footer_user_image_div>
             {/* <Stream_info_div> */}
-                <Stream_user_name>전지창</Stream_user_name>
+                <Stream_user_name>{streaming.userNickname}</Stream_user_name>
                 <Footer_user_count_div>
                     <Footer_user_count_span>
                         <Footer_user_count_em><FontAwesomeIcon icon={faUserGroup} style={{color: "#757d8a",}} /> {streaming.streamingViewer}</Footer_user_count_em>

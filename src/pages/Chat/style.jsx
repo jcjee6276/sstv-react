@@ -1608,16 +1608,17 @@ font-family: Roboto, Arial, sans-serif;
 --ytd-watch-flexy-chat-max-height: 360px;
 --ytd-watch-flexy-structured-description-max-height: 360px;
 --ytd-watch-flexy-comments-panel-max-height: 360px;
-margin-left: 1303px;
+margin-left: 0%;
 padding: 0;
 border: 0;
 background: transparent;
-
+padding-right: var(--ytd-margin-6x);
 width: var(--ytd-watch-flexy-sidebar-width);
 min-width: var(--ytd-watch-flexy-sidebar-min-width);
+overflow: auto;
 position: absolute;
 padding-top: var(--ytd-margin-6x);
-z-index: 2;
+z-index: 3;
 `;
 
 export const Chat_main_div_2 = styled.div`
@@ -38615,6 +38616,7 @@ left: 10px;
 top: 12px;
 width: 48px;
 height: 48px;
+cursor: pointer;
 `;
 
 export const Footer_user_image_a =styled.a`

@@ -8,7 +8,7 @@ import axios from 'axios';
 import useSWR from 'swr'
 import fetcher from '../utils/fetcher';
 const donationModal = ({onClose, setOnClose, donationData, setDonationData}) => {
-    
+    console.log(donationData);
     const modalRef = useRef(null);
     const cancleRef = useRef(null);
     const [donationAmount, setDonationAmount] = useState('');
@@ -16,6 +16,7 @@ const donationModal = ({onClose, setOnClose, donationData, setDonationData}) => 
     const streamingUserId = 'admin';
     const {data} = useSWR('/user/login', fetcher)
     const userId = data?.userId;
+    console.log("model"+donationData);
     useEffect(()=> {
         const handler = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -58,6 +59,7 @@ const donationModal = ({onClose, setOnClose, donationData, setDonationData}) => 
         .then((response)=> {
             const jsonData =response.data;
             setDonationData(jsonData['firstData']);
+            console.log(donationData);
         })
         
         const handler = () => {
