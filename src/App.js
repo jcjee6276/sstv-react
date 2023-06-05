@@ -12,7 +12,7 @@ const App= ()=> {
   const GetWriting = loadable(()=> import('./pages/Community/getWriting'));
   const Chat = loadable(()=> import('./pages/Chat'))
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
-  const Test = loadable(()=> import('./pages/Chat/donationModal'));
+  const Test = loadable(()=> import('./pages/Chat/chatDonation'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
   const Admin = loadable(()=> import('./pages/Admin'));
   
@@ -30,6 +30,11 @@ const App= ()=> {
         <Route path="/Chat" element={<Chat/>} />
         <Route path="/StreamerChat" element={<StreamerChat/>} />
         <Route path="/Test" element={<Test/>} />
+        {/* <Route path="/addUser" element={<AddUser/>} /> */}
+        {/* <Route path="/sendSMS" element={<SendSMS/>} /> */}
+        {/* <Route path='/remove' element={<RmUser/>} /> */}
+        {/* <Route path='/updateUser' element={<UpdateUser/>} /> */}
+        <Route path="/LoadingPage" element={<LoadingPage/>} />
         <Route path="/LoadingPage" element={<LoadingPage/>} />
         <Route path="/Admin" element={<Admin/>} />
       </Routes>

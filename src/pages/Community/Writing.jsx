@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+/* eslint-disable no-undef */
+import React, {useState, useEffect, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './header';
 import { Sidebar_Main_div, Writing_form_Body_form_1, Writing_footer_submit_span,
@@ -15,13 +16,18 @@ import { useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 const Writing = () => {
+    const quillRef = useRef(null);
     const {data} = useSWR('/user/login', fetcher);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [image, setImage] = useState([]);
     const navigate = useNavigate();
     const {userId} = useParams();
     const hostUserId = userId;
     const guestUserId = data?.userId;
+    const [imageContent, setImageContent] = useState('');
+
+
     const quillStyles = {
         height: '400px',
     };
@@ -42,6 +48,17 @@ const Writing = () => {
 
         
     }
+    useEffect(()=> {
+        if(data===undefined){
+            alert("로그인이 필요합니다.")
+            navigate(`/writingList/${userId}`);
+            
+         }
+    })
+    
+    
+    
+    
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -92,7 +109,7 @@ const Writing = () => {
                                                 </Writing_form_Body_title_div_2>
 
                                                 <Writing_form_Body_edit_div>
-                                                <ReactQuill modules={modules} style={quillStyles} onChange={contentChange} id='content' value={content} />
+                                                <ReactQuill ref={quillRef} modules={modules} style={quillStyles} onChange={contentChange} id='content' value={content} />
                                                 </Writing_form_Body_edit_div>
                                             </Writing_form_Body_title_text_div>
 
@@ -113,7 +130,7 @@ const Writing = () => {
 
                                                     <Writing_footer_submnit_button >
                                                     <FontAwesomeIcon icon={faPencil} style={{color: "#4279ff",}} />
-                                                        <Writing_footer_submit_span>확인</Writing_footer_submit_span>
+                                                        <Writing_footer_submit_span >확인</Writing_footer_submit_span>
                                                     </Writing_footer_submnit_button>
                                                 </Writing_footer_submit_sdiv>
                                             </Writing_footer_submit_div>

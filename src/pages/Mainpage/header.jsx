@@ -22,7 +22,6 @@ import axios from 'axios';
 import Mainpage from '.';
 import { useCookies } from 'react-cookie';
 
-
 const header = ({isDarkMode, setIsDarkMode}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [startStreamingIsOpen, setStartStreamingIsOpen] = useState(false);
@@ -86,6 +85,29 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         removeNodeCookie();
     });
     
+    /* 1. startStreamingModal에서 스트리밍 제목, 카테고리를 받아옴
+      2. 해당 스트리밍 제목, 카테고리로 LiveStation에 api요청을 보내 스트리밍 생성요청보냄
+      3. 생성요청을 보낸 뒤 스트리밍이 생성될 동안 자신의 스트리밍 페이지로 보냄
+   */
+//    const handleSubmit = async (data) => {
+//     closeStartStreamingModal();
+//     const streamingTitle = data.streamingTitle;
+//     const streamingCategory = data.streamingCategory;
+
+//     const response = await axios.create({
+//         baseURL: 'http://localhost:3001',
+//         withCredentials : true
+//     }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
+    
+//     const result = (JSON.parse(response.data)).result;
+//     console.log('result = ' +  result);
+//     if(result == 'success') {
+//         alert('success!');
+//         navigate('/LoadingPage');
+//     }else {
+//         alert('스트리밍 시작에 실패했습니다.');
+//     }
+// };
     
     //로그인시 노드서버에 요청을 보내 쿠키 생성
     const setNodeCookie = async () => {

@@ -21,19 +21,19 @@ const Community = () => {
     const users = useUserStore((state) => state.users);
     const fetchUsers = useUserStore((state)=> state.fetchUsers);
     console.log("pp"+userId);
-    useEffect(()=> {
-        axios.get('/fan/getBlackList/'+userId)
-        .then((response)=> {
-            const black = response.data;
-            setBlackList(black['data']);
-        })
-    },[userId])
-    console.log(blackList);
-    for(let i =0; i<blackList.length; i++){
-        if(blackList[i]===sessionUser) {
-            navigate('/');
-        }
-    }
+    // useEffect(()=> {
+    //     axios.get('/fan/getBlackList/'+userId)
+    //     .then((response)=> {
+    //         const black = response.data;
+    //         setBlackList(black['data']);
+    //     })
+    // },[userId])
+    // console.log(blackList);
+    // for(let i =0; i<blackList.length; i++){
+    //     if(blackList[i]===sessionUser) {
+    //         navigate('/');
+    //     }
+    // }
     console.log("zus+"+users);
     console.log("zusfetch+"+fetchUsers);
     
