@@ -4,10 +4,18 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Gift_input_span,Gift_input, ST_dd,Gift_st, Gift_dd, Gift_at, Gift_dt, Gift_strong, Layer_in, Modal, Send_area, Gift_dd_span, Gift_dd_input, Gift_dd_count_span, Gift_dd_button, ST_dt, ST_dd_span, ST_dd_error, ST_dd_em, ST_dd_error_span, Btn_buy, Gift_input_h3, Gift_void_text, Button_area, Button_gift_button, Button_cancle_button, Outline_area, Outline_area_2} from './donationStyle'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faCircleExclamation, faFontAwesome, faUserSecret } from '@fortawesome/free-solid-svg-icons';
-const donationModal = ({onClose, setOnClose}) => {
+import axios from 'axios';
+import useSWR from 'swr'
+import fetcher from '../utils/fetcher';
+const donationModal = ({onClose, setOnClose, donationData, setDonationData}) => {
+    
     const modalRef = useRef(null);
     const cancleRef = useRef(null);
-    const [coin, setCoin] = useState('');
+    const [donationAmount, setDonationAmount] = useState('');
+    const [donationContent, setDonationContent] = useState('');
+    const streamingUserId = 'admin';
+    const {data} = useSWR('/user/login', fetcher)
+    const userId = data?.userId;
     useEffect(()=> {
         const handler = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -20,11 +28,15 @@ const donationModal = ({onClose, setOnClose}) => {
         };
     }, [onClose]);
 
-    const resetCoin = () => {
-        setCoin('');
+    const onChangeContent =(event)=>{
+        setDonationContent(event.target.value);
     }
-    const inputCoin = () => {
-        setCoin(event.target.value);
+
+    const resetCoin = () => {
+        setDonationAmount('');
+    }
+    const inputCoin = (event) => {
+        setDonationAmount(event.target.value);
     }
     
     const onClickCancle = ()=>{
@@ -33,11 +45,30 @@ const donationModal = ({onClose, setOnClose}) => {
             setOnClose(false);
         }
     };
-    document.addEventListener('mousedown', handler);
+    document.addEventListener('click', handler);
         return () => {
-            document.removeEventListener('mousedown', handler);
+            document.removeEventListener('click', handler);
         };
         
+    }
+    const onSubmit =()=> {
+
+        axios.post('/donation/addDonation', 
+        {donationAmount, donationContent, userId, streamingUserId})
+        .then((response)=> {
+            const jsonData =response.data;
+            setDonationData(jsonData['firstData']);
+        })
+        
+        const handler = () => {
+            if(cancleRef.current){
+                setOnClose(false);
+            }
+        };
+        document.addEventListener('click', handler);
+            return () => {
+                document.removeEventListener('click', handler);
+            };
     }
 
     return (
@@ -52,7 +83,7 @@ const donationModal = ({onClose, setOnClose}) => {
                         </Gift_dt>
                         <Gift_dd>
                             <Gift_dd_span>선물할 코인</Gift_dd_span>
-                            <Gift_dd_input value={coin} onChange={inputCoin} placeholder='0'></Gift_dd_input>
+                            <Gift_dd_input value={donationAmount} onChange={inputCoin} placeholder='0'></Gift_dd_input>
                             <Gift_dd_count_span>개</Gift_dd_count_span>
                             <Gift_dd_button onClick={resetCoin}><FontAwesomeIcon icon={faCircleXmark} style={{color: "#8f9299",}} /></Gift_dd_button>
                             
@@ -67,7 +98,7 @@ const donationModal = ({onClose, setOnClose}) => {
                     
                             개
                         </ST_dd>
-                        {coin >= 1? 
+                        {donationAmount >= 1? 
                         <ST_dd_error>
                             <ST_dd_em><FontAwesomeIcon icon={faCircleExclamation} style={{color: "#e21818",}} /></ST_dd_em>
                             <ST_dd_error_span>보유 코인 부족</ST_dd_error_span>
@@ -79,12 +110,12 @@ const donationModal = ({onClose, setOnClose}) => {
                     <Gift_input>
                         <Gift_input_h3>선물 메시지</Gift_input_h3>
                         <Gift_input_span >
-                            <Gift_void_text placeholder='스트리머에게 보낼 후원 메세지를 입력하세요.'></Gift_void_text>
+                            <Gift_void_text onChange={onChangeContent} placeholder='스트리머에게 보낼 후원 메세지를 입력하세요.'></Gift_void_text>
                         </Gift_input_span>
                     </Gift_input>
 
                     <Button_area>
-                        <Button_gift_button >선물하기</Button_gift_button>
+                        <Button_gift_button onClick={onSubmit}>선물하기</Button_gift_button>
                         <Button_cancle_button ref={cancleRef} onClick={onClickCancle}>취소</Button_cancle_button>
                     </Button_area>
                 </Send_area>

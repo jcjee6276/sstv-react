@@ -19,10 +19,11 @@ import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import axios from 'axios';
 import Mainpage from '.';
+import cookie from 'react-cookies';
 
 const header = ({isDarkMode, setIsDarkMode}) => {
     const [isOpen, setIsOpen] = useState(false);
-    
+    const [startStreamingIsOpen, setStartStreamingIsOpen] = useState(false);
     const {data} = useSWR('/user/login', fetcher);
     const userId = data?.userId;
     const openModal = () => {
@@ -40,14 +41,61 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         setIsDarkMode(true);
         
     }
+    // const openStartStreamingModal = async () => {
+    //     const response = await validateStreamingRoll();
+    //     const result = response.firstData;
+
+    //     if(result == '0') {
+    //         setStartStreamingIsOpen(true);
+    //     } else if(result == '1') {
+    //         alert('로그인이 필요합니다.');
+    //     } else if(result == '2')  {
+    //         alert('회원님은 이미 스트리밍이 진행중입니다 <나중에 해당 스트리밍으로 바로 보내는 버튼 추가>.');
+    //         navigate('/streamerChat');
+    //     } else if(result == '3') {
+    //         alert('회원님은 현재 스트리밍 권한이 정지되었습니다. <나중에 가능하면 스트리밍권한 정지 종료날짜도 출력해보자>.');
+    //     }
+    // }
+    const closeStartStreamingModal = () => {
+        setStartStreamingIsOpen(false);
+    }
 
     const logout = useCallback(() => {
+        cookie.remove('NSESSIONID', {path : '/'}, 0);
+        axios.create({
+            baseURL: 'http://192.168.0.15:3001',
+            withCredentials : true
+          }).get('/testLogout');
+
         axios.get('/user/logout')
         .then(()=>{
             window.location.reload();
         })
     });
     
+    /* 1. startStreamingModal에서 스트리밍 제목, 카테고리를 받아옴
+      2. 해당 스트리밍 제목, 카테고리로 LiveStation에 api요청을 보내 스트리밍 생성요청보냄
+      3. 생성요청을 보낸 뒤 스트리밍이 생성될 동안 자신의 스트리밍 페이지로 보냄
+   */
+//    const handleSubmit = async (data) => {
+//     closeStartStreamingModal();
+//     const streamingTitle = data.streamingTitle;
+//     const streamingCategory = data.streamingCategory;
+
+//     const response = await axios.create({
+//         baseURL: 'http://localhost:3001',
+//         withCredentials : true
+//     }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
+    
+//     const result = (JSON.parse(response.data)).result;
+//     console.log('result = ' +  result);
+//     if(result == 'success') {
+//         alert('success!');
+//         navigate('/LoadingPage');
+//     }else {
+//         alert('스트리밍 시작에 실패했습니다.');
+//     }
+// };
     
    console.log(userId);
       
@@ -60,6 +108,16 @@ const header = ({isDarkMode, setIsDarkMode}) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+//   const validateStreamingRoll = async () => {
+//     const response = await axios.create({
+//         baseURL: 'http://localhost:3001',
+//         withCredentials : true
+//     }).get('/streaming/addStreaming');
+
+//     const result = JSON.parse(response.data);
+//     return result;
+// }
 
 
    

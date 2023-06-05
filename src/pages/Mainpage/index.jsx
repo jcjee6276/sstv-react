@@ -17,25 +17,25 @@ const Mainpage = () => {
     // 1. 일일히 baseURL : 'http://localhost:3000'이렇게 작성 안하고 전역변수로 만드는 방법 찾기
     const [streamingList, setStreamingList] = useState([]);
 
-    useEffect(() => {
-        console.log('[init useEffect]');
+    // useEffect(() => {
+    //     console.log('[init useEffect]');
       
-        const fetchStreamingList = async () => {
-          const response = await axios.create({
-            baseURL: 'http://localhost:3000'
-          }).get('/streaming/getStreamingList');
+    //     const fetchStreamingList = async () => {
+    //       const response = await axios.create({
+    //         baseURL: 'http://localhost:3000'
+    //       }).get('/streaming/getStreamingList');
       
-          return response.data?.firstData;
-        }
+    //       return response.data?.firstData;
+    //     }
       
-        fetchStreamingList().then((response) => {
-          let result = []; 
-          for (const data of response) {
-            result.push(JSON.parse(data));
-          }
-          setStreamingList(result);
-        });
-      }, []);
+    //     fetchStreamingList().then((response) => {
+    //       let result = []; 
+    //       for (const data of response) {
+    //         result.push(JSON.parse(data));
+    //       }
+    //       setStreamingList(result);
+    //     });
+    //   }, []);
     
 
       const getCategory = (categoryId) => {
