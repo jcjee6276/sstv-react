@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     ['/user','/fan','/Community','/community'],
     createProxyMiddleware({
-      target: 'http://192.168.0.15:8080',
+      target: 'http://localhost:8080',
       changeOrigin: true,
     })
   );
@@ -14,7 +14,7 @@ module.exports = function(app) {
   app.use(
     '/donation',
     createProxyMiddleware({
-      target: 'http://192.168.0.15:3001',
+      target: 'http://localhost:3001',
       changeOrigin: true,
     })
   );
