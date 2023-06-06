@@ -64,6 +64,7 @@ const StreamingRollBanList = () => {
     const result = response.data.result
     if(result == 'success') {
       getStreamingRollBanList();
+      alert('정지가 해제되었습니다.');
     }
   }
   

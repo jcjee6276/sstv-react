@@ -25,8 +25,8 @@ const Admin = () => {
         <div style={{ margin: '65px' }}></div> {/* 간격을 주기 위한 div 요소 */}
         {/* <StreamingRollBanList/> */}
         {/* <StreamingBanList/> */}
-        <AdminUserList/>
-        {/* <AdminStreamingList/> */}
+        {/* <AdminUserList/> */}
+        <AdminStreamingList/>
         {/* <Report/> */}
         {/* <AdReq/> */}
         {/* <Ad/> */}

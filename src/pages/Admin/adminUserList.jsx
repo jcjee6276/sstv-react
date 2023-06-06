@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
 import UserModal from './userModal';
+import StreamingRollBanModal from './addStreamingRollBanModal';
 import axios from "axios";
-import Modal from 'react-modal';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
 
 
 
 const Report = () => {
+  //paginate
   const itemsPerPage = 10;
-  const [modalIsOpen, setIsOpen] = useState(false);
   const [itemOffset, setItemOffset] = useState(0);
+
+  //modal
+  const [userModalIsOpen, setUserModalIsOpen] = useState(false);
+  const [addStreamingRollbanModalIsOpen, setAddStreamingRollbanModalIsOpen] = useState(false);
+  
 
   //검색
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -24,50 +27,55 @@ const Report = () => {
   
   const openUserModal = (user) => {
     setUser(user)
-    openModal();
+    setUserModalIsOpen(true);
   }
 
-  const openModal = () => {
-    setIsOpen(true);
+  const closeUserModal = () => {
+    setUserModalIsOpen(false);
   }
 
-  const closeModal = () => {
-    setIsOpen(false);
+  const openAddStreamingRollBanModal = () => {
+    closeUserModal();
+    setAddStreamingRollbanModalIsOpen(true);
   }
 
-  const fetchData = async () => {
+  const closeAddStreamingRollBanModal = () => {
+    setAddStreamingRollbanModalIsOpen(false);
+  }
+
+  const fetchData = async (method, url, data) => {
     try {
-        const response = await axios.get('http://localhost:3001/user/getAdminUserList', {
-          params : {
-            searchCondition : searchCondition,
-            searchKeyword : searchKeyword
-          }
-        });
+      let result;
 
-        return response.data.firstData;
+      if(method === 'GET') {
+        const response = await axios.get(url, {
+          params : data
+        });
+        result = response;
+      }
+      if(method === 'POST'){
+        const response = await axios.post(url, data);
+        result = response;
+      }
+
+      return result;
     } catch (error) {
         console.error(error);
         return [];
     }
   }
-
-  // const removeReport = async (reportNo) => {
-  //   const response =  await axios.get('http://localhost:3001/report/removeReport', {
-  //     params : {
-  //       reportNo : reportNo
-  //     }
-  //   });
-
-  //   const result = response.data.result
-    
-  //   if(result == 'success') {
-  //     getReportList();
-  //   }
-  // }
   
   const getUserList = async () => {
-    const response = await fetchData();
-    setUserList(response);
+    const method = 'GET';
+    const url = 'http://localhost:3001/user/getAdminUserList'
+    const data = {
+      searchCondition : searchCondition,
+      searchKeyword : searchKeyword
+    }
+
+    const response = await fetchData(method, url, data);
+    const userList = response.data.firstData;
+    setUserList(userList);
   }
 
   useEffect(() => {
@@ -80,6 +88,32 @@ const Report = () => {
 
   const hanldeSearchCondition = (event) => {
     setSearchCondition(event.target.value)
+  }
+
+  const handleUserModalOnClick = () => {
+    openAddStreamingRollBanModal();
+  }
+
+  const handleAddStreamingRollBanSubmit = async (data) => {
+    const method = 'POST';
+    const url = 'http://localhost:3001/ban/addStreamingRoleBan';
+    const param = {
+      userId : data.userId,
+      banType : data.banType,
+      banContent : data.banContent,
+      banPeriod : data.banPeriod
+    }
+
+    const response = await fetchData(method, url, param);
+    const result = response.data.result;
+    
+    closeAddStreamingRollBanModal();
+    
+    if(result == 'success') {
+      alert('정지되었습니다.');
+    }else {
+      alert('실패하였습니다.');
+    }
   }
   
   //paginate
@@ -148,7 +182,19 @@ const Report = () => {
                     <Users currentItems={currentItems} />
                   </tbody>
                 </table>
-                {modalIsOpen && <UserModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {user}/>}
+                {userModalIsOpen && <UserModal 
+                onClose={userModalIsOpen} 
+                setOnClose={setUserModalIsOpen} 
+                data = {user}
+                onClick = {handleUserModalOnClick}
+                />}
+
+                {addStreamingRollbanModalIsOpen && <StreamingRollBanModal
+                onClose={addStreamingRollbanModalIsOpen} 
+                setOnClose={setAddStreamingRollbanModalIsOpen} 
+                onSubmit = {handleAddStreamingRollBanSubmit}
+                data = {user}
+                />}
 
               </div>
               <ReactPaginate

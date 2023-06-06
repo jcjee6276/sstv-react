@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import {Modal_body_id_div_3, Modal_body_id_div_2, Modal_body_id_div, Modal_title_h4, Modal_title_div_3, Modal_area_1_div, Modal_area_div, Modal_area_layout_div, Modal_area_layout_div_2, Modal_area_layout_div_3, Modal_Content_div, Modal_layout_div, Modal_main_div, Modal_overlay_div, Modal_title_div, Modal_title_div_2, Modal_title_write_div, Modal_body_div, Modal_body_form, Modal_body_lay_div, Modal_body_id_div_1, Modal_body_id_lable} from '../Mainpage/style';
 
-const ReportModal = ({onClose, setOnClose, data}) => {
+const ReportModal = ({onClose, setOnClose, data, onClick}) => {
     const user = data;
     const [mouseOver, setMouseOver] = useState(false);
     const modalRef = useRef(null);
@@ -22,6 +22,7 @@ const ReportModal = ({onClose, setOnClose, data}) => {
         };
     }, [onClose]);
         
+
     const handleMouseOver = () => {
         setMouseOver(true);
     }
@@ -29,12 +30,16 @@ const ReportModal = ({onClose, setOnClose, data}) => {
     const handleMouseLeave = () => {
         setMouseOver(false);
     } 
+
+    const handleOnClick = () => {
+        onClick();
+    }
     
     const getStRoll = (stRoll) => {
         if(stRoll == 0) {
             return '가능';
         }else {
-            return '권한 정지';
+            return '정지';
         }
     }
       
@@ -179,9 +184,17 @@ const ReportModal = ({onClose, setOnClose, data}) => {
                                                                         <Modal_body_id_lable>스트리밍 권한</Modal_body_id_lable>
                                                                     </Modal_body_id_div_3>
                                                                 </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>
-                                                                    {getStRoll(user.ST_ROLL)}<pre>권한 정지하기  <FontAwesomeIcon icon={faUserXmark} className="fa-2x" /></pre>
-                                                                    </Modal_body_id_lable>
+                                                                <Modal_body_id_lable onClick = {handleOnClick}>
+                                                                {user.ST_ROLL === 0 ? (
+                                                                <>
+                                                                    {getStRoll(user.ST_ROLL)}
+                                                                    <pre>권한 정지하기 <FontAwesomeIcon icon={faUserXmark} className="fa-2x" /></pre>
+                                                                </>
+                                                                ) : (
+                                                                getStRoll(user.ST_ROLL)
+                                                                )}
+
+                                                                </Modal_body_id_lable>
                                                             </Modal_body_id_div_1>
                                                         </Modal_body_id_div>
 

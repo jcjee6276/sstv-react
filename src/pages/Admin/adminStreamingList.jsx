@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
 import StreamingModal from './streamingModal';
+import AddStreamingBanModal from "./addStreamingBanModal";
 import axios from "axios";
 import { Main_stream_list_img } from '../Mainpage/style';
 import './style.css';
+import { json } from "react-router-dom";
 
 
 
 
 const AdminStreamingList = () => {
   const itemsPerPage = 10;
-  const [modalIsOpen, setIsOpen] = useState(false);
   const [itemOffset, setItemOffset] = useState(0);
+  
+  //modal
+  const [streamingModalIsOpen, setStreamingModalIsOpen] = useState(false);
+  const [addStreamingBanModalIsOpen, setAddStreamingBanModalIsOpen] = useState(false);
+  
 
   //검색
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -23,37 +29,51 @@ const AdminStreamingList = () => {
   
   const openStreamingModal = (user) => {
     setStreaming(user)
-    openModal();
+    setStreamingModalIsOpen(true);
   }
 
-  const openModal = () => {
-    setIsOpen(true);
+  const closeStreamingModal = () => {
+    setStreamingModalIsOpen(false);
   }
 
-  const closeModal = () => {
-    setIsOpen(false);
+  const openAddStreamingBanModal = (user) => {
+    setAddStreamingBanModalIsOpen(true);
   }
 
-  const fetchData = async () => {
+  const closeAddStreamingBanModal = () => {
+    setAddStreamingBanModalIsOpen(false);
+  }
+
+  const fetchData = async (method, url, data) => {
     try {
-        const response = await axios.get('http://localhost:3001/streaming/getAdminStreamingList', {
-          params : {
-            searchCondition : searchCondition,
-            searchKeyword : searchKeyword
-          }
+      if(method == 'GET') {
+        const response = await axios.get(url, {
+          params : data
         });
 
-        return response.data.firstData;
+        return response;
+      }
+
+      if(method == 'POST') {
+        const response = await axios.post(url, data, {withCredentials : true});
+        return response;
+      }
     } catch (error) {
-        alert('error = ' + error);
-        console.error(error);
         return [];
     }
   }
   
   const getStreamingList = async () => {
-    const response = await fetchData();
-    setStreamingList(response);
+    const method = 'GET';
+    const url = 'http://localhost:3001/streaming/getAdminStreamingList'
+    const data = {
+      searchCondition : searchCondition,
+      searchKeyword : searchKeyword
+    }
+
+    const response = await fetchData(method, url, data);
+    const streamingList = response.data.firstData;
+    setStreamingList(streamingList);
   }
 
   useEffect(() => {
@@ -66,6 +86,39 @@ const AdminStreamingList = () => {
 
   const hanldeSearchCondition = (event) => {
     setSearchCondition(event.target.value)
+  }
+
+  const handleStreamingModalOnClick = () => {
+    closeStreamingModal();
+    openAddStreamingBanModal();
+  }
+
+  const handleAddStreamingBanModalOnSubmit = async (data) => {
+    const method = 'POST';
+    const url = 'http://localhost:3001/ban/addStreamingBan';
+    const param = {
+      banContent : data.banContent,
+      banType : data.banType,
+      userId : data.streamingUserId
+    }
+
+    const response = await fetchData(method, url, param);
+    const result = response.data.result;
+
+    if(result == 'success') {
+      alert('정지되었습니다.');
+    }else {
+      if(response.data.firstData == '0') {
+        alert('관리자가 아닙니다.');
+      }
+
+      if(response.data.firstData == '1') {
+        alert('서버에러입니다.');
+      }
+
+      alert('response.data = ' + JSON.stringify(response.data));
+    }
+    // closeAddStreamingBanModal();
   }
 
   const getCategory = (categoryId) => {
@@ -155,7 +208,18 @@ const AdminStreamingList = () => {
                     <AdminStreamings currentItems={currentItems} />
                   </tbody>
                 </table>
-                {modalIsOpen && <StreamingModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {streaming}/>}
+                {streamingModalIsOpen && <StreamingModal 
+                onClose={streamingModalIsOpen} 
+                setOnClose={setStreamingModalIsOpen} 
+                onClick = {handleStreamingModalOnClick}
+                data = {streaming}/>}
+
+                
+                {addStreamingBanModalIsOpen && <AddStreamingBanModal
+                onClose={addStreamingBanModalIsOpen} 
+                setOnClose={setAddStreamingBanModalIsOpen} 
+                onSubmit={handleAddStreamingBanModalOnSubmit}
+                data = {streaming}/>}
 
               </div>
               <ReactPaginate
