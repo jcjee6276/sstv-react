@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
-import ReportModal from './reportModal';
+import UserModal from './userModal';
 import axios from "axios";
-import {create} from 'zustand';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -13,14 +12,18 @@ import './style.css';
 const Report = () => {
   const itemsPerPage = 10;
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [reportList, setReportList] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
+
+  //검색
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [searchUserType, setSearchUserType] = useState('0');
-  const [report, setReport] = useState(null);
+  const [searchCondition, setSearchCondition] = useState('0');
   
-  const openReportModal = (report) => {
-    setReport(report);
+  //회원목록
+  const [userList, setUserList] = useState([]);
+  const [user, setUser] = useState(null);
+  
+  const openUserModal = (user) => {
+    setUser(user)
     openModal();
   }
 
@@ -34,12 +37,13 @@ const Report = () => {
 
   const fetchData = async () => {
     try {
-        const response = await axios.get('http://localhost:3001/report/getReportList', {
-            params : {
-                searchUserType : searchUserType,
-                searchKeyword : searchKeyword
-            }
+        const response = await axios.get('http://localhost:3001/user/getAdminUserList', {
+          params : {
+            searchCondition : searchCondition,
+            searchKeyword : searchKeyword
+          }
         });
+
         return response.data.firstData;
     } catch (error) {
         console.error(error);
@@ -47,74 +51,58 @@ const Report = () => {
     }
   }
 
-  const removeReport = async (reportNo) => {
-    const response =  await axios.get('http://localhost:3001/report/removeReport', {
-      params : {
-        reportNo : reportNo
-      }
-    });
+  // const removeReport = async (reportNo) => {
+  //   const response =  await axios.get('http://localhost:3001/report/removeReport', {
+  //     params : {
+  //       reportNo : reportNo
+  //     }
+  //   });
 
-    const result = response.data.result
+  //   const result = response.data.result
     
-    if(result == 'success') {
-      getReportList();
-    }
-  }
+  //   if(result == 'success') {
+  //     getReportList();
+  //   }
+  // }
   
-  const getReportList = async () => {
+  const getUserList = async () => {
     const response = await fetchData();
-    setReportList(response);
+    setUserList(response);
   }
 
   useEffect(() => {
-    getReportList();
+    getUserList();
   }, []);
   
   const handleSearchKeywordChange = (event) => {
     setSearchKeyword(event.target.value)
   }
 
-  const hanldeSearchUserTypeChange = (event) => {
-    setSearchUserType(event.target.value)
+  const hanldeSearchCondition = (event) => {
+    setSearchCondition(event.target.value)
   }
-
-  const getReportType = (reportCode) => {
-    let reportType;
-
-    switch (reportCode) {
-      case 1:
-        reportType = '불법/음란';
-        break;
-      case 2:
-        reportType = '저작권 침해';
-        break;
-      case 3:
-        reportType = '명예훼손';
-        break;
-      case 4:
-        reportType = '청소년 유해';
-        break;
-      case 5:
-        reportType = '기타';
-        break;
-      default:
-        break;
-    }
-    return reportType;
-  }
-
+  
   //paginate
-  const Reports = ({ currentItems }) => {
+  const Users = ({ currentItems }) => {
     return (
+                      // <th>회원ID</th>
+                      // <th>회원 닉네임</th>
+                      // <th>회원 이름</th>
+                      // <th>생년월일</th>
+                      // <th>이메일</th>
+                      // <th>전화번호</th>
+                      // <th>가입일자</th>
       <>
-        {currentItems.map((report) => (
+        {currentItems.map((user) => (
           
-          <tr key={report.REPORT_NO}>
-            <td onClick={() => openReportModal(report)}>{report.USER_ID}</td>
-            <td>{report.STREAMING_USER_ID}</td>
-            <td>{getReportType(report.REPORT_TYPE)}</td>
-            <td>{report.REPORT_CONTENT}</td>
-            <td>{report.REPORT_DATE}<FontAwesomeIcon icon={faTrash} className="fa-2x" onClick={() => removeReport(report.REPORT_NO)}/></td>
+          <tr key={JSON.stringify(user.USER_ID)}>
+            <td onClick={() => openUserModal(user)}>{user.USER_NAME}</td>
+            <td>{user.USER_NICKNAME}</td>
+            <td onClick={() => openUserModal(user)}>{user.USER_ID}</td>
+            <td>{user.DATE_BIRTH}</td>
+            <td>{user.EMAIL}</td>
+            <td>{user.PHONE}</td>
+            <td>{user.SIGN_DATE}</td>
           </tr>
         ))}
       </>
@@ -127,11 +115,11 @@ const Report = () => {
     setItemOffset(newOffset);
   };
 
-  if (reportList != null && reportList != undefined) {
+  if (userList != null && userList != undefined) {
     //paginate
     const endOffset = itemOffset + itemsPerPage;
-    const currentItems = reportList.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil(reportList.length / itemsPerPage);
+    const currentItems = userList.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(userList.length / itemsPerPage);
 
     return (
       <div>
@@ -147,18 +135,21 @@ const Report = () => {
                   <colgroup><col width="152"/><col width="*"/><col width="120"/><col width="120"/></colgroup>
                   <thead>
                     <tr>
-                      <th>신고자ID</th>
-                      <th>피신고자ID</th>
-                      <th>신고 유형</th>
-                      <th>신고 내용</th>
-                      <th>신고 날짜</th>
+                      <th>회원 이름</th>
+                      <th>회원 닉네임</th>
+                      <th>회원ID</th>
+                      <th>생년월일</th>
+                      <th>이메일</th>
+                      <th>전화번호</th>
+                      <th>가입일자</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <Reports currentItems={currentItems} />
+                    <Users currentItems={currentItems} />
                   </tbody>
                 </table>
-                {modalIsOpen && <ReportModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {report}/>}
+                {modalIsOpen && <UserModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {user}/>}
+
               </div>
               <ReactPaginate
                 breakLabel="..."
@@ -176,23 +167,23 @@ const Report = () => {
                     id="b_subject" 
                     name="search" 
                     value='0' 
-                    checked = {searchUserType === '0'} 
-                    onChange={hanldeSearchUserTypeChange}
+                    checked = {searchCondition === '0'} 
+                    onChange={hanldeSearchCondition}
                 />
-                <label htmlFor="b_subject">신고자ID</label>
+                <label htmlFor="b_subject">회원이름</label>
 
                 <input 
                     type="radio" 
                     id="b_content" 
                     name="search" 
                     value='1' 
-                    checked = {searchUserType === '1'} 
-                    onChange={hanldeSearchUserTypeChange}
+                    checked = {searchCondition === '1'} 
+                    onChange={hanldeSearchCondition}
                 />
-                <label htmlFor="b_content">피신고자ID</label>
+                <label htmlFor="b_content">회원닉네임</label>
                 
                 <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} />
-                <button class="list_search" id="searchWord" onClick={getReportList}>
+                <button class="list_search" id="searchWord" onClick={getUserList}>
                   <span>검색</span>
                 </button>
               </div>

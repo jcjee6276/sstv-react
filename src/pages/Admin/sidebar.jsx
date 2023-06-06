@@ -47,8 +47,23 @@ const sidebar = () => {
                             <Sidebar_footer_Writing_span>관리자 메뉴</Sidebar_footer_Writing_span>
                         </Sidebar_footer_Writing_button>
                     </Sidebar_footer_Writing_h3>
+
+                    
                     
                     <Sidebar_footer_Writing_ul_a>
+
+                        <Sidebar_footer_Writing_li_1>
+                            <Sidebar_footer_Writing_1_a>
+                                <Sidebar_footer_Writing_strong >회원목록</Sidebar_footer_Writing_strong>
+                            </Sidebar_footer_Writing_1_a>
+                        </Sidebar_footer_Writing_li_1>
+
+                        <Sidebar_footer_Writing_li_1>
+                            <Sidebar_footer_Writing_1_a>
+                                <Sidebar_footer_Writing_strong >스트리밍목록</Sidebar_footer_Writing_strong>
+                            </Sidebar_footer_Writing_1_a>
+                        </Sidebar_footer_Writing_li_1>
+
                         <Sidebar_footer_Writing_li_1>
                             <Sidebar_footer_Writing_1_a>
                                 <Sidebar_footer_Writing_strong >신고목록</Sidebar_footer_Writing_strong>

@@ -2,6 +2,10 @@ import React from "react";
 import Report from './report';
 import AdReq from './AdReq';
 import Ad from './ad';
+import AdminUserList from './adminUserList';
+import AdminStreamingList from './adminStreamingList';
+import StreamingBanList from './streamingBanList';
+import StreamingRollBanList from './streamingRollBanList';
 import Header from './header';
 import Footer from './footer';
 import SideBar from './sidebar';
@@ -19,6 +23,10 @@ const Admin = () => {
       <div>
         <Header/>  
         <div style={{ margin: '65px' }}></div> {/* 간격을 주기 위한 div 요소 */}
+        {/* <StreamingRollBanList/> */}
+        {/* <StreamingBanList/> */}
+        <AdminUserList/>
+        {/* <AdminStreamingList/> */}
         {/* <Report/> */}
         {/* <AdReq/> */}
         {/* <Ad/> */}

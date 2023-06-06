@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
-import ReactPaginate from 'react-paginate';
-import ReportModal from './reportModal';
-import axios from "axios";
-import {create} from 'zustand';
-import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import ReactPaginate from 'react-paginate';
+import StreamingRollBanModal from './streamingRollBanModal';
+import axios from "axios";
 import './style.css';
 
 
 
-const Report = () => {
+const StreamingRollBanList = () => {
+  //paginate
   const itemsPerPage = 10;
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [reportList, setReportList] = useState([]);
   const [itemOffset, setItemOffset] = useState(0);
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [searchUserType, setSearchUserType] = useState('0');
-  const [report, setReport] = useState(null);
+
+  //modal
+  const [modalIsOpen, setIsOpen] = useState(false);
   
-  const openReportModal = (report) => {
-    setReport(report);
+  //search
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchCondition, setSearchCondition] = useState('0');
+
+  //StreamingRollBanList
+  const [streamingRollBanList, setStreamingRollBanList] = useState([]);
+  const [streamingRollBan, setStreamingRollBan] = useState(null);
+  
+  const openStreamingRollBanModal = (streamingRollBan) => {
+    setStreamingRollBan(streamingRollBan);
     openModal();
   }
 
@@ -34,12 +39,13 @@ const Report = () => {
 
   const fetchData = async () => {
     try {
-        const response = await axios.get('http://localhost:3001/report/getReportList', {
+        const response = await axios.get('http://localhost:3001/ban/getStreamingRollBanList', {
             params : {
-                searchUserType : searchUserType,
+                searchCondition : searchCondition,
                 searchKeyword : searchKeyword
             }
         });
+
         return response.data.firstData;
     } catch (error) {
         console.error(error);
@@ -47,27 +53,27 @@ const Report = () => {
     }
   }
 
-  const removeReport = async (reportNo) => {
-    const response =  await axios.get('http://localhost:3001/report/removeReport', {
+  const removeStreamingRollBan = async (streamingRollBanNo, userId) => {
+    const response =  await axios.get('http://localhost:3001/ban/removeStreamingRollBan', {
       params : {
-        reportNo : reportNo
+        streamingRollBanNo : streamingRollBanNo,
+        userId : userId
       }
     });
 
     const result = response.data.result
-    
     if(result == 'success') {
-      getReportList();
+      getStreamingRollBanList();
     }
   }
   
-  const getReportList = async () => {
+  const getStreamingRollBanList = async () => {
     const response = await fetchData();
-    setReportList(response);
+    setStreamingRollBanList(response);
   }
 
   useEffect(() => {
-    getReportList();
+    getStreamingRollBanList();
   }, []);
   
   const handleSearchKeywordChange = (event) => {
@@ -75,7 +81,7 @@ const Report = () => {
   }
 
   const hanldeSearchUserTypeChange = (event) => {
-    setSearchUserType(event.target.value)
+    setSearchCondition(event.target.value)
   }
 
   const getReportType = (reportCode) => {
@@ -104,17 +110,23 @@ const Report = () => {
   }
 
   //paginate
-  const Reports = ({ currentItems }) => {
+  const StreamingRollBans = ({ currentItems }) => {
     return (
+      // <th>회원 닉네임</th>
+      // <th>회원 아이디</th>
+      // <th>정지 유형</th>
+      // <th>정지 시작일</th>
+      // <th>정지 만료일</th>
       <>
-        {currentItems.map((report) => (
+        {currentItems.map((streamingRollBan) => (
           
-          <tr key={report.REPORT_NO}>
-            <td onClick={() => openReportModal(report)}>{report.USER_ID}</td>
-            <td>{report.STREAMING_USER_ID}</td>
-            <td>{getReportType(report.REPORT_TYPE)}</td>
-            <td>{report.REPORT_CONTENT}</td>
-            <td>{report.REPORT_DATE}<FontAwesomeIcon icon={faTrash} className="fa-2x" onClick={() => removeReport(report.REPORT_NO)}/></td>
+          <tr key={streamingRollBan.STREAMING_ROLE_BAN_NO}>
+            <td onClick={() => openStreamingRollBanModal(streamingRollBan)}>{streamingRollBan.USER_NICKNAME}</td>
+            <td>{streamingRollBan.USER_ID}</td>
+            <td>{getReportType(streamingRollBan.BAN_TYPE)}</td>
+            <td>{streamingRollBan.BAN_START_DATE}</td>
+            <td>{streamingRollBan.BAN_END_DATE}</td>
+            <td onClick={() => removeStreamingRollBan(streamingRollBan.STREAMING_ROLE_BAN_NO, streamingRollBan.USER_ID)}><FontAwesomeIcon icon={faTrash} className="fa-2x"/></td>
           </tr>
         ))}
       </>
@@ -127,11 +139,11 @@ const Report = () => {
     setItemOffset(newOffset);
   };
 
-  if (reportList != null && reportList != undefined) {
+  if (streamingRollBanList != null && streamingRollBanList != undefined) {
     //paginate
     const endOffset = itemOffset + itemsPerPage;
-    const currentItems = reportList.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil(reportList.length / itemsPerPage);
+    const currentItems = streamingRollBanList.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(streamingRollBanList.length / itemsPerPage);
 
     return (
       <div>
@@ -147,18 +159,19 @@ const Report = () => {
                   <colgroup><col width="152"/><col width="*"/><col width="120"/><col width="120"/></colgroup>
                   <thead>
                     <tr>
-                      <th>신고자ID</th>
-                      <th>피신고자ID</th>
-                      <th>신고 유형</th>
-                      <th>신고 내용</th>
-                      <th>신고 날짜</th>
+                      <th>회원 닉네임</th>
+                      <th>회원 아이디</th>
+                      <th>정지 유형</th>
+                      <th>정지 시작일</th>
+                      <th>정지 만료일</th>
+                      <th>정지 해제</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <Reports currentItems={currentItems} />
+                    <StreamingRollBans currentItems={currentItems} />
                   </tbody>
                 </table>
-                {modalIsOpen && <ReportModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {report}/>}
+                {modalIsOpen && <StreamingRollBanModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {streamingRollBan}/>}
               </div>
               <ReactPaginate
                 breakLabel="..."
@@ -176,23 +189,23 @@ const Report = () => {
                     id="b_subject" 
                     name="search" 
                     value='0' 
-                    checked = {searchUserType === '0'} 
+                    checked = {searchCondition === '0'} 
                     onChange={hanldeSearchUserTypeChange}
                 />
-                <label htmlFor="b_subject">신고자ID</label>
+                <label htmlFor="b_subject">회원ID</label>
 
                 <input 
                     type="radio" 
                     id="b_content" 
                     name="search" 
                     value='1' 
-                    checked = {searchUserType === '1'} 
+                    checked = {searchCondition === '1'} 
                     onChange={hanldeSearchUserTypeChange}
                 />
-                <label htmlFor="b_content">피신고자ID</label>
+                <label htmlFor="b_content">회원 닉네임</label>
                 
                 <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} />
-                <button class="list_search" id="searchWord" onClick={getReportList}>
+                <button class="list_search" id="searchWord" onClick={getStreamingRollBanList}>
                   <span>검색</span>
                 </button>
               </div>
@@ -206,4 +219,4 @@ const Report = () => {
   return null;
 }
 
-export default Report;
+export default StreamingRollBanList;
