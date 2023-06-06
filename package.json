@@ -18,7 +18,9 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "fontawesome": "^5.6.3",
+    "framer-motion": "^10.12.16",
     "html-react-parser": "^3.0.16",
+    "http-proxy-middleware": "^2.0.6",
     "loadable": "^1.0.0",
     "proxy": "^2.1.1",
     "react": "^18.2.0",
@@ -31,10 +33,13 @@
     "react-router-dom": "^6.11.2",
     "react-script": "^2.0.5",
     "react-scripts": "^5.0.1",
+    "react-spring": "^9.7.1",
+    "socket.io-client": "^4.6.1",
     "style-loader": "^3.3.2",
     "styled": "^1.0.0",
     "styled-components": "^5.3.10",
     "swr": "^2.1.5",
+    "typical": "^7.1.1",
     "web-vitals": "^2.1.4",
     "zustand": "^4.3.8"
   },
@@ -61,6 +66,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:8080"
+  }
 }

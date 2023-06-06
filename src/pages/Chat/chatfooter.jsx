@@ -4,12 +4,27 @@ import {Footer_stream_item_star_li_t, Footer_stream_li2_span, Footer_main_div, F
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import DonationModal from './donationModal';
-const chatfooter = (props) => {
+import DonationEvent from './donationEvent'
+import { useNavigate } from 'react-router-dom';
+
+const chatfooter = (props ) => {
+    const {setDonationData} = props.data;
+    const {donationData} = props.data;
     const {streaming} = props.data;
     const [onClose, setOnClose] = useState(false);
-
+    const [openDo, SetOpenDo] = useState(false);
+    const navigate = useNavigate();
     const openDonation = () => {
         setOnClose(true);
+    }
+    console.log("foot"+donationData);
+
+    const Donation = () => {
+        SetOpenDo(true);
+    }
+
+    const onClickCommunity =()=>{ // 스트리머 아이디로
+        navigate('/Community/'+streaming.userId);
     }
 
     const getCategory = (categoryId) => {
@@ -38,22 +53,25 @@ const chatfooter = (props) => {
         }
         return result;
       }
+
     return (
         <Footer_main_div>
-
+                
 
             <Footer_stream_item_div>
                     <Footer_stream_item_ul>
 
                         <Footer_stream_item_up_li>
-                            <Footer_stream_item_up_button>
+                            <Footer_stream_item_up_button onClick={Donation}>
+                                {openDo && <Donation/>}
+                                
                                 <Footer_stream_item_up_em></Footer_stream_item_up_em>
                             </Footer_stream_item_up_button>
                         </Footer_stream_item_up_li>
 
                         <Footer_stream_item_star_li_t>
                             <Footer_stream_item_star_button onClick={openDonation}>
-                            {onClose && <DonationModal onClose={onClose} setOnClose={setOnClose}/>}
+                            {onClose && <DonationModal onClose={onClose} setOnClose={setOnClose} donationData={donationData} setDonationData={setDonationData}/>}
                                 <Footer_stream_item_star_em></Footer_stream_item_star_em>
                             </Footer_stream_item_star_button>
                         </Footer_stream_item_star_li_t>
@@ -68,13 +86,14 @@ const chatfooter = (props) => {
                 </Footer_stream_item_div>
 
 
-            <Footer_user_image_div>
+            <Footer_user_image_div onClick={onClickCommunity}>
                 <Footer_user_image_a>
-                    <Footer_user_img src='https://res.afreecatv.com/images/afmain/img_thumb_profile.gif'/>
+                    {/* <Footer_user_img src='https://res.afreecatv.com/images/afmain/img_thumb_profile.gif'/> */}
+                    <Footer_user_img src={process.env.PUBLIC_URL +`/img/SSTV_mini.gif`} />
                 </Footer_user_image_a>
             </Footer_user_image_div>
             {/* <Stream_info_div> */}
-                <Stream_user_name>전지창</Stream_user_name>
+                <Stream_user_name>{streaming.userNickname}</Stream_user_name>
                 <Footer_user_count_div>
                     <Footer_user_count_span>
                         <Footer_user_count_em><FontAwesomeIcon icon={faUserGroup} style={{color: "#757d8a",}} /> {streaming.streamingViewer}</Footer_user_count_em>
