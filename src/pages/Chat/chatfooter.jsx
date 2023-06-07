@@ -4,16 +4,44 @@ import {Footer_stream_item_star_li_t, Footer_stream_li2_span, Footer_main_div, F
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import DonationModal from './donationModal';
+import ReportModal from './reportModal';
 import DonationEvent from './donationEvent'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const chatfooter = (props ) => {
+    
+    //data
     const {setDonationData} = props.data;
     const {donationData} = props.data;
     const {streaming} = props.data;
+    
+    //modal
     const [onClose, setOnClose] = useState(false);
     const [openDo, SetOpenDo] = useState(false);
+    const [onCloseReportModal, setOnCloseReportModal] = useState(false);
+
     const navigate = useNavigate();
+
+    const fetchData = async (method, url, data) => {
+        let response;
+        
+        if(method == 'GET') {
+            response = await axios.get(url, {
+                params : data,
+                withCredentials : true
+            })
+        }
+
+        if(method == 'POST') {
+            response = await axios.post(url, data, {
+                withCredentials : true
+            })
+        }
+
+        return response;
+    }
+
     const openDonation = () => {
         setOnClose(true);
     }
@@ -21,6 +49,25 @@ const chatfooter = (props ) => {
 
     const Donation = () => {
         SetOpenDo(true);
+    }
+
+    const openReport = () => {
+        setOnCloseReportModal(true);
+    }
+
+    const handleReportModalSubmit = async (data) => {
+        const method = 'POST';
+        const url = 'http://localhost:3001/report/addReport';
+        const param = {
+            streamingUserId : streaming.userId, 
+            streamingNo : streaming.streamingPk,
+            reportType : data.reportType,
+            reportContent : data.reportContent
+        }
+
+        const response = await fetchData(method, url, param);
+        setOnCloseReportModal(false);
+        alert('신고가 접수되었습니다.');
     }
 
     const onClickCommunity =()=>{ // 스트리머 아이디로
@@ -56,8 +103,6 @@ const chatfooter = (props ) => {
 
     return (
         <Footer_main_div>
-                
-
             <Footer_stream_item_div>
                     <Footer_stream_item_ul>
 
@@ -65,7 +110,12 @@ const chatfooter = (props ) => {
                             <Footer_stream_item_up_button onClick={Donation}>
                                 {openDo && <Donation/>}
                                 
-                                <Footer_stream_item_up_em></Footer_stream_item_up_em>
+                                <Footer_stream_item_up_em onClick={openReport}></Footer_stream_item_up_em>
+                                {onCloseReportModal && <ReportModal 
+                                onClose={onCloseReportModal} 
+                                setOnClose={setOnCloseReportModal}
+                                onSubmit={handleReportModalSubmit}
+                                />}
                             </Footer_stream_item_up_button>
                         </Footer_stream_item_up_li>
 

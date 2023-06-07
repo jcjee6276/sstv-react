@@ -2777,6 +2777,20 @@ position: fixed;
 top: 0px;
 `;
 
+export const Start_Streaming_SelectBox = styled.select`
+width: 200px; 
+padding: .8em .5em; 
+border: 1px solid #999;
+font-family: inherit;  
+background: url('arrow.jpg') no-repeat 95% 50%; 
+border-radius: 0px; 
+-webkit-appearance: none; 
+-moz-appearance: none;
+appearance: none;
+color: white;
+}
+`
+
 export const CHeader_Dark = styled.header`
 color: #555;
 font-size: 12px;

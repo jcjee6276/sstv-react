@@ -44,10 +44,10 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         } else if(result == '1') {
             alert('로그인이 필요합니다.');
         } else if(result == '2')  {
-            alert('회원님은 이미 스트리밍이 진행중입니다 <나중에 해당 스트리밍으로 바로 보내는 버튼 추가>.');
+            alert('회원님은 이미 스트리밍이 진행중입니다 해당 스트리밍 페이지로 이동합니다.');
             navigate('/streamerChat');
         } else if(result == '3') {
-            alert('회원님은 현재 스트리밍 권한이 정지되었습니다. <나중에 가능하면 스트리밍권한 정지 종료날짜도 출력해보자>.');
+            alert('회원님은 현재 스트리밍 권한이 정지되었습니다.');
         }
     }
     const closeStartStreamingModal = () => {

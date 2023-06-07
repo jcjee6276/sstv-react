@@ -2,15 +2,17 @@
 import React, {useState} from 'react';
 import {Footer_stream_item_star_li_t, Footer_stream_li2_span, Footer_main_div, Footer_steram_info_li_1, Footer_steram_li2_em, Footer_steram_li_2, Footer_steram_li_up_span, Footer_stream_info_div, Footer_stream_info_ul, Footer_stream_li_up_em, Footer_stream_title_div, Footer_stream_title_span, Footer_title_underline, Footer_user_count_div, Footer_user_count_em, Footer_user_count_span, Footer_user_image_a, Footer_user_image_div, Footer_user_img, Stream_info_div, Stream_user_name, Footer_stream_li_3, Footer_stream_time_ul, Footer_stream_time_li_1, Footer_stream_time_1_strong, Footer_stream_time_1_span, Footer_stream_time_2_li, Footer_stream_time_2_strong, Footer_stream_time_2_span, Footer_stream_item_div, Footer_stream_item_ul, Footer_stream_item_up_li, Footer_stream_item_up_button, Footer_stream_item_up_em, Footer_stream_item_star_button, Footer_stream_item_star_em, Footer_stream_item_shop_button,Footer_stream_item_shop_li,Footer_stream_item_shop_em } from './style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserGroup} from '@fortawesome/free-solid-svg-icons';
+import { faL, faUserGroup} from '@fortawesome/free-solid-svg-icons';
 import DonationModal from './donationModal';
 import FinishStreamingModal from './finishStreamingModal';
+import FinishStreamingInfoModal from './finishStreamingInfoModal';
 import axios from 'axios';
 
 const chatfooter = (props) => {
     const {streaming} = props.data;
     const [onClose, setOnClose] = useState(false);
     const [onCloseFinishStreamingModal, setOnCloseFinishStreamingModal] = useState(false);
+    const [onCloseFinishStreamingInfoModal, setOnCloseFinishStreamingInfoModal] = useState(false);
 
     const openDonation = () => {
         setOnClose(true);
@@ -20,14 +22,20 @@ const chatfooter = (props) => {
         setOnCloseFinishStreamingModal(true);
     }
 
+    const openFinishStreamingInfo = () => {
+        setOnCloseFinishStreamingInfoModal(true);
+    }
+
     const handleFinishStreamingOnClick = async () => {
         const url = 'http://localhost:3001/streaming/finishStreaming';
         const data = {
             streamingUserId : streaming.userId
         }
 
-        const response = await fetchData(url, data);
-        alert('response = ' + response.data);
+        setOnCloseFinishStreamingModal(false);
+
+        await fetchData(url, data);
+        openFinishStreamingInfo();
     }
 
     const fetchData = async (url, data) => {
@@ -97,6 +105,12 @@ const chatfooter = (props) => {
 
                     </Footer_stream_item_ul>
                 </Footer_stream_item_div>
+                {onCloseFinishStreamingInfoModal && <FinishStreamingInfoModal 
+                onClose={onCloseFinishStreamingInfoModal}
+                setOnClose={setOnCloseFinishStreamingInfoModal}
+                data = {streaming}
+                />}
+
 
 
             <Footer_user_image_div>

@@ -23,6 +23,18 @@ display: block;
 cursor: default;
 `;
 
+export const Report_select = styled.select`
+select::-ms-expand { 
+	display: none;
+}
+.select {
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+`
+
 export const Layer_in = styled.div`
 -webkit-text-size-adjust: none;
 --text-default: 12px;

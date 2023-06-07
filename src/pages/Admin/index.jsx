@@ -26,8 +26,8 @@ const Admin = () => {
         {/* <StreamingRollBanList/> */}
         {/* <StreamingBanList/> */}
         {/* <AdminUserList/> */}
-        <AdminStreamingList/>
-        {/* <Report/> */}
+        {/* <AdminStreamingList/> */}
+        <Report/>
         {/* <AdReq/> */}
         {/* <Ad/> */}
         <Footer/>
