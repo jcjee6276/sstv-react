@@ -255,7 +255,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             <MenuItem onClick={handleClose}>Profile</MenuItem>
                                             <MenuItem onClick={setWhiteMode}>화이트 모드</MenuItem>
                                             <MenuItem onClick={()=> {
-                                                navigate('/Community/'+userId);
+                                                navigate('/Home/'+userId);
                                             }}>내 방송국 가기</MenuItem>
                                         </Menu>
                                                            
