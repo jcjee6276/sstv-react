@@ -64,14 +64,14 @@ const Writing = () => {
         event.preventDefault();
         // console.log('Submitted value:', title);
         // console.log('content : '+content)
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('content', content);
-        formData.append('hostUserId', hostUserId);
-        formData.append('guestUserId', guestUserId);
+        // const formData = new FormData();
+        // formData.append('title', title);
+        // formData.append('content', content);
+        // formData.append('hostUserId', hostUserId);
+        // formData.append('guestUserId', guestUserId);
         axios.post(
             '/community/addWriting',
-                formData,
+                {title, content, guestUserId, hostUserId},
         )
         .then(
             navigate(`/writingList/${userId}`)
