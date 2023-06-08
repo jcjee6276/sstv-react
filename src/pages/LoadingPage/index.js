@@ -65,7 +65,8 @@ const LoadingPage = () => {
   return (
 
     <div>
-     <Snowflakes style={{ height: 1000 }}>
+      생성중 {response}
+     {/* <Snowflakes style={{ height: 1000 }}>
       <Center>
       <h1 style={{ color: "white", fontSize: "40px"}}>SSTV 스트리밍 시작방법을 알려드릴게요!</h1>
       <Button onClick={openModal}>시작방법 보기</Button>
@@ -84,7 +85,7 @@ const LoadingPage = () => {
         </RippleBox>
       </ReactModal>
       </Center>
-  </Snowflakes>
+    </Snowflakes> */}
     </div>   
   )
 }

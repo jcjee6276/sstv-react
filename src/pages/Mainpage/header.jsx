@@ -124,22 +124,22 @@ const header = ({isDarkMode, setIsDarkMode}) => {
 
    const handleSubmit = async (data) => {
         closeStartStreamingModal();
-        // const streamingTitle = data.streamingTitle;
-        // const streamingCategory = data.streamingCategory;
+        const streamingTitle = data.streamingTitle;
+        const streamingCategory = data.streamingCategory;
 
-        // const response = await axios.create({
-        //     baseURL: 'http://localhost:3001',
-        //     withCredentials : true
-        // }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
+        const response = await axios.create({
+            baseURL: 'http://localhost:3001',
+            withCredentials : true
+        }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
         
-        // const result = (JSON.parse(response.data)).result;
-        // console.log('result = ' +  result);
-        // if(result == 'success') {
-        //     alert('success!');
-        //     navigate('/LoadingPage');
-        // }else {
-        //     alert('스트리밍 시작에 실패했습니다.');
-        // }
+        const result = (JSON.parse(response.data)).result;
+        console.log('result = ' +  result);
+        if(result == 'success') {
+            alert('success!');
+            navigate('/LoadingPage');
+        }else {
+            alert('스트리밍 시작에 실패했습니다.');
+        }
         navigate('/LoadingPage');
     };
       
@@ -160,7 +160,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
             <Com_h1 >
                     
                     <Header_a >
-                    <img src={process.env.PUBLIC_URL +'/img/SSTV_gray.gif'} width={150} height={65} />
+                        <Link to='/'><img src={process.env.PUBLIC_URL +'/img/SSTV_gray.gif'} width={150} height={65} /></Link>
                     </Header_a>
                 </Com_h1>
 

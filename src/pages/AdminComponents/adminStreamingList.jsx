@@ -7,6 +7,7 @@ import SideBar from './sidebar';
 import AddStreamingBanModal from "./addStreamingBanModal";
 import axios from "axios";
 import { Main_stream_list_img } from '../Mainpage/style';
+import io from 'socket.io-client'
 import './style.css';
 import { json } from "react-router-dom";
 
@@ -97,31 +98,40 @@ const AdminStreamingList = () => {
   }
 
   const handleAddStreamingBanModalOnSubmit = async (data) => {
-    const method = 'POST';
-    const url = 'http://localhost:3001/ban/addStreamingBan';
-    const param = {
-      banContent : data.banContent,
+    const socket = io('localhost:3001');
+    socket.emit('ban_streaming', {
+      roomName: streaming.userId, 
       banType : data.banType,
-      userId : data.streamingUserId
-    }
+      banContent : data.banContent
+    });
 
-    const response = await fetchData(method, url, param);
-    const result = response.data.result;
+    // socket.disconnect();
+    // const method = 'POST';
+    // const url = 'http://localhost:3001/ban/addStreamingBan';
+    // const param = {
+    //   banContent : data.banContent,
+    //   banType : data.banType,
+    //   userId : data.streamingUserId
+    // }
 
-    if(result == 'success') {
-      alert('정지되었습니다.');
-    }else {
-      if(response.data.firstData == '0') {
-        alert('관리자가 아닙니다.');
-      }
+    // const response = await fetchData(method, url, param);
+    // const result = response.data.result;
 
-      if(response.data.firstData == '1') {
-        alert('서버에러입니다.');
-      }
+    // if(result == 'success') {
+    //   alert('정지되었습니다.');
+      
+    // }else {
+    //   if(response.data.firstData == '0') {
+    //     alert('관리자가 아닙니다.');
+    //   }
 
-      alert('response.data = ' + JSON.stringify(response.data));
-    }
-    // closeAddStreamingBanModal();
+    //   if(response.data.firstData == '1') {
+    //     alert('서버에러입니다.');
+    //   }
+
+    //   alert('response.data = ' + JSON.stringify(response.data));
+    // }
+    closeAddStreamingBanModal();
   }
 
   const getCategory = (categoryId) => {
