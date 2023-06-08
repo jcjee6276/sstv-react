@@ -23,7 +23,7 @@ const getWriting = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [agreeOpen, setAgreeOpen] = useState(false);
   const open = Boolean(anchorEl);
-  const [content, setContent ] = useState('');
+  const [commentContent, setCommentContent ] = useState('');
   const location = useLocation();
   const path = location.pathname.split("/");
   const userId = path[2];
@@ -76,16 +76,16 @@ const getWriting = () => {
         
       }
     const handleChange = (event) => {
-        setContent(event.target.value);
-        alert("핸들체인지:"+content)
+        setCommentContent(event.target.value);
+        
     }
-
+    
     const handleSubmit = (event) => {
         
         
         console.log('content : ')
         axios.post('/community/addComments',
-         {writingNo,replayNo,commentsUserId, content },
+         {writingNo,replayNo,commentsUserId, commentContent },
          )
          .then(navigate(`/${writingNo}/${userId}`));
     }
@@ -113,7 +113,7 @@ const getWriting = () => {
                                                     </Writing_get_bs_header_h2>
                                                     <Writing_get_bs_header_user_div>
                                                         <Writing_get_bs_header_user_img_div>
-                                                            <Writing_get_bs_header_user_img src={process.env.PUBLIC_URL +'/img/base_profile.jpg'}/>
+                                                            <Writing_get_bs_header_user_img src={process.env.REACT_APP_IMAGE_URL }/>
                                                         </Writing_get_bs_header_user_img_div>
                                                         <Writing_get_bs_header_user_box_div>
                                                             <Writing_get_bs_header_user_button>
@@ -187,8 +187,9 @@ const getWriting = () => {
                                             {/* 글내용 부분 */}
                                             <Writing_get_body_main_section>
                                                 <Writing_get_body_main_div>
-                                                    <Writing_get_body_main_p>
-                                                       {data.content}
+                                                    <Writing_get_body_main_p >
+                                                    <div dangerouslySetInnerHTML={{ __html: data.content }} />
+                                                       
                                                        
                                                     </Writing_get_body_main_p>
                                                 </Writing_get_body_main_div>
@@ -227,8 +228,8 @@ const getWriting = () => {
                                                             </Writing_get_footer_comments_img_div>
                                                             <Writing_get_footer_comments_area_section >
                                                                 <Writing_get_footer_comments_area_div >
-                                                                    <Writing_get_footer_comments_textarea onChange={handleChange} value={content}></Writing_get_footer_comments_textarea>
-                                                                    <Writing_get_footer_comments_text_div placeholder='내용을 입력해주세요.'></Writing_get_footer_comments_text_div>
+                                                                    
+                                                                    <Writing_get_footer_comments_text_div  onChange={handleChange} placeholder='내용을 입력해주세요.' ></Writing_get_footer_comments_text_div>
                                                                 </Writing_get_footer_comments_area_div>
                                                                 <Writing_get_footer_comments_text_button_div>
                                                                     
@@ -279,7 +280,7 @@ const getWriting = () => {
                                                                     </Comments_profile_user_id_div_2>
                                                                 </Comments_profile_user_id_div>
                                                                 <Comments_content_div>
-                                                                    <Comments_content_p key={i}>{item.content}</Comments_content_p>
+                                                                    <Comments_content_p key={i}>{item.commentContent}</Comments_content_p>
                                                                 </Comments_content_div>
                                                                 <Comments_up_button>
                                                                     <Comments_up_span>up</Comments_up_span>

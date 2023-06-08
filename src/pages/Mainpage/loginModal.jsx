@@ -15,7 +15,7 @@ const loginModal = ({onClose, setOnClose}) => {
     const [buttonChange, setButtonChange] = useState(false);
 
     const {data,revalidate} = useSWR('/user/login', fetcher);
-
+    const navigate = useNavigate();
     
     
     useEffect(() => {
@@ -54,10 +54,10 @@ const loginModal = ({onClose, setOnClose}) => {
             {userId, password}
         )
         .then((response)=> {
+            alert('response.data' + JSON.stringify(response.data));
             console.log(response.data);
             revalidate();
         })
-        
         
     },[userId, password])
 
@@ -67,6 +67,12 @@ const loginModal = ({onClose, setOnClose}) => {
 
     const handleMouseLeave = () => {
         setMouseOver(false);
+    }
+
+     //휴대폰 인증 화면으로 이동
+     const handleClick = () => {
+        
+        navigate('/sendSMS');
     }
 
     // if(!data){
@@ -170,7 +176,7 @@ const loginModal = ({onClose, setOnClose}) => {
                                                                     {mouseOver === false? 
                                                                     <Modal_signup_content_div>계정이 없으신가요? 회원가입</Modal_signup_content_div>
                                                                     :
-                                                                    <Modal_signup_button_div_over>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
+                                                                    <Modal_signup_button_div_over onClick={handleClick}>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
                                                                     }
                                                                 </Modal_signup_button_div>
                                                             </Modal_signup_button>

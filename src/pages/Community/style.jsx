@@ -2828,7 +2828,7 @@ text-decoration: none;
 display: none;
 `;
 
-export const Writing_get_footer_comments_text_div = styled.div`
+export const Writing_get_footer_comments_text_div = styled.input`
 -webkit-user-modify: read-write;
 -webkit-line-break: after-white-space;
 margin: 0;
@@ -4884,3 +4884,4 @@ position: relative;
 margin-left: 6px;
 padding-left: 7px;
 `;
+
