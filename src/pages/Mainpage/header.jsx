@@ -25,12 +25,24 @@ import Mainpage from '.';
 import { useCookies } from 'react-cookie';
 
 const header = ({isDarkMode, setIsDarkMode}) => {
+    const [search, setSearch] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [startStreamingIsOpen, setStartStreamingIsOpen] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['NSESSIONID']);
     const {data} = useSWR('/user/login', fetcher);
     const userId = data?.userId;
+    const navigate = useNavigate();
     
+    const onSearch =(e) =>{
+        setSearch(e.target.value);
+        
+    }
+    
+
+    const searchSubmit = ()=>{
+        navigate('/SearchKeyword/'+search);
+    }
+
     const openModal = () => {
         setIsOpen(true);
     };
@@ -56,7 +68,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         setStartStreamingIsOpen(false);
     }
 
-    const navigate = useNavigate();
+    
     
     const setDarkMode = ()=> {
         setIsDarkMode(false);
@@ -153,12 +165,12 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                 </Com_h1>
 
                 <Header_Search_Div>
-                    <Header_Search_form>
+                    <Header_Search_form onSubmit={searchSubmit}>
                         <Header_Search_fieldset>
                             <Header_legend>검색</Header_legend>
                             <Header_Search_Div_input>
                                 <Header_Search_Div_input_in>
-                                    <Header_Search_Input_in placeholder='방송국 검색'/>
+                                    <Header_Search_Input_in value={search} onChange={onSearch} placeholder='방송국 검색'/>
                                     
 
                                     <Header_Search_Button>
@@ -169,7 +181,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                     
                                 </Header_Search_Div_input_in>
 
-                                <Header_Search_Side_Button>
+                                <Header_Search_Side_Button >
                                     <Header_Search_Side_Span>
                                         통합검색
                                     </Header_Search_Side_Span>
