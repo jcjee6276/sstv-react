@@ -1,6 +1,6 @@
 import React from 'react';
 import loadable from '@loadable/component';
-import { BrowserRouter as Router, Routes, Route , Switch}  from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route}  from 'react-router-dom';
 import Ad from './pages/AdminComponents/ad';
 import AdReq from './pages/AdminComponents/AdReq';
 import Report from './pages/AdminComponents/report';
@@ -21,11 +21,9 @@ const App= ()=> {
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
   const Test = loadable(()=> import('./pages/SearchPage'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
-  const Admin = loadable(()=> import('./pages/Admin'));
   const SearchKeyword = loadable(()=> import('./pages/SearchPage'));
   
   return (
-    
     <Router>
       <Routes>
         <Route path="/" element={<Mainpage />}/>
@@ -43,7 +41,6 @@ const App= ()=> {
         {/* <Route path='/remove' element={<RmUser/>} /> */}
         {/* <Route path='/updateUser' element={<UpdateUser/>} /> */}
         <Route path="/LoadingPage" element={<LoadingPage/>} />
-<<<<<<< HEAD
         <Route exact path="/admin/ad" element={<Ad/>} />
         <Route exact path="/admin/adReq" element={<AdReq/>} />
         <Route exact path="/admin/report" element={<Report/>} />
@@ -51,10 +48,7 @@ const App= ()=> {
         <Route exact path="/admin/adminUserList" element={<AdminUserList/>} />
         <Route exact path="/admin/streamingBanList" element={<StreamingBanList/>} />
         <Route exact path="/admin/streamingRollBanList" element={<StreamingRollBanList/>} />
-=======
-        <Route path="/Admin" element={<Admin/>} />
         <Route path="/SearchKeyword/:search" element={<SearchKeyword/>} />
->>>>>>> origin/JJC
       </Routes>
     </Router>
     
