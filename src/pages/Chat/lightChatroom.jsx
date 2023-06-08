@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+
 import {Header_Right_Login_Ui_Button, Stream_div, Chat_text_div, Chat_body_container_div, Chat_body_div, Chat_body_line_2_div, Chat_body_line_div, Chat_body_user_div, Chat_frame_div, Chat_Header_button, Chat_Header_button_a, Chat_header_button_button, Chat_Header_button_div, Chat_Header_button_g, Chat_header_button_icon, Chat_header_button_svg, Chat_Header_div, Chat_Header_font_div, Chat_Header_font_span, Chat_Header_font_view_div, Chat_header_trigger_div, Chat_Header_view_div, Chat_main_div, Chat_main_div_2, Chat_main_div_3, Chat_main_frame, Chat_main_iframe, Chat_mouseover_icon, Chat_mouseover_menu_button, Chat_mouseover_menu_div, Chat_mouseover_menu_div_2, Chat_scroll_div, Chat_stream_main_div, Chat_text_area_div, Chat_text_label, Chat_user_chatbox_div, Chat_user_container, Chat_user_content_div, Chat_user_date_div, Chat_user_date_span, Chat_user_img, Chat_user_info_div, Chat_user_info_div2, Chat_user_info_img, Chat_user_info_img_div, Chat_user_info_span, Chat_user_info_top, Chat_user_input_div, Chat_user_input_div_2, Chat_user_nickname_span, Chat_user_output_div, Chat_user_output_div_2, Chat_user_output_div_3, Chat_user_profile_div, Chat_user_text_div, Chat_user_text_span, Chat_user_tipe_div, Chat_user_tipe_div_2, Chat_user_tipe_div_cus, Chat_box_underline_div, Chat_underline_unfocus, Chat_underline_focus, Chat_buttons_div, Chat_manager_div, Chat_manager_div_cus, Chat_manager_div_cus2, Chat_manager_button, Chat_manager_icon, Chat_manager_svg, Chat_submit_div, Chat_submit_text_div, Chat_submit_button_div, Chat_submit_button_div_cus, Chat_submit_icon_a, Chat_submit_icon_cus, Chat_submit_icon_button, Stream_main_div, Stream_second_div, Stream_third_div, Chat_re_body_main, Chat_re_body_mainlist, Chat_re_body_overlay, Chat_re_body_cus, Chat_re_body_scope, Chat_re_body_item_offset, Chat_re_body_items, CS_Main, User_list_stream_span } from './style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faFilm, faFontAwesome, faUserSecret } from '@fortawesome/free-solid-svg-icons';
@@ -12,11 +13,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import io from 'socket.io-client'
 import Donation from '../Chat/donationEvent'
+import BanModal from './banModal'
 import axios from 'axios';
 import ChatList from './chatList'
 import ReactPlayer from 'react-player';
 import ChatDonation from './chatDonation';
 import Chat from '.';
+import { ban, wind } from 'fontawesome';
+import { createBrowserHistory } from 'history';
 
 
     
@@ -24,7 +28,11 @@ import Chat from '.';
 const lightChatroom = (props) => {
     const {data} = useSWR('/user/login', fetcher);
     
-    const {streaming, serviceUrl} = props.data
+    // const {streaming, serviceUrl} = props.data
+    const [streaming, setStreaming] = useState(props.data.streaming);
+    const [banType, setBanType] = useState('');
+    const [banContent, setBanContent] = useState('');
+    const [serviceUrl, setServiceUrl] = useState(props.data.serviceUrl);
     const [currentMessage, setCurrentMessage] = useState('');
     const [messageList, setMessageList] = useState([]);
     const isCanSubmit = !!currentMessage.replace(/ |\n/g, '');
@@ -34,9 +42,10 @@ const lightChatroom = (props) => {
     const [receivedMessage, setReceiveMessage] = useState(null);
     const [meInput, setMeInput] = useState(false);
     // const [donation, setDonation] = useState(false);
+    const [onCloseBanModal, setOnCloseBanModal] = useState(false);
     const [blackList, setBlackList] = useState([]);
     const navigate = useNavigate();
-    const streamUserId = 'admin';
+    const streamUserId = streaming.userId;
     const sessionUser = data?.userId
     const userId = streamUserId;
     const [donationData, setDonationData] = useState(false);
@@ -46,6 +55,8 @@ const lightChatroom = (props) => {
     const [openEvent, setOpenEvent] = useState(false);
     const [openList, SetOpenList] = useState(false);
     const [chatDonation, setChatDonation] = useState([]);
+    const history = createBrowserHistory();
+
     console.log(donationData);
     const OpenChatList = ()=> {
         SetOpenList(true);
@@ -81,14 +92,39 @@ const lightChatroom = (props) => {
         setMouseOver(null);
     }
   
-    const roomName= {'roomName': 'admin'};
-    socket.emit('join_room', roomName);
+    let roomName;
+    if(data) {
+        roomName= {roomName: streamUserId, userId : data.userId};
+    }else {
+        roomName= {roomName: streamUserId, userId : 'nonLogin'};
+    }
+
+    useEffect(() => {
+        let flag = false;
+        socket.emit('join_room', roomName);
+
+        return () => {
+            let param;
+            if(data) {
+                param = {
+                    roomName : streamUserId,
+                    userId : data.userId
+                }
+            }else {
+                param = {
+                    roomName : streamUserId,
+                    userId : 'nonLogin'
+                }
+            }
+            socket.emit('leave_room', param);
+        }
+    }, []);
 
     const sendMessage= async() => {
         if(isCanSubmit) {
             const messageData = {
                 username: data?.userId,
-                room: 'admin', // streamerId
+                room: streamUserId, // streamerId
                 message: currentMessage,
                 image: data?.profilePhoto,
                 time: 
@@ -110,8 +146,6 @@ const lightChatroom = (props) => {
 
         })
 
-        
-
         socket.on('receive_donation', ({data,fileUrl, donationMent})=>{
             setSocketDonation(data);
             
@@ -119,10 +153,38 @@ const lightChatroom = (props) => {
             console.log(data, fileUrl, donationMent);
             return() => socket.off('receive_donation');
         })
-    
 
-        
-   
+        socket.on('join_room', ({ streamingViewer, totalStreamingViewer }) => {
+            setStreaming(prevStreaming => ({
+              ...prevStreaming,
+              streamingViewer: streamingViewer,
+              totalStreamingViewer: totalStreamingViewer
+            }));
+        });
+          
+        socket.on('leave_room', ({streamingViewer}) => {
+            setStreaming(prevStreaming => ({
+                ...prevStreaming,
+                streamingViewer: streamingViewer,
+              }));
+        });
+
+        socket.on('updateStreamingTitleAndCategory', (data) => {
+            setStreaming(prevStreaming => ({
+                ...prevStreaming,
+                streamingTitle : data.streamingTitle,
+                streamingCategory : data.streamingCategory
+              }));
+        });
+
+        socket.on('ban_streaming', ({banType, banContent}) => {
+            setBanType(banType);
+            setBanContent(banContent);
+
+            setOnCloseBanModal(true);
+        });
+
+
     useEffect(()=> {
         if(socketDonation){
             setReqData(socketDonation);
@@ -221,17 +283,20 @@ const lightChatroom = (props) => {
     }
     const userClose = (e) => {
         setUserOpen(null);
-    }
-
-    
-    
-    
-
-
-    
-    
+    } 
+        
     return(
-    <CS_Main>
+        <div>
+            {onCloseBanModal && <BanModal
+                onClose={onCloseBanModal} 
+                setOnClose={setOnCloseBanModal}
+                data = {{
+                    banContent : banContent, 
+                    banType : banType
+                }}
+            />}
+        
+    <CS_Main>       
         <Chat_stream_main_div id="main">
         
             <Stream_main_div>
@@ -259,7 +324,7 @@ const lightChatroom = (props) => {
             
             {openEvent&& <Donation donationData={reqData} />}
 
-            {openList && <ChatList openList={openList} setOpenList={SetOpenList}/>}
+            {openList && <ChatList openList={openList} setOpenList={SetOpenList}/>}            
             <Chat_main_div>
             
                 <Chat_main_div_2 id="no">
@@ -516,6 +581,7 @@ const lightChatroom = (props) => {
          </Chat_stream_main_div>
          
          </CS_Main>
+         </div>
     )   
 }
 
