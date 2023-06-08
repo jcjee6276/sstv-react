@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import ReactPaginate from 'react-paginate';
 import StreamingRollBanModal from './streamingRollBanModal';
+import Header from './header';
+import Footer from './footer';
+import SideBar from './sidebar';
 import axios from "axios";
 import './style.css';
 
@@ -148,6 +151,11 @@ const StreamingRollBanList = () => {
 
     return (
       <div>
+        <div style={{ marginLeft: '200px' }}>        
+          <SideBar/>
+        </div>
+
+        <Header/>  
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
@@ -213,6 +221,7 @@ const StreamingRollBanList = () => {
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
     )
   }

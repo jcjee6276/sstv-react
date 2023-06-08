@@ -54,6 +54,7 @@ const loginModal = ({onClose, setOnClose}) => {
             {userId, password}
         )
         .then((response)=> {
+            alert('response.data' + JSON.stringify(response.data));
             console.log(response.data);
             revalidate();
         })

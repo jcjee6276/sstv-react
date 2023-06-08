@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
 import UserModal from './userModal';
+import Header from './header';
+import Footer from './footer';
+import SideBar from './sidebar';
 import StreamingRollBanModal from './addStreamingRollBanModal';
 import axios from "axios";
 import './style.css';
@@ -119,13 +122,6 @@ const Report = () => {
   //paginate
   const Users = ({ currentItems }) => {
     return (
-                      // <th>회원ID</th>
-                      // <th>회원 닉네임</th>
-                      // <th>회원 이름</th>
-                      // <th>생년월일</th>
-                      // <th>이메일</th>
-                      // <th>전화번호</th>
-                      // <th>가입일자</th>
       <>
         {currentItems.map((user) => (
           
@@ -157,6 +153,12 @@ const Report = () => {
 
     return (
       <div>
+        <div style={{ marginLeft: '200px' }}>        
+          <SideBar/>
+        </div>
+
+
+        <Header/>  
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
@@ -236,6 +238,7 @@ const Report = () => {
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
     )
   }

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
 import StreamingModal from './streamingModal';
+import Header from './header';
+import Footer from './footer';
+import SideBar from './sidebar';
 import AddStreamingBanModal from "./addStreamingBanModal";
 import axios from "axios";
 import { Main_stream_list_img } from '../Mainpage/style';
@@ -151,11 +154,6 @@ const AdminStreamingList = () => {
   //paginate
   const AdminStreamings = ({ currentItems }) => {
     return (
-      // <th>회원 닉네임</th>
-      // <th>스트리밍 제목</th>
-      // <th>스트리밍 카테고리</th>
-      // <th>실시간 시청자수</th>
-      // <th>받은 후원금액</th>
       <>
         {currentItems.map((streaming) => (
           
@@ -185,12 +183,16 @@ const AdminStreamingList = () => {
 
     return (
       <div>
+        <div style={{ marginLeft: '200px' }}>        
+          <SideBar/>
+        </div>
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
               <h4><img src="https://res.afreecatv.com/images/help/img_my.jpg" alt="회원 신고목록" /></h4>
             </div>
             
+            <Header/>  
             <div className="sub_wrap">
               <div className="tb_mylist">
                 <table cellSpacing="0" cellPadding="0">
@@ -261,6 +263,7 @@ const AdminStreamingList = () => {
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
     )
   }

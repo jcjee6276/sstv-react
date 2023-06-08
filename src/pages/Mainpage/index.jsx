@@ -25,7 +25,7 @@ const Mainpage = () => {
         const fetchStreamingList = async () => {          
             const response = await axios.create({
               baseURL: 'http://localhost:3001',
-            //   withCredentials : true
+              withCredentials : true
             }).get('/streaming/getStreamingList');
           
             return response.data?.firstData; 

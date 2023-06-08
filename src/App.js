@@ -1,6 +1,13 @@
 import React from 'react';
 import loadable from '@loadable/component';
-import { BrowserRouter as Router, Routes, Route }  from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route , Switch}  from 'react-router-dom';
+import Ad from './pages/AdminComponents/ad';
+import AdReq from './pages/AdminComponents/AdReq';
+import Report from './pages/AdminComponents/report';
+import AdminStreamingList from './pages/AdminComponents/adminStreamingList';
+import AdminUserList from './pages/AdminComponents/adminUserList';
+import StreamingBanList from './pages/AdminComponents/streamingBanList';
+import StreamingRollBanList from './pages/AdminComponents/streamingRollBanList';
 
 const App= ()=> {
   const LogIn = loadable(() => import('./pages/LogIn'));
@@ -14,7 +21,7 @@ const App= ()=> {
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
   const Test = loadable(()=> import('./pages/Chat/chatDonation'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
-  const Admin = loadable(()=> import('./pages/Admin'));
+
   
   return (
     
@@ -35,8 +42,13 @@ const App= ()=> {
         {/* <Route path='/remove' element={<RmUser/>} /> */}
         {/* <Route path='/updateUser' element={<UpdateUser/>} /> */}
         <Route path="/LoadingPage" element={<LoadingPage/>} />
-        <Route path="/LoadingPage" element={<LoadingPage/>} />
-        <Route path="/Admin" element={<Admin/>} />
+        <Route exact path="/admin/ad" element={<Ad/>} />
+        <Route exact path="/admin/adReq" element={<AdReq/>} />
+        <Route exact path="/admin/report" element={<Report/>} />
+        <Route exact path="/admin/adminStreamingList" element={<AdminStreamingList/>} />
+        <Route exact path="/admin/adminUserList" element={<AdminUserList/>} />
+        <Route exact path="/admin/streamingBanList" element={<StreamingBanList/>} />
+        <Route exact path="/admin/streamingRollBanList" element={<StreamingRollBanList/>} />
       </Routes>
     </Router>
     
