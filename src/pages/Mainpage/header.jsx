@@ -151,8 +151,15 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             <MenuItem onClick={handleClose}>Profile</MenuItem>
                                             <MenuItem onClick={setWhiteMode}>화이트 모드</MenuItem>
                                             <MenuItem onClick={()=> {
-                                                navigate('/Community/'+userId);
+                                                navigate('/Community');
                                             }}>내 방송국 가기</MenuItem>
+                                            <MenuItem onClick={()=>{
+                                                navigate('/Exchange');
+                                            }}>결제 및 환전</MenuItem>
+                                            <MenuItem onClick={()=>{
+                                                navigate('/ticket');
+                                            }}>이용권</MenuItem>
+                                            
                                         </Menu>
                                                            
 
