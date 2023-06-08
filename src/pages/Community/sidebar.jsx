@@ -47,7 +47,11 @@ const sidebar = () => {
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
     }
     
-    const image = process.env.PUBLIC_URL+'/img/'+userImage;
+   // const image = 'https://kr.object.ncloudstorage.com/sstv-image/'+userImage;
+    const image = process.env.REACT_APP_IMAGE_URL+userImage;
+
+    console.log(image);
+    
 
     return(
         

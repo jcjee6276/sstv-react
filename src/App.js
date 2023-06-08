@@ -12,9 +12,10 @@ const App= ()=> {
   const GetWriting = loadable(()=> import('./pages/Community/getWriting'));
   const Chat = loadable(()=> import('./pages/Chat'))
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
-  const Test = loadable(()=> import('./pages/Chat/chatDonation'));
+  const Test = loadable(()=> import('./pages/SearchPage'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
   const Admin = loadable(()=> import('./pages/Admin'));
+  const SearchKeyword = loadable(()=> import('./pages/SearchPage'));
   
   return (
     
@@ -35,8 +36,8 @@ const App= ()=> {
         {/* <Route path='/remove' element={<RmUser/>} /> */}
         {/* <Route path='/updateUser' element={<UpdateUser/>} /> */}
         <Route path="/LoadingPage" element={<LoadingPage/>} />
-        <Route path="/LoadingPage" element={<LoadingPage/>} />
         <Route path="/Admin" element={<Admin/>} />
+        <Route path="/SearchKeyword/:search" element={<SearchKeyword/>} />
       </Routes>
     </Router>
     

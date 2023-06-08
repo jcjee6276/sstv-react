@@ -187,8 +187,9 @@ const getWriting = () => {
                                             {/* 글내용 부분 */}
                                             <Writing_get_body_main_section>
                                                 <Writing_get_body_main_div>
-                                                    <Writing_get_body_main_p>
-                                                       {data.content}
+                                                    <Writing_get_body_main_p >
+                                                    <div dangerouslySetInnerHTML={{ __html: data.content }} />
+                                                       
                                                        
                                                     </Writing_get_body_main_p>
                                                 </Writing_get_body_main_div>

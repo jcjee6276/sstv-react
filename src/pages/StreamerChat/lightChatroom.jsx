@@ -23,6 +23,8 @@ const lightChatroom = (props) => {
     const [receivedMessage, setReceiveMessage] = useState(null);
     const roomName= {'roomName': 'admin'};
     socket.emit('join_room', roomName);
+    const nodeUrl = process.env.REACT_APP_NODE_URL;
+    console.log("node env?"+nodeUrl)
     
     const sendMessage= async () => {
         if(isCanSubmit) {
