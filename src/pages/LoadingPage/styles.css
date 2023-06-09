@@ -6,3 +6,9 @@
 body {
   margin: 0px;
 }
+
+.img-size {
+  width: 600px;
+  height: auto;
+  margin-top: 20px;
+}

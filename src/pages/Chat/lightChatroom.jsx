@@ -148,7 +148,7 @@ const lightChatroom = (props) => {
 
         socket.on('receive_donation', ({data,fileUrl, donationMent})=>{
             setSocketDonation(data);
-            
+             
             setDonationData(false); // Rnqns
             console.log(data, fileUrl, donationMent);
             return() => socket.off('receive_donation');

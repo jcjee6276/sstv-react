@@ -7,13 +7,13 @@ import { faCircleXmark, faCircleExclamation, faFontAwesome, faUserSecret } from 
 import axios from 'axios';
 import useSWR from 'swr'
 import fetcher from '../utils/fetcher';
-const donationModal = ({onClose, setOnClose, donationData, setDonationData}) => {
-    console.log(donationData);
+const donationModal = ({onClose, setOnClose, donationData, setDonationData, streamingData}) => {
+    
     const modalRef = useRef(null);
     const cancleRef = useRef(null);
     const [donationAmount, setDonationAmount] = useState('');
     const [donationContent, setDonationContent] = useState('');
-    const streamingUserId = 'admin';
+    const streamingUserId = streamingData.userId;
     const {data} = useSWR('/user/login', fetcher)
     const userId = data?.userId;
     console.log("model"+donationData);
@@ -53,10 +53,11 @@ const donationModal = ({onClose, setOnClose, donationData, setDonationData}) => 
         
     }
     const onSubmit =()=> {
-
+        console.log("console"+donationAmount, donationContent, userId, streamingUserId);
         axios.post('/donation/addDonation', 
-        {donationAmount, donationContent, userId, streamingUserId})
+        {donationAmount, donationContent, userId, streamingUserId, streamingNo : streamingData.streamingPk, voiceType : 'nara'})
         .then((response)=> {
+            console.log(response.data);
             const jsonData =response.data;
             setDonationData(jsonData['firstData']);
             console.log(donationData);

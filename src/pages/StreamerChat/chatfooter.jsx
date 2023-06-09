@@ -7,6 +7,7 @@ import DonationModal from './donationModal';
 import FinishStreamingModal from './finishStreamingModal';
 import FinishStreamingInfoModal from './finishStreamingInfoModal';
 import UpdateStreamingTitleAndCategoryModal from './updateStreamingTitleAndCategoryModal';
+import StreamingInfoModal from './streamingInfoModal';
 import axios from 'axios';
 import { socks } from 'fontawesome';
 
@@ -17,6 +18,7 @@ const chatfooter = (props) => {
     const [onCloseFinishStreamingModal, setOnCloseFinishStreamingModal] = useState(false);
     const [onCloseFinishStreamingInfoModal, setOnCloseFinishStreamingInfoModal] = useState(false);
     const [onCloseUpdateStreamingTitleAndCategoryModal, setUpdateStreamingTitleAndCategoryModal] = useState(false);
+    const [onCloseStreamingInfoModal, setStreamingInfoModal] = useState(false);
 
     const openDonation = () => {
         setOnClose(true);
@@ -32,6 +34,10 @@ const chatfooter = (props) => {
 
     const openUpdateStreamingTitleAndCategoryModal = () => {
         setUpdateStreamingTitleAndCategoryModal(true);
+    }
+
+    const openStreamingInfoModal = () => {
+        setStreamingInfoModal(true);
     }
 
     const handleFinishStreamingOnClick = async () => {
@@ -116,14 +122,25 @@ const chatfooter = (props) => {
                             setOnClose={setUpdateStreamingTitleAndCategoryModal}
                             onSubmit={handleUpdateStreamingTitleAndCategoryModalSubmit}
                             />}
-                                <Footer_stream_item_up_em></Footer_stream_item_up_em>
+                                <Footer_stream_item_up_em>실시간 제목, 카테고리 변경</Footer_stream_item_up_em>
+                            </Footer_stream_item_up_button>
+                        </Footer_stream_item_up_li>
+
+                        <Footer_stream_item_up_li>
+                            <Footer_stream_item_up_button onClick={openStreamingInfoModal}>
+                            {onCloseStreamingInfoModal && <StreamingInfoModal
+                            onClose={onCloseStreamingInfoModal} 
+                            setOnClose={setStreamingInfoModal}
+                            data = {streaming}
+                            />}
+                            <Footer_stream_item_up_em>스트리밍 정보확인</Footer_stream_item_up_em>
                             </Footer_stream_item_up_button>
                         </Footer_stream_item_up_li>
 
                         <Footer_stream_item_star_li_t>
                             <Footer_stream_item_star_button onClick={openDonation}>
                             {onClose && <DonationModal onClose={onClose} setOnClose={setOnClose}/>}
-                                <Footer_stream_item_star_em></Footer_stream_item_star_em>
+                                <Footer_stream_item_star_em>후원</Footer_stream_item_star_em>
                             </Footer_stream_item_star_button>
                         </Footer_stream_item_star_li_t>
                         
@@ -134,7 +151,7 @@ const chatfooter = (props) => {
                             setOnClose={setOnCloseFinishStreamingModal}
                             onClick={handleFinishStreamingOnClick}
                             />}
-                                <Footer_stream_item_shop_em></Footer_stream_item_shop_em>
+                                <Footer_stream_item_shop_em>스트리밍 종료</Footer_stream_item_shop_em>
                             </Footer_stream_item_shop_button>
                         </Footer_stream_item_shop_li>
 

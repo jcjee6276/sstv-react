@@ -21,6 +21,7 @@ margin-top: -349.649px;
 margin-left: -254px;
 display: block;
 cursor: default;
+user-select: auto;
 `;
 
 export const Layer_in = styled.div`

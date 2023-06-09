@@ -2,6 +2,7 @@
 import React, { useState, useCallback } from 'react';
 import Modal from 'react-modal';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 import { CHeader, CHeader_Dark, Com_h1, HeaderDiv, Header_Modal_Div, 
     Header_Modal_Div_Set, Header_Modal_Label, Header_Modal_Strong_mode, Header_Right_Icon_1_Button, 
     Header_Right_Icon_1_Div, Header_Right_Icon_1_a, Header_Right_Icon_2_Button, 
@@ -82,7 +83,7 @@ const header = () => {
                 <Com_h1 >
                     
                     <Header_a >
-                    <img src={process.env.PUBLIC_URL +'/img/SSTV.gif'} width={150} height={65} />
+                    <Link to='/'><img src={process.env.PUBLIC_URL +'/img/SSTV.gif'} width={150} height={65} /></Link>
                     </Header_a>
                 </Com_h1>
 

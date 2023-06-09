@@ -95,7 +95,6 @@ margin-right: auto;
 margin-left: auto;
 max-width: 1320px;
 `;
-
 export const Main_second_div = styled.div`
 --bs-blue: #0d6efd;
 --bs-indigo: #6610f2;

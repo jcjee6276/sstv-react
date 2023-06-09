@@ -5,7 +5,7 @@ import Animate from './aniamate'
 
 
 const donationEvent =({donationData})=>{
-    console.log(donationData)
+    alert('[donationEvent] donationData = ', donationData);
     return(
         
         
@@ -26,7 +26,7 @@ const donationEvent =({donationData})=>{
                         </audio>
                         
                         
-                        {/* <Modal_event_h3>안녕</Modal_event_h3> */}
+                        {/* <Modal_event_h3>{donationData.DONATION_CONTENT}</Modal_event_h3> */}
                     </Gift_dt>
                 </Gift_at>
                 
