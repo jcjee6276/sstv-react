@@ -5,11 +5,8 @@ import Animate from './aniamate'
 
 
 const donationEvent =({donationData})=>{
-    alert('[donationEvent] donationData = ', donationData);
+    const path = `https://donation.kr.object.ncloudstorage.com/${donationData.USER_ID}_${donationData.STREAMING_USER_ID}.mp3`;
     return(
-        
-        
-            
             <Modal_event>
             <Animate/>
                 <Send_area>
@@ -22,10 +19,11 @@ const donationEvent =({donationData})=>{
                         
                         <Gift_strong2>코인 후원하셨습니다.</Gift_strong2>
                         <audio autoPlay>
-                            <source src='./audio/admin_admin.mp3' type="audio/mpeg"/>
+                            <source src={path} type="audio/mpeg"/>
                         </audio>
                         
-                        
+                        <br/><br/>
+                        <Gift_strong2>{donationData.DONATION_CONTENT}</Gift_strong2>
                         {/* <Modal_event_h3>{donationData.DONATION_CONTENT}</Modal_event_h3> */}
                     </Gift_dt>
                 </Gift_at>
