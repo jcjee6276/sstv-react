@@ -15,6 +15,14 @@ const App= ()=> {
   const Test = loadable(()=> import('./pages/Chat/chatDonation'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
   const Admin = loadable(()=> import('./pages/Admin'));
+  const AddUser = loadable(()=> import('./pages/user/addUser'));
+  const SendSMS = loadable(()=> import('./pages/user/sendSMS'));
+  const RmUser = loadable(()=> import('./pages/user/removeUser'));
+  const UserInfo = loadable(()=> import('./pages/user/updateUser'));
+  const FindInfoId = loadable(()=> import('./pages/user/findInfoId'));
+  const FindInfoPasswd = loadable(()=> import('./pages/user/findInfoPasswd'));
+  const BlackList = loadable(()=> import('./pages/user/blackListView'));
+  const Insta = loadable(()=> import('./pages/user/blacklistModal'));
   
   return (
     
@@ -30,13 +38,17 @@ const App= ()=> {
         <Route path="/Chat" element={<Chat/>} />
         <Route path="/StreamerChat" element={<StreamerChat/>} />
         <Route path="/Test" element={<Test/>} />
-        {/* <Route path="/addUser" element={<AddUser/>} /> */}
-        {/* <Route path="/sendSMS" element={<SendSMS/>} /> */}
-        {/* <Route path='/remove' element={<RmUser/>} /> */}
-        {/* <Route path='/updateUser' element={<UpdateUser/>} /> */}
+        <Route path="/addUser" element={<AddUser/>} />
+        <Route path="/sendSMS/:path" element={<SendSMS/>} />
+        <Route path="/remove/:userId" element={<RmUser/>} />
+        <Route path="/userInfo/:userId" element={<UserInfo/>} />
+        <Route path="/findInfoId/:userId" element={<FindInfoId/>} />
+        <Route path="/findInfoPasswd/:userId" element={<FindInfoPasswd/>} />
         <Route path="/LoadingPage" element={<LoadingPage/>} />
         <Route path="/LoadingPage" element={<LoadingPage/>} />
         <Route path="/Admin" element={<Admin/>} />
+        <Route path="/blacklist" element={<BlackList/>}/>
+        <Route path="/black" element={<Insta/>}/>
       </Routes>
     </Router>
     

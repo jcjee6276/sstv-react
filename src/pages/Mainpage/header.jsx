@@ -259,6 +259,9 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             <MenuItem onClick={()=> {
                                                 navigate('/Community/'+userId);
                                             }}>내 방송국 가기</MenuItem>
+                                            <MenuItem onClick={()=> {
+                                                navigate('/userInfo/'+userId);
+                                            }}>내 정보 관리</MenuItem>
                                         </Menu>
                                                            
 
