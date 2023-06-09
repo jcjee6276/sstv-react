@@ -56,6 +56,7 @@ const chatfooter = (props ) => {
     }
 
     const handleReportModalSubmit = async (data) => {
+        alert('[handleReportModalSubmit] = ' + JSON.stringify(streaming));
         const method = 'POST';
         const url = 'http://localhost:3001/report/addReport';
         const param = {

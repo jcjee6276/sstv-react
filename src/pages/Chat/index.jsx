@@ -14,6 +14,7 @@ const Chat = () => {
     const [streaming, setStreaming] = useState(null);
     const [serviceUrl, setServiceUrl] = useState(null);
 
+    alert('streamingUserId' + streamingUserId);
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get('http://localhost:3001/streaming/getStreamingViewerPage',

@@ -102,7 +102,6 @@ const Mainpage = () => {
             alert('[index.jsx getStreamingViewPage] error  = ' + error);
         }
       }      
-    // =============================[Code By LDW End]============================= //
     console.log("dark"+isDarkMode);
     return(
         // 메인 전체 div
@@ -162,72 +161,6 @@ const Mainpage = () => {
                                             </Main_stream_list_div>
                                         
                                     ))}
-                                    {/* 방송 목록 반복 data 들어갈 부분  */}
-
-                                    {/* 방송 목록 반복 data 들어갈 부분  */}
-                                    <Main_stream_list_div>
-                                           <Main_stream_list_div_2>
-                                               <Main_stream_list_img src='./img/popular-01.jpg'/>
-                                               <Main_stream_list_h4>Test Title <Main_stream_list_span>카테고리</Main_stream_list_span> </Main_stream_list_h4>
-                                               <Main_stream_list_watching_ul>
-                                                    <Main_stream_list_watching_li_1>
-                                                    <FontAwesomeIcon icon={faUserGroup} style={{color: "#0afbff",}} /> 4
-                                                    </Main_stream_list_watching_li_1>
-                                                    <Main_stream_list_watching_li_2>
-                                                    <FontAwesomeIcon icon={faThumbsUp} style={{color: "#ff0af7",}} /> 2
-                                                    </Main_stream_list_watching_li_2>
-                                               </Main_stream_list_watching_ul>
-                                                </Main_stream_list_div_2>
-                                           </Main_stream_list_div>
-                                    {/* 방송 목록 반복 data 들어갈 부분  */}
-                                    {/* 방송 목록 반복 data 들어갈 부분  */}
-                                    <Main_stream_list_div>
-                                           <Main_stream_list_div_2>
-                                               <Main_stream_list_img src='./img/popular-01.jpg'/>
-                                               <Main_stream_list_h4>Test Title <Main_stream_list_span>카테고리</Main_stream_list_span> </Main_stream_list_h4>
-                                               <Main_stream_list_watching_ul>
-                                                    <Main_stream_list_watching_li_1>
-                                                    <FontAwesomeIcon icon={faUserGroup} style={{color: "#0afbff",}} /> 4
-                                                    </Main_stream_list_watching_li_1>
-                                                    <Main_stream_list_watching_li_2>
-                                                    <FontAwesomeIcon icon={faThumbsUp} style={{color: "#ff0af7",}} /> 2
-                                                    </Main_stream_list_watching_li_2>
-                                               </Main_stream_list_watching_ul>
-                                                </Main_stream_list_div_2>
-                                           </Main_stream_list_div>
-                                    {/* 방송 목록 반복 data 들어갈 부분  */}
-                                    {/* 방송 목록 반복 data 들어갈 부분  */}
-                                    <Main_stream_list_div>
-                                           <Main_stream_list_div_2>
-                                               <Main_stream_list_img src='./img/popular-01.jpg'/>
-                                               <Main_stream_list_h4>Test Title <Main_stream_list_span>카테고리</Main_stream_list_span> </Main_stream_list_h4>
-                                               <Main_stream_list_watching_ul>
-                                                    <Main_stream_list_watching_li_1>
-                                                    <FontAwesomeIcon icon={faUserGroup} style={{color: "#0afbff",}} /> 4
-                                                    </Main_stream_list_watching_li_1>
-                                                    <Main_stream_list_watching_li_2>
-                                                    <FontAwesomeIcon icon={faThumbsUp} style={{color: "#ff0af7",}} /> 2
-                                                    </Main_stream_list_watching_li_2>
-                                               </Main_stream_list_watching_ul>
-                                                </Main_stream_list_div_2>
-                                           </Main_stream_list_div>
-                                    {/* 방송 목록 반복 data 들어갈 부분  */}
-                                    {/* 방송 목록 반복 data 들어갈 부분  */}
-                                    <Main_stream_list_div>
-                                           <Main_stream_list_div_2>
-                                               <Main_stream_list_img src='./img/popular-01.jpg'/>
-                                               <Main_stream_list_h4>Test Title <Main_stream_list_span>카테고리</Main_stream_list_span> </Main_stream_list_h4>
-                                               <Main_stream_list_watching_ul>
-                                                    <Main_stream_list_watching_li_1>
-                                                    <FontAwesomeIcon icon={faUserGroup} style={{color: "#0afbff",}} /> 4
-                                                    </Main_stream_list_watching_li_1>
-                                                    <Main_stream_list_watching_li_2>
-                                                    <FontAwesomeIcon icon={faThumbsUp} style={{color: "#ff0af7",}} /> 2
-                                                    </Main_stream_list_watching_li_2>
-                                               </Main_stream_list_watching_ul>
-                                                </Main_stream_list_div_2>
-                                           </Main_stream_list_div>
-                                    {/* 방송 목록 반복 data 들어갈 부분  */}
                               </Main_body_stream_list_div>
                                {/* 방송 목록 메인 div */}
 

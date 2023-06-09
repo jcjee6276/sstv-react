@@ -38,7 +38,6 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         
     }
     
-
     const searchSubmit = ()=>{
         navigate('/SearchKeyword/'+search);
     }

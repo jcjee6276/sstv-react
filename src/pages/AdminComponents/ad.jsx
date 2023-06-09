@@ -9,6 +9,7 @@ import SideBar from './sidebar';
 
 
 import './style.css';
+import fa from "fontawesome";
 
 
 const Ad = () => {
@@ -29,6 +30,22 @@ const Ad = () => {
 
   const openUpdateAdCycleModal = () => {
     setUpdateAdCycleModalIsOpen(true);
+  }
+
+  const handleUpdateAdCycleModal = (data) => {
+    const adCycle = data.adCycle;
+
+    axios.get('http://localhost:3001/ad/updateAdCycle', {
+      params : {
+        adCycle : adCycle
+      }
+    }).then((response) => {
+      if(response.data.result == 'success') {
+        alert('설정되었습니다.');
+      }
+      setUpdateAdCycleModalIsOpen(false);
+    });
+ 
   }
 
   const closeModal = () => {
@@ -108,7 +125,11 @@ const Ad = () => {
             <div className="sub_wrap">
               <div className="tb_mylist">
               <button className="addAdReq-button" onClick={openUpdateAdCycleModal}>광고주기 설정</button>
-              {updateAdCycleModalIsOpen && <UpdateAdCycle onClose={updateAdCycleModalIsOpen} setOnClose={setUpdateAdCycleModalIsOpen}/>}
+              {updateAdCycleModalIsOpen && <UpdateAdCycle 
+              onClose={updateAdCycleModalIsOpen} 
+              setOnClose={setUpdateAdCycleModalIsOpen}
+              onSubmit={handleUpdateAdCycleModal}
+              />}
                 <table cellSpacing="0" cellPadding="0">
                   <colgroup><col width="152"/><col width="*"/><col width="120"/><col width="120"/></colgroup>
                   <thead>
