@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
 import AdModal from './adModal';
+import Header from './header';
+import Footer from './footer';
+import SideBar from './sidebar';
 import axios from "axios";
 import {create} from 'zustand';
 import Modal from 'react-modal';
@@ -118,6 +121,12 @@ const AdReq = () => {
 
     return (
       <div>
+        <div style={{ marginLeft: '200px' }}>        
+          <SideBar/>
+        </div>
+
+
+        <Header/>  
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
@@ -154,27 +163,6 @@ const AdReq = () => {
                 renderOnZeroPageCount={null}
               />
               <div className="search_area">
-
-                {/* <input 
-                    type="radio" 
-                    id="b_subject" 
-                    name="search" 
-                    value='0' 
-                    checked = {searchUserType === '0'} 
-                    onChange={hanldeSearchUserTypeChange}
-                />
-                <label htmlFor="b_subject">신고자ID</label>
-
-                <input 
-                    type="radio" 
-                    id="b_content" 
-                    name="search" 
-                    value='1' 
-                    checked = {searchUserType === '1'} 
-                    onChange={hanldeSearchUserTypeChange}
-                />
-                <label htmlFor="b_content">피신고자ID</label> */}
-                
                 <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} />
                 <button class="list_search" id="searchWord" onClick={getAdReqList}>
                   <span>검색</span>
@@ -183,6 +171,7 @@ const AdReq = () => {
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
     )
   }

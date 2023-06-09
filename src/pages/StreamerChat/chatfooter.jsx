@@ -6,13 +6,17 @@ import { faL, faUserGroup} from '@fortawesome/free-solid-svg-icons';
 import DonationModal from './donationModal';
 import FinishStreamingModal from './finishStreamingModal';
 import FinishStreamingInfoModal from './finishStreamingInfoModal';
+import UpdateStreamingTitleAndCategoryModal from './updateStreamingTitleAndCategoryModal';
 import axios from 'axios';
+import { socks } from 'fontawesome';
 
 const chatfooter = (props) => {
     const {streaming} = props.data;
+    const {socket} = props.data;
     const [onClose, setOnClose] = useState(false);
     const [onCloseFinishStreamingModal, setOnCloseFinishStreamingModal] = useState(false);
     const [onCloseFinishStreamingInfoModal, setOnCloseFinishStreamingInfoModal] = useState(false);
+    const [onCloseUpdateStreamingTitleAndCategoryModal, setUpdateStreamingTitleAndCategoryModal] = useState(false);
 
     const openDonation = () => {
         setOnClose(true);
@@ -24,6 +28,10 @@ const chatfooter = (props) => {
 
     const openFinishStreamingInfo = () => {
         setOnCloseFinishStreamingInfoModal(true);
+    }
+
+    const openUpdateStreamingTitleAndCategoryModal = () => {
+        setUpdateStreamingTitleAndCategoryModal(true);
     }
 
     const handleFinishStreamingOnClick = async () => {
@@ -38,6 +46,28 @@ const chatfooter = (props) => {
         openFinishStreamingInfo();
     }
 
+    const handleUpdateStreamingTitleAndCategoryModalSubmit = async (data) => {
+        const url = 'http://localhost:3001/streaming/updateStreamingTitleAndCategory';
+        const param = {
+            streamingTitle : data.streamingTitle,
+            streamingCategory : data.streamingCategory,
+            streamingUserId : streaming.userId
+        }
+
+        const response = await fetchData(url, param);
+        const result = response.data.result;
+        
+        if(result == 'success') {
+            socket.emit('updateStreamingTitleAndCategory', {
+                roomName : streaming.userId,
+                streamingTitle : data.streamingTitle,
+                streamingCategory : data.streamingCategory
+            });
+        }
+
+        setUpdateStreamingTitleAndCategoryModal(false);
+    }
+
     const fetchData = async (url, data) => {
         const response = await axios.get(url, {
             params : data,
@@ -47,7 +77,6 @@ const chatfooter = (props) => {
         return response;
     }
     
-
     const getCategory = (categoryId) => {
         let result;
         switch(categoryId) {
@@ -74,13 +103,19 @@ const chatfooter = (props) => {
         }
         return result;
       }
+
     return (
         <Footer_main_div>
             <Footer_stream_item_div>
                     <Footer_stream_item_ul>
 
                         <Footer_stream_item_up_li>
-                            <Footer_stream_item_up_button>
+                            <Footer_stream_item_up_button onClick={openUpdateStreamingTitleAndCategoryModal}>
+                            {onCloseUpdateStreamingTitleAndCategoryModal && <UpdateStreamingTitleAndCategoryModal 
+                            onClose={onCloseUpdateStreamingTitleAndCategoryModal} 
+                            setOnClose={setUpdateStreamingTitleAndCategoryModal}
+                            onSubmit={handleUpdateStreamingTitleAndCategoryModalSubmit}
+                            />}
                                 <Footer_stream_item_up_em></Footer_stream_item_up_em>
                             </Footer_stream_item_up_button>
                         </Footer_stream_item_up_li>

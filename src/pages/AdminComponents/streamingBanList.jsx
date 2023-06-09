@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
 import StreamingBanModal from './streamingBanModal';
+import Header from './header';
+import Footer from './footer';
+import SideBar from './sidebar';
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -160,6 +163,11 @@ const Report = () => {
 
     return (
       <div>
+        <div style={{ marginLeft: '200px' }}>        
+          <SideBar/>
+        </div>
+
+        <Header/>  
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
@@ -224,6 +232,7 @@ const Report = () => {
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
     )
   }

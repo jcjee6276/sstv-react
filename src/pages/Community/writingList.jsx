@@ -94,7 +94,9 @@ const writingList = () => {
                                                             <Link key={i} to={`/${item.writingNo}/${userId}`} >
                                                             <Writing_List_tbody_2_a key={i}>{item.title}</Writing_List_tbody_2_a>
                                                             </Link>
+                                                            {item.commentCount===0? null:
                                                             <Writing_List_tbody_2_span>[{item.commentCount}]</Writing_List_tbody_2_span>
+                                                            }
                                                         </Writing_List_tbody_2_div>
                                                     </Writing_List_tbody_td>
 

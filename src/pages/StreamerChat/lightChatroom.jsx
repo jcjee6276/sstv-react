@@ -8,21 +8,58 @@ import ReactPlayer from 'react-player';
 import io from 'socket.io-client'
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
+import BanModal from './banModal'
 
 const lightChatroom = (props) => {
     const {data} = useSWR('/user/login', fetcher);
-    const {streaming, serviceUrl} = props.data;
+    // const {streaming, serviceUrl} = props.data;
+    const [streaming, setStreaming] = useState(props.data.streaming);
+    const [serviceUrl, setServiceurl] = useState(props.data.serviceUrl);
     const [currentMessage, setCurrentMessage] = useState('');
     const [messageList, setMessageList] = useState([]);
     const [chatInput, setChatInput] = useState('');
     const isCanSubmit = !!currentMessage.replace(/ |\n/g, '');
     const chatboxRef = useRef(null);
     const [scrUpdate, setScrUpdate] = useState(false);
+    const [onCloseBanModal, setOnCloseBanModal] = useState(false);
     const [donationData, setDonationData] = useState(false);
     const socket = io('localhost:3001');
+    const [banType, setBanType] = useState('');
+    const [banContent, setBanContent] = useState('');
     const [receivedMessage, setReceiveMessage] = useState(null);
-    const roomName= {'roomName': 'admin'};
-    socket.emit('join_room', roomName);
+    // const roomName= {'roomName': 'admin'};
+    // socket.emit('join_room', roomName);
+    const nodeUrl = process.env.REACT_APP_NODE_URL;
+    console.log("node env?"+nodeUrl)
+
+
+    let roomName;
+    if(data) {
+        roomName= {'roomName': streaming.userId, 'userId' : data.userId};
+    }else {
+        roomName= {'roomName': streaming.userId, 'userId' : 'nonLogin'};
+    }
+
+    useEffect(() => {
+        let flag = false;
+        socket.emit('join_room', roomName);
+
+        return () => {
+            let param;
+            if(data) {
+                param = {
+                    roomName : streaming.userId,
+                    userId : data.userId
+                }
+            }else {
+                param = {
+                    roomName : streaming.userId,
+                    userId : 'nonLogin'
+                }
+            }
+            socket.emit('leave_room', param);
+        }
+    }, []);
     
     const sendMessage= async () => {
         if(isCanSubmit) {
@@ -44,7 +81,6 @@ const lightChatroom = (props) => {
 
     socket.on('receive_message', (data)=>{
         setReceiveMessage(data);
-
     })
 
     useEffect(()=>{
@@ -62,9 +98,6 @@ const lightChatroom = (props) => {
         
     }, [receivedMessage])
     
-    
-    
-
     const scrollToBottom = () => {
         
         if(chatboxRef.current){
@@ -73,8 +106,6 @@ const lightChatroom = (props) => {
             
         }
     }
-
-    
 
     const handleKeyPress = (event) => {
             if( !event.shiftKey && event.key ==="Enter"){
@@ -87,7 +118,7 @@ const lightChatroom = (props) => {
     const imageError = (event) => {
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
     }
-    
+
     const image = process.env.PUBLIC_URL+`/img`+data?.profilePhoto;
 
     // socket.on('receive_donation', ({data,fileUrl, donationMent})=>{
@@ -97,8 +128,46 @@ const lightChatroom = (props) => {
     //     return() => socket.off('receive_donation');
     // })
 
+    socket.on('updateStreamingTitleAndCategory', (data) => {
+        setStreaming(prevStreaming => ({
+            ...prevStreaming,
+            streamingTitle : data.streamingTitle,
+            streamingCategory : data.streamingCategory
+          }));
+    });
+
+    socket.on('join_room', ({ streamingViewer, totalStreamingViewer }) => {
+        setStreaming(prevStreaming => ({
+          ...prevStreaming,
+          streamingViewer: streamingViewer,
+          totalStreamingViewer: totalStreamingViewer
+        }));
+    });
+
+    socket.on('leave_room', ({streamingViewer}) => {
+        setStreaming(prevStreaming => ({
+            ...prevStreaming,
+            streamingViewer: streamingViewer,
+          }));
+    });
+
+    socket.on('ban_streaming', ({banType, banContent}) => {
+            setBanType(banType);
+            setBanContent(banContent);
+
+            setOnCloseBanModal(true);
+        });
+
     return(
         <body>
+            {onCloseBanModal && <BanModal
+                onClose={onCloseBanModal} 
+                setOnClose={setOnCloseBanModal}
+                data = {{
+                    banContent : banContent, 
+                    banType : banType
+                }}
+            />}
         <Chat_stream_main_div id="main">
             <Stream_main_div>
                 <Stream_second_div>
@@ -118,7 +187,7 @@ const lightChatroom = (props) => {
                             />
                         </Stream_div>
                     </Stream_third_div>
-                    <Chatfooter data ={{streaming}}/>
+                    <Chatfooter data ={{streaming, socket}}/>
                 </Stream_second_div>
             </Stream_main_div>
 

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
 import StreamingModal from './streamingModal';
+import Header from './header';
+import Footer from './footer';
+import SideBar from './sidebar';
 import AddStreamingBanModal from "./addStreamingBanModal";
 import axios from "axios";
 import { Main_stream_list_img } from '../Mainpage/style';
+import io from 'socket.io-client'
 import './style.css';
 import { json } from "react-router-dom";
 
@@ -94,31 +98,40 @@ const AdminStreamingList = () => {
   }
 
   const handleAddStreamingBanModalOnSubmit = async (data) => {
-    const method = 'POST';
-    const url = 'http://localhost:3001/ban/addStreamingBan';
-    const param = {
-      banContent : data.banContent,
+    const socket = io('localhost:3001');
+    socket.emit('ban_streaming', {
+      roomName: streaming.userId, 
       banType : data.banType,
-      userId : data.streamingUserId
-    }
+      banContent : data.banContent
+    });
 
-    const response = await fetchData(method, url, param);
-    const result = response.data.result;
+    // socket.disconnect();
+    // const method = 'POST';
+    // const url = 'http://localhost:3001/ban/addStreamingBan';
+    // const param = {
+    //   banContent : data.banContent,
+    //   banType : data.banType,
+    //   userId : data.streamingUserId
+    // }
 
-    if(result == 'success') {
-      alert('정지되었습니다.');
-    }else {
-      if(response.data.firstData == '0') {
-        alert('관리자가 아닙니다.');
-      }
+    // const response = await fetchData(method, url, param);
+    // const result = response.data.result;
 
-      if(response.data.firstData == '1') {
-        alert('서버에러입니다.');
-      }
+    // if(result == 'success') {
+    //   alert('정지되었습니다.');
+      
+    // }else {
+    //   if(response.data.firstData == '0') {
+    //     alert('관리자가 아닙니다.');
+    //   }
 
-      alert('response.data = ' + JSON.stringify(response.data));
-    }
-    // closeAddStreamingBanModal();
+    //   if(response.data.firstData == '1') {
+    //     alert('서버에러입니다.');
+    //   }
+
+    //   alert('response.data = ' + JSON.stringify(response.data));
+    // }
+    closeAddStreamingBanModal();
   }
 
   const getCategory = (categoryId) => {
@@ -151,11 +164,6 @@ const AdminStreamingList = () => {
   //paginate
   const AdminStreamings = ({ currentItems }) => {
     return (
-      // <th>회원 닉네임</th>
-      // <th>스트리밍 제목</th>
-      // <th>스트리밍 카테고리</th>
-      // <th>실시간 시청자수</th>
-      // <th>받은 후원금액</th>
       <>
         {currentItems.map((streaming) => (
           
@@ -185,12 +193,16 @@ const AdminStreamingList = () => {
 
     return (
       <div>
+        <div style={{ marginLeft: '200px' }}>        
+          <SideBar/>
+        </div>
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
               <h4><img src="https://res.afreecatv.com/images/help/img_my.jpg" alt="회원 신고목록" /></h4>
             </div>
             
+            <Header/>  
             <div className="sub_wrap">
               <div className="tb_mylist">
                 <table cellSpacing="0" cellPadding="0">
@@ -261,6 +273,7 @@ const AdminStreamingList = () => {
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
     )
   }

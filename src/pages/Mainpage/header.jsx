@@ -3,6 +3,8 @@ import React, { useCallback, useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import ReactDOM from 'react-dom';
 import { redirect, Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserSecret} from '@fortawesome/free-solid-svg-icons';
 import { CHeader, CHeader_Dark, Com_h1, HeaderDiv, Header_Modal_Div, 
     Header_Modal_Div_Set, Header_Modal_Label, Header_Modal_Strong_mode, Header_Right_Icon_1_Button, 
     Header_Right_Icon_1_Div, Header_Right_Icon_1_a, Header_Right_Icon_2_Button, 
@@ -23,12 +25,24 @@ import Mainpage from '.';
 import { useCookies } from 'react-cookie';
 
 const header = ({isDarkMode, setIsDarkMode}) => {
+    const [search, setSearch] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [startStreamingIsOpen, setStartStreamingIsOpen] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['NSESSIONID']);
     const {data} = useSWR('/user/login', fetcher);
     const userId = data?.userId;
+    const navigate = useNavigate();
     
+    const onSearch =(e) =>{
+        setSearch(e.target.value);
+        
+    }
+    
+
+    const searchSubmit = ()=>{
+        navigate('/SearchKeyword/'+search);
+    }
+
     const openModal = () => {
         setIsOpen(true);
     };
@@ -42,7 +56,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         if(result == '0') {
             setStartStreamingIsOpen(true);
         } else if(result == '1') {
-            alert('로그인이 필요합니다.');
+            openModal();
         } else if(result == '2')  {
             alert('회원님은 이미 스트리밍이 진행중입니다 해당 스트리밍 페이지로 이동합니다.');
             navigate('/streamerChat');
@@ -54,7 +68,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         setStartStreamingIsOpen(false);
     }
 
-    const navigate = useNavigate();
+    
     
     const setDarkMode = ()=> {
         setIsDarkMode(false);
@@ -64,14 +78,12 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         setIsDarkMode(true);
         
     }
-    
-    //로그아웃시 Node서버에서 발급한 쿠키 삭제
+
     const removeNodeCookie = useCallback(() => {
         removeCookie('NSESSIONID', { path: '/' });
     }, [removeCookie]);
 
     const logout = useCallback(() => {
-        //node의 redis에 해당 유저 삭제 요청
         axios.create({
             baseURL: 'http://localhost:3001',
             withCredentials : true
@@ -85,31 +97,6 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         removeNodeCookie();
     });
     
-    /* 1. startStreamingModal에서 스트리밍 제목, 카테고리를 받아옴
-      2. 해당 스트리밍 제목, 카테고리로 LiveStation에 api요청을 보내 스트리밍 생성요청보냄
-      3. 생성요청을 보낸 뒤 스트리밍이 생성될 동안 자신의 스트리밍 페이지로 보냄
-   */
-//    const handleSubmit = async (data) => {
-//     closeStartStreamingModal();
-//     const streamingTitle = data.streamingTitle;
-//     const streamingCategory = data.streamingCategory;
-
-//     const response = await axios.create({
-//         baseURL: 'http://localhost:3001',
-//         withCredentials : true
-//     }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
-    
-//     const result = (JSON.parse(response.data)).result;
-//     console.log('result = ' +  result);
-//     if(result == 'success') {
-//         alert('success!');
-//         navigate('/LoadingPage');
-//     }else {
-//         alert('스트리밍 시작에 실패했습니다.');
-//     }
-// };
-    
-    //로그인시 노드서버에 요청을 보내 쿠키 생성
     const setNodeCookie = async () => {
     if(data) {
         const response = await axios.create({
@@ -119,7 +106,6 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     }
    }
 
-   //login성공 후 data가 변화하면 setNodeCookie() 실행
    useEffect(() => {
         if (data) {
         setNodeCookie();
@@ -136,11 +122,6 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         return result;
    }
 
-
-   /* 1. startStreamingModal에서 스트리밍 제목, 카테고리를 받아옴
-      2. 해당 스트리밍 제목, 카테고리로 LiveStation에 api요청을 보내 스트리밍 생성요청보냄
-      3. 생성요청을 보낸 뒤 스트리밍이 생성될 동안 자신의 스트리밍 페이지로 보냄
-   */
    const handleSubmit = async (data) => {
         closeStartStreamingModal();
         const streamingTitle = data.streamingTitle;
@@ -159,6 +140,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         }else {
             alert('스트리밍 시작에 실패했습니다.');
         }
+        navigate('/LoadingPage');
     };
       
     const [anchorEl, setAnchorEl] = useState(null);
@@ -178,17 +160,17 @@ const header = ({isDarkMode, setIsDarkMode}) => {
             <Com_h1 >
                     
                     <Header_a >
-                    <img src={process.env.PUBLIC_URL +'/img/SSTV_gray.gif'} width={150} height={65} />
+                        <Link to='/'><img src={process.env.PUBLIC_URL +'/img/SSTV_gray.gif'} width={150} height={65} /></Link>
                     </Header_a>
                 </Com_h1>
 
                 <Header_Search_Div>
-                    <Header_Search_form>
+                    <Header_Search_form onSubmit={searchSubmit}>
                         <Header_Search_fieldset>
                             <Header_legend>검색</Header_legend>
                             <Header_Search_Div_input>
                                 <Header_Search_Div_input_in>
-                                    <Header_Search_Input_in placeholder='방송국 검색'/>
+                                    <Header_Search_Input_in value={search} onChange={onSearch} placeholder='방송국 검색'/>
                                     
 
                                     <Header_Search_Button>
@@ -199,7 +181,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                     
                                 </Header_Search_Div_input_in>
 
-                                <Header_Search_Side_Button>
+                                <Header_Search_Side_Button >
                                     <Header_Search_Side_Span>
                                         통합검색
                                     </Header_Search_Side_Span>
@@ -213,8 +195,24 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                 
                     </Header_Search_form>
                 </Header_Search_Div>
-
                                  <Header_Right_Side_Div >
+
+                                 {data ? (
+                                    data.roll === 'admin' ? (
+                                        <Link to='/admin/adminUserList'>
+                                        <Header_Right_Icon_1_Div>
+                                            <Header_Right_Icon_1_a>
+                                                <Header_Right_Icon_1_Button>
+                                                    <Header_right_Icon_1_Span>
+                                                        관리자페이지 이동 
+                                                    </Header_right_Icon_1_Span>
+                                                </Header_Right_Icon_1_Button>
+                                            </Header_Right_Icon_1_a>
+                                        </Header_Right_Icon_1_Div>
+                                        </Link>
+                                    ) : null
+                                    ) : null}
+
                                     <Header_Right_Icon_1_Div>
                                         <Header_Right_Icon_1_a>
                                             <Header_Right_Icon_1_Button>
@@ -257,7 +255,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             <MenuItem onClick={handleClose}>Profile</MenuItem>
                                             <MenuItem onClick={setWhiteMode}>화이트 모드</MenuItem>
                                             <MenuItem onClick={()=> {
-                                                navigate('/Community/'+userId);
+                                                navigate('/Home/'+userId);
                                             }}>내 방송국 가기</MenuItem>
                                             <MenuItem onClick={()=> {
                                                 navigate('/userInfo/'+userId);
@@ -294,9 +292,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             {isOpen && <LoginModal onClose={isOpen} setOnClose={setIsOpen}/>}
                                         </Header_Right_Login_Ui_Span>
                                     </Header_Right_Login_Ui_Div>
-
                                 </Header_Right_Side_Div>
-
             </HeaderDiv>
         </CHeader>
        

@@ -1,6 +1,13 @@
 import React from 'react';
 import loadable from '@loadable/component';
-import { BrowserRouter as Router, Routes, Route }  from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route}  from 'react-router-dom';
+import Ad from './pages/AdminComponents/ad';
+import AdReq from './pages/AdminComponents/AdReq';
+import Report from './pages/AdminComponents/report';
+import AdminStreamingList from './pages/AdminComponents/adminStreamingList';
+import AdminUserList from './pages/AdminComponents/adminUserList';
+import StreamingBanList from './pages/AdminComponents/streamingBanList';
+import StreamingRollBanList from './pages/AdminComponents/streamingRollBanList';
 
 const App= ()=> {
   const LogIn = loadable(() => import('./pages/LogIn'));
@@ -12,9 +19,9 @@ const App= ()=> {
   const GetWriting = loadable(()=> import('./pages/Community/getWriting'));
   const Chat = loadable(()=> import('./pages/Chat'))
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
-  const Test = loadable(()=> import('./pages/Chat/chatDonation'));
+  const Test = loadable(()=> import('./pages/SearchPage'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
-  const Admin = loadable(()=> import('./pages/Admin'));
+  const SearchKeyword = loadable(()=> import('./pages/SearchPage'));
   const AddUser = loadable(()=> import('./pages/user/addUser'));
   const SendSMS = loadable(()=> import('./pages/user/sendSMS'));
   const RmUser = loadable(()=> import('./pages/user/removeUser'));
@@ -25,11 +32,10 @@ const App= ()=> {
   const Insta = loadable(()=> import('./pages/user/blacklistModal'));
   
   return (
-    
     <Router>
       <Routes>
         <Route path="/" element={<Mainpage />}/>
-        <Route path="/Community/:userId" element={<Community />}/>
+        <Route path="/Home/:userId" element={<Community />}/>
         <Route path="/Login" element={<LogIn />}/>
         <Route path="/SignUp" element={<SignUp />}/>
         <Route path="/Writing/:userId" element={<Writing />}/>
@@ -45,8 +51,14 @@ const App= ()=> {
         <Route path="/findInfoId/:userId" element={<FindInfoId/>} />
         <Route path="/findInfoPasswd/:userId" element={<FindInfoPasswd/>} />
         <Route path="/LoadingPage" element={<LoadingPage/>} />
-        <Route path="/LoadingPage" element={<LoadingPage/>} />
-        <Route path="/Admin" element={<Admin/>} />
+        <Route exact path="/admin/ad" element={<Ad/>} />
+        <Route exact path="/admin/adReq" element={<AdReq/>} />
+        <Route exact path="/admin/report" element={<Report/>} />
+        <Route exact path="/admin/adminStreamingList" element={<AdminStreamingList/>} />
+        <Route exact path="/admin/adminUserList" element={<AdminUserList/>} />
+        <Route exact path="/admin/streamingBanList" element={<StreamingBanList/>} />
+        <Route exact path="/admin/streamingRollBanList" element={<StreamingRollBanList/>} />
+        <Route path="/SearchKeyword/:search" element={<SearchKeyword/>} />
         <Route path="/blacklist" element={<BlackList/>}/>
         <Route path="/black" element={<Insta/>}/>
       </Routes>

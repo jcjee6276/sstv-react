@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
 import ReportModal from './reportModal';
+import Header from './header';
+import Footer from './footer';
+import SideBar from './sidebar';
 import axios from "axios";
 import {create} from 'zustand';
 import Modal from 'react-modal';
@@ -57,6 +60,7 @@ const Report = () => {
     const result = response.data.result
     
     if(result == 'success') {
+      alert('신고가 삭제되었습니다.');
       getReportList();
     }
   }
@@ -135,6 +139,11 @@ const Report = () => {
 
     return (
       <div>
+        <div style={{ marginLeft: '200px' }}>        
+          <SideBar/>
+        </div>
+
+        <Header/>  
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
@@ -199,6 +208,7 @@ const Report = () => {
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
     )
   }

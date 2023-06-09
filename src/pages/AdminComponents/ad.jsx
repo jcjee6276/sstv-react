@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
 import AdModal from './adModal';
 import axios from "axios";
+import Header from './header';
+import Footer from './footer';
+import SideBar from './sidebar';
 import {create} from 'zustand';
 import Modal from 'react-modal';
 import './style.css';
@@ -62,13 +65,6 @@ const Ad = () => {
     return (
       <>
         {currentItems.map((adReq) => (
-          // <th>신청회원ID</th>
-          // <th>신청날짜</th>
-          // <th>지불 코인</th>
-          // <th>광고 재생횟수</th>
-          // <th>재생된 스트리밍수</th>
-          // <th>시청한 회원수</th>
-          // <th>광고시청</th>
           <tr key={adReq.AD_REQ_NO}>
             <td >{adReq.USER_ID}</td>
             <td >{adReq.AD_REQ_DATE}</td>
@@ -97,6 +93,11 @@ const Ad = () => {
 
     return (
       <div>
+        <div style={{ marginLeft: '200px' }}>        
+        <SideBar/>
+        </div>
+
+        <Header/>
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
@@ -134,26 +135,6 @@ const Ad = () => {
                 renderOnZeroPageCount={null}
               />
               <div className="search_area">
-
-                {/* <input 
-                    type="radio" 
-                    id="b_subject" 
-                    name="search" 
-                    value='0' 
-                    checked = {searchUserType === '0'} 
-                    onChange={hanldeSearchUserTypeChange}
-                />
-                <label htmlFor="b_subject">신고자ID</label>
-
-                <input 
-                    type="radio" 
-                    id="b_content" 
-                    name="search" 
-                    value='1' 
-                    checked = {searchUserType === '1'} 
-                    onChange={hanldeSearchUserTypeChange}
-                />
-                <label htmlFor="b_content">피신고자ID</label> */}
                 
                 <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} />
                 <button class="list_search" id="searchWord" onClick={getAdList}>
@@ -163,7 +144,9 @@ const Ad = () => {
             </div>
           </div>
         </div>
+        <Footer/>
       </div>
+      
     )
   }
 

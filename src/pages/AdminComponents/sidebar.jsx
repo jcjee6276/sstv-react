@@ -54,43 +54,43 @@ const sidebar = () => {
 
                         <Sidebar_footer_Writing_li_1>
                             <Sidebar_footer_Writing_1_a>
-                                <Sidebar_footer_Writing_strong >회원목록</Sidebar_footer_Writing_strong>
+                                <Sidebar_footer_Writing_strong ><Link to='/admin/adminUserList'>회원목록</Link></Sidebar_footer_Writing_strong>
                             </Sidebar_footer_Writing_1_a>
                         </Sidebar_footer_Writing_li_1>
 
                         <Sidebar_footer_Writing_li_1>
                             <Sidebar_footer_Writing_1_a>
-                                <Sidebar_footer_Writing_strong >스트리밍목록</Sidebar_footer_Writing_strong>
+                                <Sidebar_footer_Writing_strong ><Link to='/admin/adminStreamingList'>스트리밍목록</Link></Sidebar_footer_Writing_strong>
                             </Sidebar_footer_Writing_1_a>
                         </Sidebar_footer_Writing_li_1>
 
                         <Sidebar_footer_Writing_li_1>
                             <Sidebar_footer_Writing_1_a>
-                                <Sidebar_footer_Writing_strong >신고목록</Sidebar_footer_Writing_strong>
+                                <Sidebar_footer_Writing_strong ><Link to='/admin/report'>신고목록</Link></Sidebar_footer_Writing_strong>
                             </Sidebar_footer_Writing_1_a>
                         </Sidebar_footer_Writing_li_1>
 
                         <Sidebar_footer_Writing_li_1>
                             <Sidebar_footer_Writing_1_a>
-                                <Sidebar_footer_Writing_strong >스트리밍 정지목록</Sidebar_footer_Writing_strong>
+                                <Sidebar_footer_Writing_strong ><Link to='/admin/streamingBanList'>스트리밍 정지목록</Link></Sidebar_footer_Writing_strong>
                             </Sidebar_footer_Writing_1_a>
                         </Sidebar_footer_Writing_li_1>
 
                         <Sidebar_footer_Writing_li_1>
                             <Sidebar_footer_Writing_1_a>
-                                <Sidebar_footer_Writing_strong >회원 스트리밍권한 정지목록</Sidebar_footer_Writing_strong>
+                                <Sidebar_footer_Writing_strong ><Link to='/admin/streamingRollBanList'>회원 스트리밍권한 정지목록</Link></Sidebar_footer_Writing_strong>
                             </Sidebar_footer_Writing_1_a>
                         </Sidebar_footer_Writing_li_1>
 
                         <Sidebar_footer_Writing_li_1>
                             <Sidebar_footer_Writing_1_a>
-                                <Sidebar_footer_Writing_strong >광고신청목록</Sidebar_footer_Writing_strong>
+                                <Sidebar_footer_Writing_strong ><Link to='/admin/adReq'>광고신청목록</Link></Sidebar_footer_Writing_strong>
                             </Sidebar_footer_Writing_1_a>
                         </Sidebar_footer_Writing_li_1>
 
                         <Sidebar_footer_Writing_li_1>
                             <Sidebar_footer_Writing_1_a>
-                                <Sidebar_footer_Writing_strong >광고목록</Sidebar_footer_Writing_strong>
+                                <Sidebar_footer_Writing_strong ><Link to='/admin/ad'>광고목록</Link></Sidebar_footer_Writing_strong>
                             </Sidebar_footer_Writing_1_a>
                         </Sidebar_footer_Writing_li_1>
 
