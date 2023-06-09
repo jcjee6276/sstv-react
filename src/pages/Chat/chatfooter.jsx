@@ -71,7 +71,7 @@ const chatfooter = (props ) => {
     }
 
     const onClickCommunity =()=>{ // 스트리머 아이디로
-        navigate('/Community/'+streaming.userId);
+        navigate('/Home/'+streaming.userId);
     }
 
     const getCategory = (categoryId) => {
