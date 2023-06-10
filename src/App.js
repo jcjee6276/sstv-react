@@ -29,7 +29,7 @@ const App= ()=> {
   const FindInfoId = loadable(()=> import('./pages/user/findInfoId'));
   const FindInfoPasswd = loadable(()=> import('./pages/user/findInfoPasswd'));
   const BlackList = loadable(()=> import('./pages/user/blackListView'));
-  const Insta = loadable(()=> import('./pages/user/blacklistModal'));
+  const FollowList = loadable(()=> import('./pages/user/followListView'));
   
   return (
     <Router>
@@ -59,8 +59,8 @@ const App= ()=> {
         <Route exact path="/admin/streamingBanList" element={<StreamingBanList/>} />
         <Route exact path="/admin/streamingRollBanList" element={<StreamingRollBanList/>} />
         <Route path="/SearchKeyword/:search" element={<SearchKeyword/>} />
-        <Route path="/blacklist" element={<BlackList/>}/>
-        <Route path="/black" element={<Insta/>}/>
+        <Route path="/blacklist/:userId" element={<BlackList/>}/>
+        <Route path="/followlist/:userId" element={<FollowList/>}/>
       </Routes>
     </Router>
     

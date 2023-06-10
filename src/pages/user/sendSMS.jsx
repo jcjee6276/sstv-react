@@ -3,6 +3,7 @@ import React,{useState, useRef, useEffect, useCallback} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {Modal_login_submit_div, Modal_body_id_input, Modal_body_id_div_3, Modal_body_id_div_2, Modal_body_id_div, Modal_title_h4, Modal_title_div_3, Modal_area_1_div, Modal_area_div, Modal_area_layout_div, Modal_area_layout_div_2, Modal_area_layout_div_3, Modal_Content_div, Modal_layout_div, Modal_main_div, Modal_overlay_div, Modal_title_div, Modal_title_div_2, Modal_title_figure, Modal_title_write_div, Modal_body_div, Modal_body_form, Modal_body_lay_div, Modal_body_id_div_1, Modal_body_id_lable, Modal_body_id_input_div, Modal_body_id_input_div_2, Modal_login_submit_div_2, Modal_login_submit_div_3, Modal_login_submit_button_div, Modal_login_submit_noinput_div, Modal_login_submit_input_div, Modal_login_submit_input_button_div, } from '../Mainpage/style';
 import axios from 'axios';
+import { unstable_HistoryRouter } from 'react-router-dom/dist';
 
 const sendSMS = ({onClose, setOnClose}) => {
     const [mouseOver, setMouseOver] = useState(false);
@@ -125,7 +126,6 @@ const sendSMS = ({onClose, setOnClose}) => {
         })
     });
 
-    console.log('userId1 :: '+userId);
     //인증번호 일치여부 확인
     const checkCode = useCallback(()=>{
         axios.post('/user/phoneCheck',{code}).then((response)=>{
@@ -135,7 +135,7 @@ const sendSMS = ({onClose, setOnClose}) => {
                 console.log('phone 2:: '+phone)
             //회원 가입
             if(path === 'addUser'){
-                navigate('/addUser');
+                navigate('/addUser', {state:{phone}});
             }
             
             //아이디 찾기
@@ -233,23 +233,29 @@ const sendSMS = ({onClose, setOnClose}) => {
                                                     <Modal_body_lay_div >
                                                         <Modal_body_id_div>
                                                             <Modal_body_id_div_1>
-                                                                {path !=='findPasswd' && sendSMS !== 'success' ?
-                                                                ''
-                                                                : 
-                                                                <React.Fragment>
-                                                                    <Modal_body_id_div_2>
-                                                                        <Modal_body_id_div_3>
-                                                                            <Modal_body_id_lable>아이디</Modal_body_id_lable>
-                                                                        </Modal_body_id_div_3>
-                                                                    </Modal_body_id_div_2>
-                                                                    <Modal_body_id_input_div>
-                                                                        <Modal_body_id_input_div_2>
-                                                                            <Modal_body_id_input placeholder="회원님의 아이디를 입력해주세요" value={userId} onChange={idCheck} style={{ marginBottom: '20px' }}/>
-                                                                            {userId === null || userId === '' ? '' : findPasswd === 'useNo' ? '':<p style={{ color: 'red' }}>존재하지 않는 회원입니다.</p>}
-                                                                        </Modal_body_id_input_div_2>
-                                                                    </Modal_body_id_input_div>
-                                                                </React.Fragment>
-                                                                }
+                                                            {sendSMS === 'success' ?
+                                                                        ''
+                                                                        :
+                                                                        <>
+                                                                            {path === 'findPasswd' ? (
+                                                                                <>
+                                                                                    <Modal_body_id_div_2>
+                                                                                        <Modal_body_id_div_3>
+                                                                                            <Modal_body_id_lable>아이디</Modal_body_id_lable>
+                                                                                        </Modal_body_id_div_3>
+                                                                                    </Modal_body_id_div_2>
+                                                                                    <Modal_body_id_input_div>
+                                                                                        <Modal_body_id_input_div_2>
+                                                                                            <Modal_body_id_input placeholder="회원님의 아이디를 입력해주세요" value={userId} onChange={idCheck} style={{ marginBottom: '20px' }}/>
+                                                                                            {userId === null || userId === '' ? '' : findPasswd === 'useNo' ? '' : <p style={{ color: 'red' }}>존재하지 않는 회원입니다.</p>}
+                                                                                        </Modal_body_id_input_div_2>
+                                                                                    </Modal_body_id_input_div>
+                                                                                </>
+                                                                            ) : (
+                                                                                ''
+                                                                            )}
+                                                                        </>
+                                                                    }
                                                             {sendSMS !== 'success' ? (
                                                                 <>
                                                                 <Modal_body_id_div_2>

@@ -87,6 +87,7 @@ const UpdateUser = () => {
     setProfilePhoto("base_image");
   }
 
+  console.log('현재 지정된 프로필 사진은 :: '+profilePhoto);
 
   //닉네임 중복체크
   const checkNickDuplicate = useCallback(()=> {
@@ -117,12 +118,9 @@ const saveFile = useCallback(() => {
   const file = inputRef.current.files[0];
 
   if (profilePhoto === '' || profilePhoto === null || profilePhoto === "base_image") {
-    const formData = new FormData();
     const profilePhoto = "base_image";
-    formData.append('userId', userId);
-    formData.append('profilePhoto', profilePhoto);
 
-    axios.post('/user/userUpdate', formData)
+    axios.post('/user/updateUser', {userId, profilePhoto})
       .then((response) => {
         alert('프로필 사진이 변경되었습니다.');
       })
@@ -166,15 +164,35 @@ const saveFile = useCallback(() => {
   const onSubmit = useCallback(() => {
     const coin = 0;
     axios
-      .post("/user/updateUser", {userId, profilePhoto, password, eMail, coin})
+      .post("/user/updateUser", {userId, password, eMail, coin})
       .then((response) => {
         alert("수정 완료!" +userId);
       });
-  }, [profilePhoto, eMail,  userId, password, coin]);
+  }, [eMail,  userId, password, coin]);
 
-  const onBlack1 = () => {
-    navigate('/blacklist');
-  } 
+  //내 정보 관리 탭
+  const onUserInfo = () => {
+    setSelectedTab('userInfo');
+    navigate('/userInfo/'+userId);
+  }
+
+  //블랙리스트 관리 탭
+  const onBlacklist = () => {
+    setSelectedTab('blackList');
+    navigate('/blacklist/'+userId);
+  }
+
+  //팔로우 관리 탭
+  const onFollowlist = () => {
+    setSelectedTab('followList');
+    navigate('/followlist/'+userId);
+  }
+
+  //회원탈퇴 탭
+  const onRmUser = () => {
+    setSelectedTab('removeUser');
+    navigate('/remove/'+userId);
+  }
 
   console.log('현재 선택된 탭은 :: '+selectedTab)
 
@@ -204,19 +222,19 @@ const saveFile = useCallback(() => {
             <User_update_body3>
             <UserinfoTitle>내 정보 관리</UserinfoTitle>
             <Userinfo_tab>
-            <UserInfo_tab2 style={{ backgroundColor: selectedTab === 'userInfo' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={onUserInfo} style={{ backgroundColor: selectedTab === 'userInfo' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>내 정보 관리</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 style={{ backgroundColor: selectedTab === 'followList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={onFollowlist} style={{ backgroundColor: selectedTab === 'followList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>팔로우 관리</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={onBlack1} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>코인 사용내역</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>회원 탈퇴</UserInfo_tab3>
             </UserInfo_tab2>
             </Userinfo_tab>
