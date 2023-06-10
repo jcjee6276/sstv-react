@@ -13,9 +13,11 @@ const loginModal = ({onClose, setOnClose}) => {
     const [mouseOver, setMouseOver] = useState(false);
     const modalRef = useRef(null);
     const [buttonChange, setButtonChange] = useState(false);
-
+    const [findId, setFindId] = useState(false);
+    const [findPasswd, setFindPasswd] = useState(false);
     const {data,revalidate} = useSWR('/user/login', fetcher);
-
+    const [path, setPath] = useState('');
+    const navigate = useNavigate();
     
     
     useEffect(() => {
@@ -54,10 +56,10 @@ const loginModal = ({onClose, setOnClose}) => {
             {userId, password}
         )
         .then((response)=> {
+            alert('response.data' + JSON.stringify(response.data));
             console.log(response.data);
             revalidate();
         })
-        
         
     },[userId, password])
 
@@ -67,6 +69,31 @@ const loginModal = ({onClose, setOnClose}) => {
 
     const handleMouseLeave = () => {
         setMouseOver(false);
+    }
+
+     
+    //아이디 찾기&비밀번호 찾기 이동창 노출
+    const findInfo = () => {
+        setFindId(true);
+        setPassword(true);
+    }
+
+    //아이디 찾기를 위한 휴대폰 인증 화면으로 이동
+    const findIdView = () => {
+        setPath('findId')
+        navigate('/sendSMS/findId');
+    }
+
+    //비밀번호 찾기를 위한 휴대폰 인증 화면으로
+    const findPasswdView =()=> {
+        setPath('findPasswd')
+        navigate('/sendSMS/findPasswd');
+    }
+
+    //회원가입을 위한 휴대폰 인증화면으로
+    const handleClick = () => {
+        setPath('addUser')
+        navigate('/sendSMS/addUser');
     }
 
     // if(!data){
@@ -137,7 +164,16 @@ const loginModal = ({onClose, setOnClose}) => {
 
                                                                 <Modal_body_help_div>
                                                                     <Modal_body_help_a>
-                                                                        <Modal_body_help_p>로그인이 안 되세요?</Modal_body_help_p>
+                                                                    {findId === false ? (
+                                                                        <Modal_body_help_p onClick={findInfo} style={{cursor:'pointer'}}>로그인이 안 되세요?</Modal_body_help_p>
+                                                                         ) : (
+                                                                            <>
+                                                                              <Modal_body_help_p onClick={findIdView} style={{ float: 'left' , cursor:'pointer' }}>아이디 찾기</Modal_body_help_p>
+                                                                              <span style={{ float: 'left', margin: '0 5px' }}>/</span>
+                                                                              <Modal_body_help_p onClick={findPasswdView} style={{ float: 'left', cursor:'pointer' }}>비밀번호 찾기</Modal_body_help_p>
+                                                                            </>
+                                                                          )}
+                                                                          <div style={{ clear: 'both' }}></div>
                                                                     </Modal_body_help_a>
                                                                 </Modal_body_help_div>
 
@@ -170,7 +206,7 @@ const loginModal = ({onClose, setOnClose}) => {
                                                                     {mouseOver === false? 
                                                                     <Modal_signup_content_div>계정이 없으신가요? 회원가입</Modal_signup_content_div>
                                                                     :
-                                                                    <Modal_signup_button_div_over>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
+                                                                    <Modal_signup_button_div_over onClick={handleClick}>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
                                                                     }
                                                                 </Modal_signup_button_div>
                                                             </Modal_signup_button>

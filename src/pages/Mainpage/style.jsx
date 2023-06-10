@@ -95,7 +95,6 @@ margin-right: auto;
 margin-left: auto;
 max-width: 1320px;
 `;
-
 export const Main_second_div = styled.div`
 --bs-blue: #0d6efd;
 --bs-indigo: #6610f2;
@@ -2776,6 +2775,20 @@ z-index: 999;
 position: fixed;
 top: 0px;
 `;
+
+export const Start_Streaming_SelectBox = styled.select`
+width: 200px; 
+padding: .8em .5em; 
+border: 1px solid #999;
+font-family: inherit;  
+background: url('arrow.jpg') no-repeat 95% 50%; 
+border-radius: 0px; 
+-webkit-appearance: none; 
+-moz-appearance: none;
+appearance: none;
+color: white;
+}
+`
 
 export const CHeader_Dark = styled.header`
 color: #555;

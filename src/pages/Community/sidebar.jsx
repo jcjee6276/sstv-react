@@ -11,6 +11,7 @@ import fetcher from '../utils/fetcher';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+
 const sidebar = () => {
     const navigate = useNavigate();
     const [writingUserId, setWritingUserId] = useState('');
@@ -46,7 +47,11 @@ const sidebar = () => {
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
     }
     
-    const image = process.env.PUBLIC_URL+'/img/'+userImage;
+   // const image = 'https://kr.object.ncloudstorage.com/sstv-image/'+userImage;
+    const image = process.env.REACT_APP_IMAGE_URL+userImage;
+
+    console.log(image);
+    
 
     return(
         
@@ -108,6 +113,16 @@ const sidebar = () => {
                     </Sidebar_Body_Streaming>
                 </Sidebar_Body_div>
                 
+                {data === undefined? 
+                 <Sidebar_Writing_Button onClick={()=> {
+                    alert("로그인을 해주세요");
+                 }}>
+                 <FontAwesomeIcon icon={faPencil} style={{color: "#4279ff",}} />
+                     <Sidebar_Writing_Span>
+                     글쓰기
+                     </Sidebar_Writing_Span>
+                 </Sidebar_Writing_Button>
+                : 
                 <Link to={`/writing/${userId}`}>
                 <Sidebar_Writing_Button>
                 <FontAwesomeIcon icon={faPencil} style={{color: "#4279ff",}} />
@@ -116,7 +131,9 @@ const sidebar = () => {
                     </Sidebar_Writing_Span>
                 </Sidebar_Writing_Button>
                 </Link>
+                }
             </Sidebar_Body_article>
+                
             
 
             <Sidebar_footer_article>

@@ -17,23 +17,36 @@ const Community = () => {
     const {userId} = useParams();
     const [blackList, setBlackList] = useState([]);
     const [blackUser, setBlackUser] = useState(false);
+    const [writingList, setWritingList] = useState([]);
     const sessionUser = data?.userId;
     const users = useUserStore((state) => state.users);
     const fetchUsers = useUserStore((state)=> state.fetchUsers);
     console.log("pp"+userId);
+
     useEffect(()=> {
-        axios.get('/fan/getBlackList/'+userId)
+        axios.get('/community/writingList/'+userId)
         .then((response)=> {
-            const black = response.data;
-            setBlackList(black['data']);
+            const jsonData = response.data;
+            setWritingList(jsonData['data']);
         })
-    },[userId])
-    console.log(blackList);
-    for(let i =0; i<blackList.length; i++){
-        if(blackList[i]===sessionUser) {
-            navigate('/');
-        }
+    },[])
+
+    const onClickWriting = () => {
+        navigate(`/Writing/${userId}`);
     }
+    // useEffect(()=> {
+    //     axios.get('/fan/getBlackList/'+userId)
+    //     .then((response)=> {
+    //         const black = response.data;
+    //         setBlackList(black['data']);
+    //     })
+    // },[userId])
+    // console.log(blackList);
+    // for(let i =0; i<blackList.length; i++){
+    //     if(blackList[i]===sessionUser) {
+    //         navigate('/');
+    //     }
+    // }
     console.log("zus+"+users);
     console.log("zusfetch+"+fetchUsers);
     
@@ -184,24 +197,31 @@ const Community = () => {
                                     </Com_main_body_writing_image_button>
 
                                     </Com_main_body_writing_div_3>
+                                
+                                {writingList.slice(0,4).map((list, index)=> {
 
+                                return(
                                     <Com_main_body_writing_list_div>
                                         <Com_main_body_writing_list_ul>
                                             <Com_main_body_writing_list_li>
-                                                <Com_main_body_writing_list_a>
+                                                <Com_main_body_writing_list_a href={'/'+list.writingNo+'/'+userId}>
                                                     <Com_main_body_writing_list_li_div>
                                                         <Com_main_body_writing_list_li_p>
-                                                            <Com_main_body_writing_list_li_span>test</Com_main_body_writing_list_li_span>
+                                                            <Com_main_body_writing_list_li_span >{list.title}</Com_main_body_writing_list_li_span>
                                                         </Com_main_body_writing_list_li_p>
-                                                        <Com_main_body_writing_list_li_em>[0]</Com_main_body_writing_list_li_em>
+                                                        <Com_main_body_writing_list_li_em>[{list.commentCount}]</Com_main_body_writing_list_li_em>
                                                     </Com_main_body_writing_list_li_div>
                                                 </Com_main_body_writing_list_a>
                                                 <Com_main_body_writing_date_div>
-                                                    date ∙ <Com_main_body_writing_show_em>조회 0</Com_main_body_writing_show_em>
+                                                   <Com_main_body_writing_show_em>조회 0</Com_main_body_writing_show_em>
                                                 </Com_main_body_writing_date_div>
                                             </Com_main_body_writing_list_li>
                                         </Com_main_body_writing_list_ul>
                                     </Com_main_body_writing_list_div>
+                                )
+                                })}
+
+                                    
 
                                 </Com_main_body_writing_div_2>
                         </Com_main_body_writing_div>
