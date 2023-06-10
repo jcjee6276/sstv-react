@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import ReactPaginate from 'react-paginate';
 import AdModal from './adModal';
+import UpdateAdCycle from "./updateAdCycle";
 import axios from "axios";
 import Header from './header';
 import Footer from './footer';
 import SideBar from './sidebar';
-import {create} from 'zustand';
-import Modal from 'react-modal';
+
+
 import './style.css';
+import fa from "fontawesome";
 
 
 const Ad = () => {
   const itemsPerPage = 10;
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [updateAdCycleModalIsOpen, setUpdateAdCycleModalIsOpen] = useState(false);
   const [itemOffset, setItemOffset] = useState(0);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [adList, setAdList] = useState([]);
@@ -22,11 +25,27 @@ const Ad = () => {
   //modal
   const openAdModal = (adReq) => {
     setAd(adReq);
-    openModal();
+    setIsOpen(true);
   }
 
-  const openModal = () => {
-    setIsOpen(true);
+  const openUpdateAdCycleModal = () => {
+    setUpdateAdCycleModalIsOpen(true);
+  }
+
+  const handleUpdateAdCycleModal = (data) => {
+    const adCycle = data.adCycle;
+
+    axios.get('http://localhost:3001/ad/updateAdCycle', {
+      params : {
+        adCycle : adCycle
+      }
+    }).then((response) => {
+      if(response.data.result == 'success') {
+        alert('설정되었습니다.');
+      }
+      setUpdateAdCycleModalIsOpen(false);
+    });
+ 
   }
 
   const closeModal = () => {
@@ -103,9 +122,14 @@ const Ad = () => {
             <div className="stop_area">
               <h4><img src="https://res.afreecatv.com/images/help/img_my.jpg" alt="회원 신고목록" /></h4>
             </div>
-            
             <div className="sub_wrap">
               <div className="tb_mylist">
+              <button className="addAdReq-button" onClick={openUpdateAdCycleModal}>광고주기 설정</button>
+              {updateAdCycleModalIsOpen && <UpdateAdCycle 
+              onClose={updateAdCycleModalIsOpen} 
+              setOnClose={setUpdateAdCycleModalIsOpen}
+              onSubmit={handleUpdateAdCycleModal}
+              />}
                 <table cellSpacing="0" cellPadding="0">
                   <colgroup><col width="152"/><col width="*"/><col width="120"/><col width="120"/></colgroup>
                   <thead>

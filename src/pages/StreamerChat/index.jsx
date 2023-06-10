@@ -19,7 +19,6 @@ const Chat = () => {
         const data = response.data
         const result = response.data.result;
         
-  
         if(result == 'success') {
           const streamingData = data.firstData;
           const serviceUrlData = data.secondData;

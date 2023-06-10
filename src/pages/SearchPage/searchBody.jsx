@@ -12,6 +12,7 @@ const searchBody = ({select, setSelect})=>{
     const path = location.pathname.split("/");
     const [community, setCommunity] = useState([]);
     const [userList, setUserList] = useState([]);
+    const [streamingList ,setStreamingList] = useState([]);
     const mainUser = userList[0];
     const imageError = (event) => {
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
@@ -25,11 +26,57 @@ const searchBody = ({select, setSelect})=>{
         .then((response)=>{
             setUserList(response.data['data']);
         })
-    },[])
+        axios.get('http://localhost:3001/streaming/getStreamingList', {
+            params : {
+                searchKeyword : path[2],
+                searchCondition : 0
+            },
+            withCredentials : true
+        }).then((response) => {
+            const data = response.data;
+
+            // alert('data.firstData = ' + JSON.stringify(data.firstData));
+            if(data.result == 'success') {
+                setStreamingList(data.firstData);
+            }
+        });
+    },[]);
+
+    const getStreamingViewPage = async (streamingUserId) => {
+        try {
+            const response = await axios.get('http://localhost:3001/streaming/getStreamingViewerPage',
+                {params : {
+                    streamingUserId : streamingUserId
+                },
+                withCredentials : true
+            });
+
+            const firstData = response.data.result;
+            if(firstData === 'success') {
+                const streaming = response.data.firstData;
+                const serviceUrl = response.data.secondData;
+                
+                navigate(`/chat`, {
+                    state: {
+                        streaming : streaming,
+                        serviceUrl : serviceUrl,
+                        streamingUserId : streamingUserId
+                    }
+                });
+            }else {
+                const firstData = response.data.firstData;
+                if(firstData == '1') {
+                    alert('로그인이 필요합니다.')
+                }else if(firstData == '2') {
+                    alert('해당 스트리머 회원의 블랙리스트에 등록되어있습니다.')
+                }
+            }
+        } catch (error) {
+            alert('[index.jsx getStreamingViewPage] error  = ' + error);
+        }
+      }  
 
     console.log(mainUser);
-    
-
     return(
         <Search_body>
             <Search_body_ground>
@@ -215,42 +262,45 @@ const searchBody = ({select, setSelect})=>{
                         <Live_list>
                             <Live_h4>
                                 <Live_a onClick={()=>setSelect(1)}>생방송</Live_a>
-                                <Live_span>(0건)</Live_span>
+                                <Live_span>({streamingList.length}건)</Live_span>
                                 <Live_img src='https://res.afreecatv.com/images/aftv_search/ico_live.gif'/>
                             </Live_h4>
                         </Live_list>
 
                         <Broad_list>
-                            <Broad_ul>
+                        {streamingList.map((streaming, index) => {
+                            return (
+                                <Broad_ul key={index}>
                                 <Broad_title_li>
-                                    <Broad_img_a>
-                                        <Broad_title_img />
+                                    <Broad_img_a onClick={ () => getStreamingViewPage(streaming.userId)}>
+                                    <Broad_title_img src={streaming.thumnailUrlWithOutAd}></Broad_title_img>
                                     </Broad_img_a>
                                     <Broad_title_a>
-                                        <Broad_title_span>방송제목</Broad_title_span>
+                                    <Broad_title_span>{streaming.streamingTitle}</Broad_title_span>
                                     </Broad_title_a>
                                 </Broad_title_li>
                                 <Broad_streamer_li>
                                     <Broad_streamer_em>정보</Broad_streamer_em>스트리머 명
-                                    <Broad_streamer_a>testUser(testnickname)</Broad_streamer_a>
+                                    <Broad_streamer_a>{streaming.userNickname}</Broad_streamer_a>
                                 </Broad_streamer_li>
                                 <Broad_bs_em>
                                     <Broad_view_li>
-                                        <Broad_info_tit>참여정보</Broad_info_tit>
-                                        <Broad_num_span>
-                                            <Broad_num_em>0</Broad_num_em>
-                                        </Broad_num_span>
-                                        <Broad_line_span>
-                                        방송시작 2023-06-07 17:11
-                                        </Broad_line_span>
+                                    <Broad_info_tit>참여정보</Broad_info_tit>
+                                    <Broad_num_span>
+                                        <Broad_num_em>{streaming.userNickname}</Broad_num_em>
+                                    </Broad_num_span>
+                                    <Broad_line_span>
+                                        방송시작 {streaming.streamingStartTime}
+                                    </Broad_line_span>
                                     </Broad_view_li>
                                 </Broad_bs_em>
+                                </Broad_ul>
+                            );
+                        })}
 
-                                
-                            </Broad_ul>
-
+                            
                             {/* 반복할 부분 */}
-                            <Broad_ul>
+                            {/* <Broad_ul>
                                 <Broad_title_li>
                                     <Broad_img_a>
                                         <Broad_title_img />
@@ -274,9 +324,7 @@ const searchBody = ({select, setSelect})=>{
                                         </Broad_line_span>
                                     </Broad_view_li>
                                 </Broad_bs_em>
-
-                                
-                            </Broad_ul>
+                            </Broad_ul> */}
 
                         </Broad_list>
                         </div>

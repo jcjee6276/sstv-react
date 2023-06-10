@@ -7,13 +7,13 @@ import { faCircleXmark, faCircleExclamation, faFontAwesome, faUserSecret } from 
 import axios from 'axios';
 import useSWR from 'swr'
 import fetcher from '../utils/fetcher';
-const donationModal = ({onClose, setOnClose, donationData, setDonationData}) => {
-    console.log(donationData);
+const donationModal = ({onClose, setOnClose, donationData, setDonationData, streamingData}) => {
+    
     const modalRef = useRef(null);
     const cancleRef = useRef(null);
     const [donationAmount, setDonationAmount] = useState('');
     const [donationContent, setDonationContent] = useState('');
-    const streamingUserId = 'admin';
+    const streamingUserId = streamingData.userId;
     const {data} = useSWR('/user/login', fetcher)
     const userId = data?.userId;
     console.log("model"+donationData);
@@ -53,10 +53,11 @@ const donationModal = ({onClose, setOnClose, donationData, setDonationData}) => 
         
     }
     const onSubmit =()=> {
-
+        console.log("console"+donationAmount, donationContent, userId, streamingUserId);
         axios.post('/donation/addDonation', 
-        {donationAmount, donationContent, userId, streamingUserId})
+        {donationAmount, donationContent, userId, streamingUserId, streamingNo : streamingData.streamingPk, voiceType : 'nara'})
         .then((response)=> {
+            console.log(response.data);
             const jsonData =response.data;
             setDonationData(jsonData['firstData']);
             console.log(donationData);
@@ -81,7 +82,7 @@ const donationModal = ({onClose, setOnClose, donationData, setDonationData}) => 
                 <Send_area>
                     <Gift_at>
                         <Gift_dt>
-                            <Gift_strong>admin(admin)</Gift_strong>님께 선물
+                            <Gift_strong>{data.userNickname}({data.userId})</Gift_strong>님께 선물
                         </Gift_dt>
                         <Gift_dd>
                             <Gift_dd_span>선물할 코인</Gift_dd_span>
@@ -96,11 +97,11 @@ const donationModal = ({onClose, setOnClose, donationData, setDonationData}) => 
                         <ST_dt>보유 코인</ST_dt>
                         <ST_dd>
                             
-                            <ST_dd_span>0</ST_dd_span>
+                            <ST_dd_span>{data.coin}</ST_dd_span>
                     
                             개
                         </ST_dd>
-                        {donationAmount >= 1? 
+                        {donationAmount >= data.coin? 
                         <ST_dd_error>
                             <ST_dd_em><FontAwesomeIcon icon={faCircleExclamation} style={{color: "#e21818",}} /></ST_dd_em>
                             <ST_dd_error_span>보유 코인 부족</ST_dd_error_span>

@@ -10,7 +10,7 @@ const AdModal = ({onClose, setOnClose, data}) => {
     const [mouseOver, setMouseOver] = useState(false);
     const modalRef = useRef(null);
     const [buttonChange, setButtonChange] = useState(false);
-
+    
     useEffect(() => {
         const handler = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -30,7 +30,7 @@ const AdModal = ({onClose, setOnClose, data}) => {
     const handleMouseLeave = () => {
         setMouseOver(false);
     }
-    
+
     return(
         <Modal_main_div >
             <Modal_overlay_div >

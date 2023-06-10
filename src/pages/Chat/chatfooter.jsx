@@ -15,7 +15,7 @@ const chatfooter = (props ) => {
     const {setDonationData} = props.data;
     const {donationData} = props.data;
     const {streaming} = props.data;
-    
+    console.log(props.data)
     //modal
     const [onClose, setOnClose] = useState(false);
     const [openDo, SetOpenDo] = useState(false);
@@ -56,6 +56,7 @@ const chatfooter = (props ) => {
     }
 
     const handleReportModalSubmit = async (data) => {
+        alert('[handleReportModalSubmit] = ' + JSON.stringify(streaming));
         const method = 'POST';
         const url = 'http://localhost:3001/report/addReport';
         const param = {
@@ -121,7 +122,13 @@ const chatfooter = (props ) => {
 
                         <Footer_stream_item_star_li_t>
                             <Footer_stream_item_star_button onClick={openDonation}>
-                            {onClose && <DonationModal onClose={onClose} setOnClose={setOnClose} donationData={donationData} setDonationData={setDonationData}/>}
+                            {onClose && <DonationModal 
+                                onClose={onClose} 
+                                setOnClose={setOnClose} 
+                                donationData={donationData} 
+                                setDonationData={setDonationData}
+                                streamingData={streaming}
+                            />}
                                 <Footer_stream_item_star_em></Footer_stream_item_star_em>
                             </Footer_stream_item_star_button>
                         </Footer_stream_item_star_li_t>

@@ -16,6 +16,39 @@
   top: 0
 }
 
+.addAdReq-button {
+  padding: 10px 30px;
+  font-family: verdana;
+  font-size: 13px;
+  font-weight: bold; /* 글씨의 굵기를 bold로 설정 */
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: #7ba8dd;
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.addAdReq-button:hover {
+  background-color: #e0e0e0; /* 마우스 호버 시 더 어두운 회색으로 변경 */
+}
+
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px; /* 필요에 따라 너비를 조정하세요 */
+  transition: all 0.3s ease; /* 부드러운 전환 효과를 위해 추가합니다 */
+}
+
+@media (max-width: 768px) { /* 필요에 따라 브레이크포인트를 조정하세요 */
+  .sidebar-container {
+    width: 100%; /* 작은 화면에서 사이드바가 전체 너비를 차지하도록 합니다 */
+  }
+}
+
 body {
   margin: 0;
   padding: 0;

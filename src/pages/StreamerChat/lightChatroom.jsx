@@ -65,7 +65,7 @@ const lightChatroom = (props) => {
         if(isCanSubmit) {
             const messageData = {
                 username: data?.userId,
-                room: 'admin',
+                room: streaming.userId,
 
                 message: currentMessage,
                 time: 
