@@ -10,7 +10,10 @@ const App= ()=> {
   const Writing = loadable(()=> import('./pages/Community/Writing'));
   const WritingList = loadable(()=> import('./pages/Community/writingList'));
   const GetWriting = loadable(()=> import('./pages/Community/getWriting'));
-  const Chat = loadable(()=> import('./pages/Chat'))
+  const Chat = loadable(()=> import('./pages/Chat'));
+  const Ticket = loadable(()=> import('./pages/Ticket'));
+  const Exchange = loadable(()=> import('./pages/Exchange'))
+  const Admin = loadable(()=> import('./pages/Admin'))
   return (
     
     <Router>
@@ -23,6 +26,9 @@ const App= ()=> {
         <Route path="/WritingList/:userId" element={<WritingList/>}/>
         <Route path="/:writingNo/:userId" element={<GetWriting/>}/>
         <Route path="/Chat" element={<Chat/>} />
+        <Route path="/Ticket" element={<Ticket/>} />
+        <Route path="/Exchange" element={<Exchange/>} />
+        <Route path="/Admin" element={<Admin/>} />
       </Routes>
     </Router>
     
