@@ -11,7 +11,7 @@ const Chat = () => {
 
     useEffect(() => {
       const fetchData = async () => {
-        const response = await axios.get('http://localhost:3001/streaming/getMyOnGoingStreamingPage',
+        const response = await axios.get(`${process.env.REACT_APP_NODE_URL}/streaming/getMyOnGoingStreamingPage`,
         {
             withCredentials : true
         });

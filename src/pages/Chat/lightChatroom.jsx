@@ -38,7 +38,7 @@ const lightChatroom = (props) => {
     const isCanSubmit = !!currentMessage.replace(/ |\n/g, '');
     const chatboxRef = useRef(null);
     const [mouseOver, setMouseOver] = useState(null);
-    const socket = io('localhost:3001');
+    const socket = io('175.45.200.17:3001');
     const [receivedMessage, setReceiveMessage] = useState(null);
     const [meInput, setMeInput] = useState(false);
     // const [donation, setDonation] = useState(false);

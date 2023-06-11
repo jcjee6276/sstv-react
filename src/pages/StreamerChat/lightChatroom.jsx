@@ -23,7 +23,7 @@ const lightChatroom = (props) => {
     const [scrUpdate, setScrUpdate] = useState(false);
     const [onCloseBanModal, setOnCloseBanModal] = useState(false);
     const [donationData, setDonationData] = useState(false);
-    const socket = io('localhost:3001');
+    const socket = io('175.45.200.17:3001');
     const [banType, setBanType] = useState('');
     const [banContent, setBanContent] = useState('');
     const [receivedMessage, setReceiveMessage] = useState(null);

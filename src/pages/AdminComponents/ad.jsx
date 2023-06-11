@@ -34,8 +34,8 @@ const Ad = () => {
 
   const handleUpdateAdCycleModal = (data) => {
     const adCycle = data.adCycle;
-
-    axios.get('http://localhost:3001/ad/updateAdCycle', {
+    
+    axios.get(`${process.env.REACT_APP_NODE_URL}/ad/updateAdCycle`, {
       params : {
         adCycle : adCycle
       }
@@ -55,7 +55,7 @@ const Ad = () => {
   //광고신청목록 가져오기
   const fetchData = async () => {
     try {
-        const response = await axios.get('http://localhost:3001/ad/getAdList');
+        const response = await axios.get(`${process.env.REACT_APP_NODE_URL}/ad/getAdList`);
         return response.data.firstData;
     } catch (error) {
         console.error(error);

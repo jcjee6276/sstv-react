@@ -24,7 +24,7 @@ const Mainpage = () => {
     useEffect(() => {     
         const fetchStreamingList = async () => {          
             const response = await axios.create({
-              baseURL: 'http://localhost:3001',
+              baseURL: `${process.env.REACT_APP_NODE_URL}`,
               withCredentials : true
             }).get('/streaming/getStreamingList');
           
@@ -71,7 +71,7 @@ const Mainpage = () => {
 
       const getStreamingViewPage = async (streamingUserId) => {
         try {
-            const response = await axios.get('http://localhost:3001/streaming/getStreamingViewerPage',
+            const response = await axios.get(`${process.env.REACT_APP_NODE_URL}/streaming/getStreamingViewerPage`,
                 {params : {
                     streamingUserId : streamingUserId
                 },

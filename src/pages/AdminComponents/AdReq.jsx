@@ -37,7 +37,7 @@ const AdReq = () => {
   //광고신청목록 가져오기
   const fetchData = async () => {
     try {
-        const response = await axios.get('http://localhost:3001/ad/getAdReqList', {
+        const response = await axios.get(`${process.env.REACT_APP_NODE_URL}/ad/getAdReqList`, {
             params : {
                 searchKeyword : searchKeyword,
                 processCode : 0
@@ -62,7 +62,7 @@ const AdReq = () => {
   //광고수락, 광고거절
   const updateAdReqProcessCode = async (adReqNo, processCode) => {
     if(processCode == '2') {
-      await axios.get('http://localhost:3001/ad/updateProcessCode', {
+      await axios.get(`${process.env.REACT_APP_NODE_URL}/ad/updateProcessCode`, {
         params : {
           adReqNo : adReqNo,
           processCode : processCode,
@@ -70,7 +70,7 @@ const AdReq = () => {
         }
       });
     }else {
-      await axios.get('http://localhost:3001/ad/updateProcessCode', {
+      await axios.get(`${process.env.REACT_APP_NODE_URL}/ad/updateProcessCode`, {
         params : {
           adReqNo : adReqNo,
           processCode : processCode,
