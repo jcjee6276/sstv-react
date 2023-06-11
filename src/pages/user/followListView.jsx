@@ -10,11 +10,12 @@ import { useState } from 'react';
 import { useCallback } from 'react';
 
 
-const BlackListView = () => {
-  const [selectedTab, setSelectedTab] = useState('blackList'); 
+const FollowListView = () => {
+  const [selectedTab, setSelectedTab] = useState('followList'); 
   const navigate = useNavigate();
   const [userId, setUserId] = useState('');
-  const [blackList, setBlackList] = useState([]);
+  const [followList, setFollowList] = useState([]);
+  const [followerList, setFollowerList] = useState([]);
   const [pageState, setPageState] = useState('');
   const [searchList, setSearchList] = useState([]);
   const [keyword, setKeyword] = useState('');
@@ -23,6 +24,7 @@ const BlackListView = () => {
     setKeyword(e.target.value);
   });
 
+  //로그인 세션의 아이디 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
       setUserId(response.data.data.userId);
@@ -30,25 +32,44 @@ const BlackListView = () => {
     });
   }, []);
 
+  //세션에 저장된 아이디에 해당하는 팔로우 목록
   useEffect(() => {
-    axios.get('/fan/getBlackList/'+userId).then((response) => {
-      setBlackList(response.data.data);
+    axios.get('/fan/getFollow/'+userId).then((response) => {
+      setFollowList(response.data.data);
     })
   }, [userId, searchList]);
 
-  const handleDelete = (event, blackUser) => {
-    console.log('blackUser:', blackUser);
-    axios.post('/fan/removeBlacklist', { userId, blackUser }).then((response) => {
+  //나를 팔로우하는 회원목록(팔로워)
+  useEffect(() => {
+    const followUser = userId;
+    axios.get('/fan/getFollowing/'+followUser).then((response) => {
+      setFollowerList(response.data.data);
+    })
+  }, [userId]);
+
+  //팔로우 삭제
+  const handleDelete = (event, followUser) => {
+    console.log('FollowUser:', followUser);
+    axios.post('/fan/removeFollow', { userId, followUser }).then((response) => {
       window.location.reload();
     });
   };
 
-  //블랙리스트 등록
-  const handleAdd = (event, blackUser) => {
-    console.log('blackUser:', blackUser);
-    axios.post('/fan/addBlacklist', { userId, blackUser }).then((response) => {
+  //팔로워 삭제
+  const handleDelete2 = (event, followUser) => {
+    console.log('FollowUser:', followUser);
+    axios.post('/fan/removeFollower', { userId, followUser }).then((response) => {
+      window.location.reload();
+    });
+  };
+
+  //팔로우 등록
+  const handleAdd = (event, followUser) => {
+    console.log('userID :: '+userId);
+    console.log('FollowUser:', followUser);
+    axios.post('/fan/addFollow', { userId, followUser }).then((response) => {
       if(response.data.result === 'success'){
-      navigate('/blacklist/'+userId);
+      navigate('/followlist/'+userId);
       window.location.reload();
       }
       if(response.data.result === 'fail'){
@@ -148,10 +169,11 @@ const BlackListView = () => {
                               <List_body_12 style={{
                                       position: 'fixed',
                                       top: '60%',
-                                      left: '40%',
+                                      left: '30%',
                                       transform: 'translate(-50%, -50%)',
                                       zIndex: 9999,
-                                      backgroundColor:'gray'
+                                      backgroundColor:'gray',
+                                      marginRight: '10px'
                                         }}>
                                 <List_body_13 >
                       <List_body_hidden2></List_body_hidden2>
@@ -162,7 +184,7 @@ const BlackListView = () => {
                                           <List_body_16_top_1>
                                             <List_body_16_top_2>
                                               <List_body_16_top_title>
-                                                <List_body_16_top_title2>{pageState === 'search' ? '검색 결과' : '블랙리스트'}</List_body_16_top_title2>
+                                                <List_body_16_top_title2>{pageState === 'search' ? '검색 결과' : '팔로우'}</List_body_16_top_title2>
                                               </List_body_16_top_title>
                                             </List_body_16_top_2>
                                             <List_body_16_top_exit>
@@ -221,10 +243,10 @@ const BlackListView = () => {
                                                                           </List_body_16_bottom_6_title6>
                                                                         </List_body_16_bottom_6_title5>
                                                                       </List_body_16_bottom_6_title4_1>
-                                                                      <List_body_16_bottom_6_title4_2>{selectedTab === 'blackList' ? '' : '.'}</List_body_16_bottom_6_title4_2>
+                                                                      <List_body_16_bottom_6_title4_2>{pageState === 'search' ? '' : '.'}</List_body_16_bottom_6_title4_2>
                                                                       <List_body_16_bottom_6_title4_3>
                                                                         <List_follow_button>
-                                                                          <List_follow_button2>{selectedTab === 'blackList' ? '' : '팔로우'}</List_follow_button2>
+                                                                          <List_follow_button2>{pageState === 'search' ? '' : '팔로우'}</List_follow_button2>
                                                                         </List_follow_button>
                                                                       </List_body_16_bottom_6_title4_3>
                                                                     </List_body_16_bottom_6_title4>
@@ -251,7 +273,7 @@ const BlackListView = () => {
                                               </List_body_16_bottom_1>
                                               ))
                                           ) : (
-                                        blackList.map((user, index) => (
+                                        followList.map((user, index) => (
                                           <List_body_16_bottom_1 key={index} >
                                             <List_body_16_bottom_2>
                                               <List_body_16_bottom_3>
@@ -291,10 +313,10 @@ const BlackListView = () => {
                                                                       </List_body_16_bottom_6_title6>
                                                                     </List_body_16_bottom_6_title5>
                                                                   </List_body_16_bottom_6_title4_1>
-                                                                  <List_body_16_bottom_6_title4_2>{selectedTab === 'blackList' ? '' : '.'}</List_body_16_bottom_6_title4_2>
+                                                                  <List_body_16_bottom_6_title4_2></List_body_16_bottom_6_title4_2>
                                                                   <List_body_16_bottom_6_title4_3>
                                                                     <List_follow_button>
-                                                                      <List_follow_button2>{selectedTab === 'blackList' ? '' : '팔로우'}</List_follow_button2>
+                                                                      <List_follow_button2></List_follow_button2>
                                                                     </List_follow_button>
                                                                   </List_body_16_bottom_6_title4_3>
                                                                 </List_body_16_bottom_6_title4>
@@ -320,7 +342,7 @@ const BlackListView = () => {
                                             </List_body_16_bottom_2>
                                           </List_body_16_bottom_1>
                                           ))
-                                        )}
+                                        )}                                        
                                         </List_body_16_bottom>
                                       </List_body_16>
                                     </List_body_15>
@@ -329,8 +351,118 @@ const BlackListView = () => {
                               </List_body_12>
 
 
+                              <List_body_12 style={{
+                                      position: 'fixed',
+                                      top: '60%',
+                                      right: '20%',
+                                      transform: 'translate(-50%, -50%)',
+                                      zIndex: 9999,
+                                      backgroundColor:'gray',
+                                      marginLeft: '10px'
+                                        }}>
+                                <List_body_13 >
+                      <List_body_hidden2></List_body_hidden2>
+                                  <List_body_14>
+                                    <List_body_15 >
+                                      <List_body_16>
+                                      <List_body_16_top>
+                                          <List_body_16_top_1>
+                                            <List_body_16_top_2>
+                                              <List_body_16_top_title>
+                                                <List_body_16_top_title2>팔로워</List_body_16_top_title2>
+                                              </List_body_16_top_title>
+                                            </List_body_16_top_2>
+                                            <List_body_16_top_exit>
+                                              <List_body_16_top_exit2>
+                                                <List_body_16_top_exit_button>
+                                                  <List_body_16_top_exit_X>
+                                                    <List_body_16_top_exit_X1 >
+                                                      <List_body_16_top_exit_X2></List_body_16_top_exit_X2>
+                                                      <List_body_16_top_exit_X3></List_body_16_top_exit_X3>
+                                                    </List_body_16_top_exit_X1>
+                                                  </List_body_16_top_exit_X>
+                                                </List_body_16_top_exit_button>
+                                              </List_body_16_top_exit2>
+                                            </List_body_16_top_exit>
+                                          </List_body_16_top_1>
+                                        </List_body_16_top>
+                                            <List_body_16_bottom>
+                                        {followerList.map((follower, index) => (
+                                          <List_body_16_bottom_1 key={index} >
+                                            <List_body_16_bottom_2>
+                                              <List_body_16_bottom_3>
+                                                <List_body_16_bottom_4>
+                                                  <List_body_16_bottom_5>
+                                                    <List_body_16_bottom_6>
+                                                      <List_body_16_bottom_6_profile>
+                                                        <List_body_16_bottom_6_profile1>
+                                                          <List_body_16_bottom_6_profile2>
+                                                            <List_body_16_bottom_6_profile3>
+                                                              <List_body_16_bottom_6_profile4>
+                                                                <List_body_16_bottom_6_profile4_1></List_body_16_bottom_6_profile4_1>
+                                                                <List_body_16_bottom_6_profile4_2>
+                                                                <List_body_16_bottom_6_profile_image 
+                                                                src={follower.profilePhoto === 'base_image' ?
+                                                                process.env.PUBLIC_URL + '/img/base_profile.jpg'
+                                                                 :
+                                                                'https://kr.object.ncloudstorage.com/sstv-image/' + follower.profilePhoto}/>
+                                                                </List_body_16_bottom_6_profile4_2>
+                                                              </List_body_16_bottom_6_profile4>
+                                                            </List_body_16_bottom_6_profile3>
+                                                          </List_body_16_bottom_6_profile2>
+                                                        </List_body_16_bottom_6_profile1>
+                                                      </List_body_16_bottom_6_profile>
+                                                      <List_body_16_bottom_6_title>
+                                                        <List_body_16_bottom_6_title1>
+                                                          <List_body_16_bottom_6_title2>
+                                                            <List_body_16_bottom_6_title2_1>
+                                                              <List_body_16_bottom_6_title3>
+                                                                <List_body_16_bottom_6_title4>
+                                                                  <List_body_16_bottom_6_title4_1>
+                                                                    <List_body_16_bottom_6_title5>
+                                                                      <List_body_16_bottom_6_title6>
+                                                                        <List_body_16_bottom_6_title7>
+                                                                          <List_body_16_bottom_6_nickName >{follower.userNickname}</List_body_16_bottom_6_nickName>
+                                                                        </List_body_16_bottom_6_title7>
+                                                                      </List_body_16_bottom_6_title6>
+                                                                    </List_body_16_bottom_6_title5>
+                                                                  </List_body_16_bottom_6_title4_1>
+                                                                  <List_body_16_bottom_6_title4_2>.</List_body_16_bottom_6_title4_2>
+                                                                  <List_body_16_bottom_6_title4_3>
+                                                                    <List_follow_button>
+                                                                      <List_follow_button2 onClick={(event) => handleAdd(event, follower.userId)}>팔로우</List_follow_button2>
+                                                                    </List_follow_button>
+                                                                  </List_body_16_bottom_6_title4_3>
+                                                                </List_body_16_bottom_6_title4>
+                                                              </List_body_16_bottom_6_title3>
+                                                            </List_body_16_bottom_6_title2_1>
+                                                            <List_body_16_bottom_6_title2_2>
+                                                              <List_userName>{follower.userName}</List_userName>
+                                                            </List_body_16_bottom_6_title2_2>
+                                                          </List_body_16_bottom_6_title2>
+                                                        </List_body_16_bottom_6_title1>
+                                                      </List_body_16_bottom_6_title>
+                                                      <List_body_16_bottom_6_cancle>
+                                                        <List_remove>
+                                                            <List_remove2 onClick={(event) => handleDelete2(event, follower.userId)}>삭제</List_remove2>
+                                                        </List_remove>
+                                                      </List_body_16_bottom_6_cancle>
+                                                    </List_body_16_bottom_6>
+                                                  </List_body_16_bottom_5>
+                                                </List_body_16_bottom_4>
+                                              </List_body_16_bottom_3>
+                                            </List_body_16_bottom_2>
+                                          </List_body_16_bottom_1>
+                                        ))}
+                                          </List_body_16_bottom>
+                                      </List_body_16>
+                                    </List_body_15>
+                                  </List_body_14>
+                               </List_body_13>
+                              </List_body_12>
+
 
               </div>
   )
 } 
-export default BlackListView;
+export default FollowListView;

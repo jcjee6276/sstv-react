@@ -259,6 +259,13 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             <MenuItem onClick={()=> {
                                                 navigate('/userInfo/'+userId);
                                             }}>내 정보 관리</MenuItem>
+                                            <MenuItem onClick={()=>{
+                                                navigate('/Exchange');
+                                            }}>결제 및 환전</MenuItem>
+                                            <MenuItem onClick={()=>{
+                                                navigate('/ticket');
+                                            }}>이용권</MenuItem>
+                                            
                                         </Menu>
                                                            
 

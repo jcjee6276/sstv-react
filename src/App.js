@@ -17,7 +17,10 @@ const App= ()=> {
   const Writing = loadable(()=> import('./pages/Community/Writing'));
   const WritingList = loadable(()=> import('./pages/Community/writingList'));
   const GetWriting = loadable(()=> import('./pages/Community/getWriting'));
-  const Chat = loadable(()=> import('./pages/Chat'))
+  const Chat = loadable(()=> import('./pages/Chat'));
+  const Ticket = loadable(()=> import('./pages/Ticket'));
+  const Exchange = loadable(()=> import('./pages/Exchange'))
+  const Admin = loadable(()=> import('./pages/Admin'))
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
   const Test = loadable(()=> import('./pages/SearchPage'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
@@ -29,7 +32,7 @@ const App= ()=> {
   const FindInfoId = loadable(()=> import('./pages/user/findInfoId'));
   const FindInfoPasswd = loadable(()=> import('./pages/user/findInfoPasswd'));
   const BlackList = loadable(()=> import('./pages/user/blackListView'));
-  const Insta = loadable(()=> import('./pages/user/blacklistModal'));
+  const FollowList = loadable(()=> import('./pages/user/followListView'));
   
   return (
     <Router>
@@ -59,8 +62,11 @@ const App= ()=> {
         <Route exact path="/admin/streamingBanList" element={<StreamingBanList/>} />
         <Route exact path="/admin/streamingRollBanList" element={<StreamingRollBanList/>} />
         <Route path="/SearchKeyword/:search" element={<SearchKeyword/>} />
-        <Route path="/blacklist" element={<BlackList/>}/>
-        <Route path="/black" element={<Insta/>}/>
+        <Route path="/blacklist/:userId" element={<BlackList/>}/>
+        <Route path="/followlist/:userId" element={<FollowList/>}/>
+        <Route path="/Ticket" element={<Ticket/>} />
+        <Route path="/Exchange" element={<Exchange/>} />
+        <Route path="/Admin" element={<Admin/>} />
       </Routes>
     </Router>
     

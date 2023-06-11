@@ -20,7 +20,7 @@ import ReactPlayer from 'react-player';
 import ChatDonation from './chatDonation';
 import Chat from '.';
 import { ban, wind } from 'fontawesome';
-import { createBrowserHistory } from 'history';
+// import { createBrowserHistory } from 'history';
 
 
     
@@ -55,7 +55,7 @@ const lightChatroom = (props) => {
     const [openEvent, setOpenEvent] = useState(false);
     const [openList, SetOpenList] = useState(false);
     const [chatDonation, setChatDonation] = useState([]);
-    const history = createBrowserHistory();
+    // const history = createBrowserHistory();
 
     console.log(donationData);
     const OpenChatList = ()=> {
