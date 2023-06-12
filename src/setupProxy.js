@@ -12,9 +12,9 @@ module.exports = function(app) {
   
 
   app.use(
-    '/donation',
+    ['/donation', '/streaming'],
     createProxyMiddleware({
-      target: 'http://175.45.200.17:3001',
+      target: 'http://175.106.99.61:3001',
       changeOrigin: true,
     })
   );

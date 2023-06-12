@@ -102,6 +102,11 @@ function addTicket (ticketProdNo, price){
   .catch((error)=> {
     console.error(error)
   });
+
+  axios.post('/user/addCoinHistory', {userId, ticketProdNo, price: -price})
+  .then((response) => {
+    console.log('구매내역 추가..');
+  });
 }
 
 function updateUserCoin(updateCoin){

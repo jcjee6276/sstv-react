@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 
 export const PurchaseList_div = styled.div`
+position:relactive;
 width: 960px;
 padding: 0;
 margin: 109px auto 0 auto;
@@ -19,9 +20,12 @@ min-height: 100px;
 `;
 
 export const Purchase_table =styled.table`
-width: 100%;
-border-top: 2px solid #62a4be;
+position: absolute;
+top: 350px;
+width: 960px;
+border-top: 2px solid rgb(98, 164, 190);
 border-bottom: 1px solid gray;
+
 `;
 
 export const Colgroup = styled.colgroup`
@@ -106,6 +110,11 @@ export const Tabke_span = styled.span`
     font-size: 16px;
     color: rgb(0, 107, 254);
     text-align: right;
+    &::after{
+      content: "";
+      clear: both;
+      display: block;
+  }
 `;
 export const Purchase_title = styled.h3`
     float:left;

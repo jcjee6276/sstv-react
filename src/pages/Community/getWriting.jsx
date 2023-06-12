@@ -79,6 +79,10 @@ const getWriting = () => {
         setCommentContent(event.target.value);
         
     }
+
+    const ImageError = (event)=> {
+        event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
+    }
     
     const handleSubmit = (event) => {
         
@@ -109,16 +113,16 @@ const getWriting = () => {
                                                         자유게시판
                                                     </Writing_get_bs_header_a>
                                                     <Writing_get_bs_header_h2>
-                                                        {data.title}
+                                                        {data.title }
                                                     </Writing_get_bs_header_h2>
                                                     <Writing_get_bs_header_user_div>
                                                         <Writing_get_bs_header_user_img_div>
-                                                            <Writing_get_bs_header_user_img src={process.env.REACT_APP_IMAGE_URL }/>
+                                                            <Writing_get_bs_header_user_img src={process.env.REACT_APP_IMAGE_URL+data.profilePhoto } onError={ImageError}/>
                                                         </Writing_get_bs_header_user_img_div>
                                                         <Writing_get_bs_header_user_box_div>
                                                             <Writing_get_bs_header_user_button>
                                                                 <Writing_get_bs_header_user_p>
-                                                                    {data.guestUserId} <Writing_get_bs_header_user_em>(nickname)</Writing_get_bs_header_user_em>
+                                                                    {data.guestUserId} <Writing_get_bs_header_user_em></Writing_get_bs_header_user_em>
                                                                 </Writing_get_bs_header_user_p>
                                                             </Writing_get_bs_header_user_button>
                                                             <Writing_get_bs_header_user_date_span>● {data.regDate}</Writing_get_bs_header_user_date_span>
@@ -212,7 +216,7 @@ const getWriting = () => {
                                             {/* </Writing_get_body_listbutton_div_2> */}
                                         </Writing_get_body_listbutton_div>
                                         {/* 내용 밑 버튼 부분 */}
-                                            <Writing_get_footer_section>
+                                            <Writing_get_footer_section id="section">
                                                 <Writing_get_footer_comments_button>
                                                     <Writing_get_footer_comments_span>
                                                     댓글 <Writing_get_footer_comment_count_em>{nocomment === null? 0:comment.length}</Writing_get_footer_comment_count_em>
