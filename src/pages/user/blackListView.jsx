@@ -23,9 +23,15 @@ const BlackListView = () => {
     setKeyword(e.target.value);
   });
 
+  //로그인 세션의 아이디 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
+      if(response.data.data.userId !== undefined){
       setUserId(response.data.data.userId);
+      }
+      if(response.data.data.userId === undefined){
+      setUserId(response.data.data);
+      }
       setPageState('');
     });
   }, []);

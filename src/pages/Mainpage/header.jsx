@@ -30,12 +30,23 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     const [startStreamingIsOpen, setStartStreamingIsOpen] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['NSESSIONID']);
     const {data} = useSWR('/user/login', fetcher);
-    const userId = data?.userId;
+    const [userId, setUserId] = useState('');
     const navigate = useNavigate();
     
+    //userId 값 세팅
+    useEffect(() => {
+        axios.get('/user/login').then((response) => {
+          if(response.data.data.userId !== undefined && response.data.data.userId !== userId){
+          setUserId(response.data.data.userId);
+          }
+          if(response.data.data.userId === undefined && response.data.data !== userId){
+          setUserId(response.data.data);
+          }
+        });
+      }, [userId]);
+
     const onSearch =(e) =>{
-        setSearch(e.target.value);
-        
+        setSearch(e.target.value);        
     }
     
     const searchSubmit = ()=>{
