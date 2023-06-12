@@ -41,7 +41,7 @@ const chatfooter = (props) => {
     }
 
     const handleFinishStreamingOnClick = async () => {
-        const url = 'http://localhost:3001/streaming/finishStreaming';
+        const url = `${process.env.REACT_APP_NODE_URL}/streaming/finishStreaming`;
         const data = {
             streamingUserId : streaming.userId
         }
@@ -53,7 +53,7 @@ const chatfooter = (props) => {
     }
 
     const handleUpdateStreamingTitleAndCategoryModalSubmit = async (data) => {
-        const url = 'http://localhost:3001/streaming/updateStreamingTitleAndCategory';
+        const url = `${process.env.REACT_APP_NODE_URL}/streaming/updateStreamingTitleAndCategory`;
         const param = {
             streamingTitle : data.streamingTitle,
             streamingCategory : data.streamingCategory,

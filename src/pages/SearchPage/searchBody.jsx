@@ -26,7 +26,7 @@ const searchBody = ({select, setSelect})=>{
         .then((response)=>{
             setUserList(response.data['data']);
         })
-        axios.get('http://localhost:3001/streaming/getStreamingList', {
+        axios.get(`${process.env.REACT_APP_NODE_URL}/streaming/getStreamingList`, {
             params : {
                 searchKeyword : path[2],
                 searchCondition : 0
@@ -44,7 +44,7 @@ const searchBody = ({select, setSelect})=>{
 
     const getStreamingViewPage = async (streamingUserId) => {
         try {
-            const response = await axios.get('http://localhost:3001/streaming/getStreamingViewerPage',
+            const response = await axios.get(`${process.env.REACT_APP_NODE_URL}/streaming/getStreamingViewerPage`,
                 {params : {
                     streamingUserId : streamingUserId
                 },

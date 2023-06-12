@@ -43,10 +43,17 @@ const UpdateUser = () => {
   // DB에 저장된 정보 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
+      if(response.data.data.userId !== undefined){
       setUserId(response.data.data.userId);
+      }
+      if(response.data.data.userId === undefined){
+      setUserId(response.data.data);
+      }
     });
   }, []);
   
+  console.log('회원 아이디 :: '+userId);
+
   useEffect(() => {
     if (userId !== '') {
       axios.get('/user/getUser/' +userId).then((response) => {
@@ -194,6 +201,14 @@ const saveFile = useCallback(() => {
     navigate('/remove/'+userId);
   }
 
+  //광고목록 탭
+  // 추가
+  const onAdInfo = () => {
+    setSelectedTab('adInfo');
+    navigate('/adInfo/'+userId);
+  }
+  // 추가
+
   console.log('현재 선택된 탭은 :: '+selectedTab)
 
   return(
@@ -237,6 +252,12 @@ const saveFile = useCallback(() => {
             <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>회원 탈퇴</UserInfo_tab3>
             </UserInfo_tab2>
+
+            {/* 추가 */}
+            <UserInfo_tab2 onClick={onAdInfo} style={{ backgroundColor: selectedTab === 'adInfo' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+              <UserInfo_tab3>내 광고관리</UserInfo_tab3>
+            </UserInfo_tab2>
+            {/* 추가 */}
             </Userinfo_tab>
             <Info_text>회원가입 시 입력한 정보를 조회&수정할 수 있습니다.</Info_text>
             <User_type></User_type>

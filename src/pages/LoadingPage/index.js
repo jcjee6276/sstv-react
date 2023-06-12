@@ -41,14 +41,14 @@ const LoadingPage = () => {
 
   const requestServiceUrl = async () => {
     const getServiceUrlResponse = await axios.create({
-      baseURL : 'http://localhost:3001',
+      baseURL : `${process.env.REACT_APP_NODE_URL}`,
       withCredentials : true
     }).get('/streaming/getServiceUrl');
     
     const result = (JSON.parse(getServiceUrlResponse.data)).result;
     if(result === 'success') {
       const getStreamingResponse = await axios.create({
-        baseURL : 'http://localhost:3001',
+        baseURL : `${process.env.REACT_APP_NODE_URL}`,
         withCredentials : true
       }).get('/streaming/getMyStreamingPage');
 

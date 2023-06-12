@@ -12,8 +12,8 @@ import { async } from "q";
 
 
 const AdReq = () => {
-  const itemsPerPage = 10;
   const [modalIsOpen, setIsOpen] = useState(false);
+  const itemsPerPage = 10;
   const [itemOffset, setItemOffset] = useState(0);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [adReqList, setAdReqList] = useState([]);
@@ -37,7 +37,7 @@ const AdReq = () => {
   //광고신청목록 가져오기
   const fetchData = async () => {
     try {
-        const response = await axios.get('http://localhost:3001/ad/getAdReqList', {
+        const response = await axios.get(`${process.env.REACT_APP_NODE_URL}/ad/getAdReqList`, {
             params : {
                 searchKeyword : searchKeyword,
                 processCode : 0
@@ -62,7 +62,7 @@ const AdReq = () => {
   //광고수락, 광고거절
   const updateAdReqProcessCode = async (adReqNo, processCode) => {
     if(processCode == '2') {
-      await axios.get('http://localhost:3001/ad/updateProcessCode', {
+      await axios.get(`${process.env.REACT_APP_NODE_URL}/ad/updateProcessCode`, {
         params : {
           adReqNo : adReqNo,
           processCode : processCode,
@@ -70,7 +70,7 @@ const AdReq = () => {
         }
       });
     }else {
-      await axios.get('http://localhost:3001/ad/updateProcessCode', {
+      await axios.get(`${process.env.REACT_APP_NODE_URL}/ad/updateProcessCode`, {
         params : {
           adReqNo : adReqNo,
           processCode : processCode,
@@ -92,9 +92,7 @@ const AdReq = () => {
     return (
       <>
         {currentItems.map((adReq) => (
-          
           <tr key={adReq.AD_REQ_NO}>
-            {/* <td onClick={() => openReportModal(report)}>{report.USER_ID}</td> */}
             <td >{adReq.USER_ID}</td>
             <td >{adReq.AD_REQ_DATE}</td>
             <td>{adReq.PAYMENT_COIN}</td>

@@ -37,7 +37,7 @@ const Report = () => {
 
   const fetchData = async () => {
     try {
-        const response = await axios.get('http://localhost:3001/report/getReportList', {
+        const response = await axios.get(`${process.env.REACT_APP_NODE_URL}/report/getReportList`, {
             params : {
                 searchUserType : searchUserType,
                 searchKeyword : searchKeyword
@@ -51,7 +51,7 @@ const Report = () => {
   }
 
   const removeReport = async (reportNo) => {
-    const response =  await axios.get('http://localhost:3001/report/removeReport', {
+    const response =  await axios.get(`${process.env.REACT_APP_NODE_URL}/report/removeReport`, {
       params : {
         reportNo : reportNo
       }

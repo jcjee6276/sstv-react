@@ -69,8 +69,8 @@ const Report = () => {
   }
   
   const getUserList = async () => {
-    const method = 'GET';
-    const url = 'http://localhost:3001/user/getAdminUserList'
+    const method = 'GET';    
+    const url = `${process.env.REACT_APP_NODE_URL}/user/getAdminUserList`;
     const data = {
       searchCondition : searchCondition,
       searchKeyword : searchKeyword
@@ -99,7 +99,7 @@ const Report = () => {
 
   const handleAddStreamingRollBanSubmit = async (data) => {
     const method = 'POST';
-    const url = 'http://localhost:3001/ban/addStreamingRoleBan';
+    const url = `${process.env.REACT_APP_NODE_URL}/ban/addStreamingRoleBan`;
     const param = {
       userId : data.userId,
       banType : data.banType,

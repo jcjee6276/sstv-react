@@ -27,7 +27,12 @@ const FollowListView = () => {
   //로그인 세션의 아이디 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
+      if(response.data.data.userId !== undefined){
       setUserId(response.data.data.userId);
+      }
+      if(response.data.data.userId === undefined){
+      setUserId(response.data.data);
+      }
       setPageState('');
     });
   }, []);
@@ -109,6 +114,14 @@ const FollowListView = () => {
     setSelectedTab('removeUser');
     navigate('/remove/'+userId);
   }
+
+  //광고목록 탭
+  // 추가
+  const onAdInfo = () => {
+    setSelectedTab('adInfo');
+    navigate('/adInfo/'+userId);
+  }
+  // 추가
   
 
   return(
@@ -154,6 +167,12 @@ const FollowListView = () => {
             <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>회원 탈퇴</UserInfo_tab3>
             </UserInfo_tab2>
+
+            {/* 추가 */}
+            <UserInfo_tab2 onClick={onAdInfo} style={{ backgroundColor: selectedTab === 'adInfo' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+              <UserInfo_tab3>내 광고관리</UserInfo_tab3>
+            </UserInfo_tab2>
+            {/* 추가 */}
             </Userinfo_tab>
             <Info_text>회원이 지정한 블랙리스트 회원을 관리할 수 있습니다.</Info_text>
             
