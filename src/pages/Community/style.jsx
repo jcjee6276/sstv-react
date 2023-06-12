@@ -1019,6 +1019,11 @@ position: relative;
 background: none;
 margin-bottom: 0;
 padding-bottom: 0;
+cursor: pointer;
+&:hover{
+  background: #e6edfb;
+  font-weight: bold;
+}
 `;
 
 
@@ -1156,9 +1161,13 @@ text-overflow: ellipsis;
 font-size: 13px;
 word-break: break-all;
 white-space: nowrap;
-background: #e6edfb;
+cursor: pointer;
 color: #000;
 font-weight: bold;
+&:hover{
+  background: #e6edfb;
+}
+
 `;
 
 export const Sidebar_footer_Writing_strong = styled.strong`
@@ -4885,3 +4894,400 @@ margin-left: 6px;
 padding-left: 7px;
 `;
 
+export const Replay_bs_content = styled.div`
+color: #555;
+font-size: 12px;
+line-height: 1.2;
+margin: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+position: relative;
+width: 932px;
+min-height: 900px;
+margin-left: 252px;
+padding: 0 0 0 0;
+z-index: 4;
+`;
+
+export const Reaply_main_article = styled.article`
+color: #555;
+font-size: 12px;
+line-height: 1.2;
+margin: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+display: block;
+position: relative;
+padding: 25px 0 0 48px;
+transition: all .2s ease;
+z-index: 10;
+margin-top: 66px;
+`;
+
+export const Replay_hegiht = styled.div`
+color: #555;
+font-size: 12px;
+line-height: 1.2;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+min-height: 0px;
+`;
+
+export const Replay_vod_section = styled.section`
+color: #555;
+font-size: 12px;
+line-height: 1.2;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+display: block;
+`;
+
+export const Replay_title_vod = styled.div`
+color: #555;
+font-size: 12px;
+line-height: 1.2;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+`;
+
+export const Reaply_title_wrap = styled.div`
+color: #555;
+font-size: 12px;
+line-height: 1.2;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+`;
+
+export const Replay_title_h2 = styled.h2`
+line-height: 1.2;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+color: #000;
+font-size: 28px;
+font-weight: normal;
+word-break: break-all;
+`;
+
+export const Replay_title_section = styled.section`
+color: #555;
+font-size: 12px;
+line-height: 1.2;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+display: block;
+margin-top: 20px;
+padding-bottom: 28px;
+border-bottom: 1px solid #d9dddf;
+`;
+
+export const Replay_title_span = styled.span`
+line-height: 1.2;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+display: flex;
+align-items: center;
+float: left;
+padding-top: 20px;
+color: #666;
+font-size: 13px;
+`;
+
+export const Replay_body_section = styled.section`
+color: #555;
+font-size: 12px;
+line-height: 1.2;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+display: block;
+margin: 0;
+padding: 16px 0 22px 0;
+`;
+
+export const Replay_body_ul = styled.ul`
+color: #555;
+font-size: 12px;
+line-height: 1.2;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+list-style: none;
+-webkit-animation: list-up 0.4s ease;
+width: 884px;
+margin: 0;
+`;
+
+export const Replay_body_li = styled.li`
+color: #555;
+font-size: 12px;
+line-height: 1.2;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+list-style: none;
+float: left;
+position: relative;
+width: 100%;
+min-height: 135px;
+margin: 0;
+padding: 10px 0;
+`;
+
+export const Replay_thum_div = styled.div`
+color: #555;
+list-style: none;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+font-size: 0;
+line-height: 0;
+position: absolute;
+top: 10px;
+left: 8px;
+width: 240px;
+height: 135px;
+`;
+
+export const Replay_thum_a = styled.a`
+list-style: none;
+font-size: 0;
+line-height: 0;
+margin: 0;
+padding: 0;
+border: 0;
+vertical-align: baseline;
+color: inherit;
+font-family: inherit;
+text-decoration: none;
+display: block;
+`;
+
+export const Replay_thum_img = styled.img`
+list-style: none;
+font-size: 0;
+line-height: 0;
+color: inherit;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+border-radius: 4px;
+width: 240px;
+height: 135px;
+`;
+
+export const Replay_thum_span = styled.span`
+list-style: none;
+margin: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+z-index: 5;
+position: absolute;
+bottom: 4px;
+right: 4px;
+background: rgba(34,34,34,0.9);
+height: 18px;
+padding: 0 4px;
+color: #fff;
+font-size: 12px;
+line-height: 18px;
+`;
+
+export const Replay_thum_em = styled.em`
+list-style: none;
+margin: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+font-style: normal;
+font-weight: normal;
+text-decoration: none;
+position: absolute;
+top: 4px;
+left: 4px;
+height: 18px;
+padding: 0 3px;
+border-radius: 3px;
+color: #fff;
+font-size: 12px;
+line-height: 18px;
+z-index: 5;
+background: #1987da;
+`;
+
+export const Replay_body_info = styled.div`
+color: #555;
+font-size: 12px;
+line-height: 1.2;
+list-style: none;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+margin: 7px 0 0 268px;
+padding-left: 0;
+`;
+
+export const Replay_body_p = styled.p`
+list-style: none;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+display: -webkit-box;
+overflow: hidden;
+text-overflow: ellipsis;
+margin: 0 24px 11px 0;
+color: #333;
+line-height: 19px;
+-webkit-box-orient: vertical;
+word-wrap: break-word;
+word-break: break-all;
+font-weight: bold;
+max-height: 19px;
+margin-right: 30px;
+margin-bottom: 8px;
+font-size: 19px;
+-webkit-line-clamp: 1;
+`;
+
+export const Replay_body_a = styled.a`
+list-style: none;
+line-height: 19px;
+word-wrap: break-word;
+word-break: break-all;
+font-weight: bold;
+font-size: 19px;
+margin: 0;
+padding: 0;
+border: 0;
+vertical-align: baseline;
+color: inherit;
+font-family: inherit;
+text-decoration: none;
+display: block;
+`;
+
+export const Replay_body_line = styled.div`
+color: #555;
+list-style: none;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+position: relative;
+font-size: 0;
+line-height: 0;
+`;
+
+export const Replay_line_span =styled.span`
+list-style: none;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+display: inline-block;
+position: relative;
+color: #888;
+line-height: 1.2;
+margin-left: 0;
+font-size: 14px;
+`;
+
+export const Replay_view_em = styled.em`
+list-style: none;
+color: #888;
+margin: 0;
+padding: 0;
+border: 0;
+text-decoration: none;
+display: inline-block;
+background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='rgba(170,170,170,0.999)' stroke='' viewBox='0 0 7 8'%3e%3cpath fill-rule='evenodd' d='M1 1l5 3-5 3V1m0-1C.83 0 .66.043.507.13.194.307 0 .64 0 1v6c0 .36.194.693.507.87C.66 7.957.83 8 1 8c.178 0 .356-.048.514-.143l5-2.999C6.816 4.677 7 4.351 7 4s-.184-.677-.486-.857l-5-3.001C1.356.048 1.178 0 1 0z'/%3e%3c/svg%3e") 0 0 no-repeat;
+background-size: 100% 100%;
+width: 8px;
+height: 9px;
+margin-right: 4px;
+vertical-align: middle;
+font: 0/0 a;
+`;
+
+export const Replay_comment_span = styled.span`
+list-style: none;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+position: relative;
+margin-left: 8px;
+color: #888;
+line-height: 1.2;
+font-size: 14px;
+display: inline-block;
+`;
+
+export const Replay_comment_em = styled.em`
+list-style: none;
+color: #888;
+line-height: 1.2;
+font-size: 14px;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+font-style: normal;
+font-weight: normal;
+text-decoration: none;
+display: inline-block;
+background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='rgba(170,170,170,0.999)' stroke='' viewBox='0 0 14 13'%3e%3cpath fill-rule='evenodd' d='M11.77 10.929H8.793l-.785 1.534-.025.048-.032.044c-.205.284-.538.454-.891.454-.436 0-.819-.246-.998-.632l-.868-1.448H2.246c-1.233 0-2.235-.991-2.235-2.21v-6.52c0-1.219 1.002-2.21 2.235-2.21h9.524c1.233 0 2.236.991 2.236 2.21v6.52c0 1.219-1.003 2.21-2.236 2.21zm1.516-8.73c0-.828-.679-1.499-1.516-1.499H2.246C1.408.7.729 1.371.729 2.199v6.52c0 .828.679 1.499 1.517 1.499h3.358l1.102 1.837c.06.158.206.243.354.243.115 0 .23-.051.306-.157l.985-1.923h3.419c.837 0 1.516-.671 1.516-1.499v-6.52zm-2.302 1.976H3.032c-.199 0-.36-.159-.36-.356 0-.196.161-.355.36-.355h7.952c.198 0 .359.159.359.355 0 .197-.161.356-.359.356zM3.032 5.866h5.346c.199 0 .36.159.36.356 0 .196-.161.355-.36.355H3.032c-.199 0-.36-.159-.36-.355 0-.197.161-.356.36-.356z'/%3e%3c/svg%3e") 0 0 no-repeat;
+background-size: 100% 100%;
+width: 14px;
+height: 13px;
+margin-right: 4px;
+vertical-align: -3px;
+`;
+
+export const Replay_date_span = styled.span`
+list-style: none;
+margin: 0;
+padding: 0;
+border: 0;
+font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
+vertical-align: baseline;
+display: inline-block;
+position: relative;
+margin-left: 8px;
+color: #888;
+line-height: 1.2;
+font-size: 14px;
+`;

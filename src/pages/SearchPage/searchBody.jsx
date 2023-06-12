@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React,{useEffect, useState} from 'react';
-import { Streamer_nickname_span, Streamer_list, Streamer_span, Streamer_a, Streamer_div, Writing_post_con, Writing_list, Writing_span, Writing_a, Writing_h4, Writing_main, Broad_ul, Broad_list, Live_img,Live_span, Live_a, List_list, Com_main_body_vod_1_titleU_em, Replay_info, Replay_img, Replay_list_li, Replay_h2, Notice_dd, Notice_dt, Intro_dd, Follow_dd, Nickname_info_a, Search_Streamer_profile, Search_Streamer_div2, Search_Streamer_div, Search_body, Search_body_ground, Search_main_div, Search_Streamer_img, Streamer_follow_button, Stream_main_div, Search_Streamer_info, Search_info_Nickname, Search_Nickname_a, Search_content, Search_relate, Search_main_con, Search_main_p, Search_profile, Profile_zone, Thumb_area, Nickname_info, Nickname_info2, UserId_div, Follow_dl, Follow_dt, Intro_dl, Intro_dt, Notice_dl, Profile_more, Profile_button, Replay_zone, Replay_nickname, Replay_nickname_a, Replay_list_body, Replay_list_body_2, Replay_list_ul, Replay_thumb_box, Replay_cBox, Replay_cBox_h3, Replay_cBox_a, Replay_comment_count, Replay_detail, Replay_Streamer_nic, Replay_Streamer_nickname, Replay_nickname_span, Replay_box_a, Replay_view_span, Replay_date_span, Live_list, Live_h4, Broad_title_li, Broad_title_a, Broad_title_span, Broad_streamer_li, Broad_streamer_em, Broad_streamer_a, Broad_bs_em, Broad_view_li, Broad_info_tit, Broad_num_span, Broad_num_em, Broad_line_span, Broad_img_a, Broad_title_img, Writing_post_list, Writing_tit, Writing_tit_a, Writing_comment_count, Writing_body, Writing_post_info, Writing_post_info_nic, Writing_post_streamer, Writing_post_date, Writing_view_count, Streamer_h4, Streamer_list_ul, Streamer_list_li, Streamer_thumb_a, Streamer_thumb_span, Streamer_nickname_a, Streamer_userid_em, Streamer_user_li, Streamer_info_em, Streamer_info_a, Streamer_view, Streamer_view_em, Streamer_stack_view, Streamer_stack_time, Streamer_follow_count, Search_keyword, Search_keyword_span } from './style';
+import { Streamer_nickname_span, Streamer_list, Streamer_span, Streamer_a, Streamer_div, Writing_post_con, Writing_list, Writing_span, Writing_a, Writing_h4, Writing_main, Broad_ul, Broad_list, Live_img,Live_span, Live_a, List_list, Com_main_body_vod_1_titleU_em, Replay_info, Replay_img, Replay_list_li, Replay_h2, Notice_dd, Notice_dt, Intro_dd, Follow_dd, Nickname_info_a, Search_Streamer_profile, Search_Streamer_div2, Search_Streamer_div, Search_body, Search_body_ground, Search_main_div, Search_Streamer_img, Streamer_follow_button, Stream_main_div, Search_Streamer_info, Search_info_Nickname, Search_Nickname_a, Search_content, Search_relate, Search_main_con, Search_main_p, Search_profile, Profile_zone, Thumb_area, Nickname_info, Nickname_info2, UserId_div, Follow_dl, Follow_dt, Intro_dl, Intro_dt, Notice_dl, Profile_more, Profile_button, Replay_zone, Replay_nickname, Replay_nickname_a, Replay_list_body, Replay_list_body_2, Replay_list_ul, Replay_thumb_box, Replay_cBox, Replay_cBox_h3, Replay_cBox_a, Replay_comment_count, Replay_detail, Replay_Streamer_nic, Replay_Streamer_nickname, Replay_nickname_span, Replay_box_a, Replay_view_span, Replay_date_span, Live_list, Live_h4, Broad_title_li, Broad_title_a, Broad_title_span, Broad_streamer_li, Broad_streamer_em, Broad_streamer_a, Broad_bs_em, Broad_view_li, Broad_info_tit, Broad_num_span, Broad_num_em, Broad_line_span, Broad_img_a, Broad_title_img, Writing_post_list, Writing_tit, Writing_tit_a, Writing_comment_count, Writing_body, Writing_post_info, Writing_post_info_nic, Writing_post_streamer, Writing_post_date, Writing_view_count, Streamer_h4, Streamer_list_ul, Streamer_list_li, Streamer_thumb_a, Streamer_thumb_span, Streamer_nickname_a, Streamer_userid_em, Streamer_user_li, Streamer_info_em, Streamer_info_a, Streamer_view, Streamer_view_em, Streamer_stack_view, Streamer_stack_time, Streamer_follow_count, Search_keyword, Search_keyword_span, Replay_area_controls, Replay_prev_button } from './style';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { useLocation , useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import replay from '../Community/replay';
 
 const searchBody = ({select, setSelect})=>{
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ const searchBody = ({select, setSelect})=>{
     const [community, setCommunity] = useState([]);
     const [userList, setUserList] = useState([]);
     const [streamingList ,setStreamingList] = useState([]);
+    const [replayList, setReplayList] = useState([]);
     const mainUser = userList[0];
     const imageError = (event) => {
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
@@ -25,6 +27,15 @@ const searchBody = ({select, setSelect})=>{
         axios.get('/user/searchUser/'+path[2])
         .then((response)=>{
             setUserList(response.data['data']);
+        })
+        axios.get('http://localhost:3001/streaming/getStreamingByUserId', {
+            params: {
+                userId: path[2],
+            }
+        })
+        .then((response)=>{
+            console.log(response.data);
+            setReplayList(response.data['firstData']);
         })
         axios.get(`${process.env.REACT_APP_NODE_URL}/streaming/getStreamingList`, {
             params : {
@@ -160,6 +171,8 @@ const searchBody = ({select, setSelect})=>{
                         : null}
                     
                     {select===0?
+
+                    
                         <Replay_zone>
                             <Replay_h2>
                             <Replay_nickname_a onClick={()=>setSelect(2)}>
@@ -167,11 +180,21 @@ const searchBody = ({select, setSelect})=>{
                                 </Replay_nickname_a>
                             </Replay_h2>
                             
+                            {/* <Replay_area_controls>
+                                 <Replay_prev_button>
+                                            dfdfd
+                                </Replay_prev_button>
+                            </Replay_area_controls> */}
+
 
                             <Replay_list_body>
                                 <Replay_list_body_2>
                                     <Replay_list_ul>
+                                    
 
+                                        {replayList.map((replay, i) =>{
+
+                                    return(
                                         <Replay_list_li>
                                             <Replay_thumb_box>
                                                 <Replay_box_a>
@@ -201,12 +224,17 @@ const searchBody = ({select, setSelect})=>{
                                                 </Replay_info>
 
                                             </Replay_cBox>
-                                        </Replay_list_li>
 
+                                            
+
+                                        </Replay_list_li>
+                                    )
+                                   })}
                                     </Replay_list_ul>
                                 </Replay_list_body_2>
                             </Replay_list_body>
                         </Replay_zone>
+                    
                        : select === 2? 
                        <Replay_zone>
                             <Replay_h2>
