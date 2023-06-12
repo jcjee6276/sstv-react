@@ -34,6 +34,7 @@ const App= ()=> {
   const FindInfoPasswd = loadable(()=> import('./pages/user/findInfoPasswd'));
   const BlackList = loadable(()=> import('./pages/user/blackListView'));
   const FollowList = loadable(()=> import('./pages/user/followListView'));
+  const CoinHistory = loadable(()=> import('./pages/user/coinHistory'));
   
   return (
     <Router>
@@ -69,6 +70,7 @@ const App= ()=> {
         <Route path="/Ticket" element={<Ticket/>} />
         <Route path="/Exchange" element={<Exchange/>} />
         <Route path="/Admin" element={<Admin/>} />
+        <Route path="/coinHistory/:userId" element={<CoinHistory/>} />
       </Routes>
     </Router>
     

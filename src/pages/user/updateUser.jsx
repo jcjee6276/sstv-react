@@ -201,6 +201,12 @@ const saveFile = useCallback(() => {
     navigate('/remove/'+userId);
   }
 
+  //코인사용 내역 탭
+  const onCHtab = () => {
+    setSelectedTab('coinHistory');
+    navigate('/coinHistory/'+userId);
+  }
+
   //광고목록 탭
   // 추가
   const onAdInfo = () => {
@@ -246,7 +252,7 @@ const saveFile = useCallback(() => {
             <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>코인 사용내역</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
