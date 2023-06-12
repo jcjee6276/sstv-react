@@ -40,8 +40,7 @@ const AddAd = () => {
     
   const fetchData = async (userId, processCode) => {
     try {
-      // ${process.env.REACT_APP_NODE_URL}
-        const response = await axios.get(`http://localhost:3001/ad/getAdReqList`, {
+        const response = await axios.get(`${process.env.REACT_APP_NODE_URL}/ad/getAdReqList`, {
             params : {
                 searchKeyword : userId,
                 processCode : processCode
@@ -108,8 +107,7 @@ const saveFile = useCallback(() => {
   const formData = new FormData();
   formData.append('file', file);
   
-  //${process.env.REACT_APP_NODE_URL}/ad/addAdReq
-  axios.post(`http://localhost:3001/ad//addAdReq`, formData, {
+  axios.post(`${process.env.REACT_APP_NODE_URL}/ad/addAdReq`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
