@@ -87,7 +87,7 @@ const header = () => {
             <HeaderDiv >
                 <Com_h1 >
                     
-                    <Header_a >
+                    <Header_a href='/'>
                     <img src={process.env.PUBLIC_URL +'/img/SSTV.gif'} width={150} height={65} />
                     </Header_a>
                 </Com_h1>

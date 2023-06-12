@@ -43,6 +43,10 @@ const sidebar = () => {
         navigate(`/writingList/${userId}`);
     }
 
+    const onClickReplayList =() => {
+        navigate(`/replayList/${userId}`);
+    }
+
     const imageError = (event) => {
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
     }
@@ -60,7 +64,7 @@ const sidebar = () => {
         <Sidebar_Div_in>
             <Sidebar_Article_Class>
                 <Sidebar_Section_Class>
-                    <Sidebar_User_a>
+                    <Sidebar_User_a href={'/home/'+writingUserId}>
                         <Sidebar_a_in_div >
                            <Sidebar_Profile src={image} onError={imageError}/>
                         </Sidebar_a_in_div>
@@ -145,7 +149,7 @@ const sidebar = () => {
                     </Sidebar_footer_VOD_h3>
 
                     <Sidebar_footer_VOD_li_ul>
-                        <Sidebar_footer_VOD_li_1>
+                        <Sidebar_footer_VOD_li_1 onClick={onClickReplayList}>
                             <Sidebar_footer_VOD_1_a>다시보기</Sidebar_footer_VOD_1_a>
                         </Sidebar_footer_VOD_li_1>
                     </Sidebar_footer_VOD_li_ul>
