@@ -95,7 +95,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
 
     const logout = useCallback(() => {
         axios.create({
-            baseURL: 'http://localhost:3001',
+            baseURL: `${process.env.REACT_APP_NODE_URL}`,
             withCredentials : true
           }).get('/testLogout');
 
@@ -110,7 +110,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     const setNodeCookie = async () => {
     if(data) {
         const response = await axios.create({
-            baseURL: 'http://localhost:3001',
+            baseURL: `${process.env.REACT_APP_NODE_URL}`,
             withCredentials : true
           }).post('/testLogin', data);    
     }
@@ -124,7 +124,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
 
    const validateStreamingRoll = async () => {
         const response = await axios.create({
-            baseURL: 'http://localhost:3001',
+            baseURL: `${process.env.REACT_APP_NODE_URL}`,
             withCredentials : true
         }).get('/streaming/addStreaming');
 
@@ -138,7 +138,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         const streamingCategory = data.streamingCategory;
 
         const response = await axios.create({
-            baseURL: 'http://localhost:3001',
+            baseURL: `${process.env.REACT_APP_NODE_URL}`,
             withCredentials : true
         }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
         
@@ -270,6 +270,13 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             <MenuItem onClick={()=> {
                                                 navigate('/userInfo/'+userId);
                                             }}>내 정보 관리</MenuItem>
+                                            <MenuItem onClick={()=>{
+                                                navigate('/Exchange');
+                                            }}>결제 및 환전</MenuItem>
+                                            <MenuItem onClick={()=>{
+                                                navigate('/ticket');
+                                            }}>이용권</MenuItem>
+                                            
                                         </Menu>
                                                            
 

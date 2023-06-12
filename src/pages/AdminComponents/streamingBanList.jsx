@@ -42,7 +42,7 @@ const Report = () => {
 
   const fetchData = async () => {
     try {
-        const response = await axios.get('http://localhost:3001/ban/getStreamingBanList', {
+        const response = await axios.get(`${process.env.REACT_APP_NODE_URL}/ban/getStreamingBanList`, {
           params : {
             searchCondition : searchCondition,
             searchKeyword :searchKeyword

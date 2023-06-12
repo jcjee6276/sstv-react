@@ -8,6 +8,7 @@ import AdminStreamingList from './pages/AdminComponents/adminStreamingList';
 import AdminUserList from './pages/AdminComponents/adminUserList';
 import StreamingBanList from './pages/AdminComponents/streamingBanList';
 import StreamingRollBanList from './pages/AdminComponents/streamingRollBanList';
+import AddAd from './pages/AdminComponents/addAd';
 
 const App= ()=> {
   const LogIn = loadable(() => import('./pages/LogIn'));
@@ -17,7 +18,10 @@ const App= ()=> {
   const Writing = loadable(()=> import('./pages/Community/Writing'));
   const WritingList = loadable(()=> import('./pages/Community/writingList'));
   const GetWriting = loadable(()=> import('./pages/Community/getWriting'));
-  const Chat = loadable(()=> import('./pages/Chat'))
+  const Chat = loadable(()=> import('./pages/Chat'));
+  const Ticket = loadable(()=> import('./pages/Ticket'));
+  const Exchange = loadable(()=> import('./pages/Exchange'))
+  const Admin = loadable(()=> import('./pages/Admin'))
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
   const Test = loadable(()=> import('./pages/SearchPage'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
@@ -50,6 +54,7 @@ const App= ()=> {
         <Route path="/userInfo/:userId" element={<UserInfo/>} />
         <Route path="/findInfoId/:userId" element={<FindInfoId/>} />
         <Route path="/findInfoPasswd/:userId" element={<FindInfoPasswd/>} />
+        <Route path="/adInfo/:userId" element={<AddAd/>} />
         <Route path="/LoadingPage" element={<LoadingPage/>} />
         <Route exact path="/admin/ad" element={<Ad/>} />
         <Route exact path="/admin/adReq" element={<AdReq/>} />
@@ -61,6 +66,9 @@ const App= ()=> {
         <Route path="/SearchKeyword/:search" element={<SearchKeyword/>} />
         <Route path="/blacklist/:userId" element={<BlackList/>}/>
         <Route path="/followlist/:userId" element={<FollowList/>}/>
+        <Route path="/Ticket" element={<Ticket/>} />
+        <Route path="/Exchange" element={<Exchange/>} />
+        <Route path="/Admin" element={<Admin/>} />
       </Routes>
     </Router>
     

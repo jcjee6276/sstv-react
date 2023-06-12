@@ -42,7 +42,7 @@ const StreamingRollBanList = () => {
 
   const fetchData = async () => {
     try {
-        const response = await axios.get('http://localhost:3001/ban/getStreamingRollBanList', {
+        const response = await axios.get(`${process.env.REACT_APP_NODE_URL}/ban/getStreamingRollBanList`, {
             params : {
                 searchCondition : searchCondition,
                 searchKeyword : searchKeyword
@@ -57,7 +57,7 @@ const StreamingRollBanList = () => {
   }
 
   const removeStreamingRollBan = async (streamingRollBanNo, userId) => {
-    const response =  await axios.get('http://localhost:3001/ban/removeStreamingRollBan', {
+    const response =  await axios.get(`${process.env.REACT_APP_NODE_URL}/ban/removeStreamingRollBan`, {
       params : {
         streamingRollBanNo : streamingRollBanNo,
         userId : userId

@@ -69,7 +69,8 @@ const AdminStreamingList = () => {
   
   const getStreamingList = async () => {
     const method = 'GET';
-    const url = 'http://localhost:3001/streaming/getAdminStreamingList'
+    
+    const url = `${process.env.REACT_APP_NODE_URL}/ad/getAdList/streaming/getAdminStreamingList`
     const data = {
       searchCondition : searchCondition,
       searchKeyword : searchKeyword
@@ -98,7 +99,7 @@ const AdminStreamingList = () => {
   }
 
   const handleAddStreamingBanModalOnSubmit = async (data) => {
-    const socket = io('localhost:3001');
+    const socket = io(`${process.env.REACT_APP_NODE_URL}`);
     socket.emit('ban_streaming', {
       roomName: streaming.userId, 
       banType : data.banType,
@@ -107,7 +108,7 @@ const AdminStreamingList = () => {
 
     // socket.disconnect();
     // const method = 'POST';
-    // const url = 'http://localhost:3001/ban/addStreamingBan';
+    // const url = '${process.env.REACT_APP_NODE_URL}/ban/addStreamingBan';
     // const param = {
     //   banContent : data.banContent,
     //   banType : data.banType,
