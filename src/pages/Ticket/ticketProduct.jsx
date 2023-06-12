@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { Ticket_list_mt_p, Ticket_desc_use, Ticket_list_mt_div, Ticket_list_date,Ticket_list_date_p,Ticket_list_date_ed,Ticket_list_end,Ticket_list_date_st,
   Ticket_list_start, Ticket_desc_use_btn, Ticket_icon1, Ticket_item_div1, Ticket_desc_strong,Ticket_icon, Ticket_desc_buy, Ticket_desc_buy_btn,
-  Ticket_desc_price_p,Ticket_desc_price, Ticket_desc_li, Ticket_desc_mt_div, Desc_span, Ticket_desc_inner, Ticket_desc_div,Pop_ticket_div,Add_Ticket,Add_at,Add_btn_area,Btn_gift,Btn_cancel,Add_st_span,Add_st_dl,Add_st_dt,Add_st_dd,Add_dt,Add_strong,Add_dd,Add_txt_span,Add_coin_input,Add_count,Modal_div,Add_txt_span_tkName,
-  Ticket_Li, Ticket_name,Ticket_date,Ticket_item_div,H3,SPAN, TicketProduct_div,ReactModal__Overlay,Ticket_title_div ,Ticket_ul ,Ticket_li
+  Ticket_desc_price_p,Ticket_desc_price, Ticket_desc_li, Ticket_desc_mt_div, Desc_span, Ticket_desc_inner,Ticket_desc_inner1, Ticket_desc_div,Pop_ticket_div,Add_Ticket,Add_at,Add_btn_area,Btn_gift,Btn_cancel,Add_st_span,Add_st_dl,Add_st_dt,Add_st_dd,Add_dt,Add_strong,Add_dd,Add_txt_span,Add_coin_input,Add_count,Modal_div,Add_txt_span_tkName,
+  Ticket_Li, Ticket_name,Ticket_date,Blue,Ticket_item_div,H2,H3,SPAN, TicketProduct_div,Tab_sub_wrap,Subtab,Tab_list,Tab_list_T
 } from "./style";
 import Modal from "react-modal";
 import axios from 'axios';
@@ -33,68 +33,70 @@ const TicketProduct = () => {
   // 티켓사용여부를 나타내는 변수
   const [isTicketUsed, setIsTicketUsed] = useState(false);
 
+
   //티켓의 상품정보리스트를 가져오는 변수
   const [ticketProductInfo, setTicketProductInfo] = useState([]);
 
   //보유하고있는 티켓리스트을 나타내는 변수
   const [ticketInfo, setTicketInfo] = useState([]);
 
-  // 이용권 사용하기에 쓰일 변수
+ 
   
 
 
   // 티켓사용 여부를 나타내는 버튼 이벤트
   function onClickTicketUse(ticketNo, ticketUse, ticketName) {
-
+    
     console.log("티켓사용 부분 --------", userId);
     console.log("ticketName:", ticketName);
     console.log("ticketNo:", ticketNo);
-  
-    
-    axios
-      .post("/ticket/useTicket", {
-        ticketNo: ticketNo,
-        userId: userId,
-        ticketName: ticketName,
-      })
-      .then((response) => {
-        const userId = data?.userId;
-        setIsTicketUsed(true);
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.log("Error 실패:", error);
-      });
+    const hasActiveTicket = ticketInfo.some((ticket) => ticket.ticketUse === 1);
+
+    if (!hasActiveTicket) {
+      axios
+        .post("/ticket/useTicket", {
+          ticketNo: ticketNo,
+          userId: userId,
+          ticketName: ticketName
+        })
+        .then((response) => {
+          const userId = data?.userId;
+          setIsTicketUsed(true);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log("Error 실패:", error);
+        });
+    } else {
+      console.log("이미 사용중인 티켓이 존재합니다.");
+      // 이미 사용중인 티켓이 있을 경우에 대한 처리
+    }
   }
-  
-  
 
   
 
   //  구매할때  7,30,365일권 구별해서 구매하는 창으로 가는 페이지
-  const buyButtonClick = (ticketProduct) => {
-    setIsModalOpen(ticketProduct.ticketProdNo); // 모달을 열기 위해 상태를 true로 변경
+  const buyButtonClick = (Product) => {
+    setIsModalOpen(Product.ticketProdNo); // 모달을 열기 위해 상태를 true로 변경
   };
 
 
 
 
   //addTicket 유저아이디 티켓번호 티켓사용날짜 티켓만료날짜   티케사용여부 구매날짜 티켓상품번호 ---------------------------------------------
-function addTicket (ticket){
+function addTicket (ticketProdNo, price){
     const ticketBuy  = {
-       userId:userId
-      ,ticketUse:1
-      ,ticketNo: ticket.ticketNo // ticketNo 값 설정 (자동설정))
-      ,ticketDate:ticket.ticketDate  // 티켓 사용 날짜 설정 (필요한 경우 추가)
-      //,ticketEnd: // 티켓 만료 날짜 설정 (필요한 경우 추가)
-      //,ticketProductNo:  // 티켓 상품 번호 설정 (필요한 경우 추가)
+       userId:userId      
+      ,ticketProdNo:ticketProdNo
+
+
     }
 
   axios.post(`/ticket/addTicket`, ticketBuy )
   .then((response) =>{
-    //const updateCoin =dbCoin - priceInfo; //코인 차감
-    // console.log(updateCoin);
-    // updateUserCoin(updateCoin);
+    const updateCoin =dbCoin - price; //코인 차감
+   console.log(updateCoin);
+    updateUserCoin(updateCoin);
     window.location.reload(); //  구매하는 순간 리로드 
   })
   .catch((error)=> {
@@ -102,6 +104,19 @@ function addTicket (ticket){
   });
 }
 
+function updateUserCoin(updateCoin){
+  axios.post('/user/updateUser', {
+    userId: userId,
+    coin: updateCoin
+  })
+    .then((response) => {
+      console.log("업데이트 성공:", response.data);
+      // 이 부분에 원하는 로직을 추가할 수 있습니다.
+    })
+    .catch((error) => {
+      console.log("Error 실패:", error);
+    });
+}
 
 
 
@@ -134,9 +149,9 @@ function addTicket (ticket){
 
 // 이용권 상품리스트
 useEffect(() => {
-  axios.get('/ticketProduct/getTicketProductAdminList')
+  axios.get('/product/getTicketProductAdminList')
     .then((response) => {
-
+      console.log(response.data['data']);
       const ticketProductData = response.data['data'];
       setTicketProductInfo(ticketProductData);
       //setPriceInfo(response.data.data.price);
@@ -163,8 +178,8 @@ useEffect(() => {
     axios.get(`/ticket/getTicketList/${userId}`)
       .then((response) => {
         setTicketInfo(response.data['data']);
-         // 여기서 데이터 가져올떄부터 0이 나옴..
-        //console.log("데이터 prodNo 넘어오나?"+response.data['data'][0].ticketProdNo);
+      
+        console.log("데이터 prodNo 넘어오나?"+response.data['data'][0].ticketProdNo);
       });
       
   });
@@ -181,15 +196,16 @@ useEffect(() => {
 
     // 이용권 상품 -----------------------------------------------------------------------
     <TicketProduct_div>
+      <H2><Blue>{userId}</Blue> 님의 이용권</H2>
       <H3>이용권 PLUS</H3>
       <SPAN>광고없이 즐기세요</SPAN>
-      {ticketProductInfo.map((ticketProduct, key) => (
-        <Ticket_Li key={ticketProduct.ticketProdNo}>
+      {ticketProductInfo.map((product, key) => (
+        <Ticket_Li key={product.ticketProdNo}>
           <Ticket_item_div>
             <Ticket_name>
-              {ticketProduct.ticketProdNo === 1
+              {product.ticketProdNo === 1
                 ? "7일 이용권"
-                : ticketProduct.ticketProdNo === 2
+                : product.ticketProdNo === 2
                 ? "30일 이용권"
                 : "할인 이용권"}
             </Ticket_name>
@@ -202,9 +218,9 @@ useEffect(() => {
                 <Desc_span></Desc_span>
                 <Ticket_desc_mt_div>
                   <Ticket_desc_strong>
-                    {ticketProduct.ticketProdNo === 1
+                    {product.ticketProdNo === 1
                       ? "7"
-                      : ticketProduct.ticketProdNo === 2
+                      : product.ticketProdNo === 2
                       ? "30"
                       : "365"}
                   </Ticket_desc_strong>
@@ -213,7 +229,7 @@ useEffect(() => {
 
                 {/* 이용권 가격 */}
                 <Ticket_desc_price>
-                  <Ticket_desc_price_p>{ticketProduct.price} 개</Ticket_desc_price_p>
+                  <Ticket_desc_price_p>{product.price} 개</Ticket_desc_price_p>
                 </Ticket_desc_price>
 
                 {/* 이용권 구매하기 Button */}
@@ -221,7 +237,7 @@ useEffect(() => {
                     <Ticket_desc_buy>
                         <Ticket_desc_buy_btn
                             key={key}
-                            onClick={() => buyButtonClick(ticketProduct)}>
+                            onClick={() => buyButtonClick(product)}>
                             구매하기
                         </Ticket_desc_buy_btn>
                     </Ticket_desc_buy>
@@ -230,7 +246,7 @@ useEffect(() => {
 
                 {isModalOpen-1===key&&
                     <Modal 
-                        isOpen={isModalOpen === ticketProduct.ticketProdNo} 
+                        isOpen={isModalOpen === product.ticketProdNo} 
                         onRequestClose={closeModal} 
                         overlayClassName="Overlay"
                           className="modal"
@@ -243,7 +259,7 @@ useEffect(() => {
                                         <Add_strong>
                                             {data?.userId}
                                         </Add_strong>
-                                        님이 구매 {ticketProduct.ticketProdNo}
+                                        님이 구매 
                                     </Add_dt>
                                 </Add_at>
                                 <Add_dd>
@@ -267,11 +283,12 @@ useEffect(() => {
                                 </Add_st_dl>
                                 <Add_dd>
                                     <Add_txt_span>필요한 코인</Add_txt_span>
-                                        <Add_coin_input  value={ticketProduct.price} readOnly></Add_coin_input>
+                                        <Add_coin_input  value={product.price} readOnly></Add_coin_input>
                                     <Add_count>개</Add_count>
                                 </Add_dd>
                                 <Add_btn_area>
-                                    <Btn_gift onClick={() => { addTicket(); closeModal(); }}>
+                                    <Btn_gift onClick={() => {  addTicket(product.ticketProdNo,product.price); closeModal(); }}>
+                                   
                                       구매하기(코인으로)
                                     </Btn_gift>
                                     <Btn_cancel onClick={closeModal}>취소</Btn_cancel>
@@ -290,33 +307,34 @@ useEffect(() => {
 
          <H3>이용권 보유목록</H3>
         <SPAN>이용권은 1개만 사용이 가능하고 중복 사용이 불가능합니다.<br/> 만료시 보유목록에서 사라집니다.</SPAN> 
-             <Ticket_Li>
-                <Ticket_item_div1>
-                  <Ticket_name>보유번호</Ticket_name>
-                </Ticket_item_div1> 
-                <Ticket_desc_div>
-                  <Ticket_desc_inner>
-                    <Ticket_desc_li>
-                      <Ticket_list_date>
-                        <Ticket_list_date_p>구매날짜</Ticket_list_date_p>
-                      </Ticket_list_date>
-                      <Ticket_list_mt_div>
-                        <Ticket_list_mt_p>            
-                          상품명    
-                        </Ticket_list_mt_p>
-                      </Ticket_list_mt_div>
-                      <Ticket_list_start>
-                        <Ticket_list_date_st>시작일</Ticket_list_date_st>
-                      </Ticket_list_start>
-                      <Ticket_list_end>
-                        <Ticket_list_date_ed>만료일</Ticket_list_date_ed>
-                      </Ticket_list_end>
-                        <Ticket_list_end>
-                        <Ticket_list_date_ed>사용여부</Ticket_list_date_ed>
-                        </Ticket_list_end>
-                    </Ticket_desc_li>
-                  </Ticket_desc_inner>
-                </Ticket_desc_div>                       
+       
+        <Ticket_Li>
+          <Ticket_item_div1>
+            <Ticket_name>보유목록</Ticket_name>
+            <Ticket_date>
+            </Ticket_date>  
+          </Ticket_item_div1>
+          <Ticket_desc_div>
+            <Ticket_desc_inner1>
+              <Ticket_desc_li>
+                <Ticket_list_date>
+                  <Ticket_list_date_p>구매날짜</Ticket_list_date_p>
+                </Ticket_list_date>
+                <Ticket_list_mt_div>
+                  <Ticket_list_mt_p> 상품명</Ticket_list_mt_p>
+                </Ticket_list_mt_div>
+                <Ticket_list_start>
+                  <Ticket_list_date_st>시작일</Ticket_list_date_st>
+                </Ticket_list_start>
+                <Ticket_list_end>
+                  <Ticket_list_date_ed>만료일</Ticket_list_date_ed>
+                </Ticket_list_end>
+                <Ticket_list_end>
+                  <Ticket_list_date_ed>사용여부</Ticket_list_date_ed>
+                </Ticket_list_end>
+              </Ticket_desc_li>
+            </Ticket_desc_inner1>
+          </Ticket_desc_div>
         </Ticket_Li>
 
 
@@ -329,12 +347,12 @@ useEffect(() => {
           <Ticket_item_div1>
             <Ticket_name>이용권 보유목록</Ticket_name>
             <Ticket_date>
-                No. {ticket.ticketNo}// {ticket.ticketName} //{ticket.ticketProdNo} 
+              
             </Ticket_date>
             <Ticket_icon1></Ticket_icon1>
           </Ticket_item_div1>
           <Ticket_desc_div>
-            <Ticket_desc_inner>
+            <Ticket_desc_inner1>
               <Ticket_desc_li>
                 <Ticket_list_date>
                   <Ticket_list_date_p>{ticket.ticketDate}</Ticket_list_date_p>
@@ -356,13 +374,12 @@ useEffect(() => {
                       onClick={() => {
                         if (ticket.ticketUse !== 1) {
                           onClickTicketUse(ticket.ticketNo, ticket.ticketUse, ticket.ticketName);
-                        }
-                      }} >
-                    {ticket.ticketUse === 1 ? "사용중" : "사용하기"}{ticket.ticketNo}//{ticket.ticketProdNo}
+                        }}} >
+                    {ticket.ticketUse === 1 ? "사용중" : "사용하기"}
                     </Ticket_desc_use_btn>
                   </Ticket_desc_use>
               </Ticket_desc_li>
-            </Ticket_desc_inner>
+            </Ticket_desc_inner1>
           </Ticket_desc_div>
         </Ticket_Li>
       ))}

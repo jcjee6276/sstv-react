@@ -12,8 +12,8 @@ import { async } from "q";
 
 
 const AdReq = () => {
-  const itemsPerPage = 10;
   const [modalIsOpen, setIsOpen] = useState(false);
+  const itemsPerPage = 10;
   const [itemOffset, setItemOffset] = useState(0);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [adReqList, setAdReqList] = useState([]);
@@ -92,9 +92,7 @@ const AdReq = () => {
     return (
       <>
         {currentItems.map((adReq) => (
-          
           <tr key={adReq.AD_REQ_NO}>
-            {/* <td onClick={() => openReportModal(report)}>{report.USER_ID}</td> */}
             <td >{adReq.USER_ID}</td>
             <td >{adReq.AD_REQ_DATE}</td>
             <td>{adReq.PAYMENT_COIN}</td>
