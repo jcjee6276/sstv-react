@@ -8,6 +8,7 @@ import AdminStreamingList from './pages/AdminComponents/adminStreamingList';
 import AdminUserList from './pages/AdminComponents/adminUserList';
 import StreamingBanList from './pages/AdminComponents/streamingBanList';
 import StreamingRollBanList from './pages/AdminComponents/streamingRollBanList';
+import AddAd from './pages/AdminComponents/addAd';
 
 const App= ()=> {
   const LogIn = loadable(() => import('./pages/LogIn'));
@@ -53,6 +54,7 @@ const App= ()=> {
         <Route path="/userInfo/:userId" element={<UserInfo/>} />
         <Route path="/findInfoId/:userId" element={<FindInfoId/>} />
         <Route path="/findInfoPasswd/:userId" element={<FindInfoPasswd/>} />
+        <Route path="/addAd/:userId" element={<AddAd/>} />
         <Route path="/LoadingPage" element={<LoadingPage/>} />
         <Route exact path="/admin/ad" element={<Ad/>} />
         <Route exact path="/admin/adReq" element={<AdReq/>} />
