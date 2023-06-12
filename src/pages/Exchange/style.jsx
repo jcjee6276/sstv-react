@@ -91,8 +91,9 @@ export const Table_title1 = styled.p`
 display:inline-block;
 float:right;
 text-align:right;
-margin-top:44px;
+margin:44px 0 10px;
 font-weight:900;
+
     &::after{
         content: "";
         clear: both;
@@ -296,3 +297,30 @@ padding: 0;
     background: #fff;
     cursor: default;
  `;
+
+ export const H2 = styled.h2`
+position: relative;
+font-size: 32px;
+color: #000;
+letter-spacing: -1px;
+font-weight: bold;
+margin: 28px 0 20px 0;
+`;
+ export const Blue =styled.span`
+ color: rgb(73, 120, 255);
+`;
+
+export const Purchase_banner_div = styled.div`
+    position:relative;
+    width:101%;
+    height: 100px;
+`;
+export const Purchase_banner_p = styled.div`
+ //background-image: url("img/SSTV.gif");
+ position:abosulte;
+ top: 1000px;
+width:500px;
+height:500px;
+
+ 
+`;

@@ -272,9 +272,9 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             }}>내 정보 관리</MenuItem>
                                             <MenuItem onClick={()=>{
                                                 navigate('/Exchange');
-                                            }}>결제 및 환전</MenuItem>
+                                            }}>결제</MenuItem>
                                             <MenuItem onClick={()=>{
-                                                navigate('/ticket');
+                                                navigate('/ticket1');
                                             }}>이용권</MenuItem>
                                             
                                         </Menu>

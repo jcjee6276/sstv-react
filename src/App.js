@@ -10,6 +10,8 @@ import StreamingBanList from './pages/AdminComponents/streamingBanList';
 import StreamingRollBanList from './pages/AdminComponents/streamingRollBanList';
 import AddAd from './pages/AdminComponents/addAd';
 
+
+
 const App= ()=> {
   const LogIn = loadable(() => import('./pages/LogIn'));
   const Community = loadable(() => import('./pages/Community'));
@@ -20,8 +22,8 @@ const App= ()=> {
   const GetWriting = loadable(()=> import('./pages/Community/getWriting'));
   const Chat = loadable(()=> import('./pages/Chat'));
   const Ticket = loadable(()=> import('./pages/Ticket'));
-  const Exchange = loadable(()=> import('./pages/Exchange'))
-  const Admin = loadable(()=> import('./pages/Admin'))
+  const Exchange = loadable(()=> import('./pages/Exchange'));
+  const Admin = loadable(()=> import('./pages/Admin'));
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
   const Test = loadable(()=> import('./pages/SearchPage'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
@@ -67,7 +69,7 @@ const App= ()=> {
         <Route path="/SearchKeyword/:search" element={<SearchKeyword/>} />
         <Route path="/blacklist/:userId" element={<BlackList/>}/>
         <Route path="/followlist/:userId" element={<FollowList/>}/>
-        <Route path="/Ticket" element={<Ticket/>} />
+        <Route path="/Ticket1" element={<Ticket/>} />
         <Route path="/Exchange" element={<Exchange/>} />
         <Route path="/Admin" element={<Admin/>} />
         <Route path="/coinHistory/:userId" element={<CoinHistory/>} />

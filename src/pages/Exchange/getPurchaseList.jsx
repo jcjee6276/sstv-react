@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Modal,Add_at,Table_title1,Btn_cancel,Tabke_span,Add_st_dd,Btn_gift,Add_btn_area,Add_st_span,Add_dt,Add_coin_input,Add_count,Add_st_dt,Add_st_dl,Add_strong,Add_txt_span,Add_dd,Add_Ticket,Add_txt_span_tkName,Pop_ticket_div,PurchaseList_div,Purchase_title,Purchase_notice_p,Button_div ,Table_td,Table_title,Purchase_table,Colgroup,Table_tr,Table_th,Purchase_button,Col,Table_thead} from "./style";
+import {Modal,Add_at,Table_title1,H2,Blue,Purchase_banner_div,Purchase_banner_p,Btn_cancel,Tabke_span,Add_st_dd,Btn_gift,Add_btn_area,Add_st_span,Add_dt,Add_coin_input,Add_count,Add_st_dt,Add_st_dl,Add_strong,Add_txt_span,Add_dd,Add_Ticket,Add_txt_span_tkName,Pop_ticket_div,PurchaseList_div,Purchase_title,Purchase_notice_p,Button_div ,Table_td,Table_title,Purchase_table,Colgroup,Table_tr,Table_th,Purchase_button,Col,Table_thead} from "./style";
 import axios from 'axios';
 import useSWR from 'swr'
 import fetcher from "../utils/fetcher";
@@ -28,14 +28,7 @@ function Exchange() {
      //  아임포트에서 가저오는 고유한 키값
      const [ imp, setImp] = useState('');
     
-    //  //  아임포트에서 결제한 고유한 키값
-    //  const [merchant,setMerchant] = useState('');
-     
-    //  // 아임포트에서 받아오는 결제 수단 값
-    // const [payMethod, setPayMethod] = useState('');
-
-    // // 아임포트에서 받아오는 결제 금액 값
-    // const [payAmount,setPayAmount] = useState();
+ 
     
 
 
@@ -107,6 +100,7 @@ function onClickPayment() {
           console.log(response.data);
           const updateCoin = dbCoin + purchase.paymentAmount;
           updateUserCoin(updateCoin);
+          window.location.reload();
         })
         .catch((error) => {
           console.error(error);
@@ -179,13 +173,11 @@ function onClickPayment() {
     if (userId !== '') {
       axios.get('/user/getUser/' + userId).then((response) => {
         setDBcoin(response.data.data.coin);
-
+        console.log(response.data.data.coin)
       });
-      axios.get(`/purchase/getPurchaseList/${userId}`)
-      .then((response) => {
+      axios.get('/purchase/getPurchaseList/'+userId).then((response) => {
         const purchaseData = response.data['data'];
         setPurchaseInfo(purchaseData);
-        
         console.log("결제리스트 업데이트되나?"+purchaseInfo);
         console.log("결제List 부분의 데이터" + JSON.stringify(response.data));
       });
@@ -198,8 +190,12 @@ function onClickPayment() {
         
     
   return (
-    
+      
       <PurchaseList_div>
+        <Purchase_banner_div>
+          <Purchase_banner_p></Purchase_banner_p>
+        </Purchase_banner_div>
+           <H2><Blue>{userId}</Blue> 님의 결제내역</H2> 
           <Purchase_title>결제내역</Purchase_title>
           {/* 결제 목록 */}
           <Table_title1>
