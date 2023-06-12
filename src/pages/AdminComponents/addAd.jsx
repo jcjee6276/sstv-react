@@ -6,32 +6,45 @@ import { useEffect } from 'react';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import AdModal from './adModal';
 
 const AddAd = () => {
+  const [selectedTab, setSelectedTab] = useState('adInfo'); 
   const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
-  const [userNickname, setUserNickname] = useState('');
-  const [eMail, setEMail] = useState('');
+  const [modalIsOpen, setIsOpen] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState('');
   const inputRef = useRef(null);
   const [uploadedImage, setUploadedImage] = useState(null);
-  const [dbProfilePhoto, setDbProfilePhoto] = useState('');
-  const [selectedTab, setSelectedTab] = useState('userInfo'); 
-  const [adReqList, setAdReqList] = useState('[]');
+  const [adReqList, setAdReqList] = useState([]);
+  
+  const [myAdList, setMyAdList] = useState([]);
+  const [adReq, setAdReq] = useState([]);
   const navigate = useNavigate();
-  const coin =0;
+
+  const openAdReqModal = (adReq) => {
+    setAdReq(adReq);
+    openModal();
+  }
+
+  const openModal = () => {
+    setIsOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsOpen(false);
+  }
 
   //paginate
   const itemsPerPage = 10;
   const [itemOffset, setItemOffset] = useState(0);
     
-  const fetchData = async () => {
+  const fetchData = async (userId, processCode) => {
     try {
       // ${process.env.REACT_APP_NODE_URL}
         const response = await axios.get(`http://localhost:3001/ad/getAdReqList`, {
             params : {
                 searchKeyword : userId,
-                processCode : 0
+                processCode : processCode
             }
         });
         return response.data.firstData;
@@ -41,20 +54,29 @@ const AddAd = () => {
     }
   }
 
-  const getAdReqList = async () => {
-    const response = await fetchData();
+  const getAdReqList = async (userId, processCode) => {
+    const response = await fetchData(userId, processCode);
     setAdReqList(response);
   }
 
-  // DB에 저장된 정보 가져오기
+  const getMyAdList = async (userId, processCode) =>  {
+    const response = await fetchData(userId, processCode);
+    setMyAdList(response); 
+  }
+
   useEffect(() => {
+    let userId;
+
     axios.get('/user/login').then((response) => {
       setUserId(response.data.data.userId);
-    }).then((response) => {
-      getAdReqList();
+      
+      userId = response.data.data.userId
+    }).then(async (response) => {
+      await getAdReqList(userId, 0);
+      await getMyAdList(userId, 1);
     })
   }, []);
-  
+
   //파일 업로드
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
@@ -127,26 +149,90 @@ const saveFile = useCallback(() => {
     navigate('/remove/'+userId);
   }
 
-  //paginate
+  //광고목록 탭
+  // 추가
+  const onAdInfo = () => {
+    setSelectedTab('adInfo');
+    navigate('/adInfo/'+userId);
+  }
+  // 추가
+
+  //광고신청목록 paginate
   const endOffset = itemOffset + itemsPerPage;
   const currentItems = adReqList.slice(itemOffset, endOffset);
   const pageCount = Math.ceil(adReqList.length / itemsPerPage);
 
+  //내 광고목록 paginate
+  const endOffsetMyAdList = itemOffset + itemsPerPage;
+  const currentItemsMyAdList = myAdList.slice(itemOffset, endOffsetMyAdList);
+  const pageCountMyAdList = Math.ceil(myAdList.length / itemsPerPage);
+
+  const getProcessCode = (processCode) => {
+    let result;
+
+    switch(processCode) {
+      case 0 :
+      result = '심사중'
+      break;
+
+      case 1 :
+      result = '수락'
+      break;
+
+      case 2 :
+      result = '거절'
+      break;
+
+      default :
+      break;
+    }
+
+    return result;
+  }
+
   const AdReqs = ({ currentItems }) => {
-    return (
-      <>
-        {currentItems.map((adReq) => (
-          <tr key={adReq.AD_REQ_NO}>
-            <td >{adReq.USER_ID}</td>
-            <td >{adReq.AD_REQ_DATE}</td>
-            <td>{adReq.PAYMENT_COIN}</td>
-          </tr>
-        ))}
-      </>
-    )
+    if(userId != null && userId != '' && userId != undefined) {
+      return (
+        <>
+          {currentItems.map((adReq) => (
+            <tr key={adReq.AD_REQ_NO}>
+              <td >{adReq.AD_REQ_DATE}</td>
+              <td>{adReq.PAYMENT_COIN}</td>
+              <td>{getProcessCode(adReq.PROCESS_CODE)}</td>
+              <td onClick={() => openAdReqModal(adReq)}>광고 시청</td>
+            </tr>
+          ))}
+        </>
+      )
+    }
+  };
+
+  const MyAds = ({ currentItemsMyAdList }) => {
+    if(userId != null && userId != '' && userId != undefined) {
+      return (
+        <>
+          {currentItemsMyAdList.map((adReq) => (
+            <tr key={adReq.AD_REQ_NO}>
+              <td >{adReq.AD_REQ_DATE}</td>
+              <td>{adReq.PAYMENT_COIN}</td>
+              <td>{adReq.AD_PLAYS_COUNT}</td>
+              <td>{adReq.AD_STREAMING_PLAYS_COUNT}</td>
+              <td>{adReq.AD_TOTAL_VIEWERS}</td>
+              <td onClick={() => openAdReqModal(adReq)}>광고 시청</td>
+            </tr>
+          ))}
+          
+        </>
+      )
+    }
   };
 
   const handlePageClick = (event) => {
+    const newOffset = event.selected * itemsPerPage;
+    setItemOffset(newOffset);
+  };
+
+  const handlePageClickMyAdList = (event) => {
     const newOffset = event.selected * itemsPerPage;
     setItemOffset(newOffset);
   };
@@ -193,6 +279,14 @@ const saveFile = useCallback(() => {
             <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>회원 탈퇴</UserInfo_tab3>
             </UserInfo_tab2>
+
+            {/* 추가 */}
+            <UserInfo_tab2 onClick={onAdInfo} style={{ backgroundColor: selectedTab === 'adInfo' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+              <UserInfo_tab3>내 광고관리</UserInfo_tab3>
+            </UserInfo_tab2>
+            {/* 추가 */}
+            
+
             </Userinfo_tab>
             <Info_text>회원가입 시 입력한 정보를 조회&수정할 수 있습니다.</Info_text>
             <User_type></User_type>
@@ -245,18 +339,16 @@ const saveFile = useCallback(() => {
               </Profile_box2>
             </Profile_box>
 
-              <Update_user_title>내 광고목록</Update_user_title>
+              <Update_user_title>광고 신청목록</Update_user_title>
               <div className="sub_wrap">
               <div className="tb_mylist">
                 <table cellSpacing="0" cellPadding="0">
                   <colgroup><col width="152"/><col width="*"/><col width="120"/><col width="120"/></colgroup>
                   <thead>
                     <tr>
-                      <th>신청회원ID</th>
                       <th>신청날짜</th>
                       <th>지불 코인</th>
-                      <th>수락</th>
-                      <th>거절</th>
+                      <th>처리 상태</th>
                       <th>광고시청</th>
                     </tr>
                   </thead>
@@ -264,8 +356,8 @@ const saveFile = useCallback(() => {
                     <AdReqs currentItems={currentItems} />
                   </tbody>
                 </table>
-                {/* {modalIsOpen && <AdModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {adReq}/>} */}
               </div>
+              {modalIsOpen && <AdModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {adReq}/>}
               <ReactPaginate
                 breakLabel="..."
                 nextLabel=">"
@@ -277,13 +369,37 @@ const saveFile = useCallback(() => {
               />
             </div>
 
-
-              {/* <Update_user_box> */}  
-              {/* </Update_user_box> */}
-              <Update_submit_button>
-                <UpdateUser_submit_button>확인</UpdateUser_submit_button>
-              </Update_submit_button>
-            {/* </Update_form> */}
+            <Update_user_title>내 광고목록</Update_user_title>
+              <div className="sub_wrap">
+              <div className="tb_mylist">
+                <table cellSpacing="0" cellPadding="0">
+                  <colgroup><col width="152"/><col width="*"/><col width="120"/><col width="120"/></colgroup>
+                  <thead>
+                    <tr>
+                      <th>신청날짜</th>
+                      <th>지불 코인</th>
+                      <th>광고 재생횟수</th>
+                      <th>송출된 스트리밍수</th>
+                      <th>시청한 회원</th>
+                      <th>광고시청</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <MyAds currentItemsMyAdList={currentItemsMyAdList} />
+                  </tbody>
+                </table>
+              </div>
+              {modalIsOpen && <AdModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {adReq}/>}
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel=">"
+                onPageChange={handlePageClickMyAdList}
+                pageRangeDisplayed={5}
+                pageCount={pageCountMyAdList}
+                previousLabel="<"
+                renderOnZeroPageCount={null}
+              />
+            </div>
             </User_update_body3>
           </User_update_body2>
 

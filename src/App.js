@@ -54,7 +54,7 @@ const App= ()=> {
         <Route path="/userInfo/:userId" element={<UserInfo/>} />
         <Route path="/findInfoId/:userId" element={<FindInfoId/>} />
         <Route path="/findInfoPasswd/:userId" element={<FindInfoPasswd/>} />
-        <Route path="/addAd/:userId" element={<AddAd/>} />
+        <Route path="/adInfo/:userId" element={<AddAd/>} />
         <Route path="/LoadingPage" element={<LoadingPage/>} />
         <Route exact path="/admin/ad" element={<Ad/>} />
         <Route exact path="/admin/adReq" element={<AdReq/>} />
