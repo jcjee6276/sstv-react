@@ -178,7 +178,6 @@ const GetExchangeList = () =>{
                                         setCoinAmount(amount);
                                       }}
                                     />
-                                    
                                     </Add_txt_span_tkName>
                                     
                                 </Add_dd>

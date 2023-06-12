@@ -8,7 +8,14 @@ export const  TicketProduct_div =styled.div`
     background-color: 1px soild #000;
 `;
 
-
+export const H2 = styled.h2`
+position: relative;
+font-size: 32px;
+color: #000;
+letter-spacing: -1px;
+font-weight: bold;
+margin: 28px 0 20px 0;
+`;
 
 export const H3 = styled.h3`
 position: relative;
@@ -18,7 +25,9 @@ letter-spacing: -1px;
 font-weight: bold;
 margin: 28px 0 20px 0;
 `;
-
+export const Blue = styled.span`
+color: rgb(73, 120, 255);
+`;
 export const SPAN = styled.span`
 display: block;
 padding: 16px 0 8px;
@@ -237,7 +246,7 @@ width:20%;
 export  const Ticket_list_start = styled.div`
 display: inline-block;
 zoom: 1;
-width:15%;
+width:13%;
 margin-left:23px;
 `;
 //사용만료
@@ -298,7 +307,7 @@ export const Ticket_list_mt_div = styled.div`
 `;
 export const Ticket_desc_use = styled.div`
 position: absolute;
-top: 8px;
+top: -11px;
 right: 6px;
 width: auto;
 margin: 0;
@@ -476,3 +485,34 @@ padding: 0;
  list-style: none;
  margin-bottom: 15px;
  `;
+
+
+
+ //구매날짜---------------------------------- 이부분2222222
+export const Tab_sub_wrap =  styled.div`
+    width: 960px;
+    margin-top: 25px;
+    position: relative;
+  
+`;
+export const Subtab = styled.ul`
+width: 100%;
+overflow: hidden;
+height:100px;
+background-color: rgb(56, 203, 21);
+`;
+
+export const Tab_list = styled.li`
+padding-bottom: 2px;
+float: left;
+width: 16%;
+height:100px;
+display:inline-block;
+border: 1px solid #fff;
+color:#fff;
+font-size: 16px;
+`;
+
+export const Ticket_desc_inner1 = styled.div`
+padding: 50px 33px 0 33px;
+`;
