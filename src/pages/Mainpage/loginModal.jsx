@@ -96,6 +96,36 @@ const loginModal = ({onClose, setOnClose}) => {
         navigate('/sendSMS/addUser');
     }
 
+    //네이버 로그인
+    const naver_login = () => {
+        window.location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=oxyovmQ_xk_uAaUdHUKu&redirect_uri=http://192.168.0.21:8080/user/naverLogin&state=access_Token";
+        // axios.get('/user/login').then((response)=> {
+        //     if (response.data.data !== null) {
+        //         window.location.replace ("/"); // 메인 페이지로 이동
+        //       } else {
+        //         alert('로그인 실패!');
+        //       }
+        // })
+
+        // axios.get("/authorize?response_type=code&client_id=oxyovmQ_xk_uAaUdHUKu&"+"redirect_uri="+"/user/naverLogin&state=access_Token")
+        // .then((response)=> {
+        //     if(response.data.data !== null){
+        //         console.log('유저 정보 :: '+response.data.data);
+        //         navigate('/');
+        //     }
+        //     if(response.data.data === null){
+        //         alert('로그인 실패!');
+        //     }
+        // })
+  }
+
+    //카카오 로그인
+    const kakao_login = () => {
+        window.location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=73b235263e9c55fb4e85a97648c1c0de&redirect_uri=http://192.168.0.21:8080/user/kakaoLogin&prompt=login"
+    }
+
+
+
     // if(!data){
     //     return <Header data={data}/>
     // }
@@ -199,12 +229,15 @@ const loginModal = ({onClose, setOnClose}) => {
                                                                         } 
                                                             </Modal_login_submit_div_2>
                                                         </Modal_login_submit_div>
-
+                                                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop:'20px' }}>
+                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'kakao_login.png'} style={{ width: '220px', height: '50px', cursor:'pointer' }} onClick={kakao_login}/>
+                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'naver_login.png'} style={{ width: '220px', height: '50px', cursor:'pointer' }} onClick={naver_login}/>
+                                                                        </div>
                                                         <Modal_signup_nav_div>
                                                             <Modal_signup_button>
                                                                 <Modal_signup_button_div onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
                                                                     {mouseOver === false? 
-                                                                    <Modal_signup_content_div>계정이 없으신가요? 회원가입</Modal_signup_content_div>
+                                                                    <Modal_signup_content_div >계정이 없으신가요? 회원가입</Modal_signup_content_div>
                                                                     :
                                                                     <Modal_signup_button_div_over onClick={handleClick}>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
                                                                     }

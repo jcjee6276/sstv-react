@@ -43,10 +43,17 @@ const UpdateUser = () => {
   // DB에 저장된 정보 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
+      if(response.data.data.userId !== undefined){
       setUserId(response.data.data.userId);
+      }
+      if(response.data.data.userId === undefined){
+      setUserId(response.data.data);
+      }
     });
   }, []);
   
+  console.log('회원 아이디 :: '+userId);
+
   useEffect(() => {
     if (userId !== '') {
       axios.get('/user/getUser/' +userId).then((response) => {
