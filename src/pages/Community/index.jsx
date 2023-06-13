@@ -20,8 +20,9 @@ const Community = () => {
     const [blackUser, setBlackUser] = useState(false);
     const [writingList, setWritingList] = useState([]);
     const sessionUser = data?.userId;
-    const users = useUserStore((state) => state.users);
-    const fetchUsers = useUserStore((state)=> state.fetchUsers);
+    const [replayList, setReplayList] = useState([]);
+    
+
     console.log("pp"+userId);
 
     useEffect(()=> {
@@ -36,9 +37,18 @@ const Community = () => {
             setNotice(jsonData['data']);
             
         })
+        axios.get('/streaming/getStreamingByUserId', {
+            params: {
+                userId: userId,
+            }
+        })
+        .then((response)=>{
+            setReplayList(response.data['firstData']);
+            
+        })
     },[])
     console.log(notice);
-
+    console.log(replayList);
 
 
     const onClickWriting = () => {
@@ -90,11 +100,11 @@ const Community = () => {
                                             <Com_main_body_vod_1_time_span>10:00:00</Com_main_body_vod_1_time_span>
                                         </Com_main_body_vod_1_span>
                                         <Com_main_body_vod_1_title_div>
-                                            <Com_main_body_vod_1_title_p>test Title</Com_main_body_vod_1_title_p>
+                                            <Com_main_body_vod_1_title_p>{replayList[0]?.STREAMING_TITLE}</Com_main_body_vod_1_title_p>
                                             <Com_main_body_vod_1_titleU_div>
                                                 <Com_main_body_vod_1_titleU_span>
                                                     <Com_main_body_vod_1_titleU_em></Com_main_body_vod_1_titleU_em>
-                                                    223
+                                                    {replayList[0]?.TOTAL_STREAMING_VIEWER}
                                                 </Com_main_body_vod_1_titleU_span>
                                                 <Com_main_body_vod_1_titleU_2_span>
                                                    ● 2023-05-27
@@ -201,7 +211,7 @@ const Community = () => {
                                         </Com_main_body_writing_div_4>
 
                                         <Com_main_body_writing_image_div>
-                                        <Com_main_body_writing_image_a>
+                                        <Com_main_body_writing_image_a >
                                             <Com_main_body_writing_image_img src={process.env.PUBLIC_URL+'/img/notice.png'}/>
                                         </Com_main_body_writing_image_a>
                                     </Com_main_body_writing_image_div>
@@ -225,7 +235,7 @@ const Community = () => {
                                             <Com_main_body_writing_title_div>
                                                 <Com_main_body_writing_a >
                                                     <Com_main_body_writing_title_strong>등록된 공지사항이 없습니다.</Com_main_body_writing_title_strong>
-                                                    <Com_main_body_writing_title_p> <div dangerouslySetInnerHTML={{ __html: notice?.content }} /></Com_main_body_writing_title_p>
+                                                    <Com_main_body_writing_title_p></Com_main_body_writing_title_p>
                                                 </Com_main_body_writing_a>
                                             </Com_main_body_writing_title_div>
 

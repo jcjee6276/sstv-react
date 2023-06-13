@@ -12,7 +12,7 @@ const replay = ()=> {
     const {userId} = useParams();
     console.log("home?"+userId)
     useEffect(()=> {
-        axios.get('http://localhost:3001/streaming/getStreamingByUserId', {
+        axios.get('/streaming/getStreamingByUserId', {
             params: {
                 userId: userId,
             }
