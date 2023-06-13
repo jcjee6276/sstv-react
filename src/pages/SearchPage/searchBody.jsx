@@ -16,6 +16,8 @@ const searchBody = ({select, setSelect})=>{
     const [streamingList ,setStreamingList] = useState([]);
     const [replayList, setReplayList] = useState([]);
     const mainUser = userList[0];
+    const [notice, setNotice] = useState('');
+    
     const imageError = (event) => {
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
     }
@@ -27,6 +29,7 @@ const searchBody = ({select, setSelect})=>{
         axios.get('/user/searchUser/'+path[2])
         .then((response)=>{
             setUserList(response.data['data']);
+            getNotice(response.data?.data[0]?.userId)
         })
         axios.get('http://localhost:3001/streaming/getStreamingByUserId', {
             params: {
@@ -51,7 +54,17 @@ const searchBody = ({select, setSelect})=>{
                 setStreamingList(data.firstData);
             }
         });
+        
     },[]);
+    
+    const getNotice = (userId)=>{
+        axios.get('/community/getNotice/'+userId)
+        .then((response)=>{
+            console.log(response.data);
+            setNotice(response.data);
+        })
+    }
+    console.log(mainUser)
 
     const getStreamingViewPage = async (streamingUserId) => {
         try {
@@ -87,7 +100,7 @@ const searchBody = ({select, setSelect})=>{
         }
       }  
 
-    console.log(mainUser);
+    console.log(notice);
     return(
         <Search_body>
             <Search_body_ground>
@@ -157,7 +170,12 @@ const searchBody = ({select, setSelect})=>{
                                 </Intro_dl>
                                 <Notice_dl>
                                     <Notice_dt>공지</Notice_dt>
-                                    <Notice_dd>고고</Notice_dd>
+                                    {notice?.data?.notice?
+                                    <Notice_dd onClick={()=>{
+                                        navigate('/'+notice?.data?.writingNo+'/'+notice?.data?.hostUserId)
+                                    }}>{notice?.data?.title}</Notice_dd>
+                                    :
+                                    null}
                                 </Notice_dl>
                             </Nickname_info>
                             <Profile_more>

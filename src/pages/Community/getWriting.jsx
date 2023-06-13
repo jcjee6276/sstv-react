@@ -174,7 +174,9 @@ const [agreeOpen, setAgreeOpen] = useState(false);
                                                 <MenuItem onClick={addNotice}>&nbsp;공지등록</MenuItem>
                                                 :null}
                                                 {userData?.userId===data?.guestUserId? 
-                                                <MenuItem onClick={handleClose}>&nbsp;&nbsp;글 수정</MenuItem>
+                                                <MenuItem onClick={()=>{
+                                                    navigate('/')
+                                                }}>&nbsp;&nbsp;글 수정</MenuItem>
                                                 :null}
                                                 <Button variant="text" onClick={handleClickOpen} >
                                                 <MenuItem onClick={deleteOpen}>글 삭제</MenuItem>

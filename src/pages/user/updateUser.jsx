@@ -5,6 +5,9 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from './header';
+import RmUser from './removeUser';
+import BlackList from './blackListView';
 
 const UpdateUser = () => {
   const [userId, setUserId] = useState('');
@@ -27,6 +30,22 @@ const UpdateUser = () => {
   const navigate = useNavigate();
   const coin =0;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpenBlackModal, setIsOpenBlackModal] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
+
+  const openBlackModal = () => {
+    setIsOpenBlackModal(true);
+  }
+
+  const closeBlackModal = () => {
+    setIsOpenBlackModal(false);
+  }
   
   const onChangePassword = useCallback((e) => {
     setPassword(e.target.value);
@@ -43,10 +62,10 @@ const UpdateUser = () => {
   // DB에 저장된 정보 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
-      if(response.data.data.userId !== undefined){
+      if(response.data.data?.userId !== userId){
       setUserId(response.data.data.userId);
       }
-      if(response.data.data.userId === undefined){
+      if(response.data.data?.userId === userId){
       setUserId(response.data.data);
       }
     });
@@ -223,9 +242,9 @@ const saveFile = useCallback(() => {
     {/* header */}
       <User_update_header>
         <User_update_header_2>
-          <User_update_logo>
-          <img src={process.env.PUBLIC_URL +'/img/SSTV.gif'} width={150} height={65} onClick={()=> {navigate('/');}} style={{ cursor: 'pointer' }}/>
-          </User_update_logo>
+          <div>
+        <Header/>
+        </div>
           <User_update_title>
       <User_update_subTitle>
           개인정보
@@ -249,13 +268,15 @@ const saveFile = useCallback(() => {
             <UserInfo_tab2 onClick={onFollowlist} style={{ backgroundColor: selectedTab === 'followList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>팔로우 관리</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={openBlackModal} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            {isOpenBlackModal && <BlackList onClose={isOpenBlackModal} setOnClose={setIsOpenBlackModal}/> }
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>코인 사용내역</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={openModal} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+              {isModalOpen && <RmUser onClose={isModalOpen} setOnClose={setIsModalOpen}/> }
               <UserInfo_tab3>회원 탈퇴</UserInfo_tab3>
             </UserInfo_tab2>
 
@@ -275,7 +296,7 @@ const saveFile = useCallback(() => {
                     <Profile_photo>
                       <Profile_photo2>
                         <Profile_photo3 onClick={handleClick} style={{ cursor: 'pointer' }}>
-                        {dbProfilePhoto === "base_image" || profilePhoto === "base_image" ? (
+                        {/* {dbProfilePhoto === "base_image" || profilePhoto === "base_image" ? (
                           <img 
                           src={process.env.PUBLIC_URL + '/img/base_profile.jpg'}
                           alt="Profile"
@@ -299,7 +320,7 @@ const saveFile = useCallback(() => {
                             height={150}
                             style={{ borderRadius: '50%' }}
                           />
-                        )}
+                        )} */}
 
                         </Profile_photo3>
                       </Profile_photo2>

@@ -18,6 +18,15 @@ const loginModal = ({onClose, setOnClose}) => {
     const {data,revalidate} = useSWR('/user/login', fetcher);
     const [path, setPath] = useState('');
     const navigate = useNavigate();
+    const [addUserOpen, setAddUserOpen] = useState(false);
+    const [smsClose, setSmsClose] = useState(false);
+    const openAddUser = () => {
+        setPath('addUser');
+        setAddUserOpen(true);
+    }
+    const closeAddUser = () => {
+        setAddUserOpen(false);
+    }
     
     
     useEffect(() => {
@@ -97,7 +106,7 @@ const loginModal = ({onClose, setOnClose}) => {
 
     //네이버 로그인
     const naver_login = () => {
-        window.location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=oxyovmQ_xk_uAaUdHUKu&redirect_uri=http://192.168.0.21:8080/user/naverLogin&state=access_Token";
+        window.location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=oxyovmQ_xk_uAaUdHUKu&redirect_uri=http://223.130.135.131:8080/user/naverLogin&state=access_Token";
         // axios.get('/user/login').then((response)=> {
         //     if (response.data.data !== null) {
         //         window.location.replace ("/"); // 메인 페이지로 이동
@@ -120,7 +129,7 @@ const loginModal = ({onClose, setOnClose}) => {
 
     //카카오 로그인
     const kakao_login = () => {
-        window.location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=73b235263e9c55fb4e85a97648c1c0de&redirect_uri=http://192.168.0.21:8080/user/kakaoLogin&prompt=login"
+        window.location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=73b235263e9c55fb4e85a97648c1c0de&redirect_uri=http://223.130.135.131:8080/user/kakaoLogin&prompt=login"
     }
 
 
@@ -238,7 +247,10 @@ const loginModal = ({onClose, setOnClose}) => {
                                                                     {mouseOver === false? 
                                                                     <Modal_signup_content_div >계정이 없으신가요? 회원가입</Modal_signup_content_div>
                                                                     :
+                                                                    <>
                                                                     <Modal_signup_button_div_over onClick={handleClick}>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
+                                                                    {/* {addUserOpen && <SendSMS smsClose={addUserOpen} setSmsClose={setAddUserOpen}/>} */}
+                                                                    </>
                                                                     }
                                                                 </Modal_signup_button_div>
                                                             </Modal_signup_button>
