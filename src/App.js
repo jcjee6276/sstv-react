@@ -25,7 +25,7 @@ const App= ()=> {
   const Exchange = loadable(()=> import('./pages/Exchange'));
   const Admin = loadable(()=> import('./pages/Admin'));
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
-  const Test = loadable(()=> import('./pages/SearchPage'));
+  const Test = loadable(()=> import('./pages/Community/getReplay'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
   const SearchKeyword = loadable(()=> import('./pages/SearchPage'));
   const AddUser = loadable(()=> import('./pages/user/addUser'));
@@ -36,6 +36,9 @@ const App= ()=> {
   const FindInfoPasswd = loadable(()=> import('./pages/user/findInfoPasswd'));
   const BlackList = loadable(()=> import('./pages/user/blackListView'));
   const FollowList = loadable(()=> import('./pages/user/followListView'));
+  const ReplayList = loadable(()=> import('./pages/Community/replay'));
+  const GetReplay = loadable(()=> import('./pages/Community/getReplay'));
+  const CoinHistory = loadable(()=> import('./pages/user/coinHistory'));
   
   return (
     <Router>
@@ -71,6 +74,9 @@ const App= ()=> {
         <Route path="/Ticket1" element={<Ticket/>} />
         <Route path="/Exchange" element={<Exchange/>} />
         <Route path="/Admin" element={<Admin/>} />
+        <Route path="/replayList/:userId" element={<ReplayList/>} />
+        <Route path="/getReplay/:streamingNo" element={<GetReplay/>} />
+        
       </Routes>
     </Router>
     

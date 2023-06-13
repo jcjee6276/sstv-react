@@ -5815,6 +5815,8 @@ display: flex;
 transition-property: transform;
 box-sizing: content-box;
 transform: translate3d(0px, 0px, 0px);
+
+overflow-x: auto;
 `;
 
 export const Replay_list_li = styled.li`
@@ -6860,4 +6862,36 @@ padding: 0;
 font-family: "NG", verdana, sans-serif;
 color: #010101;
 font-weight: bold;
+`;
+
+export const Replay_area_controls = styled.div`
+--swiper-theme-color: #007aff;
+--swiper-navigation-size: 44px;
+margin: 0;
+padding: 0;
+font-size: 12px;
+color: #666666;
+font-family: "NG", verdana, sans-serif;
+position: absolute;
+top: 17px;
+right: 0;
+`;
+
+export const Replay_prev_button = styled.button`
+--swiper-theme-color: #007aff;
+--swiper-navigation-size: 44px;
+margin: 0;
+padding: 0;
+cursor: pointer;
+display: inline-block;
+width: 26px;
+height: 27px;
+border: 1px solid #e1e1e1;
+box-sizing: border-box;
+font: 0/0 a;
+background: #fff;
+outline: none;
+margin-right: -1px;
+border-radius: 2px 0 0 2px;
+opacity: 0.5;
 `;

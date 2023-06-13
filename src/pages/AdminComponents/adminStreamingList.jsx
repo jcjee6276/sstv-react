@@ -17,6 +17,7 @@ import { json } from "react-router-dom";
 const AdminStreamingList = () => {
   const itemsPerPage = 10;
   const [itemOffset, setItemOffset] = useState(0);
+  const socket = io(`${process.env.REACT_APP_NODE_SOCKET_URL}`);
   
   //modal
   const [streamingModalIsOpen, setStreamingModalIsOpen] = useState(false);
@@ -70,7 +71,7 @@ const AdminStreamingList = () => {
   const getStreamingList = async () => {
     const method = 'GET';
     
-    const url = `${process.env.REACT_APP_NODE_URL}/ad/getAdList/streaming/getAdminStreamingList`
+    const url = `${process.env.REACT_APP_NODE_URL}/streaming/getAdminStreamingList`
     const data = {
       searchCondition : searchCondition,
       searchKeyword : searchKeyword
@@ -99,61 +100,60 @@ const AdminStreamingList = () => {
   }
 
   const handleAddStreamingBanModalOnSubmit = async (data) => {
-    const socket = io(`${process.env.REACT_APP_NODE_URL}`);
     socket.emit('ban_streaming', {
       roomName: streaming.userId, 
       banType : data.banType,
       banContent : data.banContent
     });
 
-    // socket.disconnect();
-    // const method = 'POST';
-    // const url = '${process.env.REACT_APP_NODE_URL}/ban/addStreamingBan';
-    // const param = {
-    //   banContent : data.banContent,
-    //   banType : data.banType,
-    //   userId : data.streamingUserId
-    // }
+    socket.disconnect();
+    const method = 'POST';
+    const url = `${process.env.REACT_APP_NODE_URL}/ban/addStreamingBan`;
+    const param = {
+      banContent : data.banContent,
+      banType : data.banType,
+      userId : data.streamingUserId
+    }
 
-    // const response = await fetchData(method, url, param);
-    // const result = response.data.result;
+    const response = await fetchData(method, url, param);
+    const result = response.data.result;
 
-    // if(result == 'success') {
-    //   alert('정지되었습니다.');
+    if(result == 'success') {
+      alert('정지되었습니다.');
       
-    // }else {
-    //   if(response.data.firstData == '0') {
-    //     alert('관리자가 아닙니다.');
-    //   }
+    }else {
+      if(response.data.firstData == '0') {
+        alert('관리자가 아닙니다.');
+      }
 
-    //   if(response.data.firstData == '1') {
-    //     alert('서버에러입니다.');
-    //   }
+      if(response.data.firstData == '1') {
+        alert('서버에러입니다.');
+      }
 
-    //   alert('response.data = ' + JSON.stringify(response.data));
-    // }
+      alert('response.data = ' + JSON.stringify(response.data));
+    }
     closeAddStreamingBanModal();
   }
 
   const getCategory = (categoryId) => {
     let result;
     switch(categoryId) {
-        case '0':
+        case '1':
             result = '게임';
             break;
-        case '1':
+        case '2':
             result = '일상';
             break;
-        case '2':
+        case '3':
             result = '스포츠';
             break;
-        case '3':
+        case '4':
             result = '먹방';
             break;
-        case '4':
+        case '5':
             result = '요리';
             break;
-        case '5':
+        case '6':
             result = '교육';
             break;
         default:

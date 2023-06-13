@@ -42994,3 +42994,6 @@ font-size: var(--system-14-font-size);
 line-height: var(--system-14-line-height);
 margin: 0;
 overflow-y: visible;`;
+export const PurchaseList_div =styled.div`
+  margin-top:100px;
+`;

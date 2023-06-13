@@ -116,7 +116,7 @@ function onClickPayment() {
 
   function addPurchase(purchase) {
 
-  //       // 결제 데이터를 화면에 등록하기 위한 용도
+  // 결제 데이터를 화면에 등록하기 위한 용도
     axios.post(`/purchase/addPurchase`, purchase)
     .then((response) => {
           console.log(response.data);
@@ -129,6 +129,11 @@ function onClickPayment() {
           // 등록 중에 발생한 오류 처리 코드
           // ...
         });
+
+    axios.post('/user/addCoinHistory', {userId, prodName:3, price: purchase.paymentAmount})
+    .then((response) => {
+      console.log('구매내역 추가..');
+    });
     }
   
     function updateUserCoin(updateCoin){

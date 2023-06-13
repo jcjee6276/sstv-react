@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom/dist';
 import {User_update_Main, User_update_title, Profile_box2, Profile_add_button_box , Profile_box4, Email_update_input2, PasswordCheck_line, Password_secret, User_update_body, User_update_body2, User_update_header, User_update_header_2, User_update_logo, User_update_subTitle,User_update_titleLine, User_update_titleLine_2, User_update_body3, UserinfoTitle, UserNickname_title, Nickname_update, Nickname_update_title, Nickname_update_update, Nickname_update_title2, Nickname_update_update2, Nickname_update_input, NicknameDuplicate_button, NicknameChange_button, Nickname_update_sub, Update_form, Password_title, Password_box, Update_user_title, Update_user_box, Update_submit_button, Password_box_title, Password_box_minibox, Password_box_title2, Password_input, PasswordCheck_input, Password_input2, Password_input_mini, Password_input_line, Userinfo_tab, Info_text, User_type, Password_space, Password_box_minibox2, PasswordCheck_input2, PasswordCheck_input_input, Phone_update, Phone_update2, Phone_update_input, Phone_update_input2, Phone_update_input_text, Email_update, Email_update2, Email_update_input, Email_update_inputText1, Email_golbang, Email_update_inputText2, Email_update_selectEmail, UpdateUser_submit_button, Profile_box, Profile_box3, Profile_photo, Profile_text, Profile_photo2, Profile_photo3, Profile_add_button, Profile_add_button1, Profile_add_button2, Profile_add_button3, Profile_photo_input_button, UserInfo_tab2, UserInfo_tab3, List_title, List_title_text, Blacklist_body, Blacklist_body2, Blacklist_box, Blacklist_box2, Blacklist_box_head, Blacklist_box_Main, Blacklist_box_body, Blacklist_box_Main1, Blacklist_box_Main2, Blacklist_box_Main3, Blacklist_box_head1, Blacklist_box_head2} from './style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPoo } from '@fortawesome/free-solid-svg-icons'
+import { faFaceGrinHearts } from '@fortawesome/free-solid-svg-icons'
 import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
 import { List_Main, List_body1, List_body10_2, List_body11, List_body12, List_body12_main, List_body13, List_body13_3, List_body13_artivle, List_body14, List_body15, List_body2, List_body3, List_body4_1, List_body4_2, List_body5, List_body5_2, List_body6, List_body7, List_body8, List_body9, List_body_10, List_body_11, List_body_12, List_body_13, List_body_14, List_body_15, List_body_16, List_body_16_bottom, List_body_16_bottom_1, List_body_16_bottom_2, List_body_16_bottom_3, List_body_16_bottom_4, List_body_16_bottom_5, List_body_16_bottom_6, List_body_16_bottom_6_cancle, List_body_16_bottom_6_nickName, List_body_16_bottom_6_profile, List_body_16_bottom_6_profile1, List_body_16_bottom_6_profile2, List_body_16_bottom_6_profile3, List_body_16_bottom_6_profile4, List_body_16_bottom_6_profile4_1, List_body_16_bottom_6_profile4_2, List_body_16_bottom_6_profile_image, List_body_16_bottom_6_title, List_body_16_bottom_6_title1, List_body_16_bottom_6_title2, List_body_16_bottom_6_title2_1, List_body_16_bottom_6_title2_2, List_body_16_bottom_6_title3, List_body_16_bottom_6_title4, List_body_16_bottom_6_title4_1, List_body_16_bottom_6_title4_2, List_body_16_bottom_6_title4_3, List_body_16_bottom_6_title5, List_body_16_bottom_6_title6, List_body_16_bottom_6_title7, List_body_16_top, List_body_16_top_1, List_body_16_top_2, List_body_16_top_exit, List_body_16_top_exit2, List_body_16_top_exit_X, List_body_16_top_exit_X1, List_body_16_top_exit_X2, List_body_16_top_exit_X3, List_body_16_top_exit_button, List_body_16_top_title, List_body_16_top_title2, List_body_6, List_body_7, List_body_8, List_body_9, List_body_hidden2, List_follow_button, List_follow_button2, List_remove, List_remove2, List_userName } from "./listStyle";
 import { useEffect } from 'react';
@@ -115,6 +115,12 @@ const FollowListView = () => {
     navigate('/remove/'+userId);
   }
 
+  //코인사용 내역 탭
+  const onCHtab = () => {
+    setSelectedTab('coinHistory');
+    navigate('/coinHistory/'+userId);
+  }
+
   //광고목록 탭
   // 추가
   const onAdInfo = () => {
@@ -149,7 +155,7 @@ const FollowListView = () => {
           <User_update_body2>
             <User_update_body3>
             <List_title style={{ display: 'flex', alignItems: 'center' }}>
-            <FontAwesomeIcon icon={faPoo} size="2xl" style={{ marginRight: '8px' }}/><p style={{ fontSize: '18px', color:'blue'}}>블랙리스트 관리</p>
+            <FontAwesomeIcon icon={faFaceGrinHearts} size="2xl" style={{ marginRight: '8px' }}/><p style={{ fontSize: '18px', color:'blue'}}>팔로우 관리</p>
             </List_title>
             <Userinfo_tab>
             <UserInfo_tab2 onClick={onUserInfo} style={{ backgroundColor: selectedTab === 'userInfo' ? '#fff' : '#ccc', cursor: 'pointer' }}>
@@ -161,7 +167,7 @@ const FollowListView = () => {
             <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>코인 사용내역</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
