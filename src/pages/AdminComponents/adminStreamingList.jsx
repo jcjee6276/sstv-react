@@ -99,7 +99,7 @@ const AdminStreamingList = () => {
   }
 
   const handleAddStreamingBanModalOnSubmit = async (data) => {
-    const socket = io(`${process.env.REACT_APP_NODE_URL}`);
+    const socket = io(`${process.env.REACT_APP_NODE_SOCKET_URL}`);
     socket.emit('ban_streaming', {
       roomName: streaming.userId, 
       banType : data.banType,

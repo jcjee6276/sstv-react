@@ -109,10 +109,16 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     
     const setNodeCookie = async () => {
     if(data) {
-        const response = await axios.create({
-            baseURL: `${process.env.REACT_APP_NODE_URL}`,
-            withCredentials : true
-          }).post('/testLogin', data);    
+        try {
+            const response = await axios.create({
+                // baseURL: `${process.env.REACT_APP_NODE_URL}`,
+                // baseURL: `http://localhost:3001`,
+                baseURL: `${process.env.REACT_APP_NODE_URL}`,
+                withCredentials : true
+              }).post('/testLogin', data); 
+          } catch (error) {
+            // 에러 처리
+          }
     }
    }
 

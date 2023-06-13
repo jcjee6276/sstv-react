@@ -116,12 +116,12 @@ const startStreamingModal = ({onClose, setOnClose, handleSubmit}) => {
                                                                     </Modal_body_id_div_3>
                                                                 </Modal_body_id_div_2>
                                                                 <Start_Streaming_SelectBox value={streamingCategory} onChange={onChangestreamingCategory}>
-                                                                    <option value='0'>게임</option>
-                                                                    <option value='1'>일상</option>
-                                                                    <option value='2'>스포츠</option>
-                                                                    <option value='3'>먹방</option>
-                                                                    <option value='4'>요리</option>
-                                                                    <option value='5'>교육</option>
+                                                                    <option value='1'>게임</option>
+                                                                    <option value='2'>일상</option>
+                                                                    <option value='3'>스포츠</option>
+                                                                    <option value='4'>먹방</option>
+                                                                    <option value='5'>요리</option>
+                                                                    <option value='6'>교육</option>
                                                                 </Start_Streaming_SelectBox>
                                                             </Modal_body_id_div_1>
                                                         </Modal_body_id_div>
