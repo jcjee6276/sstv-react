@@ -38,6 +38,7 @@ const App= ()=> {
   const FollowList = loadable(()=> import('./pages/user/followListView'));
   const ReplayList = loadable(()=> import('./pages/Community/replay'));
   const GetReplay = loadable(()=> import('./pages/Community/getReplay'));
+  const UpdateWriting = loadable(()=> import('./pages/Community/updateWriting'));
   const CoinHistory = loadable(()=> import('./pages/user/coinHistory'));
   
   return (
@@ -76,7 +77,7 @@ const App= ()=> {
         <Route path="/Admin" element={<Admin/>} />
         <Route path="/replayList/:userId" element={<ReplayList/>} />
         <Route path="/getReplay/:streamingNo" element={<GetReplay/>} />
-        
+        <Route path="/updateWriting/:userId/:writingNo" element={<UpdateWriting/>} />
       </Routes>
     </Router>
     

@@ -4711,6 +4711,7 @@ position: absolute;
 top: 7px;
 right: 7px;
 z-index: 5;
+
 `;
 
 export const Com_main_body_writing_image_span = styled.span`
