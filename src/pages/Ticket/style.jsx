@@ -171,6 +171,11 @@ border-radius: 2px;
 word-wrap: break-word;
 background-color:#fff;
 cursor: pointer;
+
+    &:hover {
+        background-color: #0072ff; /* Change the button color when clicked */
+        color:#fff;
+    }
 `;
 export const Ticket_desc_buy_btn1 = styled.button`
 width: 215px;
@@ -196,7 +201,10 @@ border-radius: 2px;
 word-wrap: break-word;
 background-color:#fff;
 cursor: pointer;
-   
+    &:hover {
+        background-color: #0072ff; /* Change the button color when clicked */
+        color:#fff;
+    }
 
 `;
 export const Ticket_desc_use_btn1 = styled.button`
@@ -240,20 +248,20 @@ export  const Ticket_icon1 = styled.span`
 export const Ticket_list_date = styled.div`
 display: inline-block;
 zoom: 1;
-width:20%;
+width:16%;
 `;
 //사용시작
 export  const Ticket_list_start = styled.div`
 display: inline-block;
 zoom: 1;
-width:13%;
+width:16%;
 margin-left:23px;
 `;
 //사용만료
 export  const Ticket_list_end = styled.div`
 display: inline-block;
 zoom: 1;
-width:15%;
+width:16%;
 margin: 0 15px;
 `;
 
@@ -516,3 +524,16 @@ font-size: 16px;
 export const Ticket_desc_inner1 = styled.div`
 padding: 50px 33px 0 33px;
 `;
+
+export const Title_storng = styled.strong`
+font-weight:900;
+`;
+
+export const Ticket_list_noTicket = styled.p`
+    font-size: 24px;
+    color:#000;
+    font-weight:900;
+    text-align:center;
+`;
+
+

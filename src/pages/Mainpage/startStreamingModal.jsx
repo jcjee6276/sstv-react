@@ -10,7 +10,7 @@ import Header from './header';
 const startStreamingModal = ({onClose, setOnClose, handleSubmit}) => {
     const navigate = useNavigate();
     const [streamingTitle, setStreamingTitle]= useState('');
-    const [streamingCategory, setStreamingCategory] = useState('0');
+    const [streamingCategory, setStreamingCategory] = useState('1');
     const [mouseOver, setMouseOver] = useState(false);
     const [buttonChange, setButtonChange] = useState(false);
     const modalRef = useRef(null);

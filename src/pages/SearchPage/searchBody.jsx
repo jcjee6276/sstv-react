@@ -96,7 +96,7 @@ const searchBody = ({select, setSelect})=>{
                 }
             }
         } catch (error) {
-            alert('[index.jsx getStreamingViewPage] error  = ' + error);
+            console.log(('[index.jsx getStreamingViewPage] error  = ' + error));
         }
       }  
 

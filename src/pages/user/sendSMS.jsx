@@ -5,7 +5,7 @@ import {Modal_login_submit_div, Modal_body_id_input, Modal_body_id_div_3, Modal_
 import axios from 'axios';
 import { unstable_HistoryRouter } from 'react-router-dom/dist';
 
-const sendSMS = ({onClose, setOnClose}) => {
+const sendSMS = ({smsClose, setSmsClose}) => {
     const [mouseOver, setMouseOver] = useState(false);
     const modalRef = useRef(null);
     // const [buttonChange, setButtonChange] = useState(false);
@@ -22,20 +22,22 @@ const sendSMS = ({onClose, setOnClose}) => {
     const [userId, setUserId] = useState('');
     const [dbUserId, setDbUserId] = useState('');
     const [userType, setUserType] = useState('');
-    const navigate = useNavigate();
     const {path} = useParams();
+    const navigate = useNavigate();
+    const [timer, setTimer] = useState(false);
+    const [codeTime, setCodeTime] = useState(0);
 
-    useEffect(() => {
-        const handler = (event) => {
-            if (modalRef.current && !modalRef.current.contains(event.target)) {
-                setOnClose(false); 
-            }
-        };
-        document.addEventListener('mousedown', handler);
-        return () => {
-            document.removeEventListener('mousedown', handler);
-        };
-    }, [onClose]);
+    // useEffect(() => {
+    //     const handler = (event) => {
+    //         if (modalRef.current && !modalRef.current.contains(event.target)) {
+    //             setSmsClose(false); 
+    //         }
+    //     };
+    //     document.addEventListener('mousedown', handler);
+    //     return () => {
+    //         document.removeEventListener('mousedown', handler);
+    //     };
+    // }, [smsClose]);
 
     useEffect(()=> {
         if(phone !=='' && phoneCheck === true){
@@ -123,8 +125,34 @@ const sendSMS = ({onClose, setOnClose}) => {
     const sendMessage = useCallback(() => {
         axios.post('/user/sendSMS',{phone}).then((response)=>{
             setSendSMS(response.data.result);
+            setTimer(true);
+            // setCodeTime(3*60);
+            //테스트용 타이머
+            setCodeTime(10);
         })
     });
+
+    //문자 발송 후, 타이머 작동
+    useEffect(()=> {
+        let countdown;
+        if(timer && codeTime > 0){
+            countdown = setTimeout(()=>{
+                setCodeTime(codeTime - 1);
+            }, 1000);
+        }
+        if(codeTime === 1){
+            alert('인증시간이 만료 되었습니다!');
+                setSendSMS('');
+                setTimer(false);
+        }
+    },[timer, codeTime]);
+
+    // 타이머 시간 변환 (분:초)
+    const formatTime = (second) => {
+        const minutes = Math.floor(second/60);
+        const seconds = second%60;
+        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    };
 
     //인증번호 일치여부 확인
     const checkCode = useCallback(()=>{
@@ -198,7 +226,7 @@ const sendSMS = ({onClose, setOnClose}) => {
                 // };
 
 
-    // console.log('요청 path :: '+path)
+    console.log('요청 path :: '+path)
     // console.log('문자 발송 여부 :: '+sendSMS);
     // console.log('인증 완료 여부 :: '+success);
 
@@ -247,7 +275,7 @@ const sendSMS = ({onClose, setOnClose}) => {
                                                                                     <Modal_body_id_input_div>
                                                                                         <Modal_body_id_input_div_2>
                                                                                             <Modal_body_id_input placeholder="회원님의 아이디를 입력해주세요" value={userId} onChange={idCheck} style={{ marginBottom: '20px' }}/>
-                                                                                            {userId === null || userId === '' ? '' : findPasswd === 'useNo' ? '' : <p style={{ color: 'red' }}>존재하지 않는 회원입니다.</p>}
+                                                                                            {userId === null || userId === '' ? '' : findPasswd === 'useNo' ? '' : <p style={{ color: 'red', marginTop:'10px' }}>존재하지 않는 회원입니다.</p>}
                                                                                         </Modal_body_id_input_div_2>
                                                                                     </Modal_body_id_input_div>
                                                                                 </>
@@ -274,15 +302,15 @@ const sendSMS = ({onClose, setOnClose}) => {
                                                                 <Modal_body_id_input_div>
                                                                     <Modal_body_id_input_div_2>
                                                                         <Modal_body_id_input placeholder="'-'를 제외한 숫자만 입력해주세요." value={phone} onChange={handelPhoneCheck}></Modal_body_id_input>
-                                                                        {phoneCheck === true ? '':<p style={{ color: 'red' }}>숫자만 입력해주세요.</p>}
-                                                                        {dbUserId === 'user' ? '':<p style={{ color: 'red' }}>입력받은 번호에 해당하는 회원이 없습니다.</p>}
+                                                                        {phoneCheck === true ? '':<p style={{ color: 'red' , marginTop:'10px'}}>숫자만 입력해주세요.</p>}
+                                                                        {dbUserId === 'user' ? '':<p style={{ color: 'red' , marginTop:'10px'}}>입력받은 번호에 해당하는 회원이 없습니다.</p>}
                                                                     </Modal_body_id_input_div_2>
                                                                 </Modal_body_id_input_div>
                                                                  ) : (
                                                                 <Modal_body_id_input_div>
                                                                     <Modal_body_id_input_div_2>
                                                                         <Modal_body_id_input placeholder="'-'를 제외한 숫자만 입력해주세요." value={phone} onChange={handelPhoneCheck}></Modal_body_id_input>
-                                                                        {phoneCheck === true ? '':<p style={{ color: 'red' }}>숫자만 입력해주세요.</p>}
+                                                                        {phoneCheck === true ? '':<p style={{ color: 'red' , marginTop:'10px' }}>숫자만 입력해주세요.</p>}
                                                                     </Modal_body_id_input_div_2>
                                                                 </Modal_body_id_input_div>
                                                                  )
@@ -292,7 +320,10 @@ const sendSMS = ({onClose, setOnClose}) => {
                                                                 <>
                                                                 <Modal_body_id_div_2>
                                                                     <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>인증 번호</Modal_body_id_lable>
+                                                                        <Modal_body_id_lable>
+                                                                            인증 번호 <span style={{color:'red'}}> ({formatTime(codeTime-1)})</span>
+                                                                            <div style={{ clear: 'both' }}></div>
+                                                                        </Modal_body_id_lable>
                                                                     </Modal_body_id_div_3>
                                                                 </Modal_body_id_div_2>
 
@@ -306,7 +337,7 @@ const sendSMS = ({onClose, setOnClose}) => {
                                                                 <Modal_body_id_input_div>
                                                                     <Modal_body_id_input_div_2>
                                                                         <Modal_body_id_input placeholder="인증번호를 입력해주세요." value={code} onChange={handelCodeCheck}></Modal_body_id_input>
-                                                                        {codeCheck === true ? '':<p style={{ color: 'red' }}>숫자만 입력해주세요.</p>}
+                                                                        {codeCheck === true ? '':<p style={{ color: 'red', marginTop:'10px' }}>숫자만 입력해주세요.</p>}
                                                                     </Modal_body_id_input_div_2>
                                                                 </Modal_body_id_input_div>
                                                                 )}
