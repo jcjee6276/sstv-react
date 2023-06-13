@@ -70,7 +70,7 @@ const AdminStreamingList = () => {
   const getStreamingList = async () => {
     const method = 'GET';
     
-    const url = `${process.env.REACT_APP_NODE_URL}/ad/getAdList/streaming/getAdminStreamingList`
+    const url = `${process.env.REACT_APP_NODE_URL}/streaming/getAdminStreamingList`
     const data = {
       searchCondition : searchCondition,
       searchKeyword : searchKeyword
@@ -106,32 +106,32 @@ const AdminStreamingList = () => {
       banContent : data.banContent
     });
 
-    // socket.disconnect();
-    // const method = 'POST';
-    // const url = '${process.env.REACT_APP_NODE_URL}/ban/addStreamingBan';
-    // const param = {
-    //   banContent : data.banContent,
-    //   banType : data.banType,
-    //   userId : data.streamingUserId
-    // }
+    socket.disconnect();
+    const method = 'POST';
+    const url = `${process.env.REACT_APP_NODE_URL}/ban/addStreamingBan`;
+    const param = {
+      banContent : data.banContent,
+      banType : data.banType,
+      userId : data.streamingUserId
+    }
 
-    // const response = await fetchData(method, url, param);
-    // const result = response.data.result;
+    const response = await fetchData(method, url, param);
+    const result = response.data.result;
 
-    // if(result == 'success') {
-    //   alert('정지되었습니다.');
+    if(result == 'success') {
+      alert('정지되었습니다.');
       
-    // }else {
-    //   if(response.data.firstData == '0') {
-    //     alert('관리자가 아닙니다.');
-    //   }
+    }else {
+      if(response.data.firstData == '0') {
+        alert('관리자가 아닙니다.');
+      }
 
-    //   if(response.data.firstData == '1') {
-    //     alert('서버에러입니다.');
-    //   }
+      if(response.data.firstData == '1') {
+        alert('서버에러입니다.');
+      }
 
-    //   alert('response.data = ' + JSON.stringify(response.data));
-    // }
+      alert('response.data = ' + JSON.stringify(response.data));
+    }
     closeAddStreamingBanModal();
   }
 

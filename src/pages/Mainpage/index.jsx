@@ -99,7 +99,7 @@ const Mainpage = () => {
                 }
             }
         } catch (error) {
-            alert('[index.jsx getStreamingViewPage] error  = ' + error);
+            console.log('[getStreamingViewPage] error = ' + error)
         }
       }      
     console.log("dark"+isDarkMode);
@@ -152,9 +152,6 @@ const Mainpage = () => {
                                                             <Main_stream_list_watching_li_1>
                                                             <FontAwesomeIcon icon={faUserGroup} style={{color: "#0afbff",}} /> {streaming.streamingViewer}
                                                             </Main_stream_list_watching_li_1>
-                                                            <Main_stream_list_watching_li_2>
-                                                            <FontAwesomeIcon icon={faThumbsUp} style={{color: "#ff0af7",}} /> 2
-                                                            </Main_stream_list_watching_li_2>
                                                     </Main_stream_list_watching_ul>
                                                         </Main_stream_list_div_2>
                                                 </label>
