@@ -36,10 +36,10 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     //userId 값 세팅
     useEffect(() => {
         axios.get('/user/login').then((response) => {
-          if(response.data.data.userId !== undefined && response.data.data.userId !== userId){
+          if(response.data?.data.userId !== userId){
           setUserId(response.data.data.userId);
           }
-          if(response.data.data.userId === undefined && response.data.data !== userId){
+          if(response.data?.data !== userId){
           setUserId(response.data.data);
           }
         });

@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { useCallback } from 'react';
+import Header from './header';
 
 
 const FollowListView = () => {
@@ -27,10 +28,10 @@ const FollowListView = () => {
   //로그인 세션의 아이디 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
-      if(response.data.data.userId !== undefined){
+      if(response.data?.data.userId !== userId){
       setUserId(response.data.data.userId);
       }
-      if(response.data.data.userId === undefined){
+      if(response.data?.data.userId === userId){
       setUserId(response.data.data);
       }
       setPageState('');
@@ -134,11 +135,11 @@ const FollowListView = () => {
     <div>
     <User_update_Main>
     {/* header */}
-      <User_update_header>
+    <User_update_header>
         <User_update_header_2>
-          <User_update_logo>
-          <img src={process.env.PUBLIC_URL +'/img/SSTV.gif'} width={150} height={65} onClick={()=> {navigate('/');}} style={{ cursor: 'pointer' }}/>
-          </User_update_logo>
+          <div>
+        <Header/>
+        </div>
           <User_update_title>
       <User_update_subTitle>
           개인정보

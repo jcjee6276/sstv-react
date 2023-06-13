@@ -6,6 +6,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import Header from './header';
+import SendSMS from '../user/sendSMS';
 
 const loginModal = ({onClose, setOnClose}) => {
     const [userId, setUserId]= useState('');
@@ -18,6 +19,15 @@ const loginModal = ({onClose, setOnClose}) => {
     const {data,revalidate} = useSWR('/user/login', fetcher);
     const [path, setPath] = useState('');
     const navigate = useNavigate();
+    const [addUserOpen, setAddUserOpen] = useState(false);
+    const [smsClose, setSmsClose] = useState(false);
+    const openAddUser = () => {
+        setPath('addUser');
+        setAddUserOpen(true);
+    }
+    const closeAddUser = () => {
+        setAddUserOpen(false);
+    }
     
     
     useEffect(() => {
@@ -239,7 +249,10 @@ const loginModal = ({onClose, setOnClose}) => {
                                                                     {mouseOver === false? 
                                                                     <Modal_signup_content_div >계정이 없으신가요? 회원가입</Modal_signup_content_div>
                                                                     :
-                                                                    <Modal_signup_button_div_over onClick={handleClick}>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
+                                                                    <>
+                                                                    <Modal_signup_button_div_over onClick={openAddUser}>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
+                                                                    {addUserOpen && <SendSMS smsClose={addUserOpen} setSmsClose={setAddUserOpen}/>}
+                                                                    </>
                                                                     }
                                                                 </Modal_signup_button_div>
                                                             </Modal_signup_button>

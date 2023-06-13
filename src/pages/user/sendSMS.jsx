@@ -5,7 +5,7 @@ import {Modal_login_submit_div, Modal_body_id_input, Modal_body_id_div_3, Modal_
 import axios from 'axios';
 import { unstable_HistoryRouter } from 'react-router-dom/dist';
 
-const sendSMS = ({onClose, setOnClose}) => {
+const sendSMS = ({path, smsClose, setSmsClose}) => {
     const [mouseOver, setMouseOver] = useState(false);
     const modalRef = useRef(null);
     // const [buttonChange, setButtonChange] = useState(false);
@@ -23,19 +23,18 @@ const sendSMS = ({onClose, setOnClose}) => {
     const [dbUserId, setDbUserId] = useState('');
     const [userType, setUserType] = useState('');
     const navigate = useNavigate();
-    const {path} = useParams();
 
-    useEffect(() => {
-        const handler = (event) => {
-            if (modalRef.current && !modalRef.current.contains(event.target)) {
-                setOnClose(false); 
-            }
-        };
-        document.addEventListener('mousedown', handler);
-        return () => {
-            document.removeEventListener('mousedown', handler);
-        };
-    }, [onClose]);
+    // useEffect(() => {
+    //     const handler = (event) => {
+    //         if (modalRef.current && !modalRef.current.contains(event.target)) {
+    //             setSmsClose(false); 
+    //         }
+    //     };
+    //     document.addEventListener('mousedown', handler);
+    //     return () => {
+    //         document.removeEventListener('mousedown', handler);
+    //     };
+    // }, [smsClose]);
 
     useEffect(()=> {
         if(phone !=='' && phoneCheck === true){
