@@ -18,10 +18,12 @@ import {Comments_up_em, Comments_up_span, Comments_up_button, Comments_content_d
 import { faCheck ,faPencil , faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
+import useSWR from 'swr';
+import fetcher from '../utils/fetcher';
 const getWriting = () => {
-    
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [agreeOpen, setAgreeOpen] = useState(false);
+    const [userData, setUserData]= useState('');
+const [anchorEl, setAnchorEl] = useState(null);
+const [agreeOpen, setAgreeOpen] = useState(false);
   const open = Boolean(anchorEl);
   const [commentContent, setCommentContent ] = useState('');
   const location = useLocation();
@@ -52,12 +54,23 @@ const getWriting = () => {
         })
         
     },[])
-    const addComments = ()=> {
+   useEffect(()=>{
+     axios.get('/user/login')
+     .then((response)=> {
+        const jsonData = response.data;
+        setUserData(jsonData['data']);
         
-    }
+     })
+   },[])
+   console.log(userData);
     const deleteWriting = ()=> {
         axios.get(`/community/deleteWriting/`+writingNo);
         navigate(`/writingList/${userId}`);
+    }
+
+    const addNotice =()=>{
+        axios.get('/community/addNotice/'+writingNo);
+        navigate(`/home/`+userId);
     }
     //const parse = json.parse()
     const listOnClick = () => {
@@ -93,7 +106,11 @@ const getWriting = () => {
          )
          .then(navigate(`/${writingNo}/${userId}`));
     }
-    
+    function padZero(number) {
+        return number < 10 ? '0' + number : number;
+      }
+      let date = new Date(data.regDate);
+      let formattedDate = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate() +' '+padZero(date.getHours()) + ":"+ padZero(date.getMinutes());
     return(
         <body>
             <Header/>
@@ -125,10 +142,10 @@ const getWriting = () => {
                                                                     {data.guestUserId} <Writing_get_bs_header_user_em></Writing_get_bs_header_user_em>
                                                                 </Writing_get_bs_header_user_p>
                                                             </Writing_get_bs_header_user_button>
-                                                            <Writing_get_bs_header_user_date_span>● {data.regDate}</Writing_get_bs_header_user_date_span>
+                                                            <Writing_get_bs_header_user_date_span>● {formattedDate}</Writing_get_bs_header_user_date_span>
                                                             <Writing_get_bs_header_user_query_span>
                                                                 <Writing_get_bs_header_user_query_em>● 조회</Writing_get_bs_header_user_query_em>
-                                                                10
+                                                                {data.view}
                                                             </Writing_get_bs_header_user_query_span>
                                                         </Writing_get_bs_header_user_box_div>
                                                     </Writing_get_bs_header_user_div>
@@ -153,8 +170,12 @@ const getWriting = () => {
                                                 'aria-labelledby': 'basic-button',
                                                 }}
                                             >
-                                                
+                                                {userData?.userId===data?.hostUserId? 
+                                                <MenuItem onClick={addNotice}>&nbsp;공지등록</MenuItem>
+                                                :null}
+                                                {userData?.userId===data?.guestUserId? 
                                                 <MenuItem onClick={handleClose}>&nbsp;&nbsp;글 수정</MenuItem>
+                                                :null}
                                                 <Button variant="text" onClick={handleClickOpen} >
                                                 <MenuItem onClick={deleteOpen}>글 삭제</MenuItem>
                                                 </Button>
@@ -205,8 +226,8 @@ const getWriting = () => {
                                         <Writing_get_body_listbutton_div>
                                             {/* <Writing_get_body_listbutton_div_2> */}
                                                 <Writing_get_body_listbutton_button>
-                                                    <Writing_get_body_listbutton_span>up</Writing_get_body_listbutton_span>
-                                                    <Writing_get_body_listbutton_em>0</Writing_get_body_listbutton_em>
+                                                    <Writing_get_body_listbutton_span>{data.up}</Writing_get_body_listbutton_span>
+                                                    <Writing_get_body_listbutton_em>{data.view}</Writing_get_body_listbutton_em>
                                                 </Writing_get_body_listbutton_button>
                                                 <Writing_get_body_right_button_div>
                                                 <Writing_get_body_listbutton_2 className='float-right'>

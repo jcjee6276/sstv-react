@@ -74,6 +74,9 @@ const App= ()=> {
         <Route path="/Ticket1" element={<Ticket/>} />
         <Route path="/Exchange" element={<Exchange/>} />
         <Route path="/Admin" element={<Admin/>} />
+        <Route path="/replayList/:userId" element={<ReplayList/>} />
+        <Route path="/getReplay/:streamingNo" element={<GetReplay/>} />
+        
         <Route path="/coinHistory/:userId" element={<CoinHistory/>} />
       </Routes>
     </Router>

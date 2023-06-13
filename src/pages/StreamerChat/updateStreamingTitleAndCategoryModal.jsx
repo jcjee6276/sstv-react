@@ -83,12 +83,12 @@ const finishStreamingModal = ({onClose, setOnClose, onClick, onSubmit}) => {
                         value={streamingCategory}
                         onChange={handleCategory}
                         >
-                        <option value='0'>게임</option>
-                        <option value='1'>일상</option>
-                        <option value='2'>스포츠</option>
-                        <option value='3'>먹방</option>
-                        <option value='4'>요리</option>
-                        <option value='5'>교육</option>
+                        <option value='1'>게임</option>
+                        <option value='2'>일상</option>
+                        <option value='3'>스포츠</option>
+                        <option value='4'>먹방</option>
+                        <option value='5'>요리</option>
+                        <option value='6'>교육</option>
                     </select>
 
                     <Gift_st>

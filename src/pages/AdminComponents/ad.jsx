@@ -59,7 +59,7 @@ const Ad = () => {
         return response.data.firstData;
     } catch (error) {
         console.error(error);
-        alert('error = ' + error);
+        alert('광고목록 조회에 실패했습니다.');
         return [];
     }
   }
