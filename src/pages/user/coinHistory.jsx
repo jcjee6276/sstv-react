@@ -24,11 +24,11 @@ const BlackListView = () => {
   //로그인 세션의 아이디 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
-      if(response.data.data.userId !== userId){
-      setUserId(response.data.data.userId);
+      if(response.data.data?.userId !== userId){
+      setUserId(response.data.data?.userId);
       }
-      if(response.data.data.userId === userId){
-      setUserId(response.data.data);
+      if(response.data.data?.userId === userId){
+      setUserId(response.data?.data);
       }
       setPageState('');
     });
@@ -36,10 +36,10 @@ const BlackListView = () => {
 
   useEffect(() => {
     axios.get('/user/getCoinHistory/'+userId).then((response) => {
-      setCHlist(response.data.data);
+      setCHlist(response.data?.data);
     })
     axios.get('/user/getUser/'+userId).then((response)=> {
-      setDbCoin(response.data.data.coin)
+      setDbCoin(response.data.data?.coin)
     })
   }, [userId]);
 

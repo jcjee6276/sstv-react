@@ -63,10 +63,10 @@ const UpdateUser = () => {
   useEffect(() => {
     axios.get('/user/login').then((response) => {
       if(response.data.data?.userId !== userId){
-      setUserId(response.data.data.userId);
+      setUserId(response.data.data?.userId);
       }
       if(response.data.data?.userId === userId){
-      setUserId(response.data.data);
+      setUserId(response.data?.data);
       }
     });
   }, []);
@@ -76,11 +76,11 @@ const UpdateUser = () => {
   useEffect(() => {
     if (userId !== '') {
       axios.get('/user/getUser/' +userId).then((response) => {
-        setDbUserNickname(response.data.data.userNickname);
-        setPhone(response.data.data.phone);
-        setUserType(response.data.data.userType);  
-        setDbEmail(response.data.data.eMail);
-        setDbProfilePhoto(response.data.data.profilePhoto);    
+        setDbUserNickname(response.data.data?.userNickname);
+        setPhone(response.data.data?.phone);
+        setUserType(response.data.data?.userType);  
+        setDbEmail(response.data.data?.eMail);
+        setDbProfilePhoto(response.data.data?.profilePhoto);    
       });
     }
   }, [userId]);
@@ -118,13 +118,13 @@ const UpdateUser = () => {
   //닉네임 중복체크
   const checkNickDuplicate = useCallback(()=> {
     axios.get('/user/checkUserNickname/'+userNickname).then((response) => {
-      if(response.data.data === 'useOk'){
-        setNickEnabled(response.data.data);
+      if(response.data?.data === 'useOk'){
+        setNickEnabled(response.data?.data);
         alert('사용 가능한 닉네임 입니다!' +userId);
         setNickUpdate(false);
       }
-      if(response.data.data === 'useNo'){
-        setNickEnabled(response.data.data);
+      if(response.data?.data === 'useNo'){
+        setNickEnabled(response.data?.data);
         alert('사용중인 닉네임 입니다!'+userId);
       }
     })

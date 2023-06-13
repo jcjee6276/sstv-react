@@ -41,10 +41,10 @@ const BlackListView = ({onClose, setOnClose}) => {
   //로그인 세션의 아이디 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
-      if(response.data?.data.userId !== userId){
-      setUserId(response.data.data.userId);
+      if(response.data?.data?.userId !== userId){
+      setUserId(response.data.data?.userId);
       }
-      if(response.data?.data.userId === userId){
+      if(response.data?.data?.userId === userId){
       setUserId(response.data.data);
       }
       setPageState('');
@@ -53,7 +53,7 @@ const BlackListView = ({onClose, setOnClose}) => {
 
   useEffect(() => {
     axios.get('/fan/getBlackList/'+userId).then((response) => {
-      setBlackList(response.data.data);
+      setBlackList(response.data?.data);
     })
   }, [userId, searchList]);
 
@@ -81,7 +81,7 @@ const BlackListView = ({onClose, setOnClose}) => {
   //검색
   const search = () => {
     axios.get('/fan/searchUser/'+keyword).then((response) => {
-      setSearchList(response.data.data);
+      setSearchList(response.data?.data);
       setPageState('search');
     })
   }

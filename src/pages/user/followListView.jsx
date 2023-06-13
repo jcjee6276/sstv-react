@@ -28,11 +28,11 @@ const FollowListView = () => {
   //로그인 세션의 아이디 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
-      if(response.data?.data.userId !== userId){
-      setUserId(response.data.data.userId);
+      if(response.data?.data?.userId !== userId){
+      setUserId(response.data.data?.userId);
       }
       if(response.data?.data.userId === userId){
-      setUserId(response.data.data);
+      setUserId(response.data?.data);
       }
       setPageState('');
     });
@@ -41,7 +41,7 @@ const FollowListView = () => {
   //세션에 저장된 아이디에 해당하는 팔로우 목록
   useEffect(() => {
     axios.get('/fan/getFollow/'+userId).then((response) => {
-      setFollowList(response.data.data);
+      setFollowList(response.data?.data);
     })
   }, [userId, searchList]);
 
@@ -49,7 +49,7 @@ const FollowListView = () => {
   useEffect(() => {
     const followUser = userId;
     axios.get('/fan/getFollowing/'+followUser).then((response) => {
-      setFollowerList(response.data.data);
+      setFollowerList(response.data?.data);
     })
   }, [userId]);
 
@@ -74,11 +74,11 @@ const FollowListView = () => {
     console.log('userID :: '+userId);
     console.log('FollowUser:', followUser);
     axios.post('/fan/addFollow', { userId, followUser }).then((response) => {
-      if(response.data.result === 'success'){
+      if(response.data?.result === 'success'){
       navigate('/followlist/'+userId);
       window.location.reload();
       }
-      if(response.data.result === 'fail'){
+      if(response.data?.result === 'fail'){
         alert('이미 등록된 회원입니다!');
       }
     });
@@ -87,7 +87,7 @@ const FollowListView = () => {
   //검색
   const search = () => {
     axios.get('/fan/searchUser/'+keyword).then((response) => {
-      setSearchList(response.data.data);
+      setSearchList(response.data?.data);
       setPageState('search');
     })
   }
