@@ -6,7 +6,6 @@ import axios from 'axios';
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import Header from './header';
-import SendSMS from '../user/sendSMS';
 
 const loginModal = ({onClose, setOnClose}) => {
     const [userId, setUserId]= useState('');

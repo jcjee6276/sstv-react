@@ -44,7 +44,10 @@ position: absolute;
     overflow-wrap: break-word;
     background-color: rgb(255, 255, 255);
     cursor:pointer;
-
+    &:hover {
+        background-color: #0072ff; /* Change the button color when clicked */
+        color:#fff;
+    }
 `;
 
 
@@ -89,7 +92,7 @@ export const Table_title1 = styled.p`
 display:inline-block;
 float:right;
 text-align:right;
-margin:44px 0 10px;
+margin:34px 0 10px;
 font-weight:900;
 
     &::after{
@@ -113,11 +116,20 @@ export const Purchase_title = styled.h3`
 `;
 
 export const Purchase_notice_p = styled.p`
-    margin-top:50px;
-    text-align:center;
+    margin-top:30px;
+    text-align:left;
     font-size:18px;
+    font-family: NGB;
+    line-height:32px;
 `;
-
+export const Purchase_notice_H3 = styled.p`
+    margin-top:50px;
+    font-weight: 900;
+    font-family: NGB;
+    color: #3333CC;
+    text-align:left;
+    font-size:32px;
+`;
 // 모달
 export const Modal =styled.div`
     
@@ -306,19 +318,28 @@ margin: 28px 0 20px 0;
 `;
  export const Blue =styled.span`
  color: rgb(73, 120, 255);
+ font-weight:800;
 `;
 
 export const Purchase_banner_div = styled.div`
     position:relative;
     width:101%;
-    height: 100px;
+
 `;
-export const Purchase_banner_p = styled.div`
- //background-image: url("img/SSTV.gif");
+export const Purchase_banner_p = styled.p`
+//background: url(img/SSTV.GIF) center center / contain no-repeat;
  position:abosulte;
  top: 1000px;
-width:500px;
-height:500px;
-
- 
+ height: 200px;
 `;
+
+export const Table_td_noLogin = styled.p`
+    text-align:center;
+    font-size: 16px; 
+    font-weight:900;
+    display:block;
+    margin:0 auto
+`;
+
+
+
