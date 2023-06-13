@@ -41,7 +41,7 @@ const FollowListView = () => {
   //세션에 저장된 아이디에 해당하는 팔로우 목록
   useEffect(() => {
     axios.get('/fan/getFollow/'+userId).then((response) => {
-      setFollowList(response.data.data);
+      setFollowList(response.data?.data);
     })
   }, [userId, searchList]);
 
@@ -49,7 +49,7 @@ const FollowListView = () => {
   useEffect(() => {
     const followUser = userId;
     axios.get('/fan/getFollowing/'+followUser).then((response) => {
-      setFollowerList(response.data.data);
+      setFollowerList(response.data?.data);
     })
   }, [userId]);
 

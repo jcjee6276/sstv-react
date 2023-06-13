@@ -29,7 +29,7 @@ const searchBody = ({select, setSelect})=>{
         axios.get('/user/searchUser/'+path[2])
         .then((response)=>{
             setUserList(response.data['data']);
-            getNotice(response.data.data[0].userId)
+            getNotice(response.data?.data[0]?.userId)
         })
         axios.get('http://localhost:3001/streaming/getStreamingByUserId', {
             params: {
