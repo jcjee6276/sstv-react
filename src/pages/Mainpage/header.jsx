@@ -151,7 +151,6 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         const result = (JSON.parse(response.data)).result;
         console.log('result = ' +  result);
         if(result == 'success') {
-            alert('success!');
             navigate('/LoadingPage');
         }else {
             alert('스트리밍 시작에 실패했습니다.');

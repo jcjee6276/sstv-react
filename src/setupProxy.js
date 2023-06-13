@@ -14,7 +14,7 @@ module.exports = function(app) {
   app.use(
     ['/donation', '/streaming'],
     createProxyMiddleware({
-      target: 'http://175.45.201.36:3001',
+      target: 'http://api.sstvv.xyz',
       changeOrigin: true,
     })
   );
