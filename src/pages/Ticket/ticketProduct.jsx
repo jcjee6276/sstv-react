@@ -1,55 +1,43 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
 import React, { useState, useEffect } from "react";
-import { Ticket_list_mt_p, Ticket_desc_use, Ticket_list_mt_div, Ticket_list_date,Ticket_list_date_p,Ticket_list_date_ed,Ticket_list_end,Ticket_list_date_st,
-  Ticket_list_start, Ticket_desc_use_btn, Ticket_icon1, Ticket_item_div1, Ticket_desc_strong,Ticket_icon, Ticket_desc_buy, Ticket_desc_buy_btn,
-  Ticket_desc_price_p,Ticket_desc_price, Ticket_desc_li, Ticket_desc_mt_div, Desc_span, Ticket_desc_inner,Ticket_desc_inner1, Ticket_desc_div,Pop_ticket_div,Add_Ticket,Add_at,Add_btn_area,Btn_gift,Btn_cancel,Add_st_span,Add_st_dl,Add_st_dt,Add_st_dd,Add_dt,Add_strong,Add_dd,Add_txt_span,Add_coin_input,Add_count,Modal_div,Add_txt_span_tkName,
-  Ticket_Li, Ticket_name,Ticket_date,Blue,Ticket_item_div,H2,H3,SPAN, TicketProduct_div,Tab_sub_wrap,Subtab,Tab_list,Tab_list_T
+import {Ticket_list_mt_p,Logo,ToolbarWrapper, Ticket_desc_use, Ticket_list_mt_div, Ticket_list_date,Ticket_list_date_p,Ticket_list_date_ed,Ticket_list_end,Ticket_list_date_st,Ticket_list_start, Ticket_desc_use_btn, Ticket_icon1, Ticket_item_div1, Ticket_desc_strong,Ticket_icon, Ticket_desc_buy, Ticket_desc_buy_btn,Ticket_desc_price_p,Ticket_desc_price, Ticket_desc_li, Ticket_desc_mt_div, Desc_span, Ticket_desc_inner,Ticket_desc_inner1, Ticket_desc_div,Pop_ticket_div,Add_Ticket,Add_at,Add_btn_area,Btn_gift,Btn_cancel,Add_st_span,Add_st_dl,Add_st_dt,Add_st_dd,Add_dt,Add_strong,Add_dd,Add_txt_span,Add_coin_input,Add_count,Modal_div,Add_txt_span_tkName,Ticket_Li, Ticket_name,Ticket_date,Blue,Ticket_item_div,H2,H3,SPAN, TicketProduct_div,Title_storng,Ticket_list_noTicket,Toolbar_div,Toolbar_logo_div,Toolbar_nav,Toolbar_ul,Toolbar_li,Toolbar_a
 } from "./style";
+import {Header_Right_Side_Div ,Header_Right_Login_Ui_Div  ,Header_Right_Login_Ui_Span} from "../Mainpage/style"
 import Modal from "react-modal";
 import axios from 'axios';
 import useSWR from 'swr'
 import fetcher from "../utils/fetcher";
 import { key } from "fontawesome";
+import LoginModal from "../Mainpage/loginModal";
+
 Modal.setAppElement('#root');
 
-const TicketProduct = () => {
+const TicketProduct = ({}) => {
+   // -----------------------------------------------------------  유저 data
+  const [userId, setUserId] = useState('');//유저아이디 가져오는 훅
+  const {data} = useSWR('/user/login', fetcher);//로그인 세션 유지하는 훅
+  const [dbCoin, setDBcoin]= useState();// 유저가 가지고 있는 코인 값 
 
-  //유저아이디 가져오는 훅
-  const [userId, setUserId] = useState('');
-
-  //로그인 세션 유지하는 훅
-  const {data} = useSWR('/user/login', fetcher);
-
-  // 유저가 가지고 있는 코인 값 
-  const [dbCoin, setDBcoin]= useState();
-  // -----------------------------------------------------------  유저 data
-
-  //모달 열림여부를 나타내는 변수
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 여부를 저장하는 상태 변수
-
-  
   // ----------------------------------------------------------- 티켓
-  // 티켓사용여부를 나타내는 변수
-  const [isTicketUsed, setIsTicketUsed] = useState(false);
+  const [isTicketUsed, setIsTicketUsed] = useState(false);// 티켓사용여부를 나타내는 변수
+  const [ticketProductInfo, setTicketProductInfo] = useState([]);//티켓의 상품정보리스트를 가져오는 변수
+  const [ticketInfo, setTicketInfo] = useState([]);//보유하고있는 티켓리스트을 나타내는 변수
+  const [isOpen, setIsOpen] = useState(false);
 
-
-  //티켓의 상품정보리스트를 가져오는 변수
-  const [ticketProductInfo, setTicketProductInfo] = useState([]);
-
-  //보유하고있는 티켓리스트을 나타내는 변수
-  const [ticketInfo, setTicketInfo] = useState([]);
-
- 
+  //모달 열림
+  const [isModalOpen, setIsModalOpen] = useState(false); //모달 열림여부를 나타내는 변수
+  const openModal = () => {
+    // setIsOpen(true);
+    alert("로그인하세요");
+  };
   
-
 
   // 티켓사용 여부를 나타내는 버튼 이벤트
   function onClickTicketUse(ticketNo, ticketUse, ticketName) {
     
-    console.log("티켓사용 부분 --------", userId);
-    console.log("ticketName:", ticketName);
-    console.log("ticketNo:", ticketNo);
+    
+    
     const hasActiveTicket = ticketInfo.some((ticket) => ticket.ticketUse === 1);
 
     if (!hasActiveTicket) {
@@ -68,8 +56,7 @@ const TicketProduct = () => {
           console.log("Error 실패:", error);
         });
     } else {
-      console.log("이미 사용중인 티켓이 존재합니다.");
-      // 이미 사용중인 티켓이 있을 경우에 대한 처리
+      alert("이미 사용중인 티켓이 존재합니다.");
     }
   }
 
@@ -82,28 +69,32 @@ const TicketProduct = () => {
 
 
 
-
-  //addTicket 유저아이디 티켓번호 티켓사용날짜 티켓만료날짜   티케사용여부 구매날짜 티켓상품번호 ---------------------------------------------
-function addTicket (ticketProdNo, price){
+//  티켓 구매 PART
+//  유저아이디() 티켓번호 티켓사용날짜 티켓만료날짜   티케사용여부 구매날짜 티켓상품번호 
+  function addTicket (ticketProdNo, price){
     const ticketBuy  = {
        userId:userId      
       ,ticketProdNo:ticketProdNo
-
-
     }
 
-  axios.post(`/ticket/addTicket`, ticketBuy )
+  axios.post('/ticket/addTicket', ticketBuy )
   .then((response) =>{
-    const updateCoin =dbCoin - price; //코인 차감
-   console.log(updateCoin);
-    updateUserCoin(updateCoin);
-    window.location.reload(); //  구매하는 순간 리로드 
+    if(dbCoin >= price){
+      const updateCoin =dbCoin - price; //코인 차감
+      updateUserCoin(updateCoin);
+      window.location.reload(); //  구매하는 순간 리로드 
+    }else{
+
+      alert("코인이 부족합니다 ");
+    }
+    
   })
   .catch((error)=> {
     console.error(error)
   });
 }
 
+//코인 업데이트 
 function updateUserCoin(updateCoin){
   axios.post('/user/updateUser', {
     userId: userId,
@@ -111,13 +102,19 @@ function updateUserCoin(updateCoin){
   })
     .then((response) => {
       console.log("업데이트 성공:", response.data);
-      // 이 부분에 원하는 로직을 추가할 수 있습니다.
+     
     })
     .catch((error) => {
       console.log("Error 실패:", error);
     });
 }
 
+function handleClick() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
 
 
 
@@ -125,6 +122,7 @@ function updateUserCoin(updateCoin){
   // 모달 닫기 
   const closeModal = () => {
     setIsModalOpen(null); // 모달을 닫기 위해 상태를 false로 변경   
+    setIsOpen(false);
   };
 
   // 사용하기버튼
@@ -154,14 +152,6 @@ useEffect(() => {
       console.log(response.data['data']);
       const ticketProductData = response.data['data'];
       setTicketProductInfo(ticketProductData);
-      //setPriceInfo(response.data.data.price);
-      
-      console.log("가격나오나?", response.data.data.price);
-      
-      console.log("Ticket Product Info--------", ticketProductInfo);
-      console.log("Response:", JSON.stringify(response.data));
-
-  
     });
 }, []);
 
@@ -171,32 +161,34 @@ useEffect(() => {
 // 로그인  + 이용권리스트 
 useEffect(() => {
   axios.get('/user/login').then((response) => {
+    
     const userId = response.data.data.userId;
     setUserId(userId);
-    console.log("  로그인 세션 유지 하는 " + userId);
-
+  
+    if(userId !== undefined ){
+      setUserId(response.data.data.userId);
+      }
+      if(userId === undefined){
+      setUserId(response.data.data);
+      }
     axios.get(`/ticket/getTicketList/${userId}`)
       .then((response) => {
         setTicketInfo(response.data['data']);
-      
-        console.log("데이터 prodNo 넘어오나?"+response.data['data'][0].ticketProdNo);
+
       });
       
   });
 }, []);
 
 
-
-
-
-
-
-
   return (
 
     // 이용권 상품 -----------------------------------------------------------------------
     <TicketProduct_div>
-      <H2><Blue>{userId}</Blue> 님의 이용권</H2>
+      {data?
+        <H2><Blue>{userId}</Blue> 님의 이용권</H2> : <H2><Blue></Blue> 이용권</H2>
+       }
+      
       <H3>이용권 PLUS</H3>
       <SPAN>광고없이 즐기세요</SPAN>
       {ticketProductInfo.map((product, key) => (
@@ -234,14 +226,29 @@ useEffect(() => {
 
                 {/* 이용권 구매하기 Button */}
                 <Modal_div>
+               
+                  {!data?   
+                    //회원로그인 
                     <Ticket_desc_buy>
-                        <Ticket_desc_buy_btn
-                            key={key}
-                            onClick={() => buyButtonClick(product)}>
-                            구매하기
-                        </Ticket_desc_buy_btn>
-                    </Ticket_desc_buy>
-
+                          <Ticket_desc_buy_btn
+                              onClick={openModal}>
+                              구매하기
+                          </Ticket_desc_buy_btn>
+                      </Ticket_desc_buy>
+                    : 
+                    //구현하는창 
+                    <Ticket_desc_buy>
+                          <Ticket_desc_buy_btn
+                              key={key}
+                              onClick={() => buyButtonClick(product)}>
+                              구매하기
+                          </Ticket_desc_buy_btn>
+                      </Ticket_desc_buy>
+                    }
+                  
+                   {isOpen && <LoginModal onClose={isOpen} setOnClose={setIsOpen}/>}  
+                  
+                
                  {/* 이용권 구매하기 MODAL */}
 
                 {isModalOpen-1===key&&
@@ -287,9 +294,8 @@ useEffect(() => {
                                     <Add_count>개</Add_count>
                                 </Add_dd>
                                 <Add_btn_area>
-                                    <Btn_gift onClick={() => {  addTicket(product.ticketProdNo,product.price); closeModal(); }}>
-                                   
-                                      구매하기(코인으로)
+                                    <Btn_gift onClick={() => {addTicket(product.ticketProdNo,product.price); closeModal(); }}>
+                                      구매하기
                                     </Btn_gift>
                                     <Btn_cancel onClick={closeModal}>취소</Btn_cancel>
                                 </Add_btn_area>
@@ -306,7 +312,7 @@ useEffect(() => {
       ))}
 
          <H3>이용권 보유목록</H3>
-        <SPAN>이용권은 1개만 사용이 가능하고 중복 사용이 불가능합니다.<br/> 만료시 보유목록에서 사라집니다.</SPAN> 
+        <SPAN>이용권은 1개만 사용이 가능하고 <Title_storng>중복 사용</Title_storng>이 불가능합니다.<br/> 만료시 보유목록에서 사라집니다.</SPAN> 
        
         <Ticket_Li>
           <Ticket_item_div1>
@@ -337,52 +343,89 @@ useEffect(() => {
           </Ticket_desc_div>
         </Ticket_Li>
 
-
-
-
 {/* 이용권 보유 목록 ------------------------------------------*/}
 
-      {ticketInfo.map((ticket) => (
+{!data?   
+//로그인이 필요합니다. 
+<Ticket_Li>
+<Ticket_item_div1>
+  <Ticket_name>이용권 보유목록</Ticket_name>
+  <Ticket_date></Ticket_date>
+  <Ticket_icon1></Ticket_icon1>
+</Ticket_item_div1>
+<Ticket_desc_div>
+  <Ticket_desc_inner1>
+    <Ticket_desc_li>
+      <Ticket_list_noTicket>
+         로그인이 필요합니다.
+      </Ticket_list_noTicket>
+    </Ticket_desc_li>
+  </Ticket_desc_inner1>
+</Ticket_desc_div>
+</Ticket_Li>
+: 
+//구현하는창 
+ticketInfo.length === 0 ? (
+  <Ticket_Li>
+    <Ticket_item_div1>
+      <Ticket_name>이용권 보유목록</Ticket_name>
+      <Ticket_date></Ticket_date>
+      <Ticket_icon1></Ticket_icon1>
+    </Ticket_item_div1>
+    <Ticket_desc_div>
+      <Ticket_desc_inner1>
+        <Ticket_desc_li>
+          <Ticket_list_noTicket>
+            보유한 이용권이 없습니다.
+          </Ticket_list_noTicket>
+        </Ticket_desc_li>
+      </Ticket_desc_inner1>
+    </Ticket_desc_div>
+  </Ticket_Li>
+) : (            
+      ticketInfo.map((ticket) => (
         <Ticket_Li key={ticket.ticketNo}>
-          <Ticket_item_div1>
-            <Ticket_name>이용권 보유목록</Ticket_name>
-            <Ticket_date>
-              
-            </Ticket_date>
-            <Ticket_icon1></Ticket_icon1>
-          </Ticket_item_div1>
+            <Ticket_item_div1>
+              <Ticket_name>이용권 보유목록</Ticket_name>
+              <Ticket_date>
+              </Ticket_date>
+              <Ticket_icon1></Ticket_icon1>
+            </Ticket_item_div1>
           <Ticket_desc_div>
-            <Ticket_desc_inner1>
-              <Ticket_desc_li>
-                <Ticket_list_date>
-                  <Ticket_list_date_p>{ticket.ticketDate}</Ticket_list_date_p>
-                </Ticket_list_date>
-                <Ticket_list_mt_div>
-                  <Ticket_list_mt_p>            
-                    {ticket.ticketName === '1' ? "7일이용권" : ticket.ticketName === '2' ? "30일이용권" : ""}
-                  </Ticket_list_mt_p>
-                </Ticket_list_mt_div>
-                <Ticket_list_start>
-                  <Ticket_list_date_st>{ticket.ticketStart}</Ticket_list_date_st>
-                </Ticket_list_start>
-                <Ticket_list_end>
-                  <Ticket_list_date_ed>{ticket.ticketEnd}</Ticket_list_date_ed>
-                </Ticket_list_end>
-                  <Ticket_desc_use>
-                  <Ticket_desc_use_btn
-                      key={ticket.ticketNo}
-                      onClick={() => {
-                        if (ticket.ticketUse !== 1) {
-                          onClickTicketUse(ticket.ticketNo, ticket.ticketUse, ticket.ticketName);
-                        }}} >
-                    {ticket.ticketUse === 1 ? "사용중" : "사용하기"}
-                    </Ticket_desc_use_btn>
-                  </Ticket_desc_use>
-              </Ticket_desc_li>
-            </Ticket_desc_inner1>
+              <Ticket_desc_inner1>
+                    <Ticket_desc_li>
+                        <Ticket_list_date>
+                          <Ticket_list_date_p>{ticket.ticketDate}</Ticket_list_date_p>
+                        </Ticket_list_date>
+                        <Ticket_list_mt_div>
+                          <Ticket_list_mt_p>            
+                            {ticket.ticketName === '1' ? "7일이용권" : ticket.ticketName === '2' ? "30일이용권" : ""}
+                          </Ticket_list_mt_p>
+                        </Ticket_list_mt_div>
+                        <Ticket_list_start>
+                            <Ticket_list_date_st>{ticket.ticketStart}</Ticket_list_date_st>
+                        </Ticket_list_start>
+                        <Ticket_list_end>
+                            <Ticket_list_date_ed>{ticket.ticketEnd}</Ticket_list_date_ed>
+                        </Ticket_list_end>
+                        <Ticket_desc_use>
+                            <Ticket_desc_use_btn
+                                key={ticket.ticketNo}
+                                onClick={() => {
+                                  if (ticket.ticketUse !== 1) {
+                                    onClickTicketUse(ticket.ticketNo, ticket.ticketUse, ticket.ticketName);
+                                  }}} >
+                              {ticket.ticketUse === 1 ? "사용중" : "사용하기"}
+                              </Ticket_desc_use_btn>
+                        </Ticket_desc_use>
+                    </Ticket_desc_li>
+              </Ticket_desc_inner1>
           </Ticket_desc_div>
         </Ticket_Li>
-      ))}
+      ))
+)}
+
+  
     </TicketProduct_div>
   );
 };

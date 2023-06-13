@@ -30,23 +30,12 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     const [startStreamingIsOpen, setStartStreamingIsOpen] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['NSESSIONID']);
     const {data} = useSWR('/user/login', fetcher);
-    const [userId, setUserId] = useState('');
+    const userId = data?.userId;
     const navigate = useNavigate();
     
-    //userId 값 세팅
-    useEffect(() => {
-        axios.get('/user/login').then((response) => {
-          if(response.data.data.userId !== undefined && response.data.data.userId !== userId){
-          setUserId(response.data.data.userId);
-          }
-          if(response.data.data.userId === undefined && response.data.data !== userId){
-          setUserId(response.data.data);
-          }
-        });
-      }, [userId]);
-
     const onSearch =(e) =>{
-        setSearch(e.target.value);        
+        setSearch(e.target.value);
+        
     }
     
     const searchSubmit = ()=>{
@@ -95,7 +84,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
 
     const logout = useCallback(() => {
         axios.create({
-            baseURL: `${process.env.REACT_APP_NODE_URL}`,
+            baseURL: 'http://localhost:3001',
             withCredentials : true
           }).get('/testLogout');
 
@@ -110,7 +99,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     const setNodeCookie = async () => {
     if(data) {
         const response = await axios.create({
-            baseURL: `${process.env.REACT_APP_NODE_URL}`,
+            baseURL: 'http://localhost:3001',
             withCredentials : true
           }).post('/testLogin', data);    
     }
@@ -124,7 +113,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
 
    const validateStreamingRoll = async () => {
         const response = await axios.create({
-            baseURL: `${process.env.REACT_APP_NODE_URL}`,
+            baseURL: 'http://localhost:3001',
             withCredentials : true
         }).get('/streaming/addStreaming');
 
@@ -138,7 +127,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         const streamingCategory = data.streamingCategory;
 
         const response = await axios.create({
-            baseURL: `${process.env.REACT_APP_NODE_URL}`,
+            baseURL: 'http://localhost:3001',
             withCredentials : true
         }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
         
@@ -272,7 +261,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             }}>내 정보 관리</MenuItem>
                                             <MenuItem onClick={()=>{
                                                 navigate('/Exchange');
-                                            }}>결제</MenuItem>
+                                            }}>결제 </MenuItem>
                                             <MenuItem onClick={()=>{
                                                 navigate('/ticket1');
                                             }}>이용권</MenuItem>
