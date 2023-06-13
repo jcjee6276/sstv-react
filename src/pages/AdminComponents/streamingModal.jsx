@@ -34,22 +34,22 @@ const AdModal = ({onClose, setOnClose, data, onClick}) => {
     const getCategory = (categoryId) => {
         let result;
         switch(categoryId) {
-            case '0':
+            case '1':
                 result = '게임';
                 break;
-            case '1':
+            case '2':
                 result = '일상';
                 break;
-            case '2':
+            case '3':
                 result = '스포츠';
                 break;
-            case '3':
+            case '4':
                 result = '먹방';
                 break;
-            case '4':
+            case '5':
                 result = '요리';
                 break;
-            case '5':
+            case '6':
                 result = '교육';
                 break;
             default:
