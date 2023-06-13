@@ -56,7 +56,6 @@ const chatfooter = (props ) => {
     }
 
     const handleReportModalSubmit = async (data) => {
-        alert('[handleReportModalSubmit] = ' + JSON.stringify(streaming));
         const method = 'POST';
         const url = `${process.env.REACT_APP_NODE_URL}/report/addReport`;
         const param = {

@@ -34,16 +34,16 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     const navigate = useNavigate();
     
     //userId 값 세팅
-    useEffect(() => {
-        axios.get('/user/login').then((response) => {
-          if(response.data?.data?.userId !== userId){
-          setUserId(response.data?.data?.userId);
-          }
-          if(response.data?.data !== userId){
-          setUserId(response.data?.data);
-          }
-        });
-      }, [userId]);
+    // useEffect(() => {
+    //     axios.get('/user/login').then((response) => {
+    //       if(response.data?.data?.userId !== userId){
+    //       setUserId(response.data?.data?.userId);
+    //       }
+    //       if(response.data?.data !== userId){
+    //       setUserId(response.data?.data);
+    //       }
+    //     });
+    //   }, [userId]);
 
     const onSearch =(e) =>{
         setSearch(e.target.value);
@@ -96,7 +96,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
 
     const logout = useCallback(() => {
         axios.create({
-            baseURL: 'http://localhost:3001',
+            baseURL: `${process.env.REACT_APP_NODE_URL}`,
             withCredentials : true
           }).get('/testLogout');
 
@@ -131,7 +131,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
 
    const validateStreamingRoll = async () => {
         const response = await axios.create({
-            baseURL: 'http://localhost:3001',
+            baseURL: `${process.env.REACT_APP_NODE_URL}`,
             withCredentials : true
         }).get('/streaming/addStreaming');
 
@@ -145,7 +145,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         const streamingCategory = data.streamingCategory;
 
         const response = await axios.create({
-            baseURL: 'http://localhost:3001',
+            baseURL: `${process.env.REACT_APP_NODE_URL}`,
             withCredentials : true
         }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
         
