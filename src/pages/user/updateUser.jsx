@@ -62,10 +62,10 @@ const UpdateUser = () => {
   // DB에 저장된 정보 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
-      if(response.data.data?.userId !== ''){
+      if(response.data.data?.userId !== userId){
       setUserId(response.data.data.userId);
       }
-      if(response.data.data?.userId === ''){
+      if(response.data.data?.userId === userId){
       setUserId(response.data.data);
       }
     });

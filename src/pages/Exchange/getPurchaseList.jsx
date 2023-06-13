@@ -165,7 +165,7 @@ function onClickPayment() {
       
   useEffect(() => {
     axios.get('/user/login').then((response) => {
-      const userId = response.data.data.userId;
+      const userId = response.data?.data.userId;
       setUserId(userId);
       console.log("로그인부분" + userId);
 
