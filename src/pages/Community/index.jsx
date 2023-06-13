@@ -15,6 +15,7 @@ const Community = () => {
     const navigate = useNavigate();
     const {data} = useSWR('/user/login', fetcher);
     const {userId} = useParams();
+    const [notice, setNotice] = useState('');
     const [blackList, setBlackList] = useState([]);
     const [blackUser, setBlackUser] = useState(false);
     const [writingList, setWritingList] = useState([]);
@@ -29,7 +30,16 @@ const Community = () => {
             const jsonData = response.data;
             setWritingList(jsonData['data']);
         })
+        axios.get('/community/getNotice/'+userId)
+        .then((response)=>{
+            const jsonData = response.data;
+            setNotice(jsonData['data']);
+            
+        })
     },[])
+    console.log(notice);
+
+
 
     const onClickWriting = () => {
         navigate(`/Writing/${userId}`);
@@ -47,10 +57,11 @@ const Community = () => {
     //         navigate('/');
     //     }
     // }
-    console.log("zus+"+users);
-    console.log("zusfetch+"+fetchUsers);
-    
-    console.log("블랙유저:"+blackUser);
+    const ImageError=(event)=>{
+        event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
+    }
+      let date = new Date(notice?.regDate);
+      let formattedDate = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
     
     return(
         <body>
@@ -163,24 +174,27 @@ const Community = () => {
                                     </Com_main_body_writing_a>
                                 </Com_main_body_writing_h3>
                                 <Com_main_body_writing_div_2>
+                                {notice?.notice?
                                     <Com_main_body_writing_div_3>
                                         <Com_main_body_writing_div_4>
                                             <Com_main_body_writing_username_div>
                                                 <Com_main_body_writing_userimage_div>
-                                                    <Com_main_body_writing_userimage_img src=''/>
+                                                    <Com_main_body_writing_userimage_img src={process.env.REACT_APP_IMAGE_URL} onError={ImageError}/>
                                                 </Com_main_body_writing_userimage_div>
-                                                <Com_main_body_writing_username_button>
-                                                    <Com_main_body_writing_username_span>testuser</Com_main_body_writing_username_span>
+                                                <Com_main_body_writing_username_button >
+                                                    <Com_main_body_writing_username_span>{notice?.guestUserId}</Com_main_body_writing_username_span>
                                                 </Com_main_body_writing_username_button>
                                                 <Com_main_body_writing_userdate_div>
-                                                    2023-05-26 <Com_main_body_writing_user_view_em>∙ 조회 0</Com_main_body_writing_user_view_em>
+                                                    {formattedDate} <Com_main_body_writing_user_view_em>∙ 조회 {notice?.view}</Com_main_body_writing_user_view_em>
                                                 </Com_main_body_writing_userdate_div>
                                             </Com_main_body_writing_username_div>
 
                                             <Com_main_body_writing_title_div>
-                                                <Com_main_body_writing_a>
-                                                    <Com_main_body_writing_title_strong>testitle</Com_main_body_writing_title_strong>
-                                                    <Com_main_body_writing_title_p>testcontent</Com_main_body_writing_title_p>
+                                                <Com_main_body_writing_a onClick={()=>{
+                                                    axios('/community/addView/'+notice?.writingNo)
+                                                }} href={'/'+notice?.writingNo+'/'+notice?.hostUserId}>
+                                                    <Com_main_body_writing_title_strong>{notice?.title}</Com_main_body_writing_title_strong>
+                                                    <Com_main_body_writing_title_p>  </Com_main_body_writing_title_p>
                                                 </Com_main_body_writing_a>
                                             </Com_main_body_writing_title_div>
 
@@ -188,23 +202,51 @@ const Community = () => {
 
                                         <Com_main_body_writing_image_div>
                                         <Com_main_body_writing_image_a>
-                                            <Com_main_body_writing_image_img src='./img/base_profile.jpg'/>
+                                            <Com_main_body_writing_image_img src={process.env.PUBLIC_URL+'/img/notice.png'}/>
                                         </Com_main_body_writing_image_a>
                                     </Com_main_body_writing_image_div>
 
-                                    <Com_main_body_writing_image_button>
-                                        <Com_main_body_writing_image_span></Com_main_body_writing_image_span>
+                                    <Com_main_body_writing_image_button > 
+                                        <Com_main_body_writing_image_span ></Com_main_body_writing_image_span>
+                                        {/* <img src={process.env.PUBLIC_URL+'/img/notice.png'} /> */}
                                     </Com_main_body_writing_image_button>
 
-                                    </Com_main_body_writing_div_3>
+                                 </Com_main_body_writing_div_3>
+                                : 
                                 
+                                <Com_main_body_writing_div_3>
+                                        <Com_main_body_writing_div_4>
+                                            <Com_main_body_writing_username_div>
+                                               
+                                                
+                                                
+                                            </Com_main_body_writing_username_div>
+
+                                            <Com_main_body_writing_title_div>
+                                                <Com_main_body_writing_a >
+                                                    <Com_main_body_writing_title_strong>등록된 공지사항이 없습니다.</Com_main_body_writing_title_strong>
+                                                    <Com_main_body_writing_title_p> <div dangerouslySetInnerHTML={{ __html: notice?.content }} /></Com_main_body_writing_title_p>
+                                                </Com_main_body_writing_a>
+                                            </Com_main_body_writing_title_div>
+
+                                        </Com_main_body_writing_div_4>
+
+                                       
+
+                                    
+
+                                 </Com_main_body_writing_div_3>
+                                
+                                }
                                 {writingList.slice(0,4).map((list, index)=> {
 
                                 return(
                                     <Com_main_body_writing_list_div>
                                         <Com_main_body_writing_list_ul>
                                             <Com_main_body_writing_list_li>
-                                                <Com_main_body_writing_list_a href={'/'+list.writingNo+'/'+userId}>
+                                                <Com_main_body_writing_list_a onClick={()=>{
+                                                    axios.get('/community/addView/'+list.writingNo)
+                                                }} href={'/'+list.writingNo+'/'+userId}>
                                                     <Com_main_body_writing_list_li_div>
                                                         <Com_main_body_writing_list_li_p>
                                                             <Com_main_body_writing_list_li_span >{list.title}</Com_main_body_writing_list_li_span>
@@ -213,7 +255,7 @@ const Community = () => {
                                                     </Com_main_body_writing_list_li_div>
                                                 </Com_main_body_writing_list_a>
                                                 <Com_main_body_writing_date_div>
-                                                   <Com_main_body_writing_show_em>조회 0</Com_main_body_writing_show_em>
+                                                   <Com_main_body_writing_show_em>조회 {list.view}</Com_main_body_writing_show_em>
                                                 </Com_main_body_writing_date_div>
                                             </Com_main_body_writing_list_li>
                                         </Com_main_body_writing_list_ul>
