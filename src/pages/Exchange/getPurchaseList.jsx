@@ -187,10 +187,10 @@ function onClickPayment() {
       
   useEffect(() => {
     axios.get('/user/login').then((response) => {
-      if(response.data.data.userId !== undefined){
+      if(response.data?.data.userId !== ''){
       setUserId(response.data.data.userId);
       }
-      if(response.data.data.userId === undefined){
+      if(response.data?.data.userId === ''){
       setUserId(response.data.data);
       }
     });
