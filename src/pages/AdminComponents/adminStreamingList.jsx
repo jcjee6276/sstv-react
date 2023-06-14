@@ -129,8 +129,6 @@ const AdminStreamingList = () => {
       if(response.data.firstData == '1') {
         alert('서버에러입니다.');
       }
-
-      alert('response.data = ' + JSON.stringify(response.data));
     }
     closeAddStreamingBanModal();
   }

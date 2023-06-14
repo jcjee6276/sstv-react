@@ -142,14 +142,12 @@ const LoadingPage = () => {
           <br/>
         </div>
         <div style={{ margin: "10px 0" }} />
-        <a href="https://github.com/sorayuki/obs-multi-rtmp/releases" target="_blank" rel="noopener noreferrer">
           <img
             src="https://advertise.kr.object.ncloudstorage.com/loadingPage3.png"
             alt="#"
             className="img-size"
             style={{ maxWidth: "80%", height: "auto" }}
           />
-        </a>
       </>
     );
   };
@@ -162,14 +160,12 @@ const LoadingPage = () => {
           <br/>
         </div>
         <div style={{ margin: "10px 0" }} />
-        <a href="https://github.com/sorayuki/obs-multi-rtmp/releases" target="_blank" rel="noopener noreferrer">
           <img
             src="https://advertise.kr.object.ncloudstorage.com/loadingPage4.png"
             alt="#"
             className="img-size"
             style={{ maxWidth: "80%", height: "auto" }}
           />
-        </a>
       </>
     )
   }
@@ -184,14 +180,12 @@ const LoadingPage = () => {
           <br/>
         </div>
         <div style={{ margin: "10px 0" }} />
-        <a href="https://github.com/sorayuki/obs-multi-rtmp/releases" target="_blank" rel="noopener noreferrer">
           <img
             src="https://advertise.kr.object.ncloudstorage.com/loadingPage5.png"
             alt="#"
             className="img-size"
             style={{ maxWidth: "85%", maxHeight: "85%" }}
           />
-        </a>
       </>
     )
   }

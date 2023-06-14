@@ -33,7 +33,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     const navigate = useNavigate();
     const userId = data?.userId;
     
-    // //userId 값 세팅
+    //userId 값 세팅
     // useEffect(() => {
     //     axios.get('/user/login').then((response) => {
     //       if(response.data?.data?.userId !== userId){
@@ -96,7 +96,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
 
     const logout = useCallback(() => {
         axios.create({
-            baseURL: 'http://localhost:3001',
+            baseURL: `${process.env.REACT_APP_NODE_URL}`,
             withCredentials : true
           }).get('/testLogout');
 
@@ -131,7 +131,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
 
    const validateStreamingRoll = async () => {
         const response = await axios.create({
-            baseURL: 'http://localhost:3001',
+            baseURL: `${process.env.REACT_APP_NODE_URL}`,
             withCredentials : true
         }).get('/streaming/addStreaming');
 
@@ -145,14 +145,13 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         const streamingCategory = data.streamingCategory;
 
         const response = await axios.create({
-            baseURL: 'http://localhost:3001',
+            baseURL: `${process.env.REACT_APP_NODE_URL}`,
             withCredentials : true
         }).post('/streaming/addStreaming', {streamingTitle : streamingTitle, streamingCategory : streamingCategory});
         
         const result = (JSON.parse(response.data)).result;
         console.log('result = ' +  result);
         if(result == 'success') {
-            alert('success!');
             navigate('/LoadingPage');
         }else {
             alert('스트리밍 시작에 실패했습니다.');

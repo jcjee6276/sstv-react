@@ -8,7 +8,7 @@ const finishStreamingModal = ({onClose, setOnClose, onClick, onSubmit}) => {
     const modalRef = useRef(null);
     const cancleRef = useRef(null);
     const [streamingTitle, setStreamingTitle] = useState('');
-    const [streamingCategory, setStreamingCategory] = useState('0');
+    const [streamingCategory, setStreamingCategory] = useState('1');
     useEffect(()=> {
         const handler = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
