@@ -452,11 +452,12 @@ ticketInfo.length === 0 ? (
                             {ticket.ticketName === '1' ? "7일이용권" : ticket.ticketName === '2' ? "30일이용권" : ""}
                           </Ticket_list_mt_p>
                         </Ticket_list_mt_div>
+                        
                         <Ticket_list_start>
-                            <Ticket_list_date_st>{ticket.ticketStart}</Ticket_list_date_st>
+                          <Ticket_list_date_st>{ticket.ticketStart ? ticket.ticketStart.slice(0, 10) : ''}</Ticket_list_date_st>
                         </Ticket_list_start>
                         <Ticket_list_end>
-                            <Ticket_list_date_ed>{ticket.ticketEnd}</Ticket_list_date_ed>
+                          <Ticket_list_date_ed>{ticket.ticketEnd ? ticket.ticketEnd.slice(0, 10) : ''}</Ticket_list_date_ed>
                         </Ticket_list_end>
                         <Ticket_desc_use>
                             <Ticket_desc_use_btn
