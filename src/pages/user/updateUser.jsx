@@ -5,6 +5,9 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from './header';
+import RmUser from './removeUser';
+import BlackList from './blackListView';
 
 const UpdateUser = () => {
   const [userId, setUserId] = useState('');
@@ -27,6 +30,15 @@ const UpdateUser = () => {
   const navigate = useNavigate();
   const coin =0;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpenBlackModal, setIsOpenBlackModal] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
+
   
   const onChangePassword = useCallback((e) => {
     setPassword(e.target.value);
@@ -43,11 +55,11 @@ const UpdateUser = () => {
   // DB에 저장된 정보 가져오기
   useEffect(() => {
     axios.get('/user/login').then((response) => {
-      if(response.data.data.userId !== undefined){
-      setUserId(response.data.data.userId);
+      if(response.data.data?.userId !== userId){
+      setUserId(response.data.data?.userId);
       }
-      if(response.data.data.userId === undefined){
-      setUserId(response.data.data);
+      if(response.data.data?.userId === userId){
+      setUserId(response.data?.data);
       }
     });
   }, []);
@@ -57,11 +69,11 @@ const UpdateUser = () => {
   useEffect(() => {
     if (userId !== '') {
       axios.get('/user/getUser/' +userId).then((response) => {
-        setDbUserNickname(response.data.data.userNickname);
-        setPhone(response.data.data.phone);
-        setUserType(response.data.data.userType);  
-        setDbEmail(response.data.data.eMail);
-        setDbProfilePhoto(response.data.data.profilePhoto);    
+        setDbUserNickname(response.data.data?.userNickname);
+        setPhone(response.data.data?.phone);
+        setUserType(response.data.data?.userType);  
+        setDbEmail(response.data.data?.eMail);
+        setDbProfilePhoto(response.data.data?.profilePhoto);    
       });
     }
   }, [userId]);
@@ -90,6 +102,7 @@ const UpdateUser = () => {
     }
   };
 
+  //기본 이미지 사용
   const use_baseImage = (e) => {
     setProfilePhoto("base_image");
   }
@@ -99,14 +112,14 @@ const UpdateUser = () => {
   //닉네임 중복체크
   const checkNickDuplicate = useCallback(()=> {
     axios.get('/user/checkUserNickname/'+userNickname).then((response) => {
-      if(response.data.data === 'useOk'){
-        setNickEnabled(response.data.data);
-        alert('사용 가능한 닉네임 입니다!' +userId);
+      if(response.data?.data === 'useOk'){
+        setNickEnabled(response.data?.data);
+        alert('사용 가능한 닉네임 입니다!');
         setNickUpdate(false);
       }
-      if(response.data.data === 'useNo'){
-        setNickEnabled(response.data.data);
-        alert('사용중인 닉네임 입니다!'+userId);
+      if(response.data?.data === 'useNo'){
+        setNickEnabled(response.data?.data);
+        alert('사용중인 닉네임 입니다!');
       }
     })
 
@@ -149,6 +162,7 @@ const saveFile = useCallback(() => {
   }
 }, [inputRef, profilePhoto, userId]);
 
+console.log('선택된 파일 :: '+'file')
 
   //이메일 유효성 체크
   const handelInputEmailCheck = (e) => {
@@ -173,7 +187,7 @@ const saveFile = useCallback(() => {
     axios
       .post("/user/updateUser", {userId, password, eMail, coin})
       .then((response) => {
-        alert("수정 완료!" +userId);
+        alert("회원정보가 변경 되었습니다!");
       });
   }, [eMail,  userId, password, coin]);
 
@@ -195,11 +209,11 @@ const saveFile = useCallback(() => {
     navigate('/followlist/'+userId);
   }
 
-  //회원탈퇴 탭
-  const onRmUser = () => {
-    setSelectedTab('removeUser');
-    navigate('/remove/'+userId);
-  }
+  // //회원탈퇴 탭
+  // const onRmUser = () => {
+  //   setSelectedTab('removeUser');
+  //   navigate('/remove/'+userId);
+  // }
 
   //코인사용 내역 탭
   const onCHtab = () => {
@@ -223,9 +237,9 @@ const saveFile = useCallback(() => {
     {/* header */}
       <User_update_header>
         <User_update_header_2>
-          <User_update_logo>
-          <img src={process.env.PUBLIC_URL +'/img/SSTV.gif'} width={150} height={65} onClick={()=> {navigate('/');}} style={{ cursor: 'pointer' }}/>
-          </User_update_logo>
+          <div>
+        <Header/>
+        </div>
           <User_update_title>
       <User_update_subTitle>
           개인정보
@@ -250,12 +264,14 @@ const saveFile = useCallback(() => {
               <UserInfo_tab3>팔로우 관리</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            {/* {isOpenBlackModal && <BlackList onClose={isOpenBlackModal} setOnClose={setIsOpenBlackModal}/> } */}
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>코인 사용내역</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={openModal} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+              {isModalOpen && <RmUser onClose={isModalOpen} setOnClose={setIsModalOpen}/> }
               <UserInfo_tab3>회원 탈퇴</UserInfo_tab3>
             </UserInfo_tab2>
 
@@ -275,53 +291,71 @@ const saveFile = useCallback(() => {
                     <Profile_photo>
                       <Profile_photo2>
                         <Profile_photo3 onClick={handleClick} style={{ cursor: 'pointer' }}>
-                        {dbProfilePhoto === "base_image" || profilePhoto === "base_image" ? (
-                          <img 
-                          src={process.env.PUBLIC_URL + '/img/base_profile.jpg'}
-                          alt="Profile"
-                          width={150}
-                          height={150}
-                          style={{ borderRadius: '50%' }}
-                        />
-                        ):(dbProfilePhoto !== "base_image" && uploadedImage === null ) ? (
-                            <img 
-                              src={'https://kr.object.ncloudstorage.com/sstv-image/' + dbProfilePhoto}
+                        {
+                          uploadedImage === null && dbProfilePhoto === "base_image" ? (
+                            <img
+                              src={process.env.PUBLIC_URL + '/img/base_profile.jpg'}
                               alt="Profile"
                               width={150}
                               height={150}
                               style={{ borderRadius: '50%' }}
                             />
-                          ) : (                          
-                          <img
-                            src={uploadedImage}
-                            alt="Uploaded Profile"
-                            width={150}
-                            height={150}
-                            style={{ borderRadius: '50%' }}
-                          />
-                        )}
+                          ) : (
+                            profilePhoto === "base_image" ? (
+                              <img
+                                src={process.env.PUBLIC_URL + '/img/base_profile.jpg'}
+                                alt="Profile"
+                                width={150}
+                                height={150}
+                                style={{ borderRadius: '50%' }}
+                              />
+                            ) : (
+                              dbProfilePhoto !== "base_image" && uploadedImage === null ? (
+                                <img
+                                  src={'https://kr.object.ncloudstorage.com/sstv-image/' + dbProfilePhoto}
+                                  alt="Profile"
+                                  width={150}
+                                  height={150}
+                                  style={{ borderRadius: '50%' }}
+                                />
+                              ) : (
+                                <img
+                                  src={uploadedImage}
+                                  alt="Uploaded Profile"
+                                  width={150}
+                                  height={150}
+                                  style={{ borderRadius: '50%' }}
+                                />
+                              )
+                            )
+                          )
+                        }
 
                         </Profile_photo3>
                       </Profile_photo2>
                     </Profile_photo>
                     <Profile_text>
-                      <Profile_add_button_box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <Profile_add_button_box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap'  }}>
                         <Profile_add_button style={{ width: '100px', height: '30px' }}>
                         <Profile_add_button1>
                           <Profile_add_button2>
-                            {profilePhoto !=="base_image" ? (
-                            <>
-                            <Profile_add_button3 onClick={use_baseImage} style={{ cursor: 'pointer' }}>
-                            <p style={{ fontSize: '12px' }}>기본 이미지 사용</p>
-                          </Profile_add_button3>
-                            </>
-                             ) : (
-                            <>
-                            <Profile_add_button3 onClick={handleClick} style={{ cursor: 'pointer' }}>
-                              <p style={{ fontSize: '12px' }}>프로필 사진 추가</p>
-                            </Profile_add_button3>
-                            </>
-                          )}
+                          {(profilePhoto === null || profilePhoto === "" || profilePhoto === undefined) && dbProfilePhoto === "base_image" ? (
+                              <Profile_add_button3 onClick={handleClick} style={{ cursor: 'pointer' }}>
+                                <p style={{ fontSize: '12px' }}>프로필 변경</p>
+                              </Profile_add_button3>
+                            ) : (
+                              <>
+                                {profilePhoto === "baseImage" ? (
+                                  <Profile_add_button3 onClick={use_baseImage} style={{ cursor: 'pointer' }}>
+                                    <p style={{ fontSize: '11px' }}>기본 이미지 사용</p>
+                                  </Profile_add_button3>
+                                ) : (
+                                  <Profile_add_button3 onClick={handleClick} style={{ cursor: 'pointer' }}>
+                                    <p style={{ fontSize: '12px' }}>프로필 변경</p>
+                                  </Profile_add_button3>
+                                )}
+                              </>
+                            )}
                           <input ref={inputRef}
                               type="file"
                               onChange={handleFileInputChange}
@@ -331,7 +365,7 @@ const saveFile = useCallback(() => {
                         </Profile_add_button1>
                         </Profile_add_button>
                       </Profile_add_button_box>
-                      <Nickname_update_update2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <Nickname_update_update2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
                       <NicknameDuplicate_button onClick={saveFile} style={{ padding: '3px 5px', fontSize: '13px', marginTop:'10px' }}>적용하기</NicknameDuplicate_button>
                       </Nickname_update_update2>
                       <Nickname_update_sub >
@@ -357,7 +391,7 @@ const saveFile = useCallback(() => {
                   :
                   <NicknameChange_button onClick={updateNickname}>닉네임 변경</NicknameChange_button>
                   }
-                  <Nickname_update_sub><p style={{color:'skyblue'}}>- 스트리밍이나 채팅 및 게시글 작성 등 서비스 이용시 보이는 닉네임입니다.</p></Nickname_update_sub>
+                  <Nickname_update_sub><p style={{color:'skyblue', marginTop:'22px'}}>- 스트리밍이나 채팅 및 게시글 작성 등 서비스 이용시 보이는 닉네임입니다.</p></Nickname_update_sub>
                   <Nickname_update_sub><p style={{color:'skyblue'}}>- 중복 되지 않는 닉네임만 사용할 수 있습니다.</p></Nickname_update_sub>
                   <Nickname_update_sub><p style={{color:'skyblue'}}>- 닉네임을 입력하고 중복체크를 진행해주세요.</p></Nickname_update_sub>
                 </Nickname_update_update2>
@@ -399,7 +433,8 @@ const saveFile = useCallback(() => {
                 </Phone_update>
                 <Phone_update_input>
                   <Phone_update_input2>
-                    <Phone_update_input_text value={phone} readOnly></Phone_update_input_text>
+                    <Phone_update_input_text placeholder={userType === 1 ? 'SNS 회원' : ''}  value={phone} readOnly></Phone_update_input_text>
+                    <Nickname_update_sub><p style={{color:'blue', marginTop:'5px'}}>- 휴대폰 정보는 수정하실 수 없습니다.</p></Nickname_update_sub>
                   </Phone_update_input2>
                 </Phone_update_input>
                 <Email_update>

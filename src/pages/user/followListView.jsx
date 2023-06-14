@@ -8,39 +8,47 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { useCallback } from 'react';
+import Header from './header';
+import BlackList from './blackListView';
+import RmUser from './removeUser';
+import useSWR from 'swr';
+import fetcher from '../utils/fetcher';
 
 
 const FollowListView = () => {
   const [selectedTab, setSelectedTab] = useState('followList'); 
   const navigate = useNavigate();
-  const [userId, setUserId] = useState('');
+  // const [userId, setUserId] = useState('');
   const [followList, setFollowList] = useState([]);
   const [followerList, setFollowerList] = useState([]);
   const [pageState, setPageState] = useState('');
   const [searchList, setSearchList] = useState([]);
   const [keyword, setKeyword] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {data} = useSWR('/user/login', fetcher);
+  const userId = data?.userId;
 
   const onChangeKeyword = useCallback((e) => {
     setKeyword(e.target.value);
   });
 
   //로그인 세션의 아이디 가져오기
-  useEffect(() => {
-    axios.get('/user/login').then((response) => {
-      if(response.data.data.userId !== undefined){
-      setUserId(response.data.data.userId);
-      }
-      if(response.data.data.userId === undefined){
-      setUserId(response.data.data);
-      }
-      setPageState('');
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('/user/login').then((response) => {
+  //     if(response.data?.data?.userId !== userId){
+  //     setUserId(response.data.data?.userId);
+  //     }
+  //     if(response.data?.data.userId === userId){
+  //     setUserId(response.data?.data);
+  //     }
+  //     setPageState('');
+  //   });
+  // }, []);
 
   //세션에 저장된 아이디에 해당하는 팔로우 목록
   useEffect(() => {
     axios.get('/fan/getFollow/'+userId).then((response) => {
-      setFollowList(response.data.data);
+      setFollowList(response.data?.data);
     })
   }, [userId, searchList]);
 
@@ -48,7 +56,7 @@ const FollowListView = () => {
   useEffect(() => {
     const followUser = userId;
     axios.get('/fan/getFollowing/'+followUser).then((response) => {
-      setFollowerList(response.data.data);
+      setFollowerList(response.data?.data);
     })
   }, [userId]);
 
@@ -73,23 +81,41 @@ const FollowListView = () => {
     console.log('userID :: '+userId);
     console.log('FollowUser:', followUser);
     axios.post('/fan/addFollow', { userId, followUser }).then((response) => {
-      if(response.data.result === 'success'){
+      if(response.data?.result === 'success'){
       navigate('/followlist/'+userId);
       window.location.reload();
       }
-      if(response.data.result === 'fail'){
+      if(response.data?.result === 'fail'){
         alert('이미 등록된 회원입니다!');
       }
     });
   };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
+
   
-  //검색
+  //검색(버튼클릭)
   const search = () => {
     axios.get('/fan/searchUser/'+keyword).then((response) => {
-      setSearchList(response.data.data);
+      setSearchList(response.data?.data);
       setPageState('search');
     })
   }
+
+  //검색(enter)
+  const searchKeyPress = (e) => {
+    if(e.key === 'Enter'){
+      axios.get('/fan/searchUser/'+keyword).then((response) => {
+        setSearchList(response.data?.data);
+        setPageState('search');
+    })
+  }
+}
 
   //내 정보 관리 탭
   const onUserInfo = () => {
@@ -134,11 +160,11 @@ const FollowListView = () => {
     <div>
     <User_update_Main>
     {/* header */}
-      <User_update_header>
+    <User_update_header>
         <User_update_header_2>
-          <User_update_logo>
-          <img src={process.env.PUBLIC_URL +'/img/SSTV.gif'} width={150} height={65} onClick={()=> {navigate('/');}} style={{ cursor: 'pointer' }}/>
-          </User_update_logo>
+          <div>
+        <Header/>
+        </div>
           <User_update_title>
       <User_update_subTitle>
           개인정보
@@ -165,12 +191,14 @@ const FollowListView = () => {
               <UserInfo_tab3>팔로우 관리</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            {/* {isOpenBlackModal && <BlackList onClose={isOpenBlackModal} setOnClose={setIsOpenBlackModal}/> } */}
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>코인 사용내역</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={openModal} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+              {isModalOpen && <RmUser onClose={isModalOpen} setOnClose={setIsModalOpen}/> }
               <UserInfo_tab3>회원 탈퇴</UserInfo_tab3>
             </UserInfo_tab2>
 
@@ -183,20 +211,21 @@ const FollowListView = () => {
             <Info_text>회원이 지정한 블랙리스트 회원을 관리할 수 있습니다.</Info_text>
             
             </User_update_body3>
-            <Nickname_update_input placeholder={'검색 조건'} style={{ marginRight: '8px' }} onChange={onChangeKeyword}></Nickname_update_input>
-            <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" onClick={search}/>
+            <Nickname_update_input placeholder={'검색 조건'} style={{ marginRight: '8px', borderRadius: '8px'  }} onChange={onChangeKeyword} onKeyPress={searchKeyPress}></Nickname_update_input>
+            <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" onClick={search} style={{cursor: 'pointer'}}/>
           </User_update_body2>
         </User_update_body>
         </User_update_Main>
 
 
-
+                      {isModalOpen === true ? '' : (
+                        <>
                               <List_body_12 style={{
                                       position: 'fixed',
                                       top: '60%',
                                       left: '30%',
                                       transform: 'translate(-50%, -50%)',
-                                      zIndex: 9999,
+                                      zIndex: 9000,
                                       backgroundColor:'gray',
                                       marginRight: '10px'
                                         }}>
@@ -485,6 +514,8 @@ const FollowListView = () => {
                                   </List_body_14>
                                </List_body_13>
                               </List_body_12>
+                              </>
+                              )}
 
 
               </div>

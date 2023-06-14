@@ -7,6 +7,7 @@ import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import AdModal from './adModal';
+import Header from './header';
 
 const AddAd = () => {
   const [selectedTab, setSelectedTab] = useState('adInfo'); 
@@ -147,6 +148,12 @@ const saveFile = useCallback(() => {
     navigate('/remove/'+userId);
   }
 
+  //코인사용 내역 탭
+  const onCHtab = () => {
+    setSelectedTab('coinHistory');
+    navigate('/coinHistory/'+userId);
+  }
+
   //광고목록 탭
   // 추가
   const onAdInfo = () => {
@@ -240,11 +247,11 @@ const saveFile = useCallback(() => {
   return(
     <User_update_Main>
     {/* header */}
-      <User_update_header>
+    <User_update_header>
         <User_update_header_2>
-          <User_update_logo>
-          <img src={process.env.PUBLIC_URL +'/img/SSTV.gif'} width={150} height={65} onClick={()=> {navigate('/');}} style={{ cursor: 'pointer' }}/>
-          </User_update_logo>
+          <div>
+        <Header/>
+        </div>
           <User_update_title>
       <User_update_subTitle>
           개인정보
@@ -271,7 +278,7 @@ const saveFile = useCallback(() => {
             <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>코인 사용내역</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>

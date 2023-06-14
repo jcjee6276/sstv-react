@@ -6,7 +6,6 @@ import axios from 'axios';
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 import Header from './header';
-import TicketProduct from '../Ticket/ticketProduct';
 
 const loginModal = ({onClose, setOnClose}) => {
     const [userId, setUserId]= useState('');
@@ -19,6 +18,16 @@ const loginModal = ({onClose, setOnClose}) => {
     const {data,revalidate} = useSWR('/user/login', fetcher);
     const [path, setPath] = useState('');
     const navigate = useNavigate();
+    const [addUserOpen, setAddUserOpen] = useState(false);
+    const [smsClose, setSmsClose] = useState(false);
+    const [equals, setEquals] = useState(true);
+    const openAddUser = () => {
+        setPath('addUser');
+        setAddUserOpen(true);
+    }
+    const closeAddUser = () => {
+        setAddUserOpen(false);
+    }
     
     
     useEffect(() => {
@@ -52,16 +61,96 @@ const loginModal = ({onClose, setOnClose}) => {
         }
     })
     
-    const onSubmit = useCallback(() => {
-        axios.post('/user/login',
-            {userId, password}
-        )
-        .then((response)=> {
-            console.log(response.data);
-            revalidate();
-        })
+    // const onSubmit = useCallback(() => {
+    //     axios.post('/user/login',
+    //         {userId, password}
+    //     )
+    //     .then((response)=> {
+    //         if(response.data?.result === 'success'){
+    //             setEquals(true);
+    //             console.log(response.data);
+    //             revalidate();
+    //         }
+    //         if(response.data?.result === 'fail'){
+    //             setEquals(false);
+    //             alert('입력하신 아이디 혹은 패스워드가 일치하지 않습니다. 다시 확인해주세요!');
+    //         }
+
+    //         console.log('result :: '+response.data.result);
+    //     })
         
-    },[userId, password])
+    // },[userId, password, equals])
+
+    //로그인 이벤트
+    // const login = () => {
+    //     axios.post('/user/login', {userId, password}).then((response)=> {
+    //         if(response.data?.result === 'success'){
+    //             axios.get('/user/getUser/'+userId).then((response)=> {
+    //                 //회원 탈퇴 진행중인지 체크
+    //                 if(response.data.data.withdrawal === 1){
+    //                     alert('회원탈퇴가 취소 되었습니다. 다시 [SSTV]로 돌아오신 것을 환영합니다.');
+    //                 }
+    //             })
+    //             setEquals(true);
+    //             // revalidate();
+    //             // navigate('/');
+    //             // setOnClose(false);
+    //             window.location.reload();
+    //         }
+    //         if(response.data?.result === 'fail'){
+    //             setEquals(false);
+    //             alert('입력하신 아이디 혹은 패스워드가 일치하지 않습니다. 다시 확인해주세요!');
+    //         }
+    //     })
+    // } 
+
+    //로그인 이벤트(버튼 클릭)
+    const login = () => {
+        axios.get('/user/getUser/'+userId).then((response)=> {
+            if(response.data?.data === null){
+                alert('존재하지 않는 회원입니다! 회원가입을 진행해주세요.')
+            }
+            //회원 탈퇴 진행중인지 체크
+            if(response.data.data?.withdrawal === 1){ // 탈퇴 진행중일 경우, 로그인 처리하며 탈퇴 신청 취소 되었음을 알려줌
+                axios.post('/user/login',{userId, password}).then((response)=> {
+                    if(response.data.result === 'success'){
+                        alert('회원탈퇴가 취소 되었습니다. [SSTV]로 돌아오신 것을 환영합니다.');
+                        setEquals(true);
+                        window.location.reload();
+                    }
+                    if(response.data.result === 'fail'){
+                        setEquals(false);
+                        alert('입력하신 아이디 혹은 패스워드가 일치하지 않습니다. 다시 확인해주세요!');
+                    }
+                })
+            }
+            if(response.data.data?.withdrawal === 0){
+                axios.post('/user/login',{userId, password}).then((response)=> {
+                    if(response.data.result === 'success'){
+                        setEquals(true);
+                        window.location.reload();
+                    }
+                    if(response.data.result === 'fail'){
+                        setEquals(false);
+                        alert('입력하신 아이디 혹은 패스워드가 일치하지 않습니다. 다시 확인해주세요!');
+                    }
+                })
+            }
+        })
+    }
+    //로그인 이벤트(Enter)
+    const keyPressLogin = (e) => {
+        if(e.key === 'Enter'){
+            if(userId === ''){
+                alert('아이디를 입력해주세요!');
+            }
+            if(userId !== ''){
+                login();
+            }
+        }
+    }
+
+    // console.log('아이디 패스워드 일치 여부 :: '+equals);
 
     const handleMouseOver = () => {
         setMouseOver(true);
@@ -98,6 +187,7 @@ const loginModal = ({onClose, setOnClose}) => {
 
     //네이버 로그인
     const naver_login = () => {
+        // window.location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=oxyovmQ_xk_uAaUdHUKu&redirect_uri=http://223.130.135.131:8080/user/naverLogin&state=access_Token";
         window.location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=oxyovmQ_xk_uAaUdHUKu&redirect_uri=http://192.168.0.21:8080/user/naverLogin&state=access_Token";
         // axios.get('/user/login').then((response)=> {
         //     if (response.data.data !== null) {
@@ -121,6 +211,7 @@ const loginModal = ({onClose, setOnClose}) => {
 
     //카카오 로그인
     const kakao_login = () => {
+        // window.location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=73b235263e9c55fb4e85a97648c1c0de&redirect_uri=http://223.130.135.131:8080/user/kakaoLogin&prompt=login"
         window.location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=73b235263e9c55fb4e85a97648c1c0de&redirect_uri=http://192.168.0.21:8080/user/kakaoLogin&prompt=login"
     }
 
@@ -154,7 +245,8 @@ const loginModal = ({onClose, setOnClose}) => {
 
 
                                             <Modal_body_div>
-                                                <Modal_body_form onSubmit={onSubmit}>
+                                                {/* <Modal_body_form onSubmit={onSubmit}> */}
+                                                {/* <Model_body_form> */}
                                                     <Modal_body_lay_div >
                                                         <Modal_body_id_div>
                                                             <Modal_body_id_div_1>
@@ -185,7 +277,7 @@ const loginModal = ({onClose, setOnClose}) => {
                                                                     <Modal_body_pw_input_div>
                                                                         <Modal_body_pw_input_div_2>
                                                                             <Modal_body_pw_input_div_3>
-                                                                                <Modal_body_pw_input onChange={onChangePassword} id='password' type='password' ></Modal_body_pw_input>
+                                                                                <Modal_body_pw_input onChange={onChangePassword} id='password' type='password' onKeyPress={keyPressLogin}></Modal_body_pw_input>
                                                                             </Modal_body_pw_input_div_3>
                                                                         </Modal_body_pw_input_div_2>
                                                                     </Modal_body_pw_input_div>
@@ -223,7 +315,7 @@ const loginModal = ({onClose, setOnClose}) => {
                                                                 :
                                                                      <Modal_login_submit_input_button>
                                                                             <Modal_login_submit_input_button_div>
-                                                                                 <Modal_login_submit_input_div>로그인</Modal_login_submit_input_div>
+                                                                                 <Modal_login_submit_input_div onClick={login}>로그인</Modal_login_submit_input_div>
                                                                             </Modal_login_submit_input_button_div>
                                                                      </Modal_login_submit_input_button>  
                                                                         } 
@@ -239,14 +331,17 @@ const loginModal = ({onClose, setOnClose}) => {
                                                                     {mouseOver === false? 
                                                                     <Modal_signup_content_div >계정이 없으신가요? 회원가입</Modal_signup_content_div>
                                                                     :
+                                                                    <>
                                                                     <Modal_signup_button_div_over onClick={handleClick}>계정이 없으신가요? 회원가입</Modal_signup_button_div_over>
+                                                                    {/* {addUserOpen && <SendSMS smsClose={addUserOpen} setSmsClose={setAddUserOpen}/>} */}
+                                                                    </>
                                                                     }
                                                                 </Modal_signup_button_div>
                                                             </Modal_signup_button>
                                                         </Modal_signup_nav_div>
 
                                                     </Modal_body_lay_div>
-                                                </Modal_body_form>
+                                                {/* </Modal_body_form> */}
                                             </Modal_body_div>
 
 

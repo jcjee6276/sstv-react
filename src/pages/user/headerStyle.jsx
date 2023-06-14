@@ -76,7 +76,7 @@ font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은
 vertical-align: baseline;
 position: relative;
 width: 1184px;
-height: 66px;
+height: 92px;
 margin: 0 auto;
 `;
 
@@ -4711,7 +4711,6 @@ position: absolute;
 top: 7px;
 right: 7px;
 z-index: 5;
-
 `;
 
 export const Com_main_body_writing_image_span = styled.span`

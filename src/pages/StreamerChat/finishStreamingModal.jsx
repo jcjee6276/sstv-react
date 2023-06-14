@@ -8,6 +8,7 @@ const finishStreamingModal = ({onClose, setOnClose, onClick}) => {
     const modalRef = useRef(null);
     const cancleRef = useRef(null);
     const [inputText, setInputText] = useState('');
+
     useEffect(()=> {
         const handler = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -36,6 +37,7 @@ const finishStreamingModal = ({onClose, setOnClose, onClick}) => {
         };
         
     }
+
 
     return (
          
