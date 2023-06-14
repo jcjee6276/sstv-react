@@ -6,12 +6,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faCircleExclamation, faFontAwesome, faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import axios from 'axios';
 
 const finishStreamingInfoModal = ({onClose, setOnClose, data}) => {
     const streaming = data;
     const modalRef = useRef(null);
     const cancleRef = useRef(null);
-    
+    const [recordUrl, setRecordUrl] = useState('');
+    console.log(streaming);
+    // useEffect(()=>{
+    //     axios.get(`${process.env.REACT_APP_NODE_URL}/streaming/finishRecord`, {
+    //         params: {
+    //             userId: streaming.userId,
+    //         }
+    //     })
+    //     .then((response)=>{
+    //         console.log(response.data);
+    //     })
+    // })
+
+    useEffect(()=>{
+            axios.post('/community/finishStreaming',
+                {
+                    userId: streaming.userId,
+                    streamingNo: streaming.streamingPk,
+                }
+            );
+    },[])
     useEffect(()=> {
         const handler = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {

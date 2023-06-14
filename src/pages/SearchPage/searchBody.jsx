@@ -17,10 +17,11 @@ const searchBody = ({select, setSelect})=>{
     const [replayList, setReplayList] = useState([]);
     const mainUser = userList[0];
     const [notice, setNotice] = useState('');
-    
+    const decord = decodeURIComponent(path[2]);
     const imageError = (event) => {
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
     }
+
     useEffect(()=> {
         axios.get('/community/searchWriting/'+path[2])
         .then((response)=>{
@@ -141,7 +142,7 @@ const searchBody = ({select, setSelect})=>{
                         {select===0? 
                         <div>
                         <Search_main_p>
-                            <Search_keyword>{path[2]}</Search_keyword>
+                            <Search_keyword>{decord}</Search_keyword>
                             에 대한 통합검색 결과 입니다. (
                             <Search_keyword_span>{userList.length + community.length}건</Search_keyword_span>
                             )
@@ -194,7 +195,7 @@ const searchBody = ({select, setSelect})=>{
                         <Replay_zone>
                             <Replay_h2>
                             <Replay_nickname_a onClick={()=>setSelect(2)}>
-                                <Replay_nickname>테스터</Replay_nickname>님의 다시보기
+                                <Replay_nickname>{decord}</Replay_nickname>님의 다시보기
                                 </Replay_nickname_a>
                             </Replay_h2>
                             
@@ -211,30 +212,30 @@ const searchBody = ({select, setSelect})=>{
                                     
 
                                         {replayList.map((replay, i) =>{
-
+                                            const fileName = replay.RECORD_URL;
                                     return(
                                         <Replay_list_li>
                                             <Replay_thumb_box>
-                                                <Replay_box_a>
-                                                <Replay_img src='https://videoimg.afreecatv.com/php/SnapshotLoad.php?rowKey=20230606_0222743F_246753681_2_r' />
+                                                <Replay_box_a href={'/getReplay/'+replay.STREAMING_NO}>
+                                                <Replay_img src={process.env.REACT_APP_REPLAY_IMAGE_URL+fileName?.replace(".mp4","")+".jpg"}/>
                                                 </Replay_box_a>
                                             </Replay_thumb_box>
                                             <Replay_cBox>
                                                 <Replay_cBox_h3>
-                                                    <Replay_cBox_a>테스트 제목</Replay_cBox_a>
+                                                    <Replay_cBox_a>{replay.STREAMING_TITLE}</Replay_cBox_a>
                                                 </Replay_cBox_h3>
                                                 <Replay_comment_count>[6]</Replay_comment_count>
                                                 <Replay_detail>
                                                     <Replay_Streamer_nic>
                                                         <Replay_Streamer_nickname>
-                                                            <Replay_nickname_span>테스트스트리머</Replay_nickname_span>
+                                                            <Replay_nickname_span>{replay.USER_ID}</Replay_nickname_span>
                                                         </Replay_Streamer_nickname>
                                                     </Replay_Streamer_nic>
                                                 </Replay_detail>
 
                                                 <Replay_info>
                                                     <Replay_view_span>
-                                                       ▹ 100 
+                                                       ▹ {replay.TOTAL_STREAMING_VIEWER}
                                                     </Replay_view_span>
                                                     <Replay_date_span>
                                                       ● 1일전
