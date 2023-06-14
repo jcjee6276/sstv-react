@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import ReactDOM from 'react-dom';
 import { redirect, Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserSecret} from '@fortawesome/free-solid-svg-icons';
+import { faUserSecret, faFolderTree} from '@fortawesome/free-solid-svg-icons';
 import { CHeader, CHeader_Dark, Com_h1, HeaderDiv, Header_Modal_Div, 
     Header_Modal_Div_Set, Header_Modal_Label, Header_Modal_Strong_mode, Header_Right_Icon_1_Button, 
     Header_Right_Icon_1_Div, Header_Right_Icon_1_a, Header_Right_Icon_2_Button, 
@@ -225,7 +225,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                     ) : null
                                     ) : null}
 
-                                    <Header_Right_Icon_1_Div>
+                                    {/* <Header_Right_Icon_1_Div>
                                         <Header_Right_Icon_1_a>
                                             <Header_Right_Icon_1_Button>
                                                 <Header_right_Icon_1_Span >
@@ -233,15 +233,15 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                                 </Header_right_Icon_1_Span>
                                             </Header_Right_Icon_1_Button>
                                         </Header_Right_Icon_1_a>
-                                    </Header_Right_Icon_1_Div>
+                                    </Header_Right_Icon_1_Div> */}
 
                                     <Header_Right_Icon_2_Button onClick={openStartStreamingModal}>
                                         <Header_Right_Icon_2_Span>
-
+                                            
                                         </Header_Right_Icon_2_Span>
-                                    </Header_Right_Icon_2_Button>
-                                        {startStreamingIsOpen && <StartStreamingModal onClose={startStreamingIsOpen} setOnClose={setStartStreamingIsOpen} handleSubmit={handleSubmit} />}
-                                    <Header_Right_Login_Ui_Div>
+                                        </Header_Right_Icon_2_Button>
+                                            {startStreamingIsOpen && <StartStreamingModal onClose={startStreamingIsOpen} setOnClose={setStartStreamingIsOpen} handleSubmit={handleSubmit} />}
+                                        <Header_Right_Login_Ui_Div>
 
                                         <Header_Right_Login_Ui_Span>
                                         {!data ? null :
@@ -264,8 +264,8 @@ const header = ({isDarkMode, setIsDarkMode}) => {
                                             'aria-labelledby': 'basic-button',
                                             }}
                                         >
-                                            <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                            <MenuItem onClick={setWhiteMode}>화이트 모드</MenuItem>
+                                            {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                            <MenuItem onClick={setWhiteMode}>화이트 모드</MenuItem> */}
                                             <MenuItem onClick={()=> {
                                                 navigate('/Home/'+userId);
                                             }}>내 방송국 가기</MenuItem>
