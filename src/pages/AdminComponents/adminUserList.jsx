@@ -159,7 +159,7 @@ const Report = () => {
 
 
         <Header/>  
-        <div id="content" className="help">
+        <div id="content" className="help" style={{marginTop:'100px'}}>
           <div className="sub_area">
             <div className="stop_area">
               <h4><img src="https://res.afreecatv.com/images/help/img_my.jpg" alt="회원 신고목록" /></h4>
