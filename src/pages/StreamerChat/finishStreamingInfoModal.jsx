@@ -88,43 +88,50 @@ const finishStreamingInfoModal = ({onClose, setOnClose, data}) => {
     return (
         <Outline_area_2>
         <Modal id='modalArea' ref={modalRef}>
-            <Layer_in>
-                <Send_area>
-                    <Gift_at>
-                        <Gift_dt>
-                            <h2>{streaming.userNickname}님의 스트리밍 정보입니다.</h2>
-                            <br/><br/>
 
-                            <h3>스트리밍 제목</h3>
-                            <Gift_strong>{streaming.streamingTitle}</Gift_strong>
-                            <br/><br/>
+        <div id="layerBuyNoneSubscription" class="ui-pop layer-gudok">
+        <p class="pop-title">스트리밍</p>
+        <div class="pop-body"><div class="scroll_box">
+            <div class="gudok_bj">
+                <div class="gudok_bj">
+                    <p><em>{streaming.userId}</em><i>({streaming.userNickname})</i> 님의 스트리밍 정보입니다.</p>
+                </div>
+            </div>
+            <div class="signature ">
+                <h3>스트리밍 제목</h3>
+                <ul><li class="noList">{streaming.streamingTitle}</li></ul>
+            </div>
+            <div class="signature ">
+                <h3>스트리밍 카테고리</h3>
+                <ul><li class="noList">{getCategory(streaming.streamingCategory)}</li></ul>
+            </div>
 
-                            <h3>스트리밍 카레고리</h3>
-                            <Gift_strong>{getCategory(streaming.streamingCategory)}</Gift_strong>
-                            <br/><br/>
-                            
-                            <h3>스트리밍 시작시간</h3>
-                            <Gift_strong>{streaming.streamingStartTime}</Gift_strong>
-                            <br/><br/>
+            <div class="signature ">
+                <h3>스트리밍 시작시간</h3>
+                <ul><li class="noList">{streaming.streamingStartTime}</li></ul>
+            </div>
+            <div class="signature ">
+                <h3>스트리밍 종료시간</h3>
+                <ul><li class="noList">{moment().format('YYYY-MM-DD/HH:mm')}</li></ul>
+            </div>
 
-                            <h3>스트리밍 종료시간</h3>
-                            <Gift_strong>{moment().format('YYYY-MM-DD/HH:mm')}</Gift_strong>
-                            <br/><br/>
+            <div class="signature ">
+                <h3>총 시청자수</h3>
+                <ul><li class="noList">{streaming.totalStreamingViewer}</li></ul>
+            </div>
 
-                            <h3>총 시청자수</h3>
-                            <Gift_strong>{streaming.totalStreamingViewer}</Gift_strong>
-                            <br/><br/>
+            <div class="signature ">
+                <h3>누적 후원금액</h3>
+                <ul><li class="noList">{streaming.totalDonationAmount}</li></ul>
+            </div>
 
-                            <h3>누적 후원금액</h3>
-                            <Gift_strong>{streaming.totalDonationAmount}</Gift_strong>
-                            <br/><br/>
-                        </Gift_dt>
-                    </Gift_at>
-                    <Button_area>
-                        <Button_cancle_button><Link to='/'>확인</Link></Button_cancle_button>
-                    </Button_area>
-                </Send_area>
-            </Layer_in>
+            <div class="pop-btn">
+                <Link to='/'><a class="btn btn_blue" id="report_pop">확인</a></Link>
+            </div>
+
+        </div>
+        </div>
+    </div>
         </Modal>
     </Outline_area_2> 
     )

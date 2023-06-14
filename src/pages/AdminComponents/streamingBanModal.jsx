@@ -2,6 +2,7 @@
 import React,{useState, useRef, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Modal_body_id_div_3, Modal_body_id_div_2, Modal_body_id_div, Modal_title_h4, Modal_title_div_3, Modal_area_1_div, Modal_area_div, Modal_area_layout_div, Modal_area_layout_div_2, Modal_area_layout_div_3, Modal_Content_div, Modal_layout_div, Modal_main_div, Modal_overlay_div, Modal_title_div, Modal_title_div_2, Modal_title_figure, Modal_title_write_div, Modal_body_div, Modal_body_form, Modal_body_lay_div, Modal_body_id_div_1, Modal_body_id_lable, Modal_body_id_input_div, Modal_body_id_input_div_2, Modal_body_pw_idv, Modal_body_pw_div_2, Modal_body_pw_div_3, Modal_body_pw_div_4, Modal_body_pw_title_div, Modal_body_pw_title_lable, Modal_body_pw_input_div, Modal_body_pw_input_div_2, Modal_body_pw_input, Modal_body_help_div, Modal_login_submit_div, Modal_login_submit_div_2, Modal_login_submit_div_3, Modal_login_submit_button, Modal_login_submit_button_div, Modal_login_submit_noinput_div, Modal_signup_nav_div, Modal_signup_button, Modal_signup_button_div, Modal_signup_content_div, Modal_login_submit_input_div, Modal_login_submit_input_button_div, Modal_login_submit_input_button, Modal_signup_button_div_over } from '../Mainpage/style';
+import './style.css';
 
 const StreamingBanModal = ({onClose, setOnClose, data}) => {
     const streamingBan = data;
@@ -80,7 +81,33 @@ const StreamingBanModal = ({onClose, setOnClose, data}) => {
         }
         return result;
       }
+      
     return(
+        <div>
+        <div class="ui-pop improve report_layer win">
+        <p class="pop-title">스트리밍 정보 변경</p>
+        <div class="pop-body">
+            <strong>변경하실 스트리밍 정보를 입력해주세요</strong>
+            <div>
+                <select 
+                name="report_type" 
+                id="report_type"
+                >
+                    <option value='1'>게임</option>
+                    <option value='2'>일상</option>
+                    <option value='3'>스포츠</option>
+                    <option value='4'>먹방</option>
+                    <option value='5'>요리</option>
+                    <option value='6'>교육</option>
+                </select>
+                <input id="report_reason" cols="30" rows="10"  placeholder="스트리밍 제목을 입력해주세요(20자 미만)"></input>    
+            </div>
+        </div>
+        <div class="pop-btn">
+            <a class="btn btn_blue" id="report_pop" >변경하기</a>
+            {/* <a class="btn btn_white" id="page_close" ref={cancleRef} onClick={onClickCancle}>취소</a> */}
+        </div>
+    </div>
         <Modal_main_div >
             <Modal_overlay_div >
                 <Modal_Content_div >
@@ -241,6 +268,7 @@ const StreamingBanModal = ({onClose, setOnClose, data}) => {
                 </Modal_Content_div>
             </Modal_overlay_div>
         </Modal_main_div>
+        </div>
     )
 
 }

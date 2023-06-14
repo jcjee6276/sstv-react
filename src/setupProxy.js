@@ -15,8 +15,8 @@ module.exports = function(app) {
   app.use(
     ['/donation', '/streaming'],
     createProxyMiddleware({
-      target: 'http://www.api.ssstvv.com',
-      // target: 'http://localhost:3001',
+      // target: 'http://www.api.ssstvv.com',
+      target: 'http://localhost:3001',
       changeOrigin: true,
     })
   );
