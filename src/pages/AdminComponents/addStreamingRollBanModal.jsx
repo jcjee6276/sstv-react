@@ -72,7 +72,7 @@ const StreamingBanModal = ({onClose, setOnClose, data, onSubmit}) => {
                                                 <Modal_title_div_2>
                                                     <Modal_title_div_3>
                                                         <Modal_title_write_div>
-                                                            <Modal_title_h4>{user.USER_ID}회원 스트리밍 권한 정지</Modal_title_h4>
+                                                            <Modal_title_h4>{user.USER_ID}이거 맞냐?</Modal_title_h4>
                                                         </Modal_title_write_div>
                                                     </Modal_title_div_3>
                                                 </Modal_title_div_2>
