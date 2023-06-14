@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import AdModal from './adModal';
 import Header from './header';
+import './paginate.css'
 
 const AddAd = () => {
   const [selectedTab, setSelectedTab] = useState('adInfo'); 
@@ -122,6 +123,9 @@ const saveFile = useCallback(() => {
       alert('광고 신청에 실패했습니다.');
     }
   });
+
+  getAdReqList();
+  getMyAdList();
 }, [inputRef, profilePhoto, userId]);
   
   //내 정보 관리 탭
@@ -363,15 +367,22 @@ const saveFile = useCallback(() => {
                 </table>
               </div>
               {modalIsOpen && <AdModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {adReq}/>}
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel=">"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="<"
-                renderOnZeroPageCount={null}
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={pageCount}
+                  previousLabel="<"
+                  renderOnZeroPageCount={null}
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  previousClassName="previous"
+                  nextClassName="next"
+                  disabledClassName="disabled"
+                />
+              </div>
             </div>
 
             <Update_user_title>내 광고목록</Update_user_title>
@@ -395,15 +406,22 @@ const saveFile = useCallback(() => {
                 </table>
               </div>
               {modalIsOpen && <AdModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {adReq}/>}
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel=">"
-                onPageChange={handlePageClickMyAdList}
-                pageRangeDisplayed={5}
-                pageCount={pageCountMyAdList}
-                previousLabel="<"
-                renderOnZeroPageCount={null}
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={pageCount}
+                  previousLabel="<"
+                  renderOnZeroPageCount={null}
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  previousClassName="previous"
+                  nextClassName="next"
+                  disabledClassName="disabled"
+                />
+              </div>
             </div>
             </User_update_body3>
           </User_update_body2>

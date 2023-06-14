@@ -12,8 +12,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
-const sidebar = () => {
+const sidebar = (props) => {
     const navigate = useNavigate();
+    const [streaming, setStreaming] = useState(props);
     const [writingUserId, setWritingUserId] = useState('');
     const [writingUserNickname, setWritingUserNickname] = useState('');
     const {data} = useSWR('/user/login', fetcher);
@@ -24,7 +25,6 @@ const sidebar = () => {
     const location = useLocation();
     const currentPath = location.pathname.split("/");
     const userId = currentPath[2];
-    
 
     useEffect(() => {
          axios.get('/user/getUser/'+userId)
@@ -50,6 +50,60 @@ const sidebar = () => {
     const imageError = (event) => {
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
     }
+
+    const getStreaming = (async () => {
+        const response = await axios.get('/streaming/getOnGoingStreamingByUserId', {
+            params : {
+                userId : userId
+            }
+        })
+        .then((response) => {
+            const data = response.data
+
+            if(data) {
+                const streaming = response.data.firstData
+                setStreaming(streaming);
+            }
+        });
+    });
+
+    useEffect(() => {
+        getStreaming();
+    }, []);
+
+    const getStreamingViewPage = async (streamingUserId) => {
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_NODE_URL}/streaming/getStreamingViewerPage`,
+                {params : {
+                    streamingUserId : streamingUserId
+                },
+                withCredentials : true
+            });
+
+            const firstData = response.data.result;
+            if(firstData === 'success') {
+                const streaming = response.data.firstData;
+                const serviceUrl = response.data.secondData;
+                
+                navigate(`/chat`, {
+                    state: {
+                        streaming : streaming,
+                        serviceUrl : serviceUrl,
+                        streamingUserId : streamingUserId
+                    }
+                });
+            }else {
+                const firstData = response.data.firstData;
+                if(firstData == '1') {
+                    alert('로그인이 필요합니다.')
+                }else if(firstData == '2') {
+                    alert('해당 스트리머 회원의 블랙리스트에 등록되어있습니다.')
+                }
+            }
+        } catch (error) {
+            console.log(('[index.jsx getStreamingViewPage] error  = ' + error));
+        }
+      }  
     
    // const image = 'https://kr.object.ncloudstorage.com/sstv-image/'+userImage;
     const image = process.env.REACT_APP_IMAGE_URL+userImage;
@@ -94,8 +148,8 @@ const sidebar = () => {
                 <Sidebar_Body_div>
                     <Sidebar_Body_Streaming>
                         <Sidebar_Body_image_span>
-                            <Sidebar_Body_image_thumb>
-                                
+                            <Sidebar_Body_image_thumb onClick={() => getStreamingViewPage(streaming.userId)}>
+                                <img src={streaming.thumnailUrlWithOutAd} alt="" />
                             </Sidebar_Body_image_thumb>
                         </Sidebar_Body_image_span>
 

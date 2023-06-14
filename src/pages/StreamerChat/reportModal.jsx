@@ -78,7 +78,7 @@ const reportModal = ({onClose, setOnClose, data, onSubmit}) => {
                                     value={reportContent} onChange={handleReportContentOnChange}>
 
                         </textarea>
-                        <p>신고하기 및 운영정책에 궁금하신 내용이 있으신 경우<br/>꾹 참으세요.</p>
+                        <p>신고하기 및 운영정책에 궁금하신 내용이 있으세요?<br/>꾹 참으세요.</p>
                     </div>
                 </div>
                 <div class="pop-btn">

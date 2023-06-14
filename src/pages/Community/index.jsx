@@ -44,7 +44,6 @@ const Community = () => {
         })
         .then((response)=>{
             setReplayList(response.data['firstData']);
-            
         })
     },[])
     console.log(notice);

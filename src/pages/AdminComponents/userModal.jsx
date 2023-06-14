@@ -2,7 +2,7 @@
 import React,{useState, useRef, useEffect, useCallback} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserXmark } from '@fortawesome/free-solid-svg-icons';
-import {Modal_body_id_div_3, Modal_body_id_div_2, Modal_body_id_div, Modal_title_h4, Modal_title_div_3, Modal_area_1_div, Modal_area_div, Modal_area_layout_div, Modal_area_layout_div_2, Modal_area_layout_div_3, Modal_Content_div, Modal_layout_div, Modal_main_div, Modal_overlay_div, Modal_title_div, Modal_title_div_2, Modal_title_write_div, Modal_body_div, Modal_body_form, Modal_body_lay_div, Modal_body_id_div_1, Modal_body_id_lable} from '../Mainpage/style';
+import {Gift_input_span,Gift_input, ST_dd,Gift_st, Gift_dd, Gift_at, Gift_dt, Gift_strong, Layer_in, Modal, Send_area, Gift_dd_span, Gift_dd_input, Gift_dd_count_span, Gift_dd_button, ST_dt, ST_dd_span, ST_dd_error, ST_dd_em, ST_dd_error_span, Btn_buy, Gift_input_h3, Gift_void_text, Button_area, Button_gift_button, Button_cancle_button, Outline_area, Outline_area_2} from '../Chat/donationStyle'
 
 const ReportModal = ({onClose, setOnClose, data, onClick}) => {
     const user = data;
@@ -44,7 +44,8 @@ const ReportModal = ({onClose, setOnClose, data, onClick}) => {
     }
       
     return(
-        <div>
+        <Outline_area_2>
+        <Modal id='modalArea' ref={modalRef}>
             <div id="layerBuyNoneSubscription" class="ui-pop layer-gudok">
                 <p class="pop-title">회원정보</p>
                 <div class="pop-body"><div class="scroll_box">
@@ -105,7 +106,8 @@ const ReportModal = ({onClose, setOnClose, data, onClick}) => {
                 </div>
                 </div>
             </div>
-        </div>
+            </Modal>
+    </Outline_area_2> 
     )
 
 }

@@ -55,6 +55,12 @@ const AdReq = () => {
     setAdReqList(response);
   }
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      getAdReqList();
+    }
+  };
+
   useEffect(() => {
     getAdReqList();
   }, []);
@@ -96,9 +102,21 @@ const AdReq = () => {
             <td >{adReq.USER_ID}</td>
             <td >{adReq.AD_REQ_DATE}</td>
             <td>{adReq.PAYMENT_COIN}</td>
-            <td onClick={() => updateAdReqProcessCode(adReq.AD_REQ_NO, 1)}>수락</td>
-            <td onClick={() => updateAdReqProcessCode(adReq.AD_REQ_NO, 2)}>거절</td>
-            <td onClick={ () => openAdReqModal(adReq)}>시청</td>
+            <td onClick={() => updateAdReqProcessCode(adReq.AD_REQ_NO, 1)}>
+              <button className="pop-btn">
+                <a className="btn btn_blue" id="report_pop">수락</a>
+              </button>
+            </td>
+            <td onClick={() => updateAdReqProcessCode(adReq.AD_REQ_NO, 2)}>
+              <button className="pop-btn">
+                <a className="btn btn_blue" id="report_pop">거절</a>
+              </button>
+            </td>
+            <td onClick={ () => openAdReqModal(adReq)}>
+              <button className="pop-btn">
+                <a className="btn btn_blue" id="report_pop">시청</a>
+              </button>
+            </td>
           </tr>
         ))}
       </>
@@ -125,10 +143,11 @@ const AdReq = () => {
 
 
         <Header/>  
+        <div style={{ marginTop: '100px' }} ></div>
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
-              <h4><img src="https://res.afreecatv.com/images/help/img_my.jpg" alt="회원 신고목록" /></h4>
+            <h4><img src="https://advertise.kr.object.ncloudstorage.com/adminBanner.jpeg" alt="회원 신고목록" /></h4>
             </div>
             
             <div className="sub_wrap">
@@ -151,17 +170,24 @@ const AdReq = () => {
                 </table>
                 {modalIsOpen && <AdModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {adReq}/>}
               </div>
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel=">"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="<"
-                renderOnZeroPageCount={null}
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={pageCount}
+                  previousLabel="<"
+                  renderOnZeroPageCount={null}
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  previousClassName="previous"
+                  nextClassName="next"
+                  disabledClassName="disabled"
+                />
+              </div>
               <div className="search_area">
-                <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} />
+                <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange}  onKeyPress={handleKeyPress}/>
                 <button class="list_search" id="searchWord" onClick={getAdReqList}>
                   <span>검색</span>
                 </button>

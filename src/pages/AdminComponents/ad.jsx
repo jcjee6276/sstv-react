@@ -69,6 +69,12 @@ const Ad = () => {
     setAdList(response);
   }
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      getAdList();
+    }
+  };
+
   useEffect(() => {
     getAdList();
   }, []);
@@ -91,7 +97,11 @@ const Ad = () => {
             <td>{adReq.AD_PLAYS_COUNT}</td>
             <td>{adReq.AD_STREAMING_PLAYS_COUNT}</td>
             <td>{adReq.AD_TOTAL_VIEWERS}</td>
-            <td onClick={() => openAdModal(adReq)}>광고시청</td>
+            <td onClick={() => openAdModal(adReq)}>
+              <button className="pop-btn">
+                <a className="btn btn_blue" id="report_pop">시청</a>
+              </button>
+            </td>
           </tr>
         ))}
       </>
@@ -117,10 +127,11 @@ const Ad = () => {
         </div>
 
         <Header/>
+        <div style={{ marginTop: '100px' }} ></div>
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
-              <h4><img src="https://res.afreecatv.com/images/help/img_my.jpg" alt="회원 신고목록" /></h4>
+            <h4><img src="https://advertise.kr.object.ncloudstorage.com/adminBanner.jpeg" alt="회원 신고목록" /></h4>
             </div>
             <div className="sub_wrap">
               <div className="tb_mylist">
@@ -149,18 +160,25 @@ const Ad = () => {
                 </table>
                 {modalIsOpen && <AdModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {ad}/>}
               </div>
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel=">"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="<"
-                renderOnZeroPageCount={null}
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={pageCount}
+                  previousLabel="<"
+                  renderOnZeroPageCount={null}
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  previousClassName="previous"
+                  nextClassName="next"
+                  disabledClassName="disabled"
+                />
+              </div>
               <div className="search_area">
                 
-                <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} />
+                <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} onKeyPress={handleKeyPress} />
                 <button class="list_search" id="searchWord" onClick={getAdList}>
                   <span>검색</span>
                 </button>

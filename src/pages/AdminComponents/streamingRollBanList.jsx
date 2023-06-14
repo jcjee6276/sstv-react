@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import ReactPaginate from 'react-paginate';
 import StreamingRollBanModal from './streamingRollBanModal';
 import Header from './header';
@@ -76,6 +76,12 @@ const StreamingRollBanList = () => {
     setStreamingRollBanList(response);
   }
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      getStreamingRollBanList();
+    }
+  };
+
   useEffect(() => {
     getStreamingRollBanList();
   }, []);
@@ -116,11 +122,7 @@ const StreamingRollBanList = () => {
   //paginate
   const StreamingRollBans = ({ currentItems }) => {
     return (
-      // <th>회원 닉네임</th>
-      // <th>회원 아이디</th>
-      // <th>정지 유형</th>
-      // <th>정지 시작일</th>
-      // <th>정지 만료일</th>
+
       <>
         {currentItems.map((streamingRollBan) => (
           
@@ -129,8 +131,9 @@ const StreamingRollBanList = () => {
             <td>{streamingRollBan.USER_ID}</td>
             <td>{getReportType(streamingRollBan.BAN_TYPE)}</td>
             <td>{streamingRollBan.BAN_START_DATE}</td>
-            <td>{streamingRollBan.BAN_END_DATE}</td>
-            <td onClick={() => removeStreamingRollBan(streamingRollBan.STREAMING_ROLE_BAN_NO, streamingRollBan.USER_ID)}><FontAwesomeIcon icon={faTrash} className="fa-2x"/></td>
+            <td>{streamingRollBan.BAN_END_DATE}
+            <FontAwesomeIcon onClick={() => removeStreamingRollBan(streamingRollBan.STREAMING_ROLE_BAN_NO, streamingRollBan.USER_ID)} icon={faXmark}/>
+            </td>
           </tr>
         ))}
       </>
@@ -156,10 +159,11 @@ const StreamingRollBanList = () => {
         </div>
 
         <Header/>  
+        <div style={{ marginTop: '100px' }} ></div>
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
-              <h4><img src="https://res.afreecatv.com/images/help/img_my.jpg" alt="회원 신고목록" /></h4>
+            <h4><img src="https://advertise.kr.object.ncloudstorage.com/adminBanner.jpeg" alt="회원 신고목록" /></h4>
             </div>
             
             <div className="sub_wrap">
@@ -173,7 +177,6 @@ const StreamingRollBanList = () => {
                       <th>정지 유형</th>
                       <th>정지 시작일</th>
                       <th>정지 만료일</th>
-                      <th>정지 해제</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -182,15 +185,22 @@ const StreamingRollBanList = () => {
                 </table>
                 {modalIsOpen && <StreamingRollBanModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {streamingRollBan}/>}
               </div>
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel=">"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="<"
-                renderOnZeroPageCount={null}
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={pageCount}
+                  previousLabel="<"
+                  renderOnZeroPageCount={null}
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  previousClassName="previous"
+                  nextClassName="next"
+                  disabledClassName="disabled"
+                />
+              </div>
               <div className="search_area">
 
                 <input 
@@ -213,7 +223,7 @@ const StreamingRollBanList = () => {
                 />
                 <label htmlFor="b_content">회원 닉네임</label>
                 
-                <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} />
+                <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} onKeyPress={handleKeyPress} />
                 <button class="list_search" id="searchWord" onClick={getStreamingRollBanList}>
                   <span>검색</span>
                 </button>
