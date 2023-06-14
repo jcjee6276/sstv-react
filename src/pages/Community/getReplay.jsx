@@ -12,7 +12,7 @@ import fetcher from '../utils/fetcher';
 const getReplay = () =>{
     const navigate = useNavigate();
     const { data } = useSWR('/user/login', fetcher);
-    const serviceUrl = 'https://kr.object.ncloudstorage.com/hls/livestation/176032-739207-202306082029.mp4';
+    
     const location = useLocation();
     const path = location.pathname.split("/");
     const [streamInfo, setStreamInfo] = useState([]);
@@ -23,6 +23,7 @@ const getReplay = () =>{
     const [commentContent, setCommentContent] = useState('');
 
     const commentsUserId = data?.userId;
+    const serviceUrl = 'https://kr.object.ncloudstorage.com/hls/livestation/'+streamInfo?.recordUrl;
     const ImageError =(event)=>{
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
     }
@@ -48,7 +49,7 @@ const getReplay = () =>{
         .then((response)=>{
             setStreamInfo(response.data['firstData']);
             const log = response.data['firstData'];
-            console.log(streamInfo);
+            
             axios.get('/user/getUser/'+log.USER_ID).then((response) =>{
                 setUserInfo(response.data['data'])
                 console.log(response.data);
@@ -57,12 +58,12 @@ const getReplay = () =>{
         .then((reponse)=>{
             const data = reponse.data['data'];
             
-            console.log(data.comments);
-            setCommentInfo(data.comments);
+            console.log(data?.comments);
+            setCommentInfo(data?.comments);
         })
         },[])
 
-        
+        console.log(streamInfo);
        
         
         // axios.get('/user/getUser/'+streamInfo)
@@ -85,7 +86,7 @@ const getReplay = () =>{
                         <Stream_div>
                         <ReactPlayer
                                 className='react-player'
-                                url={serviceUrl}    // 플레이어 url
+                                url={'https://kr.object.ncloudstorage.com/hls/livestation/'+streamInfo.RECORD_URL}    // 플레이어 url
                                 width='1600px'         // 플레이어 크기 (가로)
                                 height='722px'        // 플레이어 크기 (세로)
                                 playing={true}        // 자동 재생 on
@@ -164,30 +165,30 @@ const getReplay = () =>{
                                                            {/* {comment.commentsNo === 0 ? null :  */}
                                                            
                                                         
-                                                        {commentInfo.map((comment, index)=> {
+                                                        {commentInfo?.map((comment, index)=> {
 
                                                             return(
                                                            
                                                             <Writing_footer_comments_li>
                                                                 <Comments_profile_img_div>
-                                                                    <Comments_profile_img src={process.env.REACT_APP_IMAGE_URL +comment.commentsUserId } onError={ImageError} /> 
+                                                                    <Comments_profile_img src={process.env.REACT_APP_IMAGE_URL +comment?.commentsUserId } onError={ImageError} /> 
                                                                 </Comments_profile_img_div>
                                                                 <Comments_profile_user_id_div>
                                                                     <Comments_profile_user_id_div_2>
                                                                         <Commetns_profile_user_id_div_3>
                                                                             <Comments_profile_user_id_button>
-                                                                                <Comments_profile_user_id_p >{comment.commentsUserId}
+                                                                                <Comments_profile_user_id_p >{comment?.commentsUserId}
                                                                                     <Comments_profile_user_id_em ></Comments_profile_user_id_em>
                                                                                 </Comments_profile_user_id_p>
                                                                             </Comments_profile_user_id_button>
                                                                             <Comments_profile_date_span >
-                                                                            ● {comment.regDate}
+                                                                            ● {comment?.regDate}
                                                                             </Comments_profile_date_span>
                                                                         </Commetns_profile_user_id_div_3>
                                                                     </Comments_profile_user_id_div_2>
                                                                 </Comments_profile_user_id_div>
                                                                 <Comments_content_div>
-                                                                    <Comments_content_p >{comment.commentContent}</Comments_content_p>
+                                                                    <Comments_content_p >{comment?.commentContent}</Comments_content_p>
                                                                 </Comments_content_div>
                                                                 <Comments_up_button>
                                                                     <Comments_up_span>up</Comments_up_span>

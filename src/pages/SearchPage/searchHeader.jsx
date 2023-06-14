@@ -32,9 +32,10 @@ const searchHeader = ({select, setSelect}) => {
     const {data} = useSWR('/user/login', fetcher);
     const path = location.pathname.split("/");
     const [searchKeyword, setSearchKeyword] = useState('');
-    
+    const decord = decodeURIComponent(path[2])
     const onKeyword =(e)=>{
-        setSearchKeyword(e.target.value)
+        // const encordText = encodeURIComponent(e.target.value);
+        setSearchKeyword(e.target.value);
     }
     const onSubmit =()=>{
         navigate('/SearchKeyword/'+searchKeyword);
@@ -44,7 +45,8 @@ const searchHeader = ({select, setSelect}) => {
     };
 
     useEffect(()=> {
-        setSearchKeyword(path[2]);
+        
+        setSearchKeyword(decord);
     },[])
     
 
@@ -86,6 +88,7 @@ const searchHeader = ({select, setSelect}) => {
     return (
         
         <CHeader>
+            <meta charset="UTF-8" />
             <Search_inner_div>
             <HeaderDiv data={select}>
                 <Com_h1 >

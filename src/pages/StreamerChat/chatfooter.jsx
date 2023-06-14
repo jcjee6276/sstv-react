@@ -63,7 +63,8 @@ const chatfooter = (props) => {
         const response = await fetchData(url, param);
         const result = response.data.result;
         
-        if(result == 'success') {
+        console.log(result);
+        if(result === 'success') {
             socket.emit('updateStreamingTitleAndCategory', {
                 roomName : streaming.userId,
                 streamingTitle : data.streamingTitle,
@@ -78,7 +79,8 @@ const chatfooter = (props) => {
         const response = await axios.get(url, {
             params : data,
             withCredentials : true
-        });
+        })
+        
 
         return response;
     }
