@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Header from '../Mainpage/header';
+import Header from '../Community/header';
 
 import PurchaseList from './getPurchaseList';
 

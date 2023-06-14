@@ -11,6 +11,7 @@ import { CHeader, CHeader_Dark, Com_h1, HeaderDiv, Header_Modal_Div,
     Header_Search_Input_in, Header_Search_Side_Button, Header_Search_Side_Span, Header_Search_Span, 
     Header_Search_fieldset, Header_Search_form, Header_a, Header_legend, Header_right_Icon_1_Span } from './style'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { redirect, Link, useNavigate } from 'react-router-dom';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -25,6 +26,8 @@ const header = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
     const {data} = useSWR('/user/login', fetcher);
+    const userId = data?.userId;
+    const navigate = useNavigate();
     const openModal = () => {
         setIsOpen(true);
     };
@@ -165,6 +168,18 @@ const header = () => {
                                             <MenuItem onClick={handleClose}>Profile</MenuItem>
                                             <MenuItem onClick={handleClose}>My account</MenuItem>
                                             <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                            <MenuItem onClick={()=> {
+                                                navigate('/Home/'+userId);
+                                            }}>내 방송국 가기</MenuItem>
+                                            <MenuItem onClick={()=> {
+                                                navigate('/userInfo/'+userId);
+                                            }}>내 정보 관리</MenuItem>
+                                            <MenuItem onClick={()=>{
+                                                navigate('/Exchange');
+                                            }}>결제 </MenuItem>
+                                            <MenuItem onClick={()=>{
+                                                navigate('/ticket1');
+                                            }}>이용권</MenuItem>
                                         </Menu>
                                         
 

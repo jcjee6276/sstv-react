@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 
 export const PurchaseList_div = styled.div`
+position:relactive;
 width: 960px;
 padding: 0;
 margin: 109px auto 0 auto;
@@ -68,8 +69,9 @@ border-bottom: 1px solid #cbcbcb;
 background: #f6f6f6 url('/images/item/myitem/bg_th.gif') right no-repeat;
 `;
 export const Table_td = styled.th`
-    font-weight:500;
-    font-size:14px;
+    font-weight:600;
+    font-size:16px;
+    line-height:30px;
 `;
 
 export const Button_div = styled.div`
@@ -102,6 +104,15 @@ font-weight:900;
     }
     
 `;
+export const Table_title2 = styled.p`
+position: absolute;
+right: 600px;
+top: 363px;
+float:right;
+margin: 34px 0px 10px;
+font-weight: 900;
+
+`;
 export const Tabke_span = styled.span`
     display: inline-block;
     padding-right: 2px;
@@ -113,6 +124,7 @@ export const Tabke_span = styled.span`
 export const Purchase_title = styled.h3`
     float:left;
     font-size:24px;
+    // margin-bottom:30px;
 `;
 
 export const Purchase_notice_p = styled.p`
@@ -123,12 +135,23 @@ export const Purchase_notice_p = styled.p`
     line-height:32px;
 `;
 export const Purchase_notice_H3 = styled.p`
+    position:relative;
     margin-top:50px;
     font-weight: 900;
     font-family: NGB;
     color: #3333CC;
     text-align:left;
     font-size:32px;
+    // &::before{
+    //     content: "";
+    //     position: absolute;
+    //     left:-15px;
+    //     top:20px;
+    //     width:10px;
+    //     height:10px;
+    //     border-radius:50%;
+    //     background-color:rgb(73, 120, 255);
+    // }
 `;
 // 모달
 export const Modal =styled.div`
@@ -343,3 +366,29 @@ export const Table_td_noLogin = styled.p`
 
 
 
+//MyAmount_ul ,MyAmount_li ,MyAmount_p , MyAmount_strong
+export const MyAmount_ul = styled.ul`
+float: right;
+top: 300px;
+font-family: ng;
+`;
+export const MyAmount_li = styled.li`
+float: left;
+padding: 15px 15px 15px 15px;
+font-family: ng;
+`;
+export const MyAmount_p = styled.p`
+    font-size: 14px;
+    color: #888;
+    text-align: center;
+    font-family: ng;
+    margin-bottom: 5px;
+    letter-spacing: -1px;
+`;
+export const MyAmount_strong = styled.strong`
+display: block;
+    color: #0e54ff;
+    font-size: 16px;
+    font-family: ngb;
+    text-align: center;
+`;

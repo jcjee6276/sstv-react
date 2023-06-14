@@ -2,9 +2,9 @@ import styled from 'styled-components'
 
 
 export const  TicketProduct_div =styled.div`
-    width: 960px;
+    width: 100%;
     padding: 0;
-    margin: 109px auto 0 auto;
+    margin: 67px auto 0;
     background-color: 1px soild #000;
 `;
 
@@ -14,7 +14,8 @@ font-size: 32px;
 color: #000;
 letter-spacing: -1px;
 font-weight: bold;
-margin: 28px 0 20px 0;
+margin: 0px 0 20px 0;
+padding-top: 20px;
 `;
 
 export const H3 = styled.h3`
@@ -23,10 +24,11 @@ font-size: 20px;
 color: #000;
 letter-spacing: -1px;
 font-weight: bold;
-margin: 28px 0 20px 0;
+margin: 28px 0 10px 0;
 `;
 export const Blue = styled.span`
 color: rgb(73, 120, 255);
+font-weight:900;
 `;
 export const SPAN = styled.span`
 display: block;
@@ -110,7 +112,6 @@ width: 100%;
 height: 82px;
 margin: 0;
 list-style:none;
-border-bottom: 1px solid #f1f1f1;
 `;
 export const Desc_span = styled.span`
 height: 100%;
@@ -133,6 +134,7 @@ font-size: 24px;
 export const Ticket_desc_price = styled.div`
 display: inline-block;
 zoom: 1;
+vertical-align: -6px;
 `;
 
 export const Ticket_desc_price_p = styled.p`
@@ -193,16 +195,19 @@ cursor: pointer;
 export const Ticket_desc_use_btn = styled.button`
 width: 108px;
 border: 1px solid #74b3ff;
-color: #0072ff;
+
 font-size: 14px;
 height: 41px;
 margin: 0 5px 0 4px;
 border-radius: 2px;
 word-wrap: break-word;
+border-color: #38cb15;
 background-color:#fff;
+color: #38cb15;
+
 cursor: pointer;
     &:hover {
-        background-color: #0072ff; /* Change the button color when clicked */
+        background-color: #38cb15; /* Change the button color when clicked */
         color:#fff;
     }
 
@@ -537,3 +542,86 @@ export const Ticket_list_noTicket = styled.p`
 `;
 
 
+// 나의 이용권 보유갯수 사용중인지 확인
+
+export const My_item_TK_area_div = styled.div`
+    border-bottom: 1px solid #e5e5e5;
+    background: #fff;
+    height: 127px;
+    padding: 0 !important;
+`;
+export const My_item_inner_div = styled.div`
+    position: relative;
+    width: 960px;
+    margin: 0 auto;
+    font-family: ng;
+`;
+export const My_Tk_div = styled.div`
+
+`;
+export const MY_Tk_span = styled.span`
+background: url(img/img_icon.png) -350px 0 no-repeat;
+text-indent:-9999px;
+display: inline-block;
+width:66px;
+height:66px;
+margin-right: 13px;
+vertical-align: middle;
+position: absolute;
+top: 31px;
+left: 0;
+`;
+export const My_item_div = styled.div`
+
+`;
+export const My_Tk_p = styled.p`
+position: absolute;
+top: 50px;
+left: 84px;
+font-size: 24px;
+color: #222;
+letter-spacing: -1px;
+font-family: ng;
+`;
+export const My_Tk_ul = styled.ul`
+position: absolute;
+top: 15px;
+right: 20px;
+float:right;
+`;
+export const My_Tk_li = styled.li`
+float: left;
+padding: 15px 15px 15px 15px;
+`;
+export const My_Tk_strong = styled.strong`
+display: block;
+color: #0e54ff;
+font-size: 16px;
+font-family: ngb;
+text-align: center;
+`;
+
+export const MY_TK_a = styled.a`
+padding-right: 10px;
+    color: #888;
+
+`;
+
+export const MY_TK_P = styled.p`
+font-size: 14px;
+    color: #888;
+    text-align: center;
+    font-family: ng;
+    margin-bottom: 5px;
+    letter-spacing: -1px;
+`;
+
+export const Ticket_Area = styled.div`
+    margin: 0 auto;
+    width:960px;
+    background: #f5f5f5;
+`;
+export const Ticket_wrap = styled.div`
+width:100%;
+background: #f5f5f5;
+`;

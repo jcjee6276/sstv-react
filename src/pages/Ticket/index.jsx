@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../Mainpage/header';
+import Header from '../Community/header';
 import TicketProduct from './ticketProduct';
 
 
