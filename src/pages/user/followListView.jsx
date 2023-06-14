@@ -9,34 +9,42 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useCallback } from 'react';
 import Header from './header';
+import BlackList from './blackListView';
+import RmUser from './removeUser';
+import useSWR from 'swr';
+import fetcher from '../utils/fetcher';
 
 
 const FollowListView = () => {
   const [selectedTab, setSelectedTab] = useState('followList'); 
   const navigate = useNavigate();
-  const [userId, setUserId] = useState('');
+  // const [userId, setUserId] = useState('');
   const [followList, setFollowList] = useState([]);
   const [followerList, setFollowerList] = useState([]);
   const [pageState, setPageState] = useState('');
   const [searchList, setSearchList] = useState([]);
   const [keyword, setKeyword] = useState('');
+  const [isOpenBlackModal, setIsOpenBlackModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {data} = useSWR('/user/login', fetcher);
+  const userId = data?.userId;
 
   const onChangeKeyword = useCallback((e) => {
     setKeyword(e.target.value);
   });
 
   //로그인 세션의 아이디 가져오기
-  useEffect(() => {
-    axios.get('/user/login').then((response) => {
-      if(response.data?.data.userId !== userId){
-      setUserId(response.data.data.userId);
-      }
-      if(response.data?.data.userId === userId){
-      setUserId(response.data.data);
-      }
-      setPageState('');
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('/user/login').then((response) => {
+  //     if(response.data?.data?.userId !== userId){
+  //     setUserId(response.data.data?.userId);
+  //     }
+  //     if(response.data?.data.userId === userId){
+  //     setUserId(response.data?.data);
+  //     }
+  //     setPageState('');
+  //   });
+  // }, []);
 
   //세션에 저장된 아이디에 해당하는 팔로우 목록
   useEffect(() => {
@@ -74,20 +82,35 @@ const FollowListView = () => {
     console.log('userID :: '+userId);
     console.log('FollowUser:', followUser);
     axios.post('/fan/addFollow', { userId, followUser }).then((response) => {
-      if(response.data.result === 'success'){
+      if(response.data?.result === 'success'){
       navigate('/followlist/'+userId);
       window.location.reload();
       }
-      if(response.data.result === 'fail'){
+      if(response.data?.result === 'fail'){
         alert('이미 등록된 회원입니다!');
       }
     });
   };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
+
+  const openBlackModal = () => {
+    setIsOpenBlackModal(true);
+  }
+
+  const closeBlackModal = () => {
+    setIsOpenBlackModal(false);
+  }
   
   //검색
   const search = () => {
     axios.get('/fan/searchUser/'+keyword).then((response) => {
-      setSearchList(response.data.data);
+      setSearchList(response.data?.data);
       setPageState('search');
     })
   }
@@ -165,13 +188,15 @@ const FollowListView = () => {
             <UserInfo_tab2 onClick={onFollowlist} style={{ backgroundColor: selectedTab === 'followList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>팔로우 관리</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={openBlackModal} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            {isOpenBlackModal && <BlackList onClose={isOpenBlackModal} setOnClose={setIsOpenBlackModal}/> }
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>코인 사용내역</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={openModal} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+              {isModalOpen && <RmUser onClose={isModalOpen} setOnClose={setIsModalOpen}/> }
               <UserInfo_tab3>회원 탈퇴</UserInfo_tab3>
             </UserInfo_tab2>
 

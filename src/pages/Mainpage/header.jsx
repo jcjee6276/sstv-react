@@ -30,8 +30,8 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     const [startStreamingIsOpen, setStartStreamingIsOpen] = useState(false);
     const [cookies, setCookie, removeCookie] = useCookies(['NSESSIONID']);
     const {data} = useSWR('/user/login', fetcher);
-    const [userId, setUserId] = useState('');
     const navigate = useNavigate();
+    const userId = data?.userId;
     
     //userId 값 세팅
     // useEffect(() => {
@@ -79,8 +79,6 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         setStartStreamingIsOpen(false);
     }
 
-    
-    
     const setDarkMode = ()=> {
         setIsDarkMode(false);
     }
@@ -90,9 +88,9 @@ const header = ({isDarkMode, setIsDarkMode}) => {
         
     }
 
-    const removeNodeCookie = useCallback(() => {
+    const removeNodeCookie = () => {
         removeCookie('NSESSIONID', { path: '/' });
-    }, [removeCookie]);
+    };
 
     const logout = useCallback(() => {
         axios.create({
@@ -112,8 +110,6 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     if(data) {
         try {
             const response = await axios.create({
-                // baseURL: `${process.env.REACT_APP_NODE_URL}`,
-                // baseURL: `http://localhost:3001`,
                 baseURL: `${process.env.REACT_APP_NODE_URL}`,
                 withCredentials : true
               }).post('/testLogin', data); 

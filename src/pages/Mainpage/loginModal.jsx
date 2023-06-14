@@ -65,11 +65,9 @@ const loginModal = ({onClose, setOnClose}) => {
             {userId, password}
         )
         .then((response)=> {
-            console.log(response.data);
             revalidate();
-        })
-        
-    },[userId, password])
+        });
+    },[userId, password]);
 
     const handleMouseOver = () => {
         setMouseOver(true);

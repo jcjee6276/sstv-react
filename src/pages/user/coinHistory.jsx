@@ -10,38 +10,60 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useCallback } from 'react';
 import Header from './header';
+import BlackList from './blackListView';
+import RmUser from './removeUser';
+import useSWR from 'swr';
+import fetcher from '../utils/fetcher';
 
 
 const BlackListView = () => {
   const [selectedTab, setSelectedTab] = useState('coinHistory'); 
   const navigate = useNavigate();
-  const [userId, setUserId] = useState('');
+  // const [userId, setUserId] = useState('');
   const [CHlist, setCHlist] = useState([]);
   const [dbCoin, setDbCoin] = useState('');
   const [pageState, setPageState] = useState('');
-
+  const [isOpenBlackModal, setIsOpenBlackModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {data} = useSWR('/user/login', fetcher);
+  const userId = data?.userId;
 
   //로그인 세션의 아이디 가져오기
-  useEffect(() => {
-    axios.get('/user/login').then((response) => {
-      if(response.data.data.userId !== userId){
-      setUserId(response.data.data.userId);
-      }
-      if(response.data.data.userId === userId){
-      setUserId(response.data.data);
-      }
-      setPageState('');
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('/user/login').then((response) => {
+  //     if(response.data.data?.userId !== userId){
+  //     setUserId(response.data.data?.userId);
+  //     }
+  //     if(response.data.data?.userId === userId){
+  //     setUserId(response.data?.data);
+  //     }
+  //     setPageState('');
+  //   });
+  // }, []);
 
   useEffect(() => {
     axios.get('/user/getCoinHistory/'+userId).then((response) => {
-      setCHlist(response.data.data);
+      setCHlist(response.data?.data);
     })
     axios.get('/user/getUser/'+userId).then((response)=> {
-      setDbCoin(response.data.data.coin)
+      setDbCoin(response.data.data?.coin)
     })
   }, [userId]);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
+
+  const openBlackModal = () => {
+    setIsOpenBlackModal(true);
+  }
+
+  const closeBlackModal = () => {
+    setIsOpenBlackModal(false);
+  }
 
 
   //내 정보 관리 탭
@@ -117,13 +139,15 @@ const BlackListView = () => {
             <UserInfo_tab2 onClick={onFollowlist} style={{ backgroundColor: selectedTab === 'followList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>팔로우 관리</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={openBlackModal} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            {isOpenBlackModal && <BlackList onClose={isOpenBlackModal} setOnClose={setIsOpenBlackModal}/> }
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>코인 사용내역</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={openModal} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+              {isModalOpen && <RmUser onClose={isModalOpen} setOnClose={setIsModalOpen}/> }
               <UserInfo_tab3>회원 탈퇴</UserInfo_tab3>
             </UserInfo_tab2>
 
