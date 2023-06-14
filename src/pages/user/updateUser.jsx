@@ -39,13 +39,6 @@ const UpdateUser = () => {
     setIsModalOpen(false);
   }
 
-  const openBlackModal = () => {
-    setIsOpenBlackModal(true);
-  }
-
-  const closeBlackModal = () => {
-    setIsOpenBlackModal(false);
-  }
   
   const onChangePassword = useCallback((e) => {
     setPassword(e.target.value);
@@ -109,6 +102,7 @@ const UpdateUser = () => {
     }
   };
 
+  //기본 이미지 사용
   const use_baseImage = (e) => {
     setProfilePhoto("base_image");
   }
@@ -120,12 +114,12 @@ const UpdateUser = () => {
     axios.get('/user/checkUserNickname/'+userNickname).then((response) => {
       if(response.data?.data === 'useOk'){
         setNickEnabled(response.data?.data);
-        alert('사용 가능한 닉네임 입니다!' +userId);
+        alert('사용 가능한 닉네임 입니다!');
         setNickUpdate(false);
       }
       if(response.data?.data === 'useNo'){
         setNickEnabled(response.data?.data);
-        alert('사용중인 닉네임 입니다!'+userId);
+        alert('사용중인 닉네임 입니다!');
       }
     })
 
@@ -193,7 +187,7 @@ console.log('선택된 파일 :: '+'file')
     axios
       .post("/user/updateUser", {userId, password, eMail, coin})
       .then((response) => {
-        alert("수정 완료!" +userId);
+        alert("회원정보가 변경 되었습니다!");
       });
   }, [eMail,  userId, password, coin]);
 
@@ -203,11 +197,11 @@ console.log('선택된 파일 :: '+'file')
     navigate('/userInfo/'+userId);
   }
 
-  // //블랙리스트 관리 탭
-  // const onBlacklist = () => {
-  //   setSelectedTab('blackList');
-  //   navigate('/blacklist/'+userId);
-  // }
+  //블랙리스트 관리 탭
+  const onBlacklist = () => {
+    setSelectedTab('blackList');
+    navigate('/blacklist/'+userId);
+  }
 
   //팔로우 관리 탭
   const onFollowlist = () => {
@@ -269,8 +263,8 @@ console.log('선택된 파일 :: '+'file')
             <UserInfo_tab2 onClick={onFollowlist} style={{ backgroundColor: selectedTab === 'followList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>팔로우 관리</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={openBlackModal} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
-            {isOpenBlackModal && <BlackList onClose={isOpenBlackModal} setOnClose={setIsOpenBlackModal}/> }
+            <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            {/* {isOpenBlackModal && <BlackList onClose={isOpenBlackModal} setOnClose={setIsOpenBlackModal}/> } */}
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
@@ -341,23 +335,27 @@ console.log('선택된 파일 :: '+'file')
                       </Profile_photo2>
                     </Profile_photo>
                     <Profile_text>
-                      <Profile_add_button_box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <Profile_add_button_box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap'  }}>
                         <Profile_add_button style={{ width: '100px', height: '30px' }}>
                         <Profile_add_button1>
                           <Profile_add_button2>
-                            {profilePhoto !=="base_image" || profilePhoto === null ? (
-                            <>
-                            <Profile_add_button3 onClick={use_baseImage} style={{ cursor: 'pointer' }}>
-                            <p style={{ fontSize: '12px' }}>기본 이미지 사용</p>
-                          </Profile_add_button3>
-                            </>
-                             ) : (
-                            <>
-                            <Profile_add_button3 onClick={handleClick} style={{ cursor: 'pointer' }}>
-                              <p style={{ fontSize: '12px' }}>프로필 사진 추가</p>
-                            </Profile_add_button3>
-                            </>
-                          )}
+                          {(profilePhoto === null || profilePhoto === "" || profilePhoto === undefined) && dbProfilePhoto === "base_image" ? (
+                              <Profile_add_button3 onClick={handleClick} style={{ cursor: 'pointer' }}>
+                                <p style={{ fontSize: '12px' }}>프로필 변경</p>
+                              </Profile_add_button3>
+                            ) : (
+                              <>
+                                {profilePhoto === "baseImage" ? (
+                                  <Profile_add_button3 onClick={use_baseImage} style={{ cursor: 'pointer' }}>
+                                    <p style={{ fontSize: '11px' }}>기본 이미지 사용</p>
+                                  </Profile_add_button3>
+                                ) : (
+                                  <Profile_add_button3 onClick={handleClick} style={{ cursor: 'pointer' }}>
+                                    <p style={{ fontSize: '12px' }}>프로필 변경</p>
+                                  </Profile_add_button3>
+                                )}
+                              </>
+                            )}
                           <input ref={inputRef}
                               type="file"
                               onChange={handleFileInputChange}
@@ -367,7 +365,7 @@ console.log('선택된 파일 :: '+'file')
                         </Profile_add_button1>
                         </Profile_add_button>
                       </Profile_add_button_box>
-                      <Nickname_update_update2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <Nickname_update_update2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
                       <NicknameDuplicate_button onClick={saveFile} style={{ padding: '3px 5px', fontSize: '13px', marginTop:'10px' }}>적용하기</NicknameDuplicate_button>
                       </Nickname_update_update2>
                       <Nickname_update_sub >
@@ -393,7 +391,7 @@ console.log('선택된 파일 :: '+'file')
                   :
                   <NicknameChange_button onClick={updateNickname}>닉네임 변경</NicknameChange_button>
                   }
-                  <Nickname_update_sub><p style={{color:'skyblue'}}>- 스트리밍이나 채팅 및 게시글 작성 등 서비스 이용시 보이는 닉네임입니다.</p></Nickname_update_sub>
+                  <Nickname_update_sub><p style={{color:'skyblue', marginTop:'22px'}}>- 스트리밍이나 채팅 및 게시글 작성 등 서비스 이용시 보이는 닉네임입니다.</p></Nickname_update_sub>
                   <Nickname_update_sub><p style={{color:'skyblue'}}>- 중복 되지 않는 닉네임만 사용할 수 있습니다.</p></Nickname_update_sub>
                   <Nickname_update_sub><p style={{color:'skyblue'}}>- 닉네임을 입력하고 중복체크를 진행해주세요.</p></Nickname_update_sub>
                 </Nickname_update_update2>
@@ -435,7 +433,8 @@ console.log('선택된 파일 :: '+'file')
                 </Phone_update>
                 <Phone_update_input>
                   <Phone_update_input2>
-                    <Phone_update_input_text value={phone} readOnly></Phone_update_input_text>
+                    <Phone_update_input_text placeholder={userType === 1 ? 'SNS 회원' : ''}  value={phone} readOnly></Phone_update_input_text>
+                    <Nickname_update_sub><p style={{color:'blue', marginTop:'5px'}}>- 휴대폰 정보는 수정하실 수 없습니다.</p></Nickname_update_sub>
                   </Phone_update_input2>
                 </Phone_update_input>
                 <Email_update>

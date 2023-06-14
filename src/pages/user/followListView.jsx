@@ -24,7 +24,6 @@ const FollowListView = () => {
   const [pageState, setPageState] = useState('');
   const [searchList, setSearchList] = useState([]);
   const [keyword, setKeyword] = useState('');
-  const [isOpenBlackModal, setIsOpenBlackModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {data} = useSWR('/user/login', fetcher);
   const userId = data?.userId;
@@ -99,21 +98,24 @@ const FollowListView = () => {
     setIsModalOpen(false);
   }
 
-  const openBlackModal = () => {
-    setIsOpenBlackModal(true);
-  }
-
-  const closeBlackModal = () => {
-    setIsOpenBlackModal(false);
-  }
   
-  //검색
+  //검색(버튼클릭)
   const search = () => {
     axios.get('/fan/searchUser/'+keyword).then((response) => {
       setSearchList(response.data?.data);
       setPageState('search');
     })
   }
+
+  //검색(enter)
+  const searchKeyPress = (e) => {
+    if(e.key === 'Enter'){
+      axios.get('/fan/searchUser/'+keyword).then((response) => {
+        setSearchList(response.data?.data);
+        setPageState('search');
+    })
+  }
+}
 
   //내 정보 관리 탭
   const onUserInfo = () => {
@@ -188,8 +190,8 @@ const FollowListView = () => {
             <UserInfo_tab2 onClick={onFollowlist} style={{ backgroundColor: selectedTab === 'followList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>팔로우 관리</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={openBlackModal} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
-            {isOpenBlackModal && <BlackList onClose={isOpenBlackModal} setOnClose={setIsOpenBlackModal}/> }
+            <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            {/* {isOpenBlackModal && <BlackList onClose={isOpenBlackModal} setOnClose={setIsOpenBlackModal}/> } */}
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
@@ -209,20 +211,21 @@ const FollowListView = () => {
             <Info_text>회원이 지정한 블랙리스트 회원을 관리할 수 있습니다.</Info_text>
             
             </User_update_body3>
-            <Nickname_update_input placeholder={'검색 조건'} style={{ marginRight: '8px' }} onChange={onChangeKeyword}></Nickname_update_input>
-            <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" onClick={search}/>
+            <Nickname_update_input placeholder={'검색 조건'} style={{ marginRight: '8px', borderRadius: '8px'  }} onChange={onChangeKeyword} onKeyPress={searchKeyPress}></Nickname_update_input>
+            <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" onClick={search} style={{cursor: 'pointer'}}/>
           </User_update_body2>
         </User_update_body>
         </User_update_Main>
 
 
-
+                      {isModalOpen === true ? '' : (
+                        <>
                               <List_body_12 style={{
                                       position: 'fixed',
                                       top: '60%',
                                       left: '30%',
                                       transform: 'translate(-50%, -50%)',
-                                      zIndex: 9999,
+                                      zIndex: 9000,
                                       backgroundColor:'gray',
                                       marginRight: '10px'
                                         }}>
@@ -511,6 +514,8 @@ const FollowListView = () => {
                                   </List_body_14>
                                </List_body_13>
                               </List_body_12>
+                              </>
+                              )}
 
 
               </div>

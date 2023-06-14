@@ -16,7 +16,7 @@ import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 
 
-const BlackListView = () => {
+const CoinHistory = () => {
   const [selectedTab, setSelectedTab] = useState('coinHistory'); 
   const navigate = useNavigate();
   // const [userId, setUserId] = useState('');
@@ -139,8 +139,8 @@ const BlackListView = () => {
             <UserInfo_tab2 onClick={onFollowlist} style={{ backgroundColor: selectedTab === 'followList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>팔로우 관리</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={openBlackModal} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
-            {isOpenBlackModal && <BlackList onClose={isOpenBlackModal} setOnClose={setIsOpenBlackModal}/> }
+            <UserInfo_tab2 onClick={onBlacklist} style={{ backgroundColor: selectedTab === 'blackList' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            {/* {isOpenBlackModal && <BlackList onClose={isOpenBlackModal} setOnClose={setIsOpenBlackModal}/> } */}
               <UserInfo_tab3>블랙리스트 관리</UserInfo_tab3>
             </UserInfo_tab2>
             <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
@@ -213,4 +213,4 @@ const BlackListView = () => {
       </div>
   )
 } 
-export default BlackListView;
+export default CoinHistory;
