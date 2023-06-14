@@ -10,17 +10,21 @@ import { useState } from 'react';
 import { useCallback } from 'react';
 import Header from './header';
 import { useRef } from 'react';
+import useSWR from 'swr';
+import fetcher from '../utils/fetcher';
 
 
 const BlackListView = ({onClose, setOnClose}) => {
   const [selectedTab, setSelectedTab] = useState('blackList'); 
   const navigate = useNavigate();
-  const [userId, setUserId] = useState('');
+  // const [userId, setUserId] = useState('');
   const [blackList, setBlackList] = useState([]);
   const [pageState, setPageState] = useState('');
   const [searchList, setSearchList] = useState([]);
   const [keyword, setKeyword] = useState('');
   const modalRef = useRef(null);
+  const {data} = useSWR('/user/login', fetcher);
+  const userId = data?.userId;
 
   const onChangeKeyword = useCallback((e) => {
     setKeyword(e.target.value);
@@ -39,21 +43,21 @@ const BlackListView = ({onClose, setOnClose}) => {
 }, [onClose]);
 
   //로그인 세션의 아이디 가져오기
-  useEffect(() => {
-    axios.get('/user/login').then((response) => {
-      if(response.data?.data.userId !== userId){
-      setUserId(response.data.data.userId);
-      }
-      if(response.data?.data.userId === userId){
-      setUserId(response.data.data);
-      }
-      setPageState('');
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('/user/login').then((response) => {
+  //     if(response.data?.data?.userId !== userId){
+  //     setUserId(response.data.data?.userId);
+  //     }
+  //     if(response.data?.data?.userId === userId){
+  //     setUserId(response.data.data);
+  //     }
+  //     setPageState('');
+  //   });
+  // }, []);
 
   useEffect(() => {
     axios.get('/fan/getBlackList/'+userId).then((response) => {
-      setBlackList(response.data.data);
+      setBlackList(response.data?.data);
     })
   }, [userId, searchList]);
 
@@ -81,7 +85,7 @@ const BlackListView = ({onClose, setOnClose}) => {
   //검색
   const search = () => {
     axios.get('/fan/searchUser/'+keyword).then((response) => {
-      setSearchList(response.data.data);
+      setSearchList(response.data?.data);
       setPageState('search');
     })
   }
