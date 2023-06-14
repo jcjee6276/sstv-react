@@ -68,6 +68,7 @@ const AdminStreamingList = () => {
     }
   }
   
+  
   const getStreamingList = async () => {
     const method = 'GET';
     
@@ -81,6 +82,12 @@ const AdminStreamingList = () => {
     const streamingList = response.data.firstData;
     setStreamingList(streamingList);
   }
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      getStreamingList();
+    }
+  };
 
   useEffect(() => {
     getStreamingList();
@@ -177,6 +184,7 @@ const AdminStreamingList = () => {
       </>
     )
   };
+  
 
   //paginate
   const handlePageClick = (event) => {
@@ -191,17 +199,20 @@ const AdminStreamingList = () => {
     const pageCount = Math.ceil(streamingList.length / itemsPerPage);
 
     return (
+      
       <div>
         <div style={{ marginLeft: '200px' }}>        
           <SideBar/>
         </div>
+
+        <Header/>  
+        <div style={{ marginTop: '100px' }} ></div>
+        
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
-              <h4><img src="https://res.afreecatv.com/images/help/img_my.jpg" alt="회원 신고목록" /></h4>
+            <h4><img src="https://advertise.kr.object.ncloudstorage.com/adminBanner.jpeg" alt="회원 신고목록" /></h4>
             </div>
-            
-            <Header/>  
             <div className="sub_wrap">
               <div className="tb_mylist">
                 <table cellSpacing="0" cellPadding="0">
@@ -233,17 +244,24 @@ const AdminStreamingList = () => {
                 data = {streaming}/>}
 
               </div>
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel=">"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="<"
-                renderOnZeroPageCount={null}
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={pageCount}
+                  previousLabel="<"
+                  renderOnZeroPageCount={null}
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  previousClassName="previous"
+                  nextClassName="next"
+                  disabledClassName="disabled"
+                />
+              </div>
+              
               <div className="search_area">
-
                 <input 
                     type="radio" 
                     id="b_subject" 
@@ -261,10 +279,11 @@ const AdminStreamingList = () => {
                     value='1' 
                     checked = {searchCondition === '1'} 
                     onChange={hanldeSearchCondition}
+                    
                 />
                 <label htmlFor="b_content">스트리밍 제목</label>
                 
-                <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} />
+                <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} onKeyPress={handleKeyPress} />
                 <button class="list_search" id="searchWord" onClick={getStreamingList}>
                   <span>검색</span>
                 </button>

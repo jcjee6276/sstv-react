@@ -385,66 +385,39 @@ const searchBody = ({select, setSelect})=>{
                                <Live_img src='https://res.afreecatv.com/images/aftv_search/ico_live.gif'/>
                            </Live_h4>
                        </Live_list>
-
+                       {/*  */}
                        <Broad_list>
-                           <Broad_ul>
-                               <Broad_title_li>
-                                   <Broad_img_a>
-                                       <Broad_title_img />
-                                   </Broad_img_a>
-                                   <Broad_title_a>
-                                       <Broad_title_span>방송제목</Broad_title_span>
-                                   </Broad_title_a>
-                               </Broad_title_li>
-                               <Broad_streamer_li>
-                                   <Broad_streamer_em>정보</Broad_streamer_em>스트리머 명
-                                   <Broad_streamer_a>testUser(testnickname)</Broad_streamer_a>
-                               </Broad_streamer_li>
-                               <Broad_bs_em>
-                                   <Broad_view_li>
-                                       <Broad_info_tit>참여정보</Broad_info_tit>
-                                       <Broad_num_span>
-                                           <Broad_num_em>0</Broad_num_em>
-                                       </Broad_num_span>
-                                       <Broad_line_span>
-                                       방송시작 2023-06-07 17:11
-                                       </Broad_line_span>
-                                   </Broad_view_li>
-                               </Broad_bs_em>
-
-                               
-                           </Broad_ul>
-
-                           {/* 반복할 부분 */}
-                           <Broad_ul>
-                               <Broad_title_li>
-                                   <Broad_img_a>
-                                       <Broad_title_img />
-                                   </Broad_img_a>
-                                   <Broad_title_a>
-                                       <Broad_title_span>방송제목</Broad_title_span>
-                                   </Broad_title_a>
-                               </Broad_title_li>
-                               <Broad_streamer_li>
-                                   <Broad_streamer_em>정보</Broad_streamer_em>스트리머 명
-                                   <Broad_streamer_a>testUser(testnickname)</Broad_streamer_a>
-                               </Broad_streamer_li>
-                               <Broad_bs_em>
-                                   <Broad_view_li>
-                                       <Broad_info_tit>참여정보</Broad_info_tit>
-                                       <Broad_num_span>
-                                           <Broad_num_em>0</Broad_num_em>
-                                       </Broad_num_span>
-                                       <Broad_line_span>
-                                       방송시작 2023-06-07 17:11
-                                       </Broad_line_span>
-                                   </Broad_view_li>
-                               </Broad_bs_em>
-
-                               
-                           </Broad_ul>
-
-                       </Broad_list>
+                        {streamingList.map((streaming, index) => {
+                            return (
+                                <Broad_ul key={index}>
+                                <Broad_title_li>
+                                    <Broad_img_a onClick={ () => getStreamingViewPage(streaming.userId)}>
+                                    <Broad_title_img src={streaming.thumnailUrlWithOutAd}></Broad_title_img>
+                                    </Broad_img_a>
+                                    <Broad_title_a>
+                                    <Broad_title_span>{streaming.streamingTitle}</Broad_title_span>
+                                    </Broad_title_a>
+                                </Broad_title_li>
+                                <Broad_streamer_li>
+                                    <Broad_streamer_em>정보</Broad_streamer_em>스트리머 명
+                                    <Broad_streamer_a>{streaming.userNickname}</Broad_streamer_a>
+                                </Broad_streamer_li>
+                                <Broad_bs_em>
+                                    <Broad_view_li>
+                                    <Broad_info_tit>참여정보</Broad_info_tit>
+                                    <Broad_num_span>
+                                        <Broad_num_em>{streaming.userNickname}</Broad_num_em>
+                                    </Broad_num_span>
+                                    <Broad_line_span>
+                                        방송시작 {streaming.streamingStartTime}
+                                    </Broad_line_span>
+                                    </Broad_view_li>
+                                </Broad_bs_em>
+                                </Broad_ul>
+                            );
+                        })}
+                       {/*  */}
+                        </Broad_list>
                        </div>
 
                     :null}

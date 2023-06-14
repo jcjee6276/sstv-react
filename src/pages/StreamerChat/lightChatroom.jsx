@@ -283,11 +283,11 @@ const lightChatroom = (props) => {
                                                                 <Chat_re_body_cus>
                                                                     <Chat_re_body_scope>
                                                                        <Chat_scroll_div id='chatbox' ref={chatboxRef}>
-                                                                        <Chat_re_body_item_offset>
+                                                                        {/* <Chat_re_body_item_offset>
                                                                             <Chat_re_body_items>
                                                                                 
                                                                             </Chat_re_body_items>
-                                                                        </Chat_re_body_item_offset>
+                                                                        </Chat_re_body_item_offset> */}
                                                                         
 
                                                             {messageList.map((messageContent, key)=> {

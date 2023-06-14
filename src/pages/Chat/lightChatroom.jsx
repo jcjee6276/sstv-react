@@ -347,7 +347,7 @@ const lightChatroom = (props) => {
                                         </Chat_Header_font_div>
 
                                     
-                                        {/* <Chat_Header_button_div>
+                                        <Chat_Header_button_div>
                                             <Chat_Header_button_a>
                                                 <Chat_Header_button>
                                                     <Chat_header_button_button>
@@ -381,7 +381,7 @@ const lightChatroom = (props) => {
                                                     
                                                 </Chat_Header_button>
                                             </Chat_Header_button_a>
-                                        </Chat_Header_button_div> */}
+                                        </Chat_Header_button_div>
                                         
                                     </Chat_Header_div>
                                     

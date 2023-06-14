@@ -2,6 +2,7 @@
 import React,{useState, useRef, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Modal_body_id_div_3, Modal_body_id_div_2, Modal_body_id_div, Modal_title_h4, Modal_title_div_3, Modal_area_1_div, Modal_area_div, Modal_area_layout_div, Modal_area_layout_div_2, Modal_area_layout_div_3, Modal_Content_div, Modal_layout_div, Modal_main_div, Modal_overlay_div, Modal_title_div, Modal_title_div_2, Modal_title_figure, Modal_title_write_div, Modal_body_div, Modal_body_form, Modal_body_lay_div, Modal_body_id_div_1, Modal_body_id_lable, Modal_body_id_input_div, Modal_body_id_input_div_2, Modal_body_pw_idv, Modal_body_pw_div_2, Modal_body_pw_div_3, Modal_body_pw_div_4, Modal_body_pw_title_div, Modal_body_pw_title_lable, Modal_body_pw_input_div, Modal_body_pw_input_div_2, Modal_body_pw_input, Modal_body_help_div, Modal_login_submit_div, Modal_login_submit_div_2, Modal_login_submit_div_3, Modal_login_submit_button, Modal_login_submit_button_div, Modal_login_submit_noinput_div, Modal_signup_nav_div, Modal_signup_button, Modal_signup_button_div, Modal_signup_content_div, Modal_login_submit_input_div, Modal_login_submit_input_button_div, Modal_login_submit_input_button, Modal_signup_button_div_over } from '../Mainpage/style';
+import {Gift_input_span,Gift_input, ST_dd,Gift_st, Gift_dd, Gift_at, Gift_dt, Gift_strong, Layer_in, Modal, Send_area, Gift_dd_span, Gift_dd_input, Gift_dd_count_span, Gift_dd_button, ST_dt, ST_dd_span, ST_dd_error, ST_dd_em, ST_dd_error_span, Btn_buy, Gift_input_h3, Gift_void_text, Button_area, Button_gift_button, Button_cancle_button, Outline_area, Outline_area_2} from '../Chat/donationStyle'
 import './style.css';
 
 const StreamingBanModal = ({onClose, setOnClose, data}) => {
@@ -84,190 +85,62 @@ const StreamingBanModal = ({onClose, setOnClose, data}) => {
       
     return(
         <div>
-        <div class="ui-pop improve report_layer win">
-        <p class="pop-title">스트리밍 정보 변경</p>
-        <div class="pop-body">
-            <strong>변경하실 스트리밍 정보를 입력해주세요</strong>
-            <div>
-                <select 
-                name="report_type" 
-                id="report_type"
-                >
-                    <option value='1'>게임</option>
-                    <option value='2'>일상</option>
-                    <option value='3'>스포츠</option>
-                    <option value='4'>먹방</option>
-                    <option value='5'>요리</option>
-                    <option value='6'>교육</option>
-                </select>
-                <input id="report_reason" cols="30" rows="10"  placeholder="스트리밍 제목을 입력해주세요(20자 미만)"></input>    
+        <Outline_area_2>
+        <Modal id='modalArea' ref={modalRef}>
+            <div id="layerBuyNoneSubscription" class="ui-pop layer-gudok">
+                <p class="pop-title">회원정보</p>
+                <div class="pop-body"><div class="scroll_box">
+                    <div class="gudok_bj">
+                                <div class="gudok_bj">
+                                    <p><em>{streamingBan.USER_ID}</em><i></i>님의 스트리밍정지 정보입니다.</p>
+                                </div>
+                            </div>
+                    <div class="signature ">
+                        <h3>회원 아이디</h3>
+                        <ul><li class="noList">{streamingBan.USER_ID}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>회원 닉네임</h3>
+                        <ul><li class="noList">{streamingBan.USER_NICKNAME}</li></ul>
+                    </div>
+
+                    <div class="signature ">
+                        <h3>스트리밍 제목</h3>
+                        <ul><li class="noList">{streamingBan.STREAMING_TITLE}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>스트리밍 카테고리</h3>
+                        <ul><li class="noList">{getCategory(streamingBan.STREAMING_CATEGORY)}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>스트리밍 시작시간</h3>
+                        <ul><li class="noList">{streamingBan.STREAMING_START_TIME}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>스트리밍 종료시간</h3>
+                        <ul><li class="noList">{streamingBan.STREAMING_END_TIME}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>총 시청자수</h3>
+                        <ul><li class="noList">{streamingBan.TOTAL_STREAMING_VIEWER}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>누적 후원금액</h3>
+                        <ul><li class="noList">{streamingBan.DONATION_AMOUNT}분</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>정지 유형</h3>
+                        <ul><li class="noList">{getReportType(streamingBan.BAN_TYPE)}명</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>정지 내용</h3>
+                        <ul><li class="noList">{streamingBan.BAN_CONTENT}</li></ul>
+                    </div>
+                </div>
+                </div>
             </div>
-        </div>
-        <div class="pop-btn">
-            <a class="btn btn_blue" id="report_pop" >변경하기</a>
-            {/* <a class="btn btn_white" id="page_close" ref={cancleRef} onClick={onClickCancle}>취소</a> */}
-        </div>
-    </div>
-        <Modal_main_div >
-            <Modal_overlay_div >
-                <Modal_Content_div >
-                    <Modal_layout_div  >
-                        <Modal_area_div id='modalArea' ref={modalRef} >
-                            <Modal_area_layout_div >
-                                <Modal_area_layout_div_2 >
-                                    <Modal_area_layout_div_3 >
-                                        <Modal_area_1_div >
-                                            <Modal_title_div>
-                                                <Modal_title_div_2>
-                                                    <Modal_title_div_3>
-                                                        <Modal_title_write_div>
-                                                            <Modal_title_h4>스트리밍정지 상세정보</Modal_title_h4>
-                                                        </Modal_title_write_div>
-                                                    </Modal_title_div_3>
-                                                </Modal_title_div_2>
-                                            </Modal_title_div>
-
-
-                                            <Modal_body_div>
-                                                <Modal_body_form>
-                                                    <Modal_body_lay_div >
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>회원 ID</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{streamingBan.USER_ID}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>회원 닉네임</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{streamingBan.USER_NICKNAME}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>스트리밍 제목</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{streamingBan.STREAMING_TITLE}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>스트리밍 카테고리</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{getReportType(streamingBan.REPORT_TYPE)}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>스트리밍 시작시간</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{streamingBan.STREAMING_START_TIME}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>스트리밍 종료시간</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{streamingBan.STREAMING_END_TIME}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>총 시청자수</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{streamingBan.TOTAL_STREAMING_VIEWER}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>누적 후원금액</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{streamingBan.DONATION_AMOUNT}원</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>정지 유형</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{getReportType(streamingBan.BAN_TYPE)}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>정지 내용</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{streamingBan.BAN_CONTENT}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>정지 날짜</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{streamingBan.BAN_DATE}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                    
-
-                                                    </Modal_body_lay_div>
-                                                </Modal_body_form>
-                                            </Modal_body_div>
-
-
-                                        </Modal_area_1_div>
-                                    </Modal_area_layout_div_3>
-                                </Modal_area_layout_div_2>
-                            </Modal_area_layout_div>
-                        </Modal_area_div>
-                    </Modal_layout_div>
-                </Modal_Content_div>
-            </Modal_overlay_div>
-        </Modal_main_div>
+            </Modal>
+    </Outline_area_2> 
         </div>
     )
 
