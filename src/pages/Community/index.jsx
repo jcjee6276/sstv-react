@@ -72,7 +72,10 @@ const Community = () => {
     }
       let date = new Date(notice?.regDate);
       let formattedDate = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-    
+      const fileName = replayList.RECORD_URL;
+
+      const date2 = new Date(replayList?.STREAMING_START_TIME);
+      const formattedDate2 = date2.getFullYear()+'-' + (date2.getMonth()+1) + '-'+date2.getDate();
     return(
         <body>
        <Header/>
@@ -88,16 +91,16 @@ const Community = () => {
                     <Com_main_body_section>
                         <Com_main_body_vod_div>
                             <Com_main_body_vod_h3>
-                                <Com_main_body_vod_a>
+                                <Com_main_body_vod_a href={'/getReplay/'+replayList[0]?.STREAMING_NO} >
                                 <FontAwesomeIcon icon={faVideo} style={{color: "#2e7bff",}} /> 다시보기 <FontAwesomeIcon icon={faChevronRight} style={{color: "#3881ff",}} />
                                 </Com_main_body_vod_a>
                             </Com_main_body_vod_h3>
                             <Com_main_body_vod_section>
                                 <Com_main_body_vod_1_div>
-                                    <Com_main_body_vod_1_a>
+                                    <Com_main_body_vod_1_a href={'/getReplay/'+replayList[0]?.STREAMING_NO}>
                                         <Com_main_body_vod_1_span>
-                                            <Com_main_body_vod_1_img src='https://videoimg.afreecatv.com/php/SnapshotLoad.php?rowKey=20230430_A8B04E2A_246189714_2_l'></Com_main_body_vod_1_img>
-                                            <Com_main_body_vod_1_time_span>10:00:00</Com_main_body_vod_1_time_span>
+                                            <Com_main_body_vod_1_img src={fileName?process.env.REACT_APP_REPLAY_IMAGE_URL+fileName.replace('.mp4','')+'.jpg':null}></Com_main_body_vod_1_img>
+                                            {/* <Com_main_body_vod_1_time_span>10:00:00</Com_main_body_vod_1_time_span> */}
                                         </Com_main_body_vod_1_span>
                                         <Com_main_body_vod_1_title_div>
                                             <Com_main_body_vod_1_title_p>{replayList[0]?.STREAMING_TITLE}</Com_main_body_vod_1_title_p>
@@ -107,7 +110,7 @@ const Community = () => {
                                                     {replayList[0]?.TOTAL_STREAMING_VIEWER}
                                                 </Com_main_body_vod_1_titleU_span>
                                                 <Com_main_body_vod_1_titleU_2_span>
-                                                   ● 2023-05-27
+                                                   ● {replayList[0]?.STREAMING_START_TIME}
                                                 </Com_main_body_vod_1_titleU_2_span>
                                             </Com_main_body_vod_1_titleU_div>
                                         </Com_main_body_vod_1_title_div>
@@ -115,22 +118,22 @@ const Community = () => {
                                 </Com_main_body_vod_1_div>
 
                             <Com_main_body_vod_2_div>
-                                <Com_main_body_vod_2_a>
+                                <Com_main_body_vod_2_a href={'/getReplay/'+replayList[1]?.STREAMING_NO}>
                                     <Com_main_body_vod_2_span>
-                                        <Com_main_body_vod_2_img src="https://videoimg.afreecatv.com/php/SnapshotLoad.php?rowKey=20230525_B51CADF3_246575502_3_l"/>
-                                        <Com_main_body_vod_2_time>08:00:00</Com_main_body_vod_2_time>
+                                        <Com_main_body_vod_2_img src={fileName?process.env.REACT_APP_REPLAY_IMAGE_URL+fileName.replace('.mp4','')+'.jpg':null}/>
+                                        {/* <Com_main_body_vod_2_time>08:00:00</Com_main_body_vod_2_time> */}
                                     </Com_main_body_vod_2_span>
                                     <Com_main_body_vod_2_title_div>
                                         <Com_main_body_vod_2_title_p>
-                                            title test2
+                                            {replayList[1]?.STREAMING_TITLE}
                                         </Com_main_body_vod_2_title_p>
                                         <Com_main_body_vod_2_title_div_2>
                                             <Com_main_body_vod_2_title_span>
                                                 <Com_main_body_vod_2_title_em></Com_main_body_vod_2_title_em>
-                                                500
+                                                {replayList[1]?.TOTAL_STREAMING_VIEWER}
                                             </Com_main_body_vod_2_title_span>
                                             <Com_main_body_vod_2_title_2_span>
-                                            ● 2023-05-22
+                                            ● {replayList[1]?.STREAMING_START_TIME}
                                             </Com_main_body_vod_2_title_2_span>
                                         </Com_main_body_vod_2_title_div_2>
                                     </Com_main_body_vod_2_title_div>
@@ -138,22 +141,22 @@ const Community = () => {
                             </Com_main_body_vod_2_div>
 
                             <Com_main_body_vod_3_div>
-                                <Com_main_body_vod_3_a>
+                                <Com_main_body_vod_3_a href={'/getReplay/'+replayList[2]?.STREAMING_NO}>
                                     <Com_main_body_vod_3_span>
-                                        <Com_main_body_vod_3_img src='https://videoimg.afreecatv.com/php/SnapshotLoad.php?rowKey=20230525_6CF3E1F9_246566929_3_l' />
-                                        <Com_main_body_vod_2_time>08:00:00</Com_main_body_vod_2_time>
+                                        <Com_main_body_vod_3_img  src={fileName?process.env.REACT_APP_REPLAY_IMAGE_URL+fileName.replace('.mp4','')+'.jpg':null}/>
+                                        {/* <Com_main_body_vod_2_time>08:00:00</Com_main_body_vod_2_time> */}
                                     </Com_main_body_vod_3_span>
                                     <Com_main_body_vod_2_title_div>
                                         <Com_main_body_vod_2_title_p>
-                                            title test2
+                                        {replayList[2]?.STREAMING_TITLE}
                                         </Com_main_body_vod_2_title_p>
                                         <Com_main_body_vod_2_title_div_2>
                                             <Com_main_body_vod_2_title_span>
                                                 <Com_main_body_vod_2_title_em></Com_main_body_vod_2_title_em>
-                                                500
+                                                {replayList[2]?.TOTAL_STREAMING_VIEWER}
                                             </Com_main_body_vod_2_title_span>
                                             <Com_main_body_vod_2_title_2_span>
-                                            ● 2023-05-22
+                                            ● {replayList[2]?.STREAMING_START_TIME}
                                             </Com_main_body_vod_2_title_2_span>
                                         </Com_main_body_vod_2_title_div_2>
                                     </Com_main_body_vod_2_title_div>
