@@ -11,6 +11,7 @@ import './layout.css';
 import './paginate.css';
 // import './mybs.css';
 // import './style.css';
+import './styleSecond.css'
 
 
 
@@ -121,6 +122,7 @@ const Report = () => {
     }else {
       alert('실패하였습니다.');
     }
+    window.location.reload();
   }
 
   //엔터검색
@@ -173,7 +175,7 @@ const Report = () => {
         <div id="content" className="help" style={{marginTop:'100px'}}>
           <div className="sub_area">
             <div className="stop_area">
-              <h4><img src="https://res.afreecatv.com/images/help/img_my.jpg" alt="회원 신고목록" /></h4>
+              <h4><img src="https://advertise.kr.object.ncloudstorage.com/adminBanner.jpeg" alt="회원 신고목록" /></h4>
             </div>
             
             <div className="sub_wrap">
@@ -224,11 +226,11 @@ const Report = () => {
                   nextClassName="next"
                   disabledClassName="disabled"
                 />
-          </div>
+              </div>
               <div className="search_area">
                 <input 
                     type="radio" 
-                    id="b_subject" 
+                    id="b_subject"
                     name="search" 
                     value='0' 
                     checked = {searchCondition === '0'} 

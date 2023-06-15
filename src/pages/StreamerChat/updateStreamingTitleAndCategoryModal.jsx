@@ -74,8 +74,8 @@ const finishStreamingModal = ({onClose, setOnClose, onClick, onSubmit}) => {
                             <option value='5'>요리</option>
                             <option value='6'>교육</option>
                         </select>
-                        <input id="report_reason" cols="30" rows="10" value={streamingTitle} onChange={handleStreaming} placeholder="스트리밍 제목을 입력해주세요(20자 미만)"></input>    
                     </div>
+                    <input id="report_reason" cols="30" rows="10" value={streamingTitle} onChange={handleStreaming} placeholder="스트리밍 제목을 입력해주세요(20자 미만)"></input>    
                 </div>
                 <div class="pop-btn">
                     <a class="btn btn_blue" id="report_pop" onClick={handleOnSubmit}>변경하기</a>

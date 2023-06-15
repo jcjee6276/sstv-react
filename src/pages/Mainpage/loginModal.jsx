@@ -128,7 +128,7 @@ const loginModal = ({onClose, setOnClose}) => {
                 axios.post('/user/login',{userId, password}).then((response)=> {
                     if(response.data.result === 'success'){
                         setEquals(true);
-                        window.location.reload();
+                        window.location.replace('/');
                     }
                     if(response.data.result === 'fail'){
                         setEquals(false);

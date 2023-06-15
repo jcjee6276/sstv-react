@@ -8,8 +8,9 @@ import axios from "axios";
 import {create} from 'zustand';
 import Modal from 'react-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
+import './report.css';
 
 
 
@@ -70,6 +71,12 @@ const Report = () => {
     setReportList(response);
   }
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      getReportList();
+    }
+  };
+
   useEffect(() => {
     getReportList();
   }, []);
@@ -118,7 +125,7 @@ const Report = () => {
             <td>{report.STREAMING_USER_ID}</td>
             <td>{getReportType(report.REPORT_TYPE)}</td>
             <td>{report.REPORT_CONTENT}</td>
-            <td>{report.REPORT_DATE}<FontAwesomeIcon icon={faTrash} className="fa-2x" onClick={() => removeReport(report.REPORT_NO)}/></td>
+            <td>{report.REPORT_DATE} <FontAwesomeIcon icon={faXmark}  onClick={() => removeReport(report.REPORT_NO)}/></td>
           </tr>
         ))}
       </>
@@ -144,10 +151,11 @@ const Report = () => {
         </div>
 
         <Header/>  
+        <div style={{ marginTop: '100px' }} ></div>
         <div id="content" className="help">
           <div className="sub_area">
             <div className="stop_area">
-              <h4><img src="https://res.afreecatv.com/images/help/img_my.jpg" alt="회원 신고목록" /></h4>
+            <h4><img src="https://advertise.kr.object.ncloudstorage.com/adminBanner.jpeg" alt="회원 신고목록" /></h4>
             </div>
             
             <div className="sub_wrap">
@@ -169,15 +177,22 @@ const Report = () => {
                 </table>
                 {modalIsOpen && <ReportModal onClose={modalIsOpen} setOnClose={setIsOpen} data = {report}/>}
               </div>
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel=">"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="<"
-                renderOnZeroPageCount={null}
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={pageCount}
+                  previousLabel="<"
+                  renderOnZeroPageCount={null}
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  previousClassName="previous"
+                  nextClassName="next"
+                  disabledClassName="disabled"
+                />
+              </div>
               <div className="search_area">
 
                 <input 
@@ -200,7 +215,7 @@ const Report = () => {
                 />
                 <label htmlFor="b_content">피신고자ID</label>
                 
-                <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} />
+                <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange}  onKeyPress={handleKeyPress}/>
                 <button class="list_search" id="searchWord" onClick={getReportList}>
                   <span>검색</span>
                 </button>
