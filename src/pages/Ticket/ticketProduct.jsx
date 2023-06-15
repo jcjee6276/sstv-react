@@ -1,15 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
 import React, { useState, useEffect } from "react";
-import {Ticket_list_mt_p,Logo,ToolbarWrapper, Ticket_desc_use, Ticket_list_mt_div, Ticket_list_date,Ticket_list_date_p,Ticket_list_date_ed,Ticket_list_end,Ticket_list_date_st,Ticket_list_start, Ticket_desc_use_btn, Ticket_icon1, Ticket_item_div1, Ticket_desc_strong,Ticket_icon, Ticket_desc_buy, Ticket_desc_buy_btn,Ticket_desc_price_p,Ticket_desc_price, Ticket_desc_li, Ticket_desc_mt_div, Desc_span, Ticket_desc_inner,Ticket_desc_inner1, Ticket_desc_div,Pop_ticket_div,Add_Ticket,Add_at,Add_btn_area,Btn_gift,Btn_cancel,Add_st_span,Add_st_dl,Add_st_dt,Add_st_dd,Add_dt,Add_strong,Add_dd,Add_txt_span,Add_coin_input,Add_count,Modal_div,Add_txt_span_tkName,Ticket_Li, Ticket_name,Ticket_date,Blue,Ticket_item_div,H2,H3,SPAN, TicketProduct_div,Title_storng,Ticket_list_noTicket,Toolbar_div,Toolbar_logo_div,Toolbar_nav,Toolbar_ul,Toolbar_li,Toolbar_a
+import {Ticket_wrap,Ticket_Area,MY_TK_a,MY_TK_P,My_item_TK_area_div,My_item_inner_div,My_Tk_div,MY_Tk_span,My_item_div,My_Tk_p,My_Tk_ul,My_Tk_li,My_Tk_strong,Ticket_list_mt_p,Logo,ToolbarWrapper, Ticket_desc_use, Ticket_list_mt_div, Ticket_list_date,Ticket_list_date_p,Ticket_list_date_ed,Ticket_list_end,Ticket_list_date_st,Ticket_list_start, Ticket_desc_use_btn, Ticket_icon1, Ticket_item_div1, Ticket_desc_strong,Ticket_icon, Ticket_desc_buy, Ticket_desc_buy_btn,Ticket_desc_price_p,Ticket_desc_price, Ticket_desc_li, Ticket_desc_mt_div, Desc_span, Ticket_desc_inner,Ticket_desc_inner1, Ticket_desc_div,Pop_ticket_div,Add_Ticket,Add_at,Add_btn_area,Btn_gift,Btn_cancel,Add_st_span,Add_st_dl,Add_st_dt,Add_st_dd,Add_dt,Add_strong,Add_dd,Add_txt_span,Add_coin_input,Add_count,Modal_div,Add_txt_span_tkName,Ticket_Li, Ticket_name,Ticket_date,Blue,Ticket_item_div,H2,H3,SPAN, TicketProduct_div,Title_storng,Ticket_list_noTicket,Toolbar_div,Toolbar_logo_div,Toolbar_nav,Toolbar_ul,Toolbar_li,Toolbar_a
 } from "./style";
-import {Header_Right_Side_Div ,Header_Right_Login_Ui_Div  ,Header_Right_Login_Ui_Span} from "../Mainpage/style"
 import Modal from "react-modal";
 import axios from 'axios';
 import useSWR from 'swr'
 import fetcher from "../utils/fetcher";
 import { key } from "fontawesome";
-import LoginModal from "../Mainpage/loginModal";
 
 Modal.setAppElement('#root');
 
@@ -34,7 +32,7 @@ const TicketProduct = ({}) => {
   
 
   // 티켓사용 여부를 나타내는 버튼 이벤트
-  function onClickTicketUse(ticketNo, ticketUse, ticketName) {
+  function onClickTicketUse(ticketNo, ticketUse, ticketName,ticketEnd) {
     
     
     
@@ -50,7 +48,10 @@ const TicketProduct = ({}) => {
         .then((response) => {
           const userId = data?.userId;
           setIsTicketUsed(true);
+          alert("사용완료");
           window.location.reload();
+          
+          
         })
         .catch((error) => {
           console.log("Error 실패:", error);
@@ -83,6 +84,7 @@ const TicketProduct = ({}) => {
       const updateCoin =dbCoin - price; //코인 차감
       updateUserCoin(updateCoin);
       window.location.reload(); //  구매하는 순간 리로드 
+      alert("이용권 구매완료");
     }else{
 
       alert("코인이 부족합니다 ");
@@ -91,11 +93,6 @@ const TicketProduct = ({}) => {
   })
   .catch((error)=> {
     console.error(error)
-  });
-
-  axios.post('/user/addCoinHistory', {userId, ticketProdNo, price: -price})
-  .then((response) => {
-    console.log('구매내역 추가..');
   });
 }
 
@@ -113,14 +110,13 @@ function updateUserCoin(updateCoin){
       console.log("Error 실패:", error);
     });
 }
-
-function handleClick() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-}
-
+// 10,000  세번째자리 콤마 기능
+function NumberComma(number) {
+  if (typeof number !== 'number' || isNaN(number)) {
+    return number;
+  }
+  return number.toLocaleString();
+ } 
 
 
 
@@ -142,7 +138,7 @@ function handleClick() {
   useEffect(() => {
     if (userId !== '') {
       axios.get('/user/getUser/' + userId).then((response) => {
-        setDBcoin(response.data.data.coin);
+        setDBcoin(response.data.data?.coin);
         console.log("DB코인부분~!~!!!~~~~~" + dbCoin);
       });
     }
@@ -167,7 +163,7 @@ useEffect(() => {
 useEffect(() => {
   axios.get('/user/login').then((response) => {
     
-    const userId = response.data.data.userId;
+    const userId = response.data.data?.userId;
     setUserId(userId);
   
     if(userId !== undefined ){
@@ -190,10 +186,55 @@ useEffect(() => {
 
     // 이용권 상품 -----------------------------------------------------------------------
     <TicketProduct_div>
+      
+      <My_item_TK_area_div>
+        <My_item_inner_div>
+          <My_Tk_div>
+                <MY_Tk_span>img</MY_Tk_span>
+                <My_item_div>
+                {data ? (
+                  ticketInfo.map((ticket) => {
+                    if (ticket.ticketUse === 1) {
+                      return (
+                        <My_Tk_p key={ticket.ticketNo}>
+                          이용권사용중   {ticket.ticketEnd.slice(0, 10)}까지입니다.
+                        </My_Tk_p>
+                      );
+                    }
+                    return null;
+                  })
+                ) : (
+                  <My_Tk_p>로그인하세요.</My_Tk_p>
+                )}
+
+                {data && !ticketInfo.some((ticket) => ticket.ticketUse === 1) && (
+                  <My_Tk_p>사용 중인 이용권이 없습니다.</My_Tk_p>
+                )}
+                </My_item_div>
+          </My_Tk_div>
+          <My_Tk_ul>
+            <My_Tk_li>
+              <MY_TK_P>
+                <MY_TK_a>내 이용권</MY_TK_a>
+              </MY_TK_P>
+            </My_Tk_li>
+            {data?
+              <My_Tk_strong>{ticketInfo.length} 개</My_Tk_strong>
+              :
+              <My_Tk_strong></My_Tk_strong>
+            }
+            {/* <My_Tk_strong>{ticketInfo.length} 개</My_Tk_strong> */}
+          </My_Tk_ul>
+        </My_item_inner_div>
+      </My_item_TK_area_div>
+<Ticket_wrap>
+     <Ticket_Area>
+
+    
       {data?
         <H2><Blue>{userId}</Blue> 님의 이용권</H2> : <H2><Blue></Blue> 이용권</H2>
        }
-      
+  
       <H3>이용권 PLUS</H3>
       <SPAN>광고없이 즐기세요</SPAN>
       {ticketProductInfo.map((product, key) => (
@@ -226,7 +267,7 @@ useEffect(() => {
 
                 {/* 이용권 가격 */}
                 <Ticket_desc_price>
-                  <Ticket_desc_price_p>{product.price} 개</Ticket_desc_price_p>
+                  <Ticket_desc_price_p>{NumberComma(product.price)} 개</Ticket_desc_price_p>
                 </Ticket_desc_price>
 
                 {/* 이용권 구매하기 Button */}
@@ -251,12 +292,13 @@ useEffect(() => {
                       </Ticket_desc_buy>
                     }
                   
-                   {isOpen && <LoginModal onClose={isOpen} setOnClose={setIsOpen}/>}  
+                   
                   
                 
                  {/* 이용권 구매하기 MODAL */}
 
-                {isModalOpen-1===key&&
+                {isModalOpen-1===key&& (
+                  <div>
                     <Modal 
                         isOpen={isModalOpen === product.ticketProdNo} 
                         onRequestClose={closeModal} 
@@ -281,24 +323,24 @@ useEffect(() => {
                                         ? "7일 이용권"
                                         : key === 1
                                         ? "30일 이용권"
-                                        : key === 2
-                                        ? "365일 이용권"
                                         : "이용권"}
                                     </Add_txt_span_tkName>
-                                    
                                 </Add_dd>
                                 <Add_st_dl>
                                     <Add_st_dt>보유 코인</Add_st_dt>
                                     <Add_st_dd>
-                                        <Add_st_span>{dbCoin}</Add_st_span>개
+                                        <Add_st_span>{NumberComma(dbCoin)}</Add_st_span>개
                                     </Add_st_dd>
                                 </Add_st_dl>
+                                
                                 <Add_dd>
                                     <Add_txt_span>필요한 코인</Add_txt_span>
-                                        <Add_coin_input  value={product.price} readOnly></Add_coin_input>
+                                        <Add_coin_input  value={NumberComma(product.price)} readOnly></Add_coin_input>
                                     <Add_count>개</Add_count>
                                 </Add_dd>
+                               
                                 <Add_btn_area>
+
                                     <Btn_gift onClick={() => {addTicket(product.ticketProdNo,product.price); closeModal(); }}>
                                       구매하기
                                     </Btn_gift>
@@ -306,8 +348,11 @@ useEffect(() => {
                                 </Add_btn_area>
                             </Add_Ticket>
                     </Pop_ticket_div> 
-                  </Modal>}
-                
+                  </Modal>
+                    <div onClick={closeModal} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0, 0, 0, 0.5)', zIndex: 2 }} >
+                    </div>
+                  </div> )}
+                  
                 </Modal_div>
                
               </Ticket_desc_li>
@@ -400,25 +445,32 @@ ticketInfo.length === 0 ? (
               <Ticket_desc_inner1>
                     <Ticket_desc_li>
                         <Ticket_list_date>
-                          <Ticket_list_date_p>{ticket.ticketDate}</Ticket_list_date_p>
+                          <Ticket_list_date_p>{ticket.ticketDate.slice(0, 10)}</Ticket_list_date_p>
                         </Ticket_list_date>
                         <Ticket_list_mt_div>
                           <Ticket_list_mt_p>            
                             {ticket.ticketName === '1' ? "7일이용권" : ticket.ticketName === '2' ? "30일이용권" : ""}
                           </Ticket_list_mt_p>
                         </Ticket_list_mt_div>
+                        
                         <Ticket_list_start>
-                            <Ticket_list_date_st>{ticket.ticketStart}</Ticket_list_date_st>
+                          <Ticket_list_date_st>{ticket.ticketStart ? ticket.ticketStart.slice(0, 10) : ''}</Ticket_list_date_st>
                         </Ticket_list_start>
                         <Ticket_list_end>
-                            <Ticket_list_date_ed>{ticket.ticketEnd}</Ticket_list_date_ed>
+                          <Ticket_list_date_ed>{ticket.ticketEnd ? ticket.ticketEnd.slice(0, 10) : ''}</Ticket_list_date_ed>
                         </Ticket_list_end>
                         <Ticket_desc_use>
                             <Ticket_desc_use_btn
                                 key={ticket.ticketNo}
+                                style={{
+                                  backgroundColor: ticket.ticketUse === 1 ? "rgb(56, 203, 21)" : "inherit",
+                                  color: ticket.ticketUse === 0 ? "rgb(56, 203, 21)" : "#fff",
+                                  border: ticket.ticketUse === 0 ? "1px solid rgb(56, 203, 21)" : "none",
+                                  cursor: ticket.ticketUse === 1 ? "default" : "pointer"
+                                }}
                                 onClick={() => {
                                   if (ticket.ticketUse !== 1) {
-                                    onClickTicketUse(ticket.ticketNo, ticket.ticketUse, ticket.ticketName);
+                                    onClickTicketUse(ticket.ticketNo, ticket.ticketUse, ticket.ticketName, ticket.ticketEnd);
                                   }}} >
                               {ticket.ticketUse === 1 ? "사용중" : "사용하기"}
                               </Ticket_desc_use_btn>
@@ -429,9 +481,12 @@ ticketInfo.length === 0 ? (
         </Ticket_Li>
       ))
 )}
-
+ </Ticket_Area>
+    </Ticket_wrap>  
+  
   
     </TicketProduct_div>
+    
   );
 };
 

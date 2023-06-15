@@ -11,7 +11,9 @@ import { CHeader, CHeader_Dark, Com_h1, HeaderDiv, Header_Modal_Div,
     Header_Search_Input_in, Header_Search_Side_Button, Header_Search_Side_Span, Header_Search_Span, 
     Header_Search_fieldset, Header_Search_form, Header_a, Header_legend, Header_right_Icon_1_Span } from './style'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { redirect, Link, useNavigate } from 'react-router-dom';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
@@ -25,6 +27,10 @@ const header = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
     const {data} = useSWR('/user/login', fetcher);
+    const userId = data?.userId;
+    const navigate = useNavigate();
+    const [search, setSearch] = useState('');
+
     const openModal = () => {
         setIsOpen(true);
     };
@@ -46,9 +52,14 @@ const header = () => {
         })
     });
 
-    
+    const onSearch =(e) =>{
+        setSearch(e.target.value);       
+    }
 
-
+    //검색 이벤트
+    const searchSubmit = ()=>{
+        navigate('/SearchKeyword/'+search);
+    }
     
    
       
@@ -93,12 +104,13 @@ const header = () => {
                 </Com_h1>
 
                 <Header_Search_Div>
-                    <Header_Search_form>
+
+                    <Header_Search_form onSubmit={searchSubmit}>
                         <Header_Search_fieldset>
                             <Header_legend>검색</Header_legend>
                             <Header_Search_Div_input>
                                 <Header_Search_Div_input_in>
-                                    <Header_Search_Input_in placeholder='방송국 검색'/>
+                                    <Header_Search_Input_in value={search} onChange={onSearch} placeholder='방송국 검색'/>
                                     
 
                                     <Header_Search_Button>
@@ -123,8 +135,22 @@ const header = () => {
                                 
                     </Header_Search_form>
                 </Header_Search_Div>
-
                                  <Header_Right_Side_Div >
+
+                                 {data ? (
+                                    data.roll === 'admin' ? (
+                                        <Link to='/admin/adminUserList'>
+                                        <Header_Right_Icon_1_Div>
+                                            <Header_Right_Icon_1_a>
+                                                
+                                                <FontAwesomeIcon icon={faUserSecret} size="2x" style={{cursor:'pointer', marginTop:'6px'}} />
+                                                
+                                            </Header_Right_Icon_1_a>
+                                        </Header_Right_Icon_1_Div>
+                                        </Link>
+                                    ) : null
+                                    ) : null}
+
                                     <Header_Right_Icon_1_Div>
                                         <Header_Right_Icon_1_a>
                                             <Header_Right_Icon_1_Button>
@@ -162,9 +188,19 @@ const header = () => {
                                             'aria-labelledby': 'basic-button',
                                             }}
                                         >
-                                            <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                            <MenuItem onClick={handleClose}>My account</MenuItem>
-                                            <MenuItem onClick={handleClose}>Logout</MenuItem>
+
+                                            <MenuItem onClick={()=> {
+                                                navigate('/Home/'+userId);
+                                            }}>내 방송국 가기</MenuItem>
+                                            <MenuItem onClick={()=> {
+                                                navigate('/userInfo/'+userId);
+                                            }}>내 정보 관리</MenuItem>
+                                            <MenuItem onClick={()=>{
+                                                navigate('/Exchange');
+                                            }}>결제 </MenuItem>
+                                            <MenuItem onClick={()=>{
+                                                navigate('/ticket1');
+                                            }}>이용권</MenuItem>
                                         </Menu>
                                         
 

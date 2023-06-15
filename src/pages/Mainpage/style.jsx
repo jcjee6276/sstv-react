@@ -2777,18 +2777,21 @@ top: 0px;
 `;
 
 export const Start_Streaming_SelectBox = styled.select`
-width: 200px; 
-padding: .8em .5em; 
-border: 1px solid #999;
-font-family: inherit;  
-background: url('arrow.jpg') no-repeat 95% 50%; 
-border-radius: 0px; 
--webkit-appearance: none; 
--moz-appearance: none;
-appearance: none;
-color: white;
+  width: 349px; 
+  height : 35px;
+  padding: .8em .5em; 
+  border: 1px solid #999;
+  font-family: inherit;  
+  background: url('arrow.jpg') no-repeat 95% 50%; 
+  border-radius: 10px; /* 모서리를 둥글게 */
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  appearance: none;
+  color: white;
+  text-align: center; /* 글자를 가운데 배치 */
+  line-height: 1.5; /* 높이를 약간 낮춤 */
 }
-`
+`;
 
 export const CHeader_Dark = styled.header`
 color: #555;

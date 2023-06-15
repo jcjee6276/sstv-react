@@ -1,3 +1,7 @@
+@import url("//res.afreecatv.com/css/global/layout.css");@import url("//res.afreecatv.com/css/global/layer.css");@import url("//res.afreecatv.com/css/global/mybs.css");#accessibility {
+  position: relative;
+  z-index: 10001
+}
 
 #accessibility a {
   position: absolute;
@@ -14,39 +18,6 @@
 
 #accessibility a:active,#accessibility a:focus {
   top: 0
-}
-
-.addAdReq-button {
-  padding: 10px 30px;
-  font-family: verdana;
-  font-size: 13px;
-  font-weight: bold; /* 글씨의 굵기를 bold로 설정 */
-  margin-bottom: 20px;
-  border-radius: 5px;
-  background-color: #7ba8dd;
-  color: #FFFFFF;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-
-.addAdReq-button:hover {
-  background-color: #e0e0e0; /* 마우스 호버 시 더 어두운 회색으로 변경 */
-}
-
-.sidebar-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px; /* 필요에 따라 너비를 조정하세요 */
-  transition: all 0.3s ease; /* 부드러운 전환 효과를 위해 추가합니다 */
-}
-
-@media (max-width: 768px) { /* 필요에 따라 브레이크포인트를 조정하세요 */
-  .sidebar-container {
-    width: 100%; /* 작은 화면에서 사이드바가 전체 너비를 차지하도록 합니다 */
-  }
 }
 
 body {
@@ -100,21 +71,36 @@ body {
   background: #f7f7f7
 }
 
-.pg_area {
-  width: 100%;
-  text-align: center;
-  margin: 20px auto 0 !important;
+.ictBox dl dd .ic_fav {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  vertical-align: middle;
+  margin: 0 6px 4px 0;
+  
 }
 
-.search_area *, .pg_area a, .pg_area em, .pg_area .btn_next, .pg_area .btn_prev {
-    font-size: 13px;
-    font-family: 'ng';
-}
-.pg_area .btn_prev {
-  background-position: 0 6px;
+.ictBox .btn_home {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  width: 128px;
+  height: 23px;
+
 }
 
+.ictBox .btn_home span {
+  overflow: hidden;
+  position: absolute;
+  top: 5px;
+  right: 7px;
+  display: block;
+  width: 13px;
+  height: 13px;
+  text-indent: -9999px;
 
+}
 
 body {
   font-family: Dotum, "돋움", verdana, sans-serif;
@@ -239,6 +225,12 @@ html {
   background: none
 }
 
+.paginate a,.paginate span,.paginate strong {
+  display: inline-block;
+  margin-left: -6px;
+  padding: 1px 9px 0 9px;
+
+}
 
 .paginate a:hover {
   color: #ff4c4c;
@@ -267,6 +259,15 @@ html {
   font-weight: normal
 }
 
+.help_seach {
+
+  height: 92px;
+  margin: 0 0 16px 19px;
+  width: 580px;
+  padding: 14px 0 0 0;
+  width: 580px;
+  overflow: hidden
+}
 
 .help_seach input {
   width: 411px;
@@ -306,7 +307,15 @@ html {
   margin: 12px 0 0 14px
 }
 
+.help_seach dt {
+  font-weight: bold;
+  color: #cbfff9;
+  float: left;
+  font-size: 11px;
 
+  padding: 0 12px 0 5px;
+  line-height: 1.3em
+}
 
 .help_seach dd a {
   color: #fff;
@@ -326,7 +335,12 @@ html {
   right: 69px
 }
 
+.main_area {
 
+  margin: 39px auto 0 auto;
+  width: 920px;
+  overflow: hidden
+}
 
 .main_area .top_area {
   width: 615px;
@@ -455,6 +469,15 @@ html {
   height: 31px
 }
 
+.main_area .info_area {
+  float: right;
+  width: 582px;
+  height: 120px;
+
+  margin: 49px 7px 0 0;
+  display: inline;
+  border: 0
+}
 
 .main_area .info_area a {
   float: left;
@@ -512,6 +535,19 @@ html {
   font-family: 'NG','AppleGothic',sans-serif
 }
 
+.board_header.notice {
+  position: relative;
+
+}
+
+.hmenu {
+  width: 100%;
+  background-color: #fff;
+  overflow: hidden;
+  height: 116px;
+
+  border-bottom: 1px solid #929292
+}
 
 .hmenu ul {
   width: 821px;
@@ -523,6 +559,11 @@ html {
   position: relative
 }
 
+.hmenu li a {
+  display: block;
+
+  height: 71px
+}
 
 .hmenu li .nv1 {
   background-position: 0 -71px;
@@ -617,6 +658,13 @@ html {
   border-bottom: 1px solid #d4d4d4
 }
 
+.h_list dt {
+  border-top: 1px solid #e3e3e3;
+  padding: 14px 0 16px 0;
+  margin-top: -1px;
+
+  cursor: pointer
+}
 
 .h_list dt p {
   font-weight: bold;
@@ -631,6 +679,14 @@ html {
   cursor: default
 }
 
+.h_list dt p {
+
+  padding-right: 30px
+}
+
+.h_list dt.selected p {
+
+}
 
 .h_list dd {
   position: relative
@@ -642,6 +698,14 @@ html {
   background-color: #fff
 }
 
+.h_list dd p {
+
+  margin: 0 0 0 13px;
+  padding-left: 22px;
+  line-height: 1.8em;
+  padding-bottom: 20px;
+  width: 775px
+}
 
 .h_list dd img.bg_a {
   display: block;
@@ -681,7 +745,13 @@ html {
   text-align: center
 }
 
+#writeButton,#cancelButton {
+  width: 125px !important;
+  height: 40px;
 
+  cursor: pointer;
+  margin: 0 2px 0 3px
+}
 
 #writeButton span.blind,#cancelButton span.blind {
   text-indent: -9999em
@@ -709,7 +779,14 @@ button#cancelButton {
   vertical-align: top
 }
 
+.form_area2 th span,.form_area th span {
 
+  display: block;
+  height: 35px;
+  text-indent: -100%;
+  white-space: nowrap;
+  overflow: hidden
+}
 
 .form_area2 th {
   padding-bottom: 13px
@@ -828,7 +905,14 @@ a.cke_dialog_ui_button_ok {
   top: 0
 }
 
+.form_area .t7 td .fadd_info .filedelete a {
+  width: 100px;
+  height: 26px;
+  display: block;
+  overflow: hidden;
+  text-indent: -1111px;
 
+}
 
 .form_area .t7 td .fadd2 {
   width: 588px;
@@ -1012,7 +1096,14 @@ a.cke_dialog_ui_button_ok {
   top: 0
 }
 
+.form_area.text_type td .fadd_info .filedelete a {
+  width: 100px;
+  height: 26px;
+  display: block;
+  overflow: hidden;
+  text-indent: -1111px;
 
+}
 
 .form_area.text_type td .fadd2 {
   width: 588px;
@@ -1188,6 +1279,19 @@ a.cke_dialog_ui_button_ok {
   font-weight: normal
 }
 
+.tb_mylist td.title {
+  text-align: left;
+
+  padding-left: 23px;
+  line-height: 1.3em
+}
+
+.tb_mylist td.title2 {
+  text-align: left;
+
+  padding-left: 23px;
+  line-height: 1.3em
+}
 
 .tb_mylist td a {
   color: #222;
@@ -1211,6 +1315,17 @@ a.cke_dialog_ui_button_ok {
   position: relative
 }
 
+.title_area div p {
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+
+  padding: 0 0 0 21px;
+  margin: 0 0 0 10px;
+  width: 622px;
+  word-break: break-all;
+  line-height: 1.3em
+}
 
 .title_area div span {
   color: #fff;
@@ -1231,6 +1346,11 @@ a.cke_dialog_ui_button_ok {
   margin: 5px 0
 }
 
+.a_area {
+  position: relative;
+
+  padding-top: 19px
+}
 
 .a_area dl {
   border: 1px solid #ced6df;
@@ -1238,7 +1358,14 @@ a.cke_dialog_ui_button_ok {
   border-top: none
 }
 
+.a_area dt {
+  font-weight: bold;
+  color: #222;
+  font-size: 14px;
 
+  padding: 21px 0 15px 21px;
+  margin-left: 13px
+}
 
 .a_area dd {
   margin: 0 34px;
@@ -1305,7 +1432,10 @@ a.cke_dialog_ui_button_ok {
   color: #fff
 }
 
+.tb_notice {
 
+  border-bottom: 1px solid #d4d4d4
+}
 
 .tb_notice table {
   width: 100%;
@@ -1420,18 +1550,6 @@ a.cke_dialog_ui_button_ok {
   border: 1px solid #4279ff
 }
 
-
-#footer {
-  width: 100%;
-  margin: 0 auto;
-  clear: both;
-  border-top: 1px solid #d1d1d1;
-  margin-top: 57px;
-  padding-top: 15px;
-  text-align: center;
-  font-size: 11px;
-}
-
 .input_filewrap {
   width: 700px
 }
@@ -1446,6 +1564,13 @@ a.cke_dialog_ui_button_ok {
   vertical-align: middle
 }
 
+.file_wrap {
+  width: 100px;
+  height: 38px;
+
+  display: inline-block;
+  vertical-align: middle
+}
 
 .file_add {
   opacity: 0;
@@ -1530,7 +1655,18 @@ p.btn_write button span {
   margin-bottom: -20px
 }
 
+.btn_admin button.btn_edit {
+  width: 42px;
+  height: 21px;
 
+  margin-right: 4px
+}
+
+.btn_admin button.btn_del {
+  width: 42px;
+  height: 21px;
+
+}
 
 .comment_area {
   margin: 0 auto;
@@ -1628,6 +1764,7 @@ p.btn_write button span {
 }
 
 
+
 #DivRichEditor {
   border: 0 !important
 }
@@ -1654,7 +1791,15 @@ p.btn_write button span {
   vertical-align: 2px
 }
 
+.writeBbsUtil .lt .btn_img {
 
+  width: 74px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  font: 0/0 a;
+  vertical-align: 6px
+}
 
 .writeBbsUtil .rt {
   padding-right: 2px;
@@ -1709,6 +1854,15 @@ p.btn_write button span {
   margin: 20px 0 0 0
 }
 
+.illegal_filming_header em {
+  display: block;
+  position: absolute;
+  top: 40px;
+  right: 50px;
+  width: 266px;
+  height: 152px;
+
+}
 
 .illegal_filming_contents {
   position: relative;
@@ -1785,7 +1939,11 @@ p.btn_write button span {
   color: #0072ff
 }
 
+.thema_dark .board_header.notice {
+  position: relative;
 
+  border-color: #1d1d1d
+}
 
 .thema_dark .sub_area {
   background-color: #1b1b1c;
@@ -1800,6 +1958,10 @@ p.btn_write button span {
   color: #999
 }
 
+.thema_dark .tb_notice {
+
+  border-color: #2e2e2f
+}
 
 .thema_dark .tb_notice td {
   border-color: #282828;
@@ -1836,6 +1998,7 @@ p.btn_write button span {
 .thema_dark .help .paginate a.first-child {
   background: none
 }
+
 
 
 
@@ -1974,12 +2137,16 @@ body.thema_dark .help .search_area fieldset {
   padding-right: 0 !important
 }
 
+.thema_dark #FileUploadForm table:nth-child(2) td:nth-child(2) a {
+  display: inline-block;
 
+  width: 43px;
+  height: 18px
+}
 
 .thema_dark #FileUploadForm table:nth-child(2) td:nth-child(2) a img {
   display: none
 }
-
 
 
 .thema_dark .writeBbsUtil .rt button {
@@ -1997,88 +2164,4 @@ body.thema_dark .help .search_area fieldset {
   color: #999
 }
 
-#serviceHeader.headerSub {
-  position: relative;
-  min-width: 960px;
-}
-
-#serviceHeader.headerSub {
-  position: relative;
-  min-width: 960px;
-}
-
-#serviceHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: #fff;
-  width: 100%;
-  min-width: 1280px;
-  border-bottom: 1px solid #ecf0f5;
-  box-sizing: border-box;
-  z-index: 1500;
-}
-
-#serviceHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: #fff;
-  width: 100%;
-  min-width: 1280px;
-  border-bottom: 1px solid #ecf0f5;
-  box-sizing: border-box;
-  z-index: 1500;
-}
-
-#serviceHeader.headerSub:after {
-  content: "";
-  position: absolute;
-  top: 158px;
-  left: 0;
-  right: 0;
-  background: #4279ff;
-  width: 100%;
-  height: 2px;
-}
-
-.select-gap {
-  margin-left: 10px; /* 여백의 크기를 조절할 수 있습니다 */
-}
-
-.ui-pop {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  padding-bottom: 20px;
-  border: 1px solid #2c84ce;
-  z-index: 999999;
-}
-
-.ui-pop-streaming {
-  position: fixed;
-  top: 50%;
-  height: 100%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  padding-bottom: 20px;
-  border: 1px solid #2c84ce;
-  z-index: 999999;
-}
-
-
-#serviceHeader.headerSub:after {
-  content: "";
-  position: absolute;
-  top: 158px;
-  left: 0;
-  right: 0;
-  background: #4279ff;
-  width: 100%;
-  height: 2px;
-}
+/*# sourceMappingURL=help.css.map */

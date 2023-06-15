@@ -12,9 +12,11 @@ import Header from './header';
 import { useRef } from 'react';
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
+import ReactDOM from 'react-dom';
+import RmUser from './removeUser';
 
 
-const BlackListView = ({onClose, setOnClose}) => {
+const BlackListView = () => {
   const [selectedTab, setSelectedTab] = useState('blackList'); 
   const navigate = useNavigate();
   // const [userId, setUserId] = useState('');
@@ -25,22 +27,27 @@ const BlackListView = ({onClose, setOnClose}) => {
   const modalRef = useRef(null);
   const {data} = useSWR('/user/login', fetcher);
   const userId = data?.userId;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  }
 
   const onChangeKeyword = useCallback((e) => {
     setKeyword(e.target.value);
   });
 
-  useEffect(() => {
-    const handler = (event) => {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
-            setOnClose(false); 
-        }
-    };
-    document.addEventListener('mousedown', handler);
-    return () => {
-        document.removeEventListener('mousedown', handler);
-    };
-}, [onClose]);
+//   useEffect(() => {
+//     const handler = (event) => {
+//         if (modalRef.current && !modalRef.current.contains(event.target)) {
+//             setOnClose(false); 
+//         }
+//     };
+//     document.addEventListener('mousedown', handler);
+//     return () => {
+//         document.removeEventListener('mousedown', handler);
+//     };
+// }, [onClose]);
 
   //로그인 세션의 아이디 가져오기
   // useEffect(() => {
@@ -82,13 +89,23 @@ const BlackListView = ({onClose, setOnClose}) => {
     });
   };
   
-  //검색
+  //검색(버튼클릭)
   const search = () => {
     axios.get('/fan/searchUser/'+keyword).then((response) => {
       setSearchList(response.data?.data);
       setPageState('search');
     })
   }
+
+  //검색(enter)
+  const searchKeyPress = (e) => {
+    if(e.key === 'Enter'){
+      axios.get('/fan/searchUser/'+keyword).then((response) => {
+        setSearchList(response.data?.data);
+        setPageState('search');
+    })
+  }
+}
 
   //내 정보 관리 탭
   const onUserInfo = () => {
@@ -129,7 +146,7 @@ const BlackListView = ({onClose, setOnClose}) => {
   // 추가
   
 
-  return(
+  return (
     <div>
     <User_update_Main>
     {/* header */}
@@ -169,7 +186,8 @@ const BlackListView = ({onClose, setOnClose}) => {
             <UserInfo_tab2 onClick={onCHtab} style={{ backgroundColor: selectedTab === 'coinHistory' ? '#fff' : '#ccc', cursor: 'pointer' }}>
               <UserInfo_tab3>코인 사용내역</UserInfo_tab3>
             </UserInfo_tab2>
-            <UserInfo_tab2 onClick={onRmUser} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+            <UserInfo_tab2 onClick={openModal} style={{ backgroundColor: selectedTab === 'removeUser' ? '#fff' : '#ccc', cursor: 'pointer' }}>
+              {isModalOpen && <RmUser onClose={isModalOpen} setOnClose={setIsModalOpen}/> }
               <UserInfo_tab3>회원 탈퇴</UserInfo_tab3>
             </UserInfo_tab2>
 
@@ -183,20 +201,21 @@ const BlackListView = ({onClose, setOnClose}) => {
             <Info_text>회원이 지정한 블랙리스트 회원을 관리할 수 있습니다.</Info_text>
             
             </User_update_body3>
-            <Nickname_update_input placeholder={'검색 조건'} style={{ marginRight: '8px' }} onChange={onChangeKeyword}></Nickname_update_input>
-            <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" onClick={search}/>
+            <Nickname_update_input placeholder={'검색어를 입력해주세요!'} style={{ marginRight: '8px', borderRadius: '8px' }} onChange={onChangeKeyword} onKeyPress={searchKeyPress}></Nickname_update_input>
+            <FontAwesomeIcon icon={faMagnifyingGlass} size="2xl" onClick={search} style={{cursor: 'pointer'}}/>
           </User_update_body2>
         </User_update_body>
         </User_update_Main>
 
 
-
+                  {isModalOpen === true ? '' : (
+                          <>
                               <List_body_12 style={{
                                       position: 'fixed',
                                       top: '60%',
                                       left: '40%',
                                       transform: 'translate(-50%, -50%)',
-                                      zIndex: 9999,
+                                      zIndex: 9000,
                                       backgroundColor:'gray'
                                         }}>
                                 <List_body_13 id='modalArea' ref={modalRef}>
@@ -374,9 +393,9 @@ const BlackListView = ({onClose, setOnClose}) => {
                                </List_body_13>
                               </List_body_12>
 
-
+                              </>)}
 
               </div>
-  )
-} 
+  );
+}; 
 export default BlackListView;

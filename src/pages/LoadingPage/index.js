@@ -238,7 +238,8 @@ const LoadingPage = () => {
         <Center>
         <div style={{ position: "absolute", top: 0, right: 0, left: 10,  margin: "10px" }}>
           <h1 style={{ color: "white", fontSize: "24px" }}>
-            스트리밍을 생성중입니다{dots}
+          {/* 스트리밍을 생성중입니다<img src="../img/25.gif" alt="예시 GIF 이미지" /> */}
+          스트리밍을 생성중입니다{dots}
           </h1>
         </div>
         

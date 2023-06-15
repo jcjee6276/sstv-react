@@ -2,7 +2,7 @@
 import React,{useState, useRef, useEffect, useCallback} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserXmark } from '@fortawesome/free-solid-svg-icons';
-import {Modal_body_id_div_3, Modal_body_id_div_2, Modal_body_id_div, Modal_title_h4, Modal_title_div_3, Modal_area_1_div, Modal_area_div, Modal_area_layout_div, Modal_area_layout_div_2, Modal_area_layout_div_3, Modal_Content_div, Modal_layout_div, Modal_main_div, Modal_overlay_div, Modal_title_div, Modal_title_div_2, Modal_title_write_div, Modal_body_div, Modal_body_form, Modal_body_lay_div, Modal_body_id_div_1, Modal_body_id_lable} from '../Mainpage/style';
+import {Gift_input_span,Gift_input, ST_dd,Gift_st, Gift_dd, Gift_at, Gift_dt, Gift_strong, Layer_in, Modal, Send_area, Gift_dd_span, Gift_dd_input, Gift_dd_count_span, Gift_dd_button, ST_dt, ST_dd_span, ST_dd_error, ST_dd_em, ST_dd_error_span, Btn_buy, Gift_input_h3, Gift_void_text, Button_area, Button_gift_button, Button_cancle_button, Outline_area, Outline_area_2} from '../Chat/donationStyle'
 
 const ReportModal = ({onClose, setOnClose, data, onClick}) => {
     const user = data;
@@ -44,176 +44,70 @@ const ReportModal = ({onClose, setOnClose, data, onClick}) => {
     }
       
     return(
-        <Modal_main_div >
-            <Modal_overlay_div >
-                <Modal_Content_div >
-                    <Modal_layout_div  >
-                        <Modal_area_div id='modalArea' ref={modalRef} >
-                            <Modal_area_layout_div >
-                                <Modal_area_layout_div_2 >
-                                    <Modal_area_layout_div_3 >
-                                        <Modal_area_1_div >
-                                            <Modal_title_div>
-                                                <Modal_title_div_2>
-                                                    <Modal_title_div_3>
-                                                        <Modal_title_write_div>
-                                                            <Modal_title_h4>회원 상세정보</Modal_title_h4>
-                                                        </Modal_title_write_div>
-                                                    </Modal_title_div_3>
-                                                </Modal_title_div_2>
-                                            </Modal_title_div>
+        <Outline_area_2>
+        <Modal id='modalArea' ref={modalRef}>
+            <div id="layerBuyNoneSubscription" class="ui-pop layer-gudok">
+                <p class="pop-title">회원정보</p>
+                <div class="pop-body"><div class="scroll_box">
+                    <div class="gudok_bj">
+                                <div class="gudok_bj">
+                                    <p><em>{user.USER_ID}</em><i>({(user.USER_NAME)})</i>님의 회원정보입니다.</p>
+                                </div>
+                            </div>
+                    <div class="signature ">
+                        <h3>회원 아이디</h3>
+                        <ul><li class="noList">{user.USER_ID}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>회원 닉네임</h3>
+                        <ul><li class="noList">{user.USER_NICKNAME}</li></ul>
+                    </div>
 
-
-                                            <Modal_body_div>
-                                                <Modal_body_form>
-                                                    <Modal_body_lay_div >
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>회원 이름</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{user.USER_NAME}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>회원 ID</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{user.USER_ID}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>회원 닉네임</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{user.USER_NICKNAME}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>생년월일</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{user.DATE_BIRTH}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>이메일</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{user.EMAIL}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>전화번호</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{user.PHONE}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>가입일자</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{user.SIGN_DATE}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>보유 코인</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{user.COIN}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>방송시간</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{user.TOTAL_STREAMING_ACCUMULATED_TIME}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>누적시청자수</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable>{user.ACCUMULATED_VIEWERS}</Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                        <Modal_body_id_div>
-                                                            <Modal_body_id_div_1>
-                                                                <Modal_body_id_div_2>
-                                                                    <Modal_body_id_div_3>
-                                                                        <Modal_body_id_lable>스트리밍 권한</Modal_body_id_lable>
-                                                                    </Modal_body_id_div_3>
-                                                                </Modal_body_id_div_2>
-                                                                <Modal_body_id_lable onClick = {handleOnClick}>
-                                                                {user.ST_ROLL === 0 ? (
-                                                                <>
-                                                                    {getStRoll(user.ST_ROLL)}
-                                                                    <pre>권한 정지하기 <FontAwesomeIcon icon={faUserXmark} className="fa-2x" /></pre>
-                                                                </>
-                                                                ) : (
-                                                                getStRoll(user.ST_ROLL)
-                                                                )}
-
-                                                                </Modal_body_id_lable>
-                                                            </Modal_body_id_div_1>
-                                                        </Modal_body_id_div>
-
-                                                    
-
-                                                    </Modal_body_lay_div>
-                                                </Modal_body_form>
-                                            </Modal_body_div>
-
-
-                                        </Modal_area_1_div>
-                                    </Modal_area_layout_div_3>
-                                </Modal_area_layout_div_2>
-                            </Modal_area_layout_div>
-                        </Modal_area_div>
-                    </Modal_layout_div>
-                </Modal_Content_div>
-            </Modal_overlay_div>
-        </Modal_main_div>
+                    <div class="signature ">
+                        <h3>회원 생년월일</h3>
+                        <ul><li class="noList">{user.DATE_BIRTH}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>회원 이메일</h3>
+                        <ul><li class="noList">{user.EMAIL}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>회원 휴대폰</h3>
+                        <ul><li class="noList">{user.PHONE}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>회원 가입일자</h3>
+                        <ul><li class="noList">{user.SIGN_DATE}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>회원 보유코인</h3>
+                        <ul><li class="noList">{user.COIN}</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>회원 스트리밍 시간</h3>
+                        <ul><li class="noList">{user.TOTAL_STREAMING_ACCUMULATED_TIME}분</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>회원 누적시청자수</h3>
+                        <ul><li class="noList">{user.ACCUMULATED_VIEWERS}명</li></ul>
+                    </div>
+                    <div class="signature ">
+                        <h3>회원 스트리밍 권한</h3>
+                        
+                        {user.ST_ROLL === 0 ? (
+                            <>
+                                <ul><li class="noList">{getStRoll(user.ST_ROLL)}</li></ul>
+                                <pre>권한 정지하기 <FontAwesomeIcon icon={faUserXmark} className="fa-2x" onClick = {handleOnClick}/></pre>
+                            </>
+                            ) : (
+                                <ul><li class="noList">{getStRoll(user.ST_ROLL)}</li></ul>
+                        )}
+                    </div>
+                </div>
+                </div>
+            </div>
+            </Modal>
+    </Outline_area_2> 
     )
 
 }

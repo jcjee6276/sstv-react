@@ -19,7 +19,7 @@ const findPasswd = ({onClose, setOnClose}) => {
     useEffect(() => {
         const handler = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
-                setOnClose(false); 
+                navigate('/'); 
             }
         };
         document.addEventListener('mousedown', handler);

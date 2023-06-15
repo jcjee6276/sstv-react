@@ -6,7 +6,12 @@ import Footer from './footer';
 import SideBar from './sidebar';
 import StreamingRollBanModal from './addStreamingRollBanModal';
 import axios from "axios";
-import './style.css';
+import './help.css';
+import './layout.css';
+import './paginate.css';
+// import './mybs.css';
+// import './style.css';
+import './styleSecond.css'
 
 
 
@@ -117,7 +122,15 @@ const Report = () => {
     }else {
       alert('실패하였습니다.');
     }
+    window.location.reload();
   }
+
+  //엔터검색
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      getUserList();
+    }
+  };
   
   //paginate
   const Users = ({ currentItems }) => {
@@ -145,7 +158,7 @@ const Report = () => {
     setItemOffset(newOffset);
   };
 
-  if (userList != null && userList != undefined) {
+
     //paginate
     const endOffset = itemOffset + itemsPerPage;
     const currentItems = userList.slice(itemOffset, endOffset);
@@ -153,16 +166,16 @@ const Report = () => {
 
     return (
       <div>
-        <div style={{ marginLeft: '200px' }}>        
+        <div style={{ marginLeft: '200px'}}>        
           <SideBar/>
         </div>
 
 
         <Header/>  
-        <div id="content" className="help">
+        <div id="content" className="help" style={{marginTop:'100px'}}>
           <div className="sub_area">
             <div className="stop_area">
-              <h4><img src="https://res.afreecatv.com/images/help/img_my.jpg" alt="회원 신고목록" /></h4>
+              <h4><img src="https://advertise.kr.object.ncloudstorage.com/adminBanner.jpeg" alt="회원 신고목록" /></h4>
             </div>
             
             <div className="sub_wrap">
@@ -197,29 +210,33 @@ const Report = () => {
                 onSubmit = {handleAddStreamingRollBanSubmit}
                 data = {user}
                 />}
-
               </div>
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel=">"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="<"
-                renderOnZeroPageCount={null}
-              />
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={pageCount}
+                  previousLabel="<"
+                  renderOnZeroPageCount={null}
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  previousClassName="previous"
+                  nextClassName="next"
+                  disabledClassName="disabled"
+                />
+              </div>
               <div className="search_area">
-
                 <input 
                     type="radio" 
-                    id="b_subject" 
+                    id="b_subject"
                     name="search" 
                     value='0' 
                     checked = {searchCondition === '0'} 
                     onChange={hanldeSearchCondition}
                 />
                 <label htmlFor="b_subject">회원이름</label>
-
                 <input 
                     type="radio" 
                     id="b_content" 
@@ -230,7 +247,14 @@ const Report = () => {
                 />
                 <label htmlFor="b_content">회원닉네임</label>
                 
-                <input type="text" className="input_txt" id="searchText" value={searchKeyword} onChange={handleSearchKeywordChange} />
+                <input
+                  type="text"
+                  className="input_txt"
+                  id="searchText"
+                  value={searchKeyword}
+                  onChange={handleSearchKeywordChange}
+                  onKeyPress={handleKeyPress}
+                />
                 <button class="list_search" id="searchWord" onClick={getUserList}>
                   <span>검색</span>
                 </button>
@@ -241,9 +265,6 @@ const Report = () => {
         <Footer/>
       </div>
     )
-  }
-
-  return null;
 }
 
 export default Report;
