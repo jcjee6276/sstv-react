@@ -322,8 +322,10 @@ const loginModal = ({onClose, setOnClose}) => {
                                                             </Modal_login_submit_div_2>
                                                         </Modal_login_submit_div>
                                                                         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop:'20px' }}>
-                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'kakao_login.png'} style={{ width: '220px', height: '50px', cursor:'pointer' }} onClick={kakao_login}/>
-                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'naver_login.png'} style={{ width: '220px', height: '50px', cursor:'pointer' }} onClick={naver_login}/>
+                                                                        {/* <img src={process.env.REACT_APP_IMAGE_URL+'kakao_login.png'} style={{ width: '220px', height: '50px', cursor:'pointer' }} onClick={kakao_login}/>
+                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'naver_login.png'} style={{ width: '220px', height: '50px', cursor:'pointer' }} onClick={naver_login}/> */}
+                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'kakao_login.png'} style={{ width: '170px', height: '40px', cursor:'pointer' }} onClick={kakao_login}/>
+                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'naver_login.png'} style={{ width: '170px', height: '40px', cursor:'pointer' }} onClick={naver_login}/>                                                           
                                                                         </div>
                                                         <Modal_signup_nav_div>
                                                             <Modal_signup_button>
