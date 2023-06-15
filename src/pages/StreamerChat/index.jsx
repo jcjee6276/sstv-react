@@ -33,7 +33,7 @@ const Chat = () => {
     
     if (streaming && serviceUrl) {
         return (
-          <body>
+          <body style={{ overflowY: "auto", maxHeight: "90vh" }}>
             <Header />
             <LightChatroom data={{ streaming, serviceUrl }} />
           </body>

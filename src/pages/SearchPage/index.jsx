@@ -7,7 +7,7 @@ const SearchPage = () => {
     
     return (
         
-            <form>
+            <form style={{ overflowY: "auto", maxHeight: "90vh" }}>
              <SearchHeader select={select} setSelect={setSelect}/>
                <SearchBody select={select} setSelect={setSelect} />
             </form>

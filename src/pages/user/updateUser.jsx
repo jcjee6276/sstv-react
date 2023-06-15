@@ -233,7 +233,7 @@ console.log('선택된 파일 :: '+'file')
 
   return(
 
-    <User_update_Main>
+    <User_update_Main style={{ overflowY: "auto", maxHeight: "90vh" }}>
     {/* header */}
       <User_update_header>
         <User_update_header_2>

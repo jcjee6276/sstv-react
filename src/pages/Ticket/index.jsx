@@ -7,7 +7,7 @@ import TicketProduct from './ticketProduct';
 const Ticket = () => {
 
     return (
-        <body>
+        <body style={{ overflowY: "auto", maxHeight: "90vh" }}>
             <Header/>
             <TicketProduct/>
         </body>

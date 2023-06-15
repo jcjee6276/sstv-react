@@ -78,7 +78,7 @@ const Community = () => {
     return(
         <body>
        <Header/>
-       <Sidebar_Main_div>
+       <Sidebar_Main_div style={{ overflowY: "auto", maxHeight: "90vh" }}>
             <Sidebar/>
        
        <Writing_form_Main_div>
