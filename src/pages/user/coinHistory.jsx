@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSackDollar } from '@fortawesome/free-solid-svg-icons'
 import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
 import { List_Main, List_body1, List_body10_2, List_body11, List_body12, List_body12_main, List_body13, List_body13_3, List_body13_artivle, List_body14, List_body15, List_body2, List_body3, List_body4_1, List_body4_2, List_body5, List_body5_2, List_body6, List_body7, List_body8, List_body9, List_body_10, List_body_11, List_body_12, List_body_13, List_body_14, List_body_15, List_body_16, List_body_16_bottom, List_body_16_bottom_1, List_body_16_bottom_2, List_body_16_bottom_3, List_body_16_bottom_4, List_body_16_bottom_5, List_body_16_bottom_6, List_body_16_bottom_6_cancle, List_body_16_bottom_6_nickName, List_body_16_bottom_6_profile, List_body_16_bottom_6_profile1, List_body_16_bottom_6_profile2, List_body_16_bottom_6_profile3, List_body_16_bottom_6_profile4, List_body_16_bottom_6_profile4_1, List_body_16_bottom_6_profile4_2, List_body_16_bottom_6_profile_image, List_body_16_bottom_6_title, List_body_16_bottom_6_title1, List_body_16_bottom_6_title2, List_body_16_bottom_6_title2_1, List_body_16_bottom_6_title2_2, List_body_16_bottom_6_title3, List_body_16_bottom_6_title4, List_body_16_bottom_6_title4_1, List_body_16_bottom_6_title4_2, List_body_16_bottom_6_title4_3, List_body_16_bottom_6_title5, List_body_16_bottom_6_title6, List_body_16_bottom_6_title7, List_body_16_top, List_body_16_top_1, List_body_16_top_2, List_body_16_top_exit, List_body_16_top_exit2, List_body_16_top_exit_X, List_body_16_top_exit_X1, List_body_16_top_exit_X2, List_body_16_top_exit_X3, List_body_16_top_exit_button, List_body_16_top_title, List_body_16_top_title2, List_body_6, List_body_7, List_body_8, List_body_9, List_body_hidden2, List_follow_button, List_follow_button2, List_remove, List_remove2, List_userName } from "./listStyle";
-import {Modal,Add_at,Exchange_button,Btn_cancel,Table_title1,Tabke_span,Add_st_dd,Btn_gift,Add_btn_area,Add_st_span,Add_dt,Add_coin_input,Add_count,Add_st_dt,Add_st_dl,Add_strong,Add_txt_span,Add_dd,Add_Ticket,Add_txt_span_tkName,Pop_ticket_div,PurchaseList_div,Purchase_title,Purchase_notice_p,Button_div ,Table_td,Table_title,Purchase_table,Colgroup,Table_tr,Table_th,Purchase_button,Col,Table_thead} from "./coinstyle.jsx";
+import {History_title_H2,History_No_div,History_No_p,Modal,Add_at,Exchange_button,Btn_cancel,Table_title1,Tabke_span,Add_st_dd,Btn_gift,Add_btn_area,Add_st_span,Add_dt,Add_coin_input,Add_count,Add_st_dt,Add_st_dl,Add_strong,Add_txt_span,Add_dd,Add_Ticket,Add_txt_span_tkName,Pop_ticket_div,PurchaseList_div,Purchase_title,Purchase_notice_p,Button_div ,Table_td,Table_title,Purchase_table,Colgroup,Table_tr,Table_th,Purchase_button,Col,Table_thead,History_div,History_table,History_thead,History_tr,History_th,History_td,History_body} from "./coinstyle.jsx";
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
@@ -159,15 +159,63 @@ const CoinHistory = () => {
             
             </Userinfo_tab>
             <Info_text>회원의 사용 및 구매등으로 코인의 변동 내역을 조회 할 수 있습니다.</Info_text>
-            
+            <History_title_H2>CoinHistory</History_title_H2>
+            <History_div>
+              
+            <div
+                style={{
+                  maxHeight: "400px",
+                  overflowY: "auto",
+                }}
+              >
+                <History_table style={{ minWidth: "100%" }}>
+                  <History_thead>
+                  <History_tr>
+                    <History_th style={{ width: "10%" }}>No</History_th>
+                    <History_th style={{ width: "20%" }}>지출내용</History_th>
+                    <History_th style={{ width: "30%" }}>금액</History_th>
+                    <History_th style={{ width: "40%" }}>변동날짜</History_th>
+                  </History_tr>
+                  </History_thead>
+                  <History_body>
+                    {CHlist.map((coinHistory, index) => (
+                      <History_tr key={index}>
+                        <History_td>{index + 1}</History_td>
+                        <History_td>
+                          {coinHistory.ticketProdNo === 0
+                            ? coinHistory.prodName === 0
+                              ? "후원"
+                              : coinHistory.prodName === 1
+                              ? "광고 신청"
+                              : coinHistory.prodName === 2
+                              ? "광고 신청 거절"
+                              : "코인 충전"
+                            : coinHistory.ticketProdNo === 1
+                            ? "7일권"
+                            : coinHistory.ticketProdNo === 2
+                            ? "30일권"
+                            : "365일권"}
+                        </History_td>
+                        <History_td>{coinHistory.price}</History_td>
+                        <History_td>
+                          {coinHistory.payDate !== null ? new Date(coinHistory.payDate).toLocaleString() : ""}
+                        </History_td>
+                      </History_tr>
+                    ))}
+                  </History_body>
+                </History_table>
+              </div>
+
+
+            </History_div>
+           
             </User_update_body3>
           </User_update_body2>
         </User_update_body>
         </User_update_Main>
-
-
-        
-        <PurchaseList_div>
+       
+        {/* <PurchaseList_div>
+          <Purchase_title>코인사용내역</Purchase_title>
             <Table_title1 >
                 보유중인 코인 : <Tabke_span>{dbCoin}</Tabke_span>
             </Table_title1>
@@ -207,7 +255,7 @@ const CoinHistory = () => {
 
             </Purchase_table>
 
-        </PurchaseList_div>
+        </PurchaseList_div> */}
         
    
       </div>

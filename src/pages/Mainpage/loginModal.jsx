@@ -187,8 +187,8 @@ const loginModal = ({onClose, setOnClose}) => {
 
     //네이버 로그인
     const naver_login = () => {
-        // window.location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=oxyovmQ_xk_uAaUdHUKu&redirect_uri=http://223.130.135.131:8080/user/naverLogin&state=access_Token";
-        window.location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=oxyovmQ_xk_uAaUdHUKu&redirect_uri=http://192.168.0.21:8080/user/naverLogin&state=access_Token";
+        window.location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=oxyovmQ_xk_uAaUdHUKu&redirect_uri=http://223.130.135.131:8080/user/naverLogin&state=access_Token";
+        // window.location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=oxyovmQ_xk_uAaUdHUKu&redirect_uri=http://192.168.0.21:8080/user/naverLogin&state=access_Token";
         // axios.get('/user/login').then((response)=> {
         //     if (response.data.data !== null) {
         //         window.location.replace ("/"); // 메인 페이지로 이동
@@ -211,8 +211,8 @@ const loginModal = ({onClose, setOnClose}) => {
 
     //카카오 로그인
     const kakao_login = () => {
-        // window.location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=73b235263e9c55fb4e85a97648c1c0de&redirect_uri=http://223.130.135.131:8080/user/kakaoLogin&prompt=login"
-        window.location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=73b235263e9c55fb4e85a97648c1c0de&redirect_uri=http://192.168.0.21:8080/user/kakaoLogin&prompt=login"
+        window.location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=73b235263e9c55fb4e85a97648c1c0de&redirect_uri=http://223.130.135.131:8080/user/kakaoLogin&prompt=login"
+        // window.location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=73b235263e9c55fb4e85a97648c1c0de&redirect_uri=http://192.168.0.21:8080/user/kakaoLogin&prompt=login"
     }
 
 
@@ -322,8 +322,10 @@ const loginModal = ({onClose, setOnClose}) => {
                                                             </Modal_login_submit_div_2>
                                                         </Modal_login_submit_div>
                                                                         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop:'20px' }}>
-                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'kakao_login.png'} style={{ width: '220px', height: '50px', cursor:'pointer' }} onClick={kakao_login}/>
-                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'naver_login.png'} style={{ width: '220px', height: '50px', cursor:'pointer' }} onClick={naver_login}/>
+                                                                        {/* <img src={process.env.REACT_APP_IMAGE_URL+'kakao_login.png'} style={{ width: '220px', height: '50px', cursor:'pointer' }} onClick={kakao_login}/>
+                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'naver_login.png'} style={{ width: '220px', height: '50px', cursor:'pointer' }} onClick={naver_login}/> */}
+                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'kakao_login.png'} style={{ width: '170px', height: '40px', cursor:'pointer' }} onClick={kakao_login}/>
+                                                                        <img src={process.env.REACT_APP_IMAGE_URL+'naver_login.png'} style={{ width: '170px', height: '40px', cursor:'pointer' }} onClick={naver_login}/>                                                           
                                                                         </div>
                                                         <Modal_signup_nav_div>
                                                             <Modal_signup_button>

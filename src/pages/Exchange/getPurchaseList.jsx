@@ -301,7 +301,7 @@ function onClickPayment() {
           </Purchase_table>
           
           {!data?
-          <Button_div>TotalPaymentAmount
+          <Button_div>
               <Purchase_button onClick={NoLogin}>결제하기</Purchase_button>
               
           </Button_div>

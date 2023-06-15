@@ -19,7 +19,7 @@ const getReplay = () =>{
     const [userInfo, setUserInfo] = useState([]);
     const [commentInfo, setCommentInfo] = useState([]);
     const replayNo = path[2];
-    const writingNo = 1;
+    const writingNo = 300001+replayNo;
     const [commentContent, setCommentContent] = useState('');
 
     const commentsUserId = data?.userId;
@@ -41,7 +41,7 @@ const getReplay = () =>{
     }
     
     useEffect(()=> {
-        axios.get('http://localhost:3001/streaming/getStreamingByStreamingNo', {
+        axios.get('/streaming/getStreamingByStreamingNo', {
             params: {
                 streamingNo: path[2],
             }
@@ -52,18 +52,18 @@ const getReplay = () =>{
             
             axios.get('/user/getUser/'+log.USER_ID).then((response) =>{
                 setUserInfo(response.data['data'])
-                console.log(response.data);
+                // console.log(response.data);
             })
         axios.get('/community/getWriting/'+replayNo)
         .then((reponse)=>{
             const data = reponse.data['data'];
             
-            console.log(data?.comments);
+            // console.log(data?.comments);
             setCommentInfo(data?.comments);
         })
         },[])
 
-        console.log(streamInfo);
+        // console.log(streamInfo);
        
         
         // axios.get('/user/getUser/'+streamInfo)
@@ -121,14 +121,14 @@ const getReplay = () =>{
 
         <Writing_get_footer_section id="section">
                                                 <Writing_get_footer_comments_button>
-                                                    <Writing_get_footer_comments_span>
+                                                    {/* <Writing_get_footer_comments_span>
                                                     댓글 <Writing_get_footer_comment_count_em></Writing_get_footer_comment_count_em>
-                                                    </Writing_get_footer_comments_span>
+                                                    </Writing_get_footer_comments_span> */}
                                                 </Writing_get_footer_comments_button>
                                                 
                                                 <Writing_get_footer_comments_div>
                                                     {/* 댓글 등록*/}
-                                                    <Writing_get_footer_comments_form onSubmit={handleSubmit} >
+                                                    {/* <Writing_get_footer_comments_form onSubmit={handleSubmit} >
                                                         <Writing_get_footer_comments_input_div > 
                                                             <Writing_get_footer_comments_img_div >
                                                                 <Writing_get_footer_comments_img src={process.env.REACT_APP_IMAGE_URL + data?.profilePhoto}/>
@@ -147,17 +147,17 @@ const getReplay = () =>{
                                                                 </Writing_get_footer_comments_text_button_div>
                                                             </Writing_get_footer_comments_area_section>
                                                         </Writing_get_footer_comments_input_div>
-                                                    </Writing_get_footer_comments_form>
+                                                    </Writing_get_footer_comments_form> */}
                                                      {/* 댓글 등록*/}
                                                      {/* 댓글 목록 */}
                                                      <Writing_get_footer_comments_list_section>
                                                         <Writing_get_footer_comments_list_ul>
-                                                            {/* <Writing_get_footer_comments_list_li_1> */}
-                                                                <Writing_get_footer_comments_list_button_1>
+                                                            
+                                                                {/* <Writing_get_footer_comments_list_button_1>
                                                                     <FontAwesomeIcon icon={faCheck} />
                                                                     <Writing_get_footer_comments_list_span_1>최신순</Writing_get_footer_comments_list_span_1>
-                                                                </Writing_get_footer_comments_list_button_1>
-                                                            {/* </Writing_get_footer_comments_list_li_1> */}
+                                                                </Writing_get_footer_comments_list_button_1> */}
+                                                            
                                                         </Writing_get_footer_comments_list_ul>
                                                         <Writing_get_footer_comments_list_ul_2>
                                                             {/* 반복할 부분  */}
@@ -165,7 +165,7 @@ const getReplay = () =>{
                                                            {/* {comment.commentsNo === 0 ? null :  */}
                                                            
                                                         
-                                                        {commentInfo?.map((comment, index)=> {
+                                                        {/* {commentInfo?.map((comment, index)=> {
 
                                                             return(
                                                            
@@ -198,16 +198,11 @@ const getReplay = () =>{
 
                                                             )
                                                            
-                                                        })}
+                                                        })} */}
                                                             
                                                             {/* 반복  */}
 
-                                                            {/* {comment.map((item, i)=> {
-                                                                return(
-                                                                <div key={i}>{item.commentsNo}</div>
-                                                                )
-                                                                console.log(item.commentsNo)
-                                                            })} */}
+                                                           
 
                                                         </Writing_get_footer_comments_list_ul_2>
                                                      </Writing_get_footer_comments_list_section>

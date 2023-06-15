@@ -171,10 +171,8 @@ const Report = () => {
         </div>
 
 
-        <Header/>
-        <div style={{ marginTop: '100px' }} ></div>
-        
-        <div id="content" className="help" >
+        <Header/>  
+        <div id="content" className="help" style={{marginTop:'100px'}}>
           <div className="sub_area">
             <div className="stop_area">
               <h4><img src="https://advertise.kr.object.ncloudstorage.com/adminBanner.jpeg" alt="회원 신고목록" /></h4>

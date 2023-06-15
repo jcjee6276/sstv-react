@@ -296,8 +296,10 @@ console.log('선택된 파일 :: '+'file')
                             <img
                               src={process.env.PUBLIC_URL + '/img/base_profile.jpg'}
                               alt="Profile"
-                              width={150}
-                              height={150}
+                              // width={150}
+                              // height={150}
+                              width={125}
+                              height={125}
                               style={{ borderRadius: '50%' }}
                             />
                           ) : (
@@ -305,8 +307,10 @@ console.log('선택된 파일 :: '+'file')
                               <img
                                 src={process.env.PUBLIC_URL + '/img/base_profile.jpg'}
                                 alt="Profile"
-                                width={150}
-                                height={150}
+                                // width={150}
+                                // height={150}
+                                width={125}
+                                height={125}
                                 style={{ borderRadius: '50%' }}
                               />
                             ) : (
@@ -314,16 +318,20 @@ console.log('선택된 파일 :: '+'file')
                                 <img
                                   src={'https://kr.object.ncloudstorage.com/sstv-image/' + dbProfilePhoto}
                                   alt="Profile"
-                                  width={150}
-                                  height={150}
+                                  // width={150}
+                                  // height={150}
+                                  width={125}
+                                  height={125}
                                   style={{ borderRadius: '50%' }}
                                 />
                               ) : (
                                 <img
                                   src={uploadedImage}
                                   alt="Uploaded Profile"
-                                  width={150}
-                                  height={150}
+                                  // width={150}
+                                  // height={150}
+                                  width={125}
+                                  height={125}
                                   style={{ borderRadius: '50%' }}
                                 />
                               )

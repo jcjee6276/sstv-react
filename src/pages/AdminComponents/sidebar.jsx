@@ -10,11 +10,18 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 const sidebar = () => {
     const navigate = useNavigate();
+    const [profilePhoto, setProfilePhoto] = useState('');
     
     const imageError = (event) => {
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
     }
     
+    useEffect(()=> {
+        axios.get('/user/getUser/admin').then((response) => {
+            setProfilePhoto(response.data.data?.profilePhoto);
+        })
+    })
+
     // const image = process.env.PUBLIC_URL+'/img/'+userImage;
 
     return(
@@ -25,14 +32,28 @@ const sidebar = () => {
             <Sidebar_Article_Class>
                 <Sidebar_Section_Class>
                     <Sidebar_User_a>
-                        <Sidebar_a_in_div >
-                        </Sidebar_a_in_div>
+                        {profilePhoto === "base_image" ? (
+                            <img
+                            src={process.env.PUBLIC_URL + '/img/base_profile.jpg'}
+                            alt="Profile"
+                            width={80}
+                            height={80}
+                            style={{ borderRadius: '50%', marginLeft:'60px' }}
+                            />
+                        ) : (
+                            <img
+                            src={'https://kr.object.ncloudstorage.com/sstv-image/' + profilePhoto}
+                            alt="Profile"
+                            width={80}
+                            height={80}
+                            style={{ borderRadius: '50%', border: '1px solid gray', marginLeft:'60px' }}
+                            />
+                        )}
                     </Sidebar_User_a>
-
                     <Sidebar_User_info>
                         <Sidebar_User_name_idv>
                             <Sidebar_User_name_h2>
-                                관리자 페이지
+                                관리자 페이지 
                             </Sidebar_User_name_h2>
                         </Sidebar_User_name_idv>
                     </Sidebar_User_info>

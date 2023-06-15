@@ -52,16 +52,19 @@ const replay = ()=> {
                                 {streamingList.map((replayList, index)=> {
                                     // let formattedDate = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate() +' '+padZero(date.getHours()) + ":"+ padZero(date.getMinutes());
                                     const startTime = new Date(replayList.STREAMING_START_TIME);
-                                    const formatDate = startTime.getFullYear()+'-'+startTime.getMonth() + '-'+startTime.getDay();
+                                    const formatDate = startTime.getFullYear()+'-'+(startTime.getMonth()+1) + '-'+startTime.getDate();
                                     const formattedStartTime = startTime.getHours() + ":" + startTime.getMinutes()+ ":" + startTime.getMilliseconds();
                                     const endTitme = new Date(replayList.STREAMING_END_TIME)
                                     const formattedEndTime = endTitme.getHours() + ":" + endTitme.getMinutes()+ ":" + endTitme.getMilliseconds();
                                     const testTime = startTime.getTime() - endTitme.getTime()
+                                    const replayTime = endTitme.getHours() - startTime.getHours();
+                                    const replayMinute = endTitme.getMinutes() - startTime.getMinutes();
                                     const fileName = replayList.RECORD_URL;
-                                    
+                                    startTime.setHours(replayList.STREAMING_START_TIME);
+                                    console.log()
                                     // const replayURL = fileName.replace('.mp4','');
                                     
-                                    console.log(fileName?process.env.REACT_APP_REPLAY_IMAGE_URL+fileName.replace('.mp4',''):null);
+                                    
                                     
                                     
                                 return(
@@ -71,7 +74,7 @@ const replay = ()=> {
                                                 <Replay_thum_div>
                                                     <Replay_thum_a href={'/getReplay/'+replayList.STREAMING_NO}>
                                                         <Replay_thum_img src={fileName?process.env.REACT_APP_REPLAY_IMAGE_URL+fileName.replace('.mp4','')+'.jpg':null}/>
-                                                        <Replay_thum_span>{replayList.STREAMING_END_TIME - replayList.STREAMING_START_TIME}</Replay_thum_span>
+                                                        {/* <Replay_thum_span>{startTime}</Replay_thum_span> */}
                                                         <Replay_thum_em>다시보기</Replay_thum_em>
                                                     </Replay_thum_a>
                                                 </Replay_thum_div>
@@ -85,10 +88,10 @@ const replay = ()=> {
                                                             <Replay_view_em></Replay_view_em>
                                                             {replayList.TOTAL_STREAMING_VIEWER}
                                                         </Replay_line_span>
-                                                        <Replay_comment_span>
+                                                        {/* <Replay_comment_span>
                                                             <Replay_comment_em></Replay_comment_em>
                                                             0
-                                                        </Replay_comment_span>
+                                                        </Replay_comment_span> */}
                                                         <Replay_date_span>
                                                             {formatDate}
                                                         </Replay_date_span>
