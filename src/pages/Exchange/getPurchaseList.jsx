@@ -234,7 +234,7 @@ function onClickPayment() {
     
   return (
       
-      <PurchaseList_div>
+      <PurchaseList_div >
         <Purchase_banner_div>
         <Purchase_notice_H3>결제내역이란?</Purchase_notice_H3>
         <Purchase_notice_p>
@@ -251,7 +251,7 @@ function onClickPayment() {
                보유 하고있는 코인 <Tabke_span> </Tabke_span><br/>
                현재까지 충전한 금액 <Tabke_span></Tabke_span>
           </Table_title1> */}
-          <MyAmount_ul>
+          <MyAmount_ul >
               <MyAmount_li>
                 <MyAmount_p>보유코인</MyAmount_p>
                 {data? 

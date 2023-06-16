@@ -113,7 +113,8 @@ font-size: 12px;
 line-height: 1.2 !important;
 font-family: "NG";
 list-style: none;
-text-indent: 0;`;
+text-indent: 0;
+`;
 
 export const User_update_body = styled.div`
 font-size: 12px;

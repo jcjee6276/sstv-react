@@ -162,52 +162,58 @@ const CoinHistory = () => {
             <History_title_H2>CoinHistory</History_title_H2>
             <History_div>
               
-              <History_table>
-                <History_thead>
+            <div
+                style={{
+                  maxHeight: "400px",
+                  overflowY: "auto",
+                }}
+              >
+                <History_table style={{ minWidth: "100%" }}>
+                  <History_thead>
                   <History_tr>
-                    <History_th>번호</History_th>
-                    <History_th>지출내용</History_th>
-                    <History_th>금액</History_th>
-                    <History_th>변동날짜</History_th>
+                    <History_th style={{ width: "10%" }}>No</History_th>
+                    <History_th style={{ width: "20%" }}>지출내용</History_th>
+                    <History_th style={{ width: "30%" }}>금액</History_th>
+                    <History_th style={{ width: "40%" }}>변동날짜</History_th>
                   </History_tr>
-                </History_thead>
-                <History_body>
-                  <History_tr>
-                      <History_td>111</History_td>
-                      <History_td>후원</History_td>
-                      <History_td>7000</History_td>
-                      <History_td>2020-12-31</History_td>
-                  </History_tr>
-                  <History_tr>
-                      <History_td>111</History_td>
-                      <History_td>후원</History_td>
-                      <History_td>7000</History_td>
-                      <History_td>2020-12-31</History_td>
-                  </History_tr>
-                  <History_tr>
-                      <History_td>111</History_td>
-                      <History_td>후원</History_td>
-                      <History_td>7000</History_td>
-                      <History_td>2020-12-31</History_td>
-                  </History_tr>
-                  <History_tr>
-                      <History_td>111</History_td>
-                      <History_td>후원</History_td>
-                      <History_td>7000</History_td>
-                      <History_td>2020-12-31</History_td>
-                  </History_tr>
-                </History_body>
-              </History_table>
+                  </History_thead>
+                  <History_body>
+                    {CHlist.map((coinHistory, index) => (
+                      <History_tr key={index}>
+                        <History_td>{index + 1}</History_td>
+                        <History_td>
+                          {coinHistory.ticketProdNo === 0
+                            ? coinHistory.prodName === 0
+                              ? "후원"
+                              : coinHistory.prodName === 1
+                              ? "광고 신청"
+                              : coinHistory.prodName === 2
+                              ? "광고 신청 거절"
+                              : "코인 충전"
+                            : coinHistory.ticketProdNo === 1
+                            ? "7일권"
+                            : coinHistory.ticketProdNo === 2
+                            ? "30일권"
+                            : "365일권"}
+                        </History_td>
+                        <History_td>{coinHistory.price}</History_td>
+                        <History_td>
+                          {coinHistory.payDate !== null ? new Date(coinHistory.payDate).toLocaleString() : ""}
+                        </History_td>
+                      </History_tr>
+                    ))}
+                  </History_body>
+                </History_table>
+              </div>
+
+
             </History_div>
            
-
             </User_update_body3>
           </User_update_body2>
         </User_update_body>
         </User_update_Main>
-
-
-        
+       
         {/* <PurchaseList_div>
           <Purchase_title>코인사용내역</Purchase_title>
             <Table_title1 >
