@@ -4909,6 +4909,7 @@ min-height: 900px;
 margin-left: 252px;
 padding: 0 0 0 0;
 z-index: 4;
+
 `;
 
 export const Reaply_main_article = styled.article`

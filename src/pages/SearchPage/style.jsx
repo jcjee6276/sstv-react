@@ -5251,6 +5251,8 @@ width: 100%;
 position: relative;
 min-width: 960px;
 background: #fff;
+overflow-y: auto;
+max-height: 90vh;
 `;
 
 export const Search_body_ground = styled.div`

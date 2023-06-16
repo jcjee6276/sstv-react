@@ -25,7 +25,7 @@ const App= ()=> {
   const Exchange = loadable(()=> import('./pages/Exchange'));
   const Admin = loadable(()=> import('./pages/Admin'));
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
-  const Test = loadable(()=> import('./pages/Community/getReplay'));
+  const Test = loadable(()=> import('./pages/Mainpage/centerMode'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
   const SearchKeyword = loadable(()=> import('./pages/SearchPage'));
   const AddUser = loadable(()=> import('./pages/user/addUser'));
@@ -40,6 +40,7 @@ const App= ()=> {
   const GetReplay = loadable(()=> import('./pages/Community/getReplay'));
   const UpdateWriting = loadable(()=> import('./pages/Community/updateWriting'));
   const CoinHistory = loadable(()=> import('./pages/user/coinHistory'));
+  const VODList = loadable(()=> import('./pages/Community/vodList'));
   
   return (
     <Router>
@@ -79,6 +80,7 @@ const App= ()=> {
         <Route path="/getReplay/:streamingNo" element={<GetReplay/>} />
         <Route path="/updateWriting/:userId/:writingNo" element={<UpdateWriting/>} />
         <Route path="/coinHistory/:userId" element={<CoinHistory/>} />
+        <Route path="/VodList/:userId" element={<VODList/>} />
       </Routes>
     </Router>
     

@@ -47,6 +47,10 @@ const sidebar = (props) => {
         navigate(`/replayList/${userId}`);
     }
 
+    const onClickVODList =() => {
+        navigate(`/vodList/${userId}`);
+    }
+
     const imageError = (event) => {
         event.target.src = process.env.PUBLIC_URL+'/img/base_profile.jpg';
     }
@@ -205,6 +209,9 @@ const sidebar = (props) => {
                     <Sidebar_footer_VOD_li_ul>
                         <Sidebar_footer_VOD_li_1 onClick={onClickReplayList}>
                             <Sidebar_footer_VOD_1_a>다시보기</Sidebar_footer_VOD_1_a>
+                        </Sidebar_footer_VOD_li_1>
+                        <Sidebar_footer_VOD_li_1 onClick={onClickVODList}>
+                            <Sidebar_footer_VOD_1_a>VOD 업로드</Sidebar_footer_VOD_1_a>
                         </Sidebar_footer_VOD_li_1>
                     </Sidebar_footer_VOD_li_ul>
                 </Sidebar_footer_VOD_div>

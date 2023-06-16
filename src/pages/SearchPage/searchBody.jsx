@@ -32,7 +32,7 @@ const searchBody = ({select, setSelect})=>{
             setUserList(response.data['data']);
             getNotice(response.data?.data[0]?.userId)
         })
-        axios.get('http://localhost:3001/streaming/getStreamingByUserId', {
+        axios.get('streaming/getStreamingByUserId', {
             params: {
                 userId: path[2],
             }

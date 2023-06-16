@@ -172,7 +172,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
             <Com_h1 >
                     
                     <Header_a >
-                        <Link to='/'><img src={process.env.PUBLIC_URL +'/img/SSTV_gray.gif'} width={150} height={65} /></Link>
+                        <Link to='/'><img src={process.env.PUBLIC_URL +'/img/SSTV.gif'} width={150} height={65} /></Link>
                     </Header_a>
                 </Com_h1>
 

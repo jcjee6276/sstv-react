@@ -8,11 +8,12 @@ import axios from 'axios';
 import { key } from 'fontawesome';
 import LightChatroom from '../Chat/lightChatroom';
 import { useNavigate } from 'react-router-dom';
-
+import CenterMode from './centerMode';
 
 const Mainpage = () => {
     const navigate = useNavigate();
     const [isDarkMode, setIsDarkMode] = useState(false);
+    
     // useEffect(()=> {
     //     return <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
     // },[isDarkMode])
@@ -102,17 +103,21 @@ const Mainpage = () => {
             console.log('[getStreamingViewPage] error = ' + error)
         }
       }      
-    console.log("dark"+isDarkMode);
+    
     return(
         // 메인 전체 div
         <Main_Body>
         
         <Header/>
+        
         <Main_first_div>
+        <CenterMode/>
             <Main_second_div>
+            
                 <Main_third_div>
-                    <Main_four_div>
+                    {/* <Main_four_div> */}
                     {/* 맨위 상단 배너 div */}
+                    
                     <Main_stram_div>
                         <Main_stream_second_div>
                             <Main_stream_third_div>
@@ -126,8 +131,10 @@ const Mainpage = () => {
                     </Main_stram_div>
                     {/* 맨위 상단 배너 div */}
                     {/* 홈화면 중단 배너 (스트리밍) */}
+                    
                     <Main_stream_body_div>
-                        <Main_stream_body_div_2>z``
+                    
+                        <Main_stream_body_div_2>
                             <Main_stream_body_div_3>
                                 <Main_stream_body_title_div>
                                     <Main_steram_body_title_h4>
@@ -165,7 +172,7 @@ const Mainpage = () => {
                         </Main_stream_body_div_2>
                     </Main_stream_body_div>
                     {/* 홈화면 중단 배너 (스트리밍) */}
-                    </Main_four_div>
+                    {/* </Main_four_div> */}
                 </Main_third_div>
             </Main_second_div>
         </Main_first_div>

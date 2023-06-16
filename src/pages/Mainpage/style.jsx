@@ -1968,7 +1968,7 @@ box-sizing: border-box;
 margin: 0;
 border: 0;
 outline: 0;
-background-color: #27292a;
+background-color: #B9E0FD;
 padding: 30px 15px;
 border-radius: 23px;
 margin-bottom: 30px;
@@ -2615,16 +2615,16 @@ outline: 0;
 font-weight: 400;
 font-size: 16px;
 -webkit-font-smoothing: antialiased;
-background: #1f2122;
+background: #fffff;
 font-family: 'Poppins', sans-serif;
 overflow-x: hidden;
 height: 100vh;
   overflow: auto;
-  background-color: #1f2122;
+  background-color: #fffff;
 
   &::-webkit-scrollbar {
-    width: 10px;
-    background-color: #1f2122;
+    width: 5px;
+    background-color: #ffffff;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -2724,7 +2724,7 @@ margin: 0;
 border: 0;
 outline: 0;
 margin-top: 110px;
-background-color: #27292a;
+background-color: #B9E0FD;
 padding: 60px;
 border-radius: 23px;
 scrollbar-width: thin;
@@ -2767,7 +2767,7 @@ vertical-align: baseline;
 display: block;
 left: 0;
 right: 0;
-background: #1f2122;
+background: #ffffff;
 width: 100%;
 min-width: 1184px;
 
