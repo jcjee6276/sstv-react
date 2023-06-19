@@ -19,10 +19,7 @@ const Mainpage = () => {
     //     return <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
     // },[isDarkMode])
 
-    // =============================[Code By LDW Start]============================= //
-    // 1. 일일히 baseURL : 'http://localhost:3000'이렇게 작성 안하고 전역변수로 만드는 방법 찾기
     const [streamingList, setStreamingList] = useState([]);
-
 
     const fetchStreamingList = async () => {          
         const response = await axios.create({
@@ -149,7 +146,7 @@ const Mainpage = () => {
 
                                     {streamingList.map((streaming, index) => (
 
-                                    <Stream_list_div>
+                                    <Stream_list_div onClick={() => getStreamingViewPage(streaming.userId)}>
                                 <Stream_list_div_inner>
                                     <Stream_ScTower>
                                         {/* <Stream_ScTransition> */}
@@ -164,15 +161,15 @@ const Mainpage = () => {
                                                                             <Streaming_Title_div>
                                                                                 <Streaming_title_button>
                                                                                     <Streaming_title_h3>
-                                                                                        테스트 제목
+                                                                                        {streaming.streamingTitle}
                                                                                     </Streaming_title_h3>
                                                                                 </Streaming_title_button>
                                                                             </Streaming_Title_div>
                                                                             <Title_p>
-                                                                                userId
+                                                                                {streaming.streamingUserId}
                                                                             </Title_p>
                                                                         </Info_Title_a>
-                                                                        <Stream_category_p>운동</Stream_category_p>
+                                                                        <Stream_category_p>{getCategory(streaming.streamingCategory)}</Stream_category_p>
                                                                     </Info_div>
                                                                 </Stream_Text_info>
 
@@ -201,7 +198,7 @@ const Mainpage = () => {
                                                                     <Stream_image_layout>
                                                                         <Stream_image_ScA>
                                                                             <Image_div></Image_div>
-                                                                            <Stream_Image_img src={process.env.PUBLIC_URL+'/img/base_profile.jpg'} />
+                                                                            <Stream_Image_img src={streaming.thumnailUrlWithOutAd} />
                                                                         </Stream_image_ScA>
 
                                                                         <Live_div>
@@ -212,7 +209,7 @@ const Mainpage = () => {
 
 
                                                                         <View_count>
-                                                                            <View_count_div>시청자 1명 </View_count_div>
+                                                                            <View_count_div>{streaming.streamingViewer}</View_count_div>
                                                                         </View_count>
 
 
@@ -231,7 +228,6 @@ const Mainpage = () => {
                             </Stream_list_div>
 
                                     ))}
-
 
 
 
