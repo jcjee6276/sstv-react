@@ -156,9 +156,6 @@ const Mainpage = () => {
                                             <Stream_shelf_card>
                                                 <Stream_selector>
                                                     <Stream_article>
-
-
-
                                                         <Stream_Text_area>
                                                             <Stream_Text_area_inner>
                                                                 <Stream_Text_info>
@@ -242,9 +239,6 @@ const Mainpage = () => {
 
                     <Main_stream_body_div>
 
-
-                            
-                        
                     
                         <Main_stream_body_div_2>
                             {/* <Main_stream_body_div_3> */}
