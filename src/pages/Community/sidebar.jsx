@@ -11,7 +11,7 @@ import fetcher from '../utils/fetcher';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-
+import LoginModal from '../Mainpage/loginModal';
 const sidebar = (props) => {
     const navigate = useNavigate();
     const [streaming, setStreaming] = useState(props);
@@ -19,12 +19,19 @@ const sidebar = (props) => {
     const [writingUserNickname, setWritingUserNickname] = useState('');
     const {data} = useSWR('/user/login', fetcher);
     const [userImage, setUserImage] = useState('');
-    console.log(data);
+    const [onClose, setOnClose] = useState(false);
     // const userId = data?.userId;
     //const userNickname = data?.userNickname;
     const location = useLocation();
     const currentPath = location.pathname.split("/");
     const userId = currentPath[2];
+
+    const onClickUser =() =>{
+        if(data===null || data === undefined){
+            setOnClose(true);
+        } else
+        navigate('/writing/'+userId)
+    }
 
     useEffect(() => {
          axios.get('/user/getUser/'+userId)
@@ -119,6 +126,9 @@ const sidebar = (props) => {
         
         
     <Sidebar_Div>
+        {onClose && (
+            <LoginModal onClose={onClose} setOnClose={setOnClose}/>
+        )}
         <Sidebar_Div_in>
             <Sidebar_Article_Class>
                 <Sidebar_Section_Class>
@@ -149,6 +159,7 @@ const sidebar = (props) => {
             </Sidebar_Article_Class>
 
             <Sidebar_Body_article>
+                {streaming.userId!==undefined?
                 <Sidebar_Body_div>
                     <Sidebar_Body_Streaming>
                         <Sidebar_Body_image_span>
@@ -174,26 +185,16 @@ const sidebar = (props) => {
 
                     </Sidebar_Body_Streaming>
                 </Sidebar_Body_div>
+                    :null}
                 
-                {data === undefined? 
-                 <Sidebar_Writing_Button onClick={()=> {
-                    alert("로그인을 해주세요");
-                 }}>
+                
+                 <Sidebar_Writing_Button onClick={onClickUser}>
                  <FontAwesomeIcon icon={faPencil} style={{color: "#4279ff",}} />
                      <Sidebar_Writing_Span>
                      글쓰기
                      </Sidebar_Writing_Span>
                  </Sidebar_Writing_Button>
-                : 
-                <Link to={`/writing/${userId}`}>
-                <Sidebar_Writing_Button>
-                <FontAwesomeIcon icon={faPencil} style={{color: "#4279ff",}} />
-                    <Sidebar_Writing_Span>
-                    글쓰기
-                    </Sidebar_Writing_Span>
-                </Sidebar_Writing_Button>
-                </Link>
-                }
+                
             </Sidebar_Body_article>
                 
             

@@ -1737,6 +1737,7 @@ table-layout: fixed;
 word-break: break-all;
 width: 100%;
 border-bottom: 1px solid #eee;
+
 `;
 
 export const Writing_List_title_thead = styled.thead`
@@ -1750,6 +1751,8 @@ padding: 0;
 border: 0;
 font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
 vertical-align: baseline;
+padding-left: 10px;
+margin-left: 10px;
 `;
 
 export const Writing_List_title_tr = styled.tr`
@@ -1758,8 +1761,8 @@ font-size: 12px;
 line-height: 1.2;
 border-collapse: collapse;
 word-break: break-all;
-margin: 0;
-padding: 0;
+margin-left: 10px;
+padding-left: 10px;
 border: 0;
 font-family: "NGBS", verdana, applegothic, sans-serif, "Malgun Gothic" , "맑은 고딕" , "dotum";
 vertical-align: baseline;
@@ -1775,6 +1778,7 @@ vertical-align: middle;
 height: 44px;
 width: 508px;
 color: #555;
+padding-left: 20px;
 `;
 
 export const Writing_List_title_th_2 = styled.th`
@@ -1801,6 +1805,7 @@ font-size: 13px;
 vertical-align: middle;
 height: 44px;
 color: #555;
+padding-left: 20px;
 `;
 
 export const Writing_List_title_th_4 = styled.th`
@@ -1812,6 +1817,7 @@ font-size: 13px;
 vertical-align: middle;
 height: 44px;
 color: #555;
+
 `;
 
 export const Writing_List_title_th_5 = styled.th`
@@ -1823,6 +1829,7 @@ font-size: 13px;
 vertical-align: middle;
 height: 44px;
 color: #555;
+padding-left: 40px;
 `;
 
 export const Writing_List_tbody = styled.tbody`
@@ -5057,6 +5064,7 @@ width: 100%;
 min-height: 135px;
 margin: 0;
 padding: 10px 0;
+-webkit-animation: left_AC 0.4s ease;
 `;
 
 export const Replay_thum_div = styled.div`

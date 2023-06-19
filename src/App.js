@@ -25,7 +25,7 @@ const App= ()=> {
   const Exchange = loadable(()=> import('./pages/Exchange'));
   const Admin = loadable(()=> import('./pages/Admin'));
   const StreamerChat = loadable(()=> import('./pages/StreamerChat'));
-  const Test = loadable(()=> import('./pages/Mainpage/centerMode'));
+  const Test = loadable(()=> import('./pages/Mainpage/mainSidebar'));
   const LoadingPage = loadable(()=> import('./pages/LoadingPage'));
   const SearchKeyword = loadable(()=> import('./pages/SearchPage'));
   const AddUser = loadable(()=> import('./pages/user/addUser'));
@@ -41,6 +41,9 @@ const App= ()=> {
   const UpdateWriting = loadable(()=> import('./pages/Community/updateWriting'));
   const CoinHistory = loadable(()=> import('./pages/user/coinHistory'));
   const VODList = loadable(()=> import('./pages/Community/vodList'));
+  const UploadVOD = loadable(()=> import('./pages/Community/vodUpload'));
+  const UploadVODSubmit = loadable(()=> import('./pages/Community/vodUploadSubmit'));
+  const GetVod = loadable(()=> import('./pages/Community/getVOD'));
   
   return (
     <Router>
@@ -81,6 +84,9 @@ const App= ()=> {
         <Route path="/updateWriting/:userId/:writingNo" element={<UpdateWriting/>} />
         <Route path="/coinHistory/:userId" element={<CoinHistory/>} />
         <Route path="/VodList/:userId" element={<VODList/>} />
+        <Route path="/uploadVOD/:userId" element={<UploadVOD/>} />
+        <Route path="/getVod/:replayNo" element={<GetVod/>} />
+        {/* <Route path="/uploadVOD/:userId" element={<UploadVOD/>} /> */}
       </Routes>
     </Router>
     

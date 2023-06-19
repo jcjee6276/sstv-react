@@ -32,7 +32,7 @@ const searchBody = ({select, setSelect})=>{
             setUserList(response.data['data']);
             getNotice(response.data?.data[0]?.userId)
         })
-        axios.get('streaming/getStreamingByUserId', {
+        axios.get('/streaming/getStreamingByUserId', {
             params: {
                 userId: path[2],
             }
@@ -139,6 +139,7 @@ const searchBody = ({select, setSelect})=>{
 
                     </Search_relate>
                     <Search_main_con>
+                    
                         {select===0? 
                         <div>
                         <Search_main_p>
@@ -195,7 +196,9 @@ const searchBody = ({select, setSelect})=>{
                         <Replay_zone>
                             <Replay_h2>
                             <Replay_nickname_a onClick={()=>setSelect(2)}>
+                                
                                 <Replay_nickname>{decord}</Replay_nickname>님의 다시보기
+                                
                                 </Replay_nickname_a>
                             </Replay_h2>
                             
@@ -613,6 +616,7 @@ const searchBody = ({select, setSelect})=>{
 
                     </Search_main_con>
                 </Search_content>
+                
             </Search_body_ground>
         </Search_body>
     )

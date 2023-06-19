@@ -76,7 +76,7 @@ const writingList = () => {
                                                     <Writing_List_title_th_1>제목</Writing_List_title_th_1>
                                                     <Writing_List_title_th_2>작성자</Writing_List_title_th_2>
                                                     <Writing_List_title_th_3>작성일</Writing_List_title_th_3>
-                                                    <Writing_List_title_th_4>UP</Writing_List_title_th_4>
+                                                    {/* <Writing_List_title_th_4>UP</Writing_List_title_th_4> */}
                                                     <Writing_List_title_th_5>조회</Writing_List_title_th_5>
                                                 </Writing_List_title_tr>
                                             </Writing_List_title_thead>
@@ -112,7 +112,7 @@ const writingList = () => {
                                                         <Writing_List_tbody_td_2_a key={i}>{item.guestUserId}</Writing_List_tbody_td_2_a>
                                                     </Writing_List_tbody_td_2>
                                                     <Writing_List_tbody_td_3 key={i}>{formattedDate}</Writing_List_tbody_td_3>
-                                                    <Writing_List_tbody_td_4>{item.up}</Writing_List_tbody_td_4>
+                                                    {/* <Writing_List_tbody_td_4>{item.up}</Writing_List_tbody_td_4> */}
                                                     <Writing_List_tbody_td_5 >{item.view}</Writing_List_tbody_td_5>
 
                                                 </Writing_List_tbody_tr>

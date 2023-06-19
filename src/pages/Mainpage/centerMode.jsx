@@ -7,96 +7,90 @@ import './centerMode.css'
 import { useEffect,useState } from "react";
 import axios from 'axios';
 const centerMode= ()=> {
-   const userId = "user10";
-   const [replayList, setReplayList] = useState([]);
+   const userId = "user9";
+   const [vodList, setVodList] = useState([]);
+   const [card, setCard] = useState([]);
+   
+  //  const [cards, setCards] = useState([]);
    useEffect(()=>{
-    axios.get('streaming/getStreamingByUserId', {
-        params: {
-            userId: userId,
-        }
-    })
+    axios.get('/community/getAllVodList')
     .then((response)=>{
         console.log(response.data);
-        setReplayList(response.data['firstData']);
+        setVodList(response.data['data']);
+        return response.data['data'];
     })
   },[])
- const image = replayList[0]?.RECORD_URL.replace(".mp4","");
- console.log(process.env.REACT_APP_REPLAY_IMAGE_URL+replayList[0]?.RECORD_URL.replace(".mp4","")+".jpg")
- console.log(replayList[0]?.RECORD_URL)
-  let cards = [
-    {
-      key: uuidv4(),
-      content: (
-        <Card imagen="https://kr.object.ncloudstorage.com/hls/livestation/thumbnails/177816-745345-202306151134.jpg"/>
-      )
-    },
-    {
-      key: uuidv4(),
-      content: (
-        <Card imagen="https://kr.object.ncloudstorage.com/hls/livestation/thumbnails/177816-745345-202306151134.jpg" />
-      )
-    },
-    {
-      key: uuidv4(),
-      content: (
-        <Card imagen="https://updates.theme-fusion.com/wp-content/uploads/2017/12/layer_slider_plugin_thumb.png" />
-      )
-    },
-    {
-      key: uuidv4(),
-      content: (
-        <Card imagen="https://updates.theme-fusion.com/wp-content/uploads/2016/08/slider_revolution-1.png" />
-      )
-    },
-    {
-      key: uuidv4(),
-      content: (
-        <Card imagen="https://updates.theme-fusion.com/wp-content/uploads/2019/01/pwa_880_660.jpg" />
-      )
-    },
-    {
-      key: uuidv4(),
-      content: (
-        <Card imagen="https://updates.theme-fusion.com/wp-content/uploads/2017/12/convertplus_thumbnail.jpg" />
-      )
-    },
-    {
-      key: uuidv4(),
-      content: (
-        <Card imagen="https://updates.theme-fusion.com/wp-content/uploads/2017/12/acf_pro.png" />
-      )
-    },
-    {
-      key: uuidv4(),
-      content: (
-        <Card imagen="https://updates.theme-fusion.com/wp-content/uploads/2017/12/layer_slider_plugin_thumb.png" />
-      )
-    },
-    {
-      key: uuidv4(),
-      content: (
-        <Card imagen="https://updates.theme-fusion.com/wp-content/uploads/2016/08/slider_revolution-1.png" />
-      )
-    },
-    {
-      key: uuidv4(),
-      content: (
-        <Card imagen="https://updates.theme-fusion.com/wp-content/uploads/2019/01/pwa_880_660.jpg" />
-      )
+
+  useEffect(()=>{
+    if (vodList && vodList.length > 0) {
+     const cards =[
+        {
+          key: uuidv4(),
+          content: (
+            
+            <Card vodNo={vodList[0].vodNo} category={vodList[0].category} hostUserId={vodList[0].hostUserId} view={vodList[0].view} title={vodList[0]?.title} content={vodList[0]?.content} imagen={process.env.REACT_APP_VOD_URL+vodList[0]?.fileName+'.mp4'}/>
+          )
+        },
+        {
+          key: uuidv4(),
+          content: (
+            <Card vodNo={vodList[1].vodNo} category={vodList[1].category} hostUserId={vodList[1].hostUserId} view={vodList[1].view} title={vodList[1]?.title} content={vodList[1]?.content} imagen={process.env.REACT_APP_VOD_URL+vodList[1]?.fileName+'.mp4'}/>
+          )
+        },
+        {
+          key: uuidv4(),
+          content: (
+            <Card vodNo={vodList[2].vodNo} category={vodList[2].category} hostUserId={vodList[2].hostUserId} view={vodList[2].view} title={vodList[2]?.title} content={vodList[2]?.content} imagen={process.env.REACT_APP_VOD_URL+vodList[2]?.fileName+'.mp4'}/>
+          )
+        },
+        {
+          key: uuidv4(),
+          content: (
+            <Card vodNo={vodList[3].vodNo} category={vodList[3].category} hostUserId={vodList[3].hostUserId} view={vodList[3].view} title={vodList[3]?.title} content={vodList[3]?.content} imagen={process.env.REACT_APP_VOD_URL+vodList[3]?.fileName+'.mp4'}/>
+          )
+        },
+        {
+          key: uuidv4(),
+          content: (
+            <Card vodNo={vodList[4].vodNo} category={vodList[4].category} hostUserId={vodList[4].hostUserId} view={vodList[4].view} title={vodList[4]?.title} content={vodList[4]?.content} imagen={process.env.REACT_APP_VOD_URL+vodList[4]?.fileName+'.mp4'}/>
+          )
+        },
+        {
+          key: uuidv4(),
+          content: (
+            <Card vodNo={vodList[5].vodNo} category={vodList[5].category} hostUserId={vodList[5].hostUserId} view={vodList[5].view} title={vodList[5]?.title} content={vodList[5]?.content} imagen={process.env.REACT_APP_VOD_URL+vodList[5]?.fileName+'.mp4'}/>
+          )
+        },
+        
+      ];
+      setCard(cards);
     }
-  ];
+  },[vodList])
+
+
+  
+  
   return (
     <div className="App">
+      {card.length > 0 ? (
       <Carousel
-        cards={cards}
+        cards={card}
         height="600px"
         width="70%"
         margin="0 50"
         offset={7}
         showArrows={false}
       />
+    ) : (
+      <div>Loading...</div>
+    )}
     </div>
   );
+
+// }) 
 }
+
+
+
 
 export default centerMode;

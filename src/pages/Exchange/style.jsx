@@ -32,23 +32,22 @@ export const Col = styled.col`
 width: 16%;
 `;
 export const Purchase_button = styled.button`
-position: absolute;
-    top: 15px;
-    left: 50%;
-    width: 100px;
-    border: 1px solid rgb(116, 179, 255);
-    color: rgb(0, 114, 255);
-    font-size: 14px;
-    height: 41px;
-    margin-left: -50px;
-    border-radius: 2px;
-    overflow-wrap: break-word;
-    background-color: rgb(255, 255, 255);
-    cursor:pointer;
+margin: 20px auto;
+display: block;
+width: 100px;
+border: 1px solid rgb(116, 179, 255);
+color: rgb(0, 114, 255);
+font-size: 14px;
+height: 41px;
+border-radius: 2px;
+overflow-wrap: break-word;
+background-color: rgb(255, 255, 255);
+cursor: pointer;
     &:hover {
         background-color: #0072ff; /* Change the button color when clicked */
         color:#fff;
     }
+
 `;
 
 

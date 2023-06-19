@@ -6,6 +6,7 @@ export default function Carroussel(props) {
   const table = props.cards.map((element, index) => {
     return { ...element, onClick: () => setGoToSlide(index) };
   });
+  console.log(props);
 
   const [offsetRadius, setOffsetRadius] = useState(2);
   const [showArrows, setShowArrows] = useState(false);
