@@ -338,41 +338,45 @@ console.log('선택된 파일 :: '+'file')
                             )
                           )
                         }
+                        <input ref={inputRef}
+                              type="file"
+                              onChange={handleFileInputChange}
+                              style={{ display: 'none' }}
+                            />
 
                         </Profile_photo3>
                       </Profile_photo2>
                     </Profile_photo>
                     <Profile_text>
+                    {profilePhoto === 'base_image' && dbProfilePhoto === "base_image" ? '' :
                       <Profile_add_button_box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap'  }}>
                         <Profile_add_button style={{ width: '100px', height: '30px' }}>
                         <Profile_add_button1>
                           <Profile_add_button2>
-                          {(profilePhoto === null || profilePhoto === "" || profilePhoto === undefined) && dbProfilePhoto === "base_image" ? (
+                          {/* {profilePhoto === '' && dbProfilePhoto === "base_image" ? (
                               <Profile_add_button3 onClick={handleClick} style={{ cursor: 'pointer' }}>
                                 <p style={{ fontSize: '12px' }}>프로필 변경</p>
                               </Profile_add_button3>
-                            ) : (
-                              <>
-                                {profilePhoto === "baseImage" ? (
+                            ) : ( */}
+                              {/* <> */}
+                                  
                                   <Profile_add_button3 onClick={use_baseImage} style={{ cursor: 'pointer' }}>
                                     <p style={{ fontSize: '11px' }}>기본 이미지 사용</p>
                                   </Profile_add_button3>
-                                ) : (
-                                  <Profile_add_button3 onClick={handleClick} style={{ cursor: 'pointer' }}>
-                                    <p style={{ fontSize: '12px' }}>프로필 변경</p>
-                                  </Profile_add_button3>
-                                )}
-                              </>
-                            )}
-                          <input ref={inputRef}
-                              type="file"
-                              onChange={handleFileInputChange}
-                              style={{ display: 'none' }}
-                            />
+                                  
+                                {/* // ) : (
+                                //   <Profile_add_button3 onClick={handleClick} style={{ cursor: 'pointer' }}>
+                                //     <p style={{ fontSize: '12px' }}>프로필 변경</p>
+                                //   </Profile_add_button3>
+                                // ) */}
+                                
+                              {/* </>
+                            )} */}
                           </Profile_add_button2>
                         </Profile_add_button1>
                         </Profile_add_button>
                       </Profile_add_button_box>
+                      }
                       <Nickname_update_update2 style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
                       <NicknameDuplicate_button onClick={saveFile} style={{ padding: '3px 5px', fontSize: '13px', marginTop:'10px' }}>적용하기</NicknameDuplicate_button>
                       </Nickname_update_update2>
