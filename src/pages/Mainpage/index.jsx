@@ -144,9 +144,9 @@ const Mainpage = () => {
 
 
 
-                                    {streamingList.map((streaming, index) => (
+                        {streamingList.map((streaming, index) => (
 
-                                    <Stream_list_div onClick={() => getStreamingViewPage(streaming.userId)}>
+                            <Stream_list_div onClick={() => getStreamingViewPage(streaming.userId)}>
                                 <Stream_list_div_inner>
                                     <Stream_ScTower>
                                         {/* <Stream_ScTransition> */}
@@ -179,7 +179,7 @@ const Mainpage = () => {
                                                                             <Streamer_img_inner_div/>
 
                                                                             <Streamer_figure>
-                                                                                <Streamer_img src={process.env.PUBLIC_URL+'/img/base_profile.jpg'} />
+                                                                                <Streamer_img src={process.env.REACT_APP_IMAGE_URL+streaming.userId+".jpg"} />
                                                                             </Streamer_figure>
 
                                                                         </Streamer_img_div>
@@ -227,57 +227,93 @@ const Mainpage = () => {
                                 </Stream_list_div_inner>
                             </Stream_list_div>
 
-                                    ))}
+                        ))}
+
+
+                       {/* 더미데이터 */}
+                        {/* 구분 */}
+                        <Stream_list_div>
+                                <Stream_list_div_inner>
+                                    <Stream_ScTower>
+                                        {/* <Stream_ScTransition> */}
+                                            <Stream_shelf_card>
+                                                <Stream_selector>
+                                                    <Stream_article>
+                                                        <Stream_Text_area>
+                                                            <Stream_Text_area_inner>
+                                                                <Stream_Text_info>
+                                                                    <Info_div>
+                                                                        <Info_Title_a>
+                                                                            <Streaming_Title_div>
+                                                                                <Streaming_title_button>
+                                                                                    <Streaming_title_h3>
+                                                                                        아침방송
+                                                                                    </Streaming_title_h3>
+                                                                                </Streaming_title_button>
+                                                                            </Streaming_Title_div>
+                                                                            <Title_p>
+                                                                                심장
+                                                                            </Title_p>
+                                                                        </Info_Title_a>
+                                                                        <Stream_category_p>일상</Stream_category_p>
+                                                                    </Info_div>
+                                                                </Stream_Text_info>
+
+                                                                <Stream_user_image_div>
+                                                                    <Streamer_img_a>
+                                                                        <Streamer_img_div>
+                                                                            <Streamer_img_inner_div/>
+
+                                                                            <Streamer_figure>
+                                                                                <Streamer_img src={process.env.REACT_APP_IMAGE_UR+'/img/base_profile.jpg'} />
+                                                                            </Streamer_figure>
+
+                                                                        </Streamer_img_div>
+                                                                    </Streamer_img_a>
+                                                                </Stream_user_image_div>
+
+                                                            </Stream_Text_area_inner>
+                                                        </Stream_Text_area>
 
 
 
-                    
 
-                    <Main_stream_body_div>
+                                                        <Stream_image_area>
+                                                            <Stream_image_area_inner>
+                                                                <Stream_image_a>
+                                                                    <Stream_image_layout>
+                                                                        <Stream_image_ScA>
+                                                                            <Image_div></Image_div>
+                                                                            {/* <Stream_Image_img src={streaming.thumnailUrlWithOutAd} /> */}
+                                                                        </Stream_image_ScA>
 
-                    
-                        <Main_stream_body_div_2>
-                            {/* <Main_stream_body_div_3> */}
-                                {/* <Main_stream_body_title_div>
-                                    <Main_steram_body_title_h4> */}
-                                        
+                                                                        <Live_div>
+                                                                            <Live_div_inner>
+                                                                                <Live_p>생방송</Live_p>
+                                                                            </Live_div_inner>
+                                                                        </Live_div>
 
-                                    
 
-                                       
-                                    {/* </Main_steram_body_title_h4>
-                                </Main_stream_body_title_div> */}
-                                {/* 방송 목록 메인 div */}
-                                 <Main_body_stream_list_div>
-                                   {/* 방송 목록 반복 data 들어갈 부분  */}
-                                    {streamingList.map((streaming, index) => (
-                                        
-                                            <Main_stream_list_div>
-                                                <label onClick={() => getStreamingViewPage(streaming.userId)}>
-                                                <Main_stream_list_div_2>
-                                                    <Main_stream_list_img src={streaming.thumnailUrlWithOutAd}/>
-                                                    <Main_stream_list_h4 key={index}>{streaming.streamingTitle}
-                                                    <Main_stream_list_span>
-                                                        {getCategory(streaming.streamingCategory)}
-                                                    </Main_stream_list_span> </Main_stream_list_h4>
-                                                    <Main_stream_list_watching_ul>
-                                                            <Main_stream_list_watching_li_1>
-                                                            <FontAwesomeIcon icon={faUserGroup} style={{color: "#0afbff",}} /> {streaming.streamingViewer}
-                                                            </Main_stream_list_watching_li_1>
-                                                    </Main_stream_list_watching_ul>
-                                                        </Main_stream_list_div_2>
-                                                </label>
-                                            </Main_stream_list_div>
-                                        
-                                    ))}
-                              </Main_body_stream_list_div>
-                               {/* 방송 목록 메인 div */}
+                                                                        <View_count>
+                                                                            <View_count_div>78</View_count_div>
+                                                                        </View_count>
 
-                            {/* </Main_stream_body_div_3> */}
-                        </Main_stream_body_div_2>
-                    </Main_stream_body_div>
-                    {/* 홈화면 중단 배너 (스트리밍) */}
-                    {/* </Main_four_div> */}
+
+                                                                    </Stream_image_layout>
+                                                                </Stream_image_a>
+                                                            </Stream_image_area_inner>
+                                                        </Stream_image_area>
+
+
+                                                    </Stream_article>
+                                                </Stream_selector>
+                                            </Stream_shelf_card>
+                                        {/* </Stream_ScTransition> */}
+                                    </Stream_ScTower>
+                                </Stream_list_div_inner>
+                            </Stream_list_div>
+
+                        {/* 더미데이터 */}
                 </Main_third_div>
             </Main_second_div>
         </Main_first_div>
