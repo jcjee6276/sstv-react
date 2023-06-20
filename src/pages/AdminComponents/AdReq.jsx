@@ -75,6 +75,12 @@ const AdReq = () => {
           denyCode : 1
         }
       });
+      //회원 코인, 코인 사용내역 업데이트
+      axios.get('/user/getUser/'+adReq.USER_ID).then((response)=>{
+        const dbCoin = response.data.data.coin;
+        axios.post('/user/update',{userId:adReq.USER_ID, coin:dbCoin+10000});
+      })     
+      axios.post('/user/addCoinHistory',{userId:adReq.USER_ID, ticketProdNo:0, prodName:2, price:10000});
     }else {
       await axios.get(`${process.env.REACT_APP_NODE_URL}/ad/updateProcessCode`, {
         params : {

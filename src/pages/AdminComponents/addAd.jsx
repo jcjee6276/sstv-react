@@ -119,6 +119,7 @@ const saveFile = useCallback(() => {
 
     if(result == 'success') {
       alert('광고가 신청되었습니다.');
+      axios.post('/user/addCoinHistory',{userId, ticketProdNo:0, prodName:1, price:10000});
     }else {
       alert('광고 신청에 실패했습니다.');
     }
