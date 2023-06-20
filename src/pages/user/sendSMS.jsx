@@ -126,9 +126,9 @@ const sendSMS = () => {
         axios.post('/user/sendSMS',{phone}).then((response)=>{
             setSendSMS(response.data.result);
             setTimer(true);
-            // setCodeTime(3*60);
+            setCodeTime(3*60);
             //테스트용 타이머
-            setCodeTime(10);
+            // setCodeTime(10);
         })
     });
 
