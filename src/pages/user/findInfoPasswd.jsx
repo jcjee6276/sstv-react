@@ -51,7 +51,7 @@ const findPasswd = ({onClose, setOnClose}) => {
         .then((response)=> {
             console.log(response.data.data);
         })
-        alert('비밀번호가 변경 되었습니다.');
+        // alert('비밀번호가 변경 되었습니다.');
         navigate('/');
       
     },[password])

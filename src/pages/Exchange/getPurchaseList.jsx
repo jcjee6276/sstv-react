@@ -95,7 +95,7 @@ function onClickPayment() {
           if (rsp.success) {
 
             alert('결제 성공');
-            alert(rsp.pay_method);
+            // alert(rsp.pay_method);
             const purchase = {
               userId: userId,
               impUid: rsp.imp_uid,

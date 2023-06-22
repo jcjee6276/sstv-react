@@ -21,9 +21,9 @@ import { useLocation } from 'react-router-dom';
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 const getWriting = () => {
-    const [userData, setUserData]= useState('');
-const [anchorEl, setAnchorEl] = useState(null);
-const [agreeOpen, setAgreeOpen] = useState(false);
+  const [userData, setUserData]= useState('');
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [agreeOpen, setAgreeOpen] = useState(false);
   const open = Boolean(anchorEl);
   const [commentContent, setCommentContent ] = useState('');
   const location = useLocation();
@@ -58,8 +58,7 @@ const [agreeOpen, setAgreeOpen] = useState(false);
      axios.get('/user/login')
      .then((response)=> {
         const jsonData = response.data;
-        setUserData(jsonData['data']);
-        
+        setUserData(jsonData['data']);        
      })
    },[])
    console.log(userData);
@@ -134,12 +133,12 @@ const [agreeOpen, setAgreeOpen] = useState(false);
                                                     </Writing_get_bs_header_h2>
                                                     <Writing_get_bs_header_user_div>
                                                         <Writing_get_bs_header_user_img_div>
-                                                            <Writing_get_bs_header_user_img src={process.env.REACT_APP_IMAGE_URL+data.profilePhoto } onError={ImageError}/>
+                                                            <Writing_get_bs_header_user_img src={process.env.REACT_APP_IMAGE_URL+data.guestUserId+'.jpg' } onError={ImageError}/>
                                                         </Writing_get_bs_header_user_img_div>
                                                         <Writing_get_bs_header_user_box_div>
                                                             <Writing_get_bs_header_user_button>
                                                                 <Writing_get_bs_header_user_p>
-                                                                    {data.guestUserId} <Writing_get_bs_header_user_em></Writing_get_bs_header_user_em>
+                                                                    {data.guestNickName} <Writing_get_bs_header_user_em></Writing_get_bs_header_user_em>
                                                                 </Writing_get_bs_header_user_p>
                                                             </Writing_get_bs_header_user_button>
                                                             <Writing_get_bs_header_user_date_span>● {formattedDate}</Writing_get_bs_header_user_date_span>
@@ -251,7 +250,7 @@ const [agreeOpen, setAgreeOpen] = useState(false);
                                                     <Writing_get_footer_comments_form onSubmit={handleSubmit}>
                                                         <Writing_get_footer_comments_input_div>
                                                             <Writing_get_footer_comments_img_div>
-                                                                <Writing_get_footer_comments_img src={process.env.PUBLIC_URL +'/img/base_profile.jpg'}/>
+                                                                <Writing_get_footer_comments_img src={process.env.REACT_APP_IMAGE_URL +userData?.userId+'.jpg'} onError={ImageError}/>
                                                             </Writing_get_footer_comments_img_div>
                                                             <Writing_get_footer_comments_area_section >
                                                                 <Writing_get_footer_comments_area_div >
@@ -291,6 +290,7 @@ const [agreeOpen, setAgreeOpen] = useState(false);
                                                             <Writing_footer_comments_li>
                                                                 <Comments_profile_img_div>
                                                                     <Comments_profile_img src={process.env.PUBLIC_URL +'/img/base_profile.jpg'} /> 
+                                                                    {/* <Comments_profile_img src={process.env.PUBLIC_URL +userData.userId+'.jpg'} />  */}
                                                                 </Comments_profile_img_div>
                                                                 <Comments_profile_user_id_div>
                                                                     <Comments_profile_user_id_div_2>

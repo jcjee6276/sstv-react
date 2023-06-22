@@ -20,7 +20,7 @@ const userInfo = () => {
                 <User_info_second_div>
                     <User_info_title_area_div>
                         <User_info_title_h4>
-                            <User_info_title_a>{userInfo.userId}</User_info_title_a>
+                            <User_info_title_a>{userInfo.userNickname}</User_info_title_a>
                         </User_info_title_h4>
                         <User_info_div_2>
                             <User_info_div_button>

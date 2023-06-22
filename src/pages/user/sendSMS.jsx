@@ -126,9 +126,9 @@ const sendSMS = () => {
         axios.post('/user/sendSMS',{phone}).then((response)=>{
             setSendSMS(response.data.result);
             setTimer(true);
-            setCodeTime(3*60);
+            // setCodeTime(3*60);
             //테스트용 타이머
-            // setCodeTime(10);
+            setCodeTime(30);
         })
     });
 
@@ -187,7 +187,7 @@ const sendSMS = () => {
                         console.log('입력받은 id :: '+userId);
                         console.log('입력받은 id에 해당하는 휴대폰 번호 :: '+response.data.data.phone);
                         if(phone === response.data.data.phone){
-                            alert('비밀번호 변경창으로 이동..');
+                            // alert('비밀번호 변경창으로 이동..');
                             navigate('/findInfoPasswd/'+userId);
                         }
                         if(phone !== response.data.data.phone){

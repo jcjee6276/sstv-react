@@ -102,15 +102,16 @@ const Mainpage = () => {
         }
       }
       
-      //메인페이지 더미데이터 리스트
-      const dummyList = [
+        //메인페이지 더미데이터 리스트
+    const dummyList = [
         {
           streaming_title: "아침 방송",
           title: "음악 여행떠나요",
           category: "일상",
           img: "Dummy1.png",
           profile: "eunjin1234.jpg",
-          view: 32
+          view: 32,
+          nickName : '논현동사랑꾼'
         },
         {
           streaming_title: "산책 나왔어요",
@@ -118,6 +119,7 @@ const Mainpage = () => {
           category: "일상",
           img: "Dummy2.png",
           profile: "admin.jpg",
+          nickName : '대방동불주먹',
           view: 73
         },
         {
@@ -126,6 +128,7 @@ const Mainpage = () => {
             category: "일상",
             img: "Dummy3.png",
             profile: "user3.jpg",
+            nickName : '나를따르라',
             view: 47
           },
         {
@@ -134,6 +137,7 @@ const Mainpage = () => {
             category: "일상",
             img: "Dummy4.png",
             profile: "user4.jpg",
+            nickName: '귀염둥이후니',
             view: 26
           },
           {
@@ -142,6 +146,7 @@ const Mainpage = () => {
             category: "일상",
             img: "Dummy5.png",
             profile: "user5.jpg",
+            nickName : '꽃보다수진',
             view: 86
           },
           {
@@ -150,6 +155,7 @@ const Mainpage = () => {
             category: "요리",
             img: "Dummy6.png",
             profile: "user6.jpg",
+            nickName: '임연수',
             view: 9
           },
           {
@@ -158,6 +164,7 @@ const Mainpage = () => {
             category: "일상",
             img: "Dummy7.png",
             profile: "user7.jpg",
+            nickName:'쁘띠동욱',
             view: 129
           },
           {
@@ -166,6 +173,7 @@ const Mainpage = () => {
             category: "요리",
             img: "Dummy8.png",
             profile: "user8.jpg",
+            nickName:'짱민츄',
             view: 238
           },
           {
@@ -174,6 +182,7 @@ const Mainpage = () => {
             category: "일상",
             img: "Dummy9.png",
             profile: "user9.jpg",
+            nickName:'희준오빠',
             view: 18
           },
           {
@@ -182,6 +191,7 @@ const Mainpage = () => {
             category: "일상",
             img: "Dummy10.png",
             profile: "user10.jpg",
+            nickName:'sooYeon',
             view: 18
           },
           {
@@ -190,6 +200,7 @@ const Mainpage = () => {
             category: "운동",
             img: "Dummy11.png",
             profile: "user11.jpg",
+            nickName:'두팔멋쟁이',
             view: 72
           },
           {
@@ -198,6 +209,7 @@ const Mainpage = () => {
             category: "일상",
             img: "Dummy12.png",
             profile: "user12.jpg",
+            nickName:'bangMY',
             view: 3
           },
           {
@@ -206,6 +218,7 @@ const Mainpage = () => {
             category: "일상",
             img: "Dummy13.png",
             profile: "user13.jpg",
+            nickName:'의적주민',
             view: 39
           },
 
@@ -275,7 +288,7 @@ const Mainpage = () => {
                                                                                 </Streaming_title_button>
                                                                             </Streaming_Title_div>
                                                                             <Title_p>
-                                                                                {streaming.streamingUserId}
+                                                                                {streaming.userNickname}
                                                                             </Title_p>
                                                                         </Info_Title_a>
                                                                         <Stream_category_p>{getCategory(streaming.streamingCategory)}</Stream_category_p>
@@ -362,7 +375,7 @@ const Mainpage = () => {
                                                                                 </Streaming_title_button>
                                                                             </Streaming_Title_div>
                                                                             <Title_p>
-                                                                               {dummy.title}
+                                                                               {dummy.nickName}
                                                                             </Title_p>
                                                                         </Info_Title_a>
                                                                         <Stream_category_p>{dummy.category}</Stream_category_p>
