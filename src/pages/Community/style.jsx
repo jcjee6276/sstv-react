@@ -529,6 +529,8 @@ width: 1184px;
 margin: 0 auto;
 padding: 65px 0 90px;
 z-index: 11;
+overflow: auto;
+max-height: 90vh;
 `;
 
 export const Sidebar_Div = styled.div`

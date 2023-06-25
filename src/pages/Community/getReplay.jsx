@@ -86,7 +86,8 @@ const getReplay = () =>{
                         <Stream_div>
                         <ReactPlayer
                                 className='react-player'
-                                url={'https://kr.object.ncloudstorage.com/hls/livestation/'+streamInfo.RECORD_URL}    // 플레이어 url
+                                // url={'https://kr.object.ncloudstorage.com/hls/livestation/'+streamInfo.RECORD_URL}    // 플레이어 url
+                                url={process.env.PUBLIC_URL+"/video/실력상승.mp4"}
                                 width='1600px'         // 플레이어 크기 (가로)
                                 height='722px'        // 플레이어 크기 (세로)
                                 playing={true}        // 자동 재생 on
@@ -105,7 +106,8 @@ const getReplay = () =>{
         </Footer_user_image_a>
        </Footer_user_image_div>
 
-        <Stream_user_name> {userInfo.userId}</Stream_user_name>
+        {/* <Stream_user_name> {userInfo.userId}</Stream_user_name> */}
+        <Stream_user_name>귀염둥이후니</Stream_user_name>
             <Footer_user_count_div>
                 <Footer_user_count_span>
                     <Footer_user_count_em><FontAwesomeIcon icon={faPlay} style={{color: "#757d8a",}}/> {streamInfo.TOTAL_STREAMING_VIEWER}</Footer_user_count_em>

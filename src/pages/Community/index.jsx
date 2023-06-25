@@ -98,11 +98,11 @@ const Community = () => {
                                 <Com_main_body_vod_1_div>
                                     <Com_main_body_vod_1_a href={'/getReplay/'+replayList[0]?.STREAMING_NO}>
                                         <Com_main_body_vod_1_span>
-                                            <Com_main_body_vod_1_img src={process.env.REACT_APP_REPLAY_IMAGE_URL+replayList[0]?.RECORD_URL?.replace('.mp4','')+'.jpg'}></Com_main_body_vod_1_img>
+                                            <Com_main_body_vod_1_img src={process.env.PUBLIC_URL+"/img/Main.jpeg"}></Com_main_body_vod_1_img>
                                             {/* <Com_main_body_vod_1_time_span>10:00:00</Com_main_body_vod_1_time_span> */}
                                         </Com_main_body_vod_1_span>
                                         <Com_main_body_vod_1_title_div>
-                                            <Com_main_body_vod_1_title_p>{replayList[0]?.STREAMING_TITLE}</Com_main_body_vod_1_title_p>
+                                            <Com_main_body_vod_1_title_p>배그 신입 남캠 1일차 방송</Com_main_body_vod_1_title_p>
                                             <Com_main_body_vod_1_titleU_div>
                                                 <Com_main_body_vod_1_titleU_span>
                                                     <Com_main_body_vod_1_titleU_em></Com_main_body_vod_1_titleU_em>
@@ -119,7 +119,7 @@ const Community = () => {
                             <Com_main_body_vod_2_div>
                                 <Com_main_body_vod_2_a href={'/getReplay/'+replayList[1]?.STREAMING_NO}>
                                     <Com_main_body_vod_2_span>
-                                        <Com_main_body_vod_2_img src={process.env.REACT_APP_REPLAY_IMAGE_URL+replayList[1]?.RECORD_URL?.replace('.mp4','')+'.jpg'}/>
+                                        <Com_main_body_vod_2_img src={process.env.PUBLIC_URL+"/img/Main(1).jpeg"}/>
                                         {/* <Com_main_body_vod_2_time>08:00:00</Com_main_body_vod_2_time> */}
                                     </Com_main_body_vod_2_span>
                                     <Com_main_body_vod_2_title_div>
@@ -142,7 +142,7 @@ const Community = () => {
                             <Com_main_body_vod_3_div>
                                 <Com_main_body_vod_3_a href={'/getReplay/'+replayList[2]?.STREAMING_NO}>
                                     <Com_main_body_vod_3_span>
-                                        <Com_main_body_vod_3_img  src={process.env.REACT_APP_REPLAY_IMAGE_URL+replayList[2]?.RECORD_URL?.replace('.mp4','')+'.jpg'}/>
+                                        <Com_main_body_vod_3_img src={process.env.PUBLIC_URL+"/img/Main(2).jpeg"}/>
                                         {/* <Com_main_body_vod_2_time>08:00:00</Com_main_body_vod_2_time> */}
                                     </Com_main_body_vod_3_span>
                                     <Com_main_body_vod_2_title_div>
@@ -191,7 +191,7 @@ const Community = () => {
                                         <Com_main_body_writing_div_4>
                                             <Com_main_body_writing_username_div>
                                                 <Com_main_body_writing_userimage_div>
-                                                    <Com_main_body_writing_userimage_img src={process.env.REACT_APP_IMAGE_URL} onError={ImageError}/>
+                                                    <Com_main_body_writing_userimage_img src={process.env.REACT_APP_IMAGE_URL+notice?.guestUserId+".jpg"} onError={ImageError}/>
                                                 </Com_main_body_writing_userimage_div>
                                                 <Com_main_body_writing_username_button >
                                                     <Com_main_body_writing_username_span>{notice?.guestUserId}</Com_main_body_writing_username_span>

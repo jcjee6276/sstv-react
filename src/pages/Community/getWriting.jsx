@@ -21,6 +21,7 @@ import { useLocation } from 'react-router-dom';
 import useSWR from 'swr';
 import fetcher from '../utils/fetcher';
 const getWriting = () => {
+const {data} = useSWR('/user/login', fetcher);
     const [userData, setUserData]= useState('');
 const [anchorEl, setAnchorEl] = useState(null);
 const [agreeOpen, setAgreeOpen] = useState(false);
@@ -35,19 +36,19 @@ const [agreeOpen, setAgreeOpen] = useState(false);
   const handleClose = () => {
     setAnchorEl(null);
   };
-    const [data, setData ] = useState('');
+    const [writingData, setWritingData ] = useState('');
     const [comment, setComment ] = useState([]);
     const [nocomment, setNocomment] = useState('');
     const { writingNo } = useParams();
     const navigate = useNavigate();
     const replayNo = 1;
-    const commentsUserId = "user1";
+    const commentsUserId = data?.userId;
     useEffect(()=>{
         axios.get('/community/getWriting/'+writingNo)
         .then((response)=> {
             const datalist = response.data;
             
-            setData(datalist['data'])
+            setWritingData(datalist['data'])
             setComment(datalist['data'].comments)
             setNocomment(datalist['data'].comments[0].commentsUserId);
             
@@ -109,7 +110,7 @@ const [agreeOpen, setAgreeOpen] = useState(false);
     function padZero(number) {
         return number < 10 ? '0' + number : number;
       }
-      let date = new Date(data.regDate);
+      let date = new Date(writingData.regDate);
       let formattedDate = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate() +' '+padZero(date.getHours()) + ":"+ padZero(date.getMinutes());
     return(
         <body>
@@ -130,22 +131,22 @@ const [agreeOpen, setAgreeOpen] = useState(false);
                                                         자유게시판
                                                     </Writing_get_bs_header_a>
                                                     <Writing_get_bs_header_h2>
-                                                        {data.title }
+                                                        {writingData.title }
                                                     </Writing_get_bs_header_h2>
                                                     <Writing_get_bs_header_user_div>
                                                         <Writing_get_bs_header_user_img_div>
-                                                            <Writing_get_bs_header_user_img src={process.env.REACT_APP_IMAGE_URL+data.profilePhoto } onError={ImageError}/>
+                                                            <Writing_get_bs_header_user_img src={process.env.REACT_APP_IMAGE_URL+writingData.guestUserId+".jpg" } onError={ImageError}/>
                                                         </Writing_get_bs_header_user_img_div>
                                                         <Writing_get_bs_header_user_box_div>
                                                             <Writing_get_bs_header_user_button>
                                                                 <Writing_get_bs_header_user_p>
-                                                                    {data.guestUserId} <Writing_get_bs_header_user_em></Writing_get_bs_header_user_em>
+                                                                    {writingData.guestUserId} <Writing_get_bs_header_user_em></Writing_get_bs_header_user_em>
                                                                 </Writing_get_bs_header_user_p>
                                                             </Writing_get_bs_header_user_button>
                                                             <Writing_get_bs_header_user_date_span>● {formattedDate}</Writing_get_bs_header_user_date_span>
                                                             <Writing_get_bs_header_user_query_span>
                                                                 <Writing_get_bs_header_user_query_em>● 조회</Writing_get_bs_header_user_query_em>
-                                                                {data.view}
+                                                                {writingData.view}
                                                             </Writing_get_bs_header_user_query_span>
                                                         </Writing_get_bs_header_user_box_div>
                                                     </Writing_get_bs_header_user_div>
@@ -170,10 +171,10 @@ const [agreeOpen, setAgreeOpen] = useState(false);
                                                 'aria-labelledby': 'basic-button',
                                                 }}
                                             >
-                                                {userData?.userId===data?.hostUserId? 
+                                                {userData?.userId===writingData?.hostUserId? 
                                                 <MenuItem onClick={addNotice}>&nbsp;공지등록</MenuItem>
                                                 :null}
-                                                {userData?.userId===data?.guestUserId? 
+                                                {userData?.userId===writingData?.guestUserId? 
                                                 <MenuItem onClick={()=>{
                                                     navigate('/')
                                                 }}>&nbsp;&nbsp;글 수정</MenuItem>
@@ -215,7 +216,7 @@ const [agreeOpen, setAgreeOpen] = useState(false);
                                             <Writing_get_body_main_section>
                                                 <Writing_get_body_main_div>
                                                     <Writing_get_body_main_p >
-                                                    <div dangerouslySetInnerHTML={{ __html: data.content }} />
+                                                    <div dangerouslySetInnerHTML={{ __html: writingData.content }} />
                                                        
                                                        
                                                     </Writing_get_body_main_p>
@@ -228,8 +229,8 @@ const [agreeOpen, setAgreeOpen] = useState(false);
                                         <Writing_get_body_listbutton_div>
                                             {/* <Writing_get_body_listbutton_div_2> */}
                                                 <Writing_get_body_listbutton_button>
-                                                    <Writing_get_body_listbutton_span>{data.up}</Writing_get_body_listbutton_span>
-                                                    <Writing_get_body_listbutton_em>{data.view}</Writing_get_body_listbutton_em>
+                                                    <Writing_get_body_listbutton_span>{writingData.up}</Writing_get_body_listbutton_span>
+                                                    <Writing_get_body_listbutton_em>{writingData.view}</Writing_get_body_listbutton_em>
                                                 </Writing_get_body_listbutton_button>
                                                 <Writing_get_body_right_button_div>
                                                 <Writing_get_body_listbutton_2 className='float-right'>
@@ -251,7 +252,7 @@ const [agreeOpen, setAgreeOpen] = useState(false);
                                                     <Writing_get_footer_comments_form onSubmit={handleSubmit}>
                                                         <Writing_get_footer_comments_input_div>
                                                             <Writing_get_footer_comments_img_div>
-                                                                <Writing_get_footer_comments_img src={process.env.PUBLIC_URL +'/img/base_profile.jpg'}/>
+                                                                <Writing_get_footer_comments_img src={process.env.REACT_APP_IMAGE_URL+commentsUserId+".jpg" }/>
                                                             </Writing_get_footer_comments_img_div>
                                                             <Writing_get_footer_comments_area_section >
                                                                 <Writing_get_footer_comments_area_div >
@@ -290,14 +291,14 @@ const [agreeOpen, setAgreeOpen] = useState(false);
                                                            return(
                                                             <Writing_footer_comments_li>
                                                                 <Comments_profile_img_div>
-                                                                    <Comments_profile_img src={process.env.PUBLIC_URL +'/img/base_profile.jpg'} /> 
+                                                                    <Comments_profile_img src={process.env.REACT_APP_IMAGE_URL +item.commentsUserId +".jpg"} /> 
                                                                 </Comments_profile_img_div>
                                                                 <Comments_profile_user_id_div>
                                                                     <Comments_profile_user_id_div_2>
                                                                         <Commetns_profile_user_id_div_3>
                                                                             <Comments_profile_user_id_button>
-                                                                                <Comments_profile_user_id_p >nickname
-                                                                                    <Comments_profile_user_id_em key={i}>({item.commentsUserId})</Comments_profile_user_id_em>
+                                                                                <Comments_profile_user_id_p >{item.commentsUserId}
+                                                                                    <Comments_profile_user_id_em key={i}></Comments_profile_user_id_em>
                                                                                 </Comments_profile_user_id_p>
                                                                             </Comments_profile_user_id_button>
                                                                             <Comments_profile_date_span key={i}>
