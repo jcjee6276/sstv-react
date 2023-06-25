@@ -85,6 +85,7 @@ const TicketProduct = ({}) => {
       updateUserCoin(updateCoin);
       window.location.reload(); //  구매하는 순간 리로드 
       alert("이용권 구매완료");
+      axios.post('/user/addCoinHistory',{userId, ticketProdNo, price});
     }else{
 
       alert("코인이 부족합니다 ");

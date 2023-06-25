@@ -193,6 +193,8 @@ margin-left: calc(-.5 * var(--bs-gutter-x));
 `;
 
 export const Main_third_div =styled.div`
+position: relative;
+top: 100px;
 --bs-blue: #0d6efd;
 --bs-indigo: #6610f2;
 --bs-purple: #6f42c1;
@@ -1134,6 +1136,7 @@ overflow: hidden;
 
 
 export const Main_stream_body_div = styled.div`
+
 --bs-blue: #0d6efd;
 --bs-indigo: #6610f2;
 --bs-purple: #6f42c1;
@@ -1220,7 +1223,7 @@ box-sizing: border-box;
 margin: 0;
 border: 0;
 outline: 0;
-margin-top: 60px;
+margin-top: 500px;
 padding: 30px;
 background-color: #1f2122;
 border-radius: 23px;
@@ -1693,6 +1696,7 @@ text-decoration: underline;
 `;
 
 export const Main_body_stream_list_div = styled.div`
+
 --bs-blue: #0d6efd;
 --bs-indigo: #6610f2;
 --bs-purple: #6f42c1;
@@ -1788,6 +1792,8 @@ margin-left: calc(-.5 * var(--bs-gutter-x));
 `;
 
 export const Main_stream_list_div = styled.div`
+
+
 --bs-blue: #0d6efd;
 --bs-indigo: #6610f2;
 --bs-purple: #6f42c1;
@@ -53135,6 +53141,7 @@ height: 100% !important;
 `
 
 export const Streaming_Div = styled.div`
+
 text-size-adjust: 100%;
 --border-width-default: 1px;
 --border-width-button: 2px;
@@ -56616,6 +56623,14 @@ color: var(--color-text-link);
 `;
 
 export const Stream_list_div = styled.div`
+
+
+
+
+
+float:left;
+width:31%;
+margin-right:25px;
 text-size-adjust: 100%;
 --border-width-default: 1px;
 --border-width-button: 2px;
@@ -57477,9 +57492,13 @@ color: var(--color-text-base);
 box-sizing: border-box;
 border: 0;
 font: inherit;
-margin: 0;
-padding: 0;
-
+//margin: 0;
+//padding: 0;
+  &::after{
+    content: "";
+    clear: both;
+    display: block;
+  }
 `;
 
 export const Stream_list_div_inner = styled.div`

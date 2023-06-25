@@ -31,9 +31,10 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     const [cookies, setCookie, removeCookie] = useCookies(['NSESSIONID']);
     const {data} = useSWR('/user/login', fetcher);
     const navigate = useNavigate();
+    // const [userId, setUserId] = useState('');
     const userId = data?.userId;
     
-    //userId 값 세팅
+    // // userId 값 세팅
     // useEffect(() => {
     //     axios.get('/user/login').then((response) => {
     //       if(response.data?.data?.userId !== userId){

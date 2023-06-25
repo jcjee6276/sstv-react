@@ -59,8 +59,7 @@ const [agreeOpen, setAgreeOpen] = useState(false);
      axios.get('/user/login')
      .then((response)=> {
         const jsonData = response.data;
-        setUserData(jsonData['data']);
-        
+        setUserData(jsonData['data']);        
      })
    },[])
    console.log(userData);

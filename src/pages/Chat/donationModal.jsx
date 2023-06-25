@@ -62,6 +62,7 @@ const donationModal = ({onClose, setOnClose, donationData, setDonationData, stre
             setDonationData(jsonData['firstData']);
             console.log(donationData);
         })
+        axios.post('/user/addCoinHistory',{userId, ticketProdNo:0, prodName:0, price:donationAmount});
         
         const handler = () => {
             if(cancleRef.current){

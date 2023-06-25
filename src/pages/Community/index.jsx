@@ -21,12 +21,13 @@ const Community = () => {
     const [writingList, setWritingList] = useState([]);
     const sessionUser = data?.userId;
     const [replayList, setReplayList] = useState([]);
+    const [nickNameList, setNickNameList] = useState([]);
     
 
     
 
     useEffect(()=> {
-        axios.get('/community/writingList/'+userId)
+        axios.get('/community/writingList/'+userId) //userId = hostUserId
         .then((response)=> {
             const jsonData = response.data;
             setWritingList(jsonData['data']);
@@ -76,9 +77,9 @@ const Community = () => {
       const date2 = new Date(replayList?.STREAMING_START_TIME);
       const formattedDate2 = date2.getFullYear()+'-' + (date2.getMonth()+1) + '-'+date2.getDate();
     return(
-        <body>
+        <body style={{ overflowY: "auto", maxHeight: "90vh" }}>
        <Header/>
-       <Sidebar_Main_div style={{ overflowY: "auto", maxHeight: "90vh" }}>
+       <Sidebar_Main_div >
             <Sidebar/>
        
        <Writing_form_Main_div>
@@ -194,7 +195,7 @@ const Community = () => {
                                                     <Com_main_body_writing_userimage_img src={process.env.REACT_APP_IMAGE_URL+notice?.guestUserId+".jpg"} onError={ImageError}/>
                                                 </Com_main_body_writing_userimage_div>
                                                 <Com_main_body_writing_username_button >
-                                                    <Com_main_body_writing_username_span>{notice?.guestUserId}</Com_main_body_writing_username_span>
+                                                    <Com_main_body_writing_username_span>{notice?.guestNickName}</Com_main_body_writing_username_span>
                                                 </Com_main_body_writing_username_button>
                                                 <Com_main_body_writing_userdate_div>
                                                     {formattedDate} <Com_main_body_writing_user_view_em>∙ 조회 {notice?.view}</Com_main_body_writing_user_view_em>

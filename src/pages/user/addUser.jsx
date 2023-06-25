@@ -127,6 +127,11 @@ const addUserModal = ({onClose, setOnClose}) => {
       console.log('이메일 유효성 체크.'+eMailCheck);
       console.log('phone값 :: '+phone);
 
+      let message = '';
+        if (userId.length === 10) {
+            message = '아이디는 10글자까지만 가능합니다..';
+    }
+
     const onSubmit = useCallback(() => {
         axios.post('/user/addUser',
             {userId, password, profilePhoto, userNickname, userName, dateBirth, eMail, phone}
@@ -176,8 +181,9 @@ const addUserModal = ({onClose, setOnClose}) => {
                                                               {userId !== ''?
                                                                 <Modal_body_id_input_div>
                                                                     <Modal_body_id_input_div_2>
-                                                                        <Modal_body_id_input value={userId} onChange={handleInputIdChange}></Modal_body_id_input>
+                                                                        <Modal_body_id_input maxLength="10" value={userId} onChange={handleInputIdChange}></Modal_body_id_input>
                                                                         {idEnabled === 'useOk' ? '':<p style={{ color: 'red' }}>이미 사용 중인 아이디입니다.</p>}
+                                                                        {!message ? '':<p style={{ color: 'red' }}>{message}</p>}
                                                                     </Modal_body_id_input_div_2>
                                                                 </Modal_body_id_input_div>
                                                                 :

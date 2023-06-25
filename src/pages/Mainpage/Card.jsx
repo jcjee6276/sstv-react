@@ -7,7 +7,7 @@ import axios from 'axios'
 import Carousel from "./Carousel";
 import { Link } from "react-router-dom";
 import { Main_VOD, Main_VOD_Layout, Main_VOD_container, Main_VOd_resize, Main_info_layout, Main_inner, Main_inner_2, Main_inner_3, Main_inner_4, Main_inner_5, Main_inner_6, Main_top, Resize_detector, Resize_detector_2, Resize_detector_grow, Resize_detector_grow_2, Title_inner, Title_span, User_figure, User_img, VOD_Content, VOD_Title, VOD_Title_a, VOD_category_a, VOD_info, VOD_info_inner, VOD_infomation, VOD_title_box, VOD_title_inner, VOD_tttle, VOD_userName_a, VOD_user_image_div, VOD_view_p, Video, Vod_userName_p } from './CardStyle';
-function Card({ title,imagen,content,vodNo,hostUserId,category, view}) {
+function Card({ title,imagen,content,vodNo,hostUserId,category, view, hostNickName}) {
   const [show, setShown] = useState(false);
   const userId = "user9";
   const [vodList, setVodList] = useState([]);
@@ -97,7 +97,7 @@ function Card({ title,imagen,content,vodNo,hostUserId,category, view}) {
 
                           <VOD_infomation>
                             <VOD_userName_a href={"/home/"+hostUserId}>
-                              <Vod_userName_p>{hostUserId}</Vod_userName_p>
+                              <Vod_userName_p>{hostNickName}</Vod_userName_p>
                             </VOD_userName_a>
                             <VOD_category_a>{reportType}</VOD_category_a>
                             <VOD_view_p>조회수 {view}</VOD_view_p>

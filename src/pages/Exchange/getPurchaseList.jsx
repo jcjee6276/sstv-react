@@ -95,7 +95,7 @@ function onClickPayment() {
           if (rsp.success) {
 
             alert('결제 성공');
-            alert(rsp.pay_method);
+            // alert(rsp.pay_method);
             const purchase = {
               userId: userId,
               impUid: rsp.imp_uid,
@@ -104,6 +104,8 @@ function onClickPayment() {
               paymentAmount: paymentAmount
             };
             addPurchase(purchase);
+
+            axios.post('/user/addCoinHistory', {userId, ticketProdNo:0, prodName:3, price:paymentAmount});
               
           } else {
             alert(`결제 실패: ${rsp.error_msg}`);
@@ -133,10 +135,10 @@ function onClickPayment() {
           // ...
         });
 
-    axios.post('/user/addCoinHistory', {userId, prodName:3, price: purchase.paymentAmount})
-    .then((response) => {
-      console.log('구매내역 추가..');
-    });
+    // axios.post('/user/addCoinHistory', {userId, prodName:3, price: purchase.paymentAmount})
+    // .then((response) => {
+    //   console.log('구매내역 추가..');
+    // });
     }
   
     function updateUserCoin(updateCoin){

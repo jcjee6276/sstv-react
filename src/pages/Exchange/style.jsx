@@ -71,6 +71,7 @@ export const Table_td = styled.th`
     font-weight:600;
     font-size:16px;
     line-height:30px;
+    text-align:center;
 `;
 
 export const Button_div = styled.div`
