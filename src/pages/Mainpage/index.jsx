@@ -22,10 +22,7 @@ const Mainpage = () => {
     const [streamingList, setStreamingList] = useState([]);
 
     const fetchStreamingList = async () => {          
-        const response = await axios.create({
-          baseURL: `${process.env.REACT_APP_NODE_URL}`,
-          withCredentials : true
-        }).get('/streaming/getStreamingList');
+        const response = await axios.get('/streaming/getStreamingList');
       
         return response.data?.firstData; 
     };

@@ -110,10 +110,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     const setNodeCookie = async () => {
     if(data) {
         try {
-            const response = await axios.create({
-                baseURL: `${process.env.REACT_APP_NODE_URL}`,
-                withCredentials : true
-              }).post('/testLogin', data); 
+            const response = await axios.post('/testLogin', data); 
           } catch (error) {
             // 에러 처리
           }
@@ -127,10 +124,7 @@ const header = ({isDarkMode, setIsDarkMode}) => {
     }, [data]);
 
    const validateStreamingRoll = async () => {
-        const response = await axios.create({
-            baseURL: `${process.env.REACT_APP_NODE_URL}`,
-            withCredentials : true
-        }).get('/streaming/addStreaming');
+        const response = await axios.get('/streaming/addStreaming');
 
         const result = JSON.parse(response.data);
         return result;
